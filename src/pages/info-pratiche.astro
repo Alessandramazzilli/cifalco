@@ -1,0 +1,129 @@
+---
+import Base from '../layouts/Base.astro';
+import NotaMargine from '../components/NotaMargine.astro';
+import Illustrazione from '../components/Illustrazione.astro';
+---
+
+<Base
+  titolo="Info pratiche"
+  descrizione="Come arrivare alla Via del Cifalco, dove dormire e mangiare lungo il cammino, la credenziale e i timbri: tutte le informazioni pratiche."
+>
+  <div class="contenitore sezione">
+    <p class="occhiello">Info pratiche</p>
+    <h1>Prima di partire</h1>
+    <p style="font-size: 1.12rem;">
+      Le cose concrete: come si arriva, dove si dorme e si mangia, come
+      funziona la credenziale. <em>I recapiti qui sotto sono segnaposto, in
+      attesa dei dati definitivi.</em>
+    </p>
+
+    <section aria-labelledby="titolo-arrivare" class="blocco-info">
+      <h2 id="titolo-arrivare">Come arrivare</h2>
+      <ul>
+        <li>
+          <strong>In autobus:</strong> Pietrafonte e la Rocca del Cifalco sono
+          servite dalla linea di valle (corse mattina e pomeriggio, ridotte la
+          domenica). Orari aggiornati alla pagina del gestore <em>(collegamento
+          segnaposto)</em>.
+        </li>
+        <li>
+          <strong>In auto:</strong> parcheggi liberi all’ingresso di
+          Pietrafonte e sotto le mura della Rocca. Se cammini la Via intera,
+          lascia l’auto alla partenza e rientra in autobus.
+        </li>
+        <li>
+          <strong>In treno:</strong> la stazione più vicina è a fondovalle;
+          da lì l’autobus di linea sale a Pietrafonte in circa mezz’ora.
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titolo-dormire" class="blocco-info">
+      <h2 id="titolo-dormire">Dormire e mangiare: le locande della Via</h2>
+      <p>
+        Le locande sono il cuore caldo del cammino: cucina del territorio,
+        camere semplici e il timbro della credenziale. Conviene
+        <strong>prenotare sempre</strong>, soprattutto nei fine settimana e in
+        autunno.
+      </p>
+      <table class="tabella">
+        <caption class="sr-only">Strutture di ristoro e pernotto lungo la Via</caption>
+        <thead>
+          <tr>
+            <th scope="col">Dove</th>
+            <th scope="col">Struttura</th>
+            <th scope="col">Offre</th>
+            <th scope="col">Contatti</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Borgo di Pietrafonte</td>
+            <td>Locanda della Piazza <em>(segnaposto)</em></td>
+            <td>Cucina, camere, timbro</td>
+            <td>000 0000000</td>
+          </tr>
+          <tr>
+            <td>Casale dell’Orso</td>
+            <td>Locanda del Casale <em>(segnaposto)</em></td>
+            <td>Cucina, camere, timbro — fine tappa 1</td>
+            <td>000 0000000</td>
+          </tr>
+          <tr>
+            <td>San Lorenzo in Colle</td>
+            <td>Due locande e un forno <em>(segnaposto)</em></td>
+            <td>Cucina, camere, timbro — fine tappa 2</td>
+            <td>000 0000000</td>
+          </tr>
+          <tr>
+            <td>Rocca del Cifalco</td>
+            <td>Locanda della Torre <em>(segnaposto)</em></td>
+            <td>Cucina, camere, timbro finale</td>
+            <td>000 0000000</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <Illustrazione
+      scena="locanda"
+      alt="La locanda del Casale dell’Orso con il cane accucciato sull’aia"
+      nomeFile="info-locanda-casale.jpg"
+      rapporto="21/9"
+    />
+
+    <section aria-labelledby="titolo-credenziale" class="blocco-info">
+      <h2 id="titolo-credenziale">La credenziale e il contributo</h2>
+      <p>
+        La <strong>credenziale</strong> è il quaderno di viaggio della Via: si
+        ritira alla partenza (a Pietrafonte o alla Rocca) con un piccolo
+        contributo libero che sostiene la manutenzione dei segnavia e delle
+        fonti. A ogni punto tappa ricevi un timbro; con tutti i timbri, alla
+        fine, il <strong>testimonium</strong> del cammino.
+      </p>
+      <p>
+        Il contributo non è un biglietto: la Via è di tutti. È il modo più
+        semplice di lasciare il sentiero meglio di come l’hai trovato.
+      </p>
+    </section>
+
+    <NotaMargine titolo="Una cortesia">
+      <p>
+        I borghi della Via sono abitati: si passa parlando piano nelle ore del
+        riposo, si chiude ogni cancello che si apre e i cani si tengono al
+        guinzaglio dove ci sono greggi.
+      </p>
+    </NotaMargine>
+  </div>
+</Base>
+
+<style>
+  .blocco-info {
+    margin-block: 2.5rem;
+    max-width: 52rem;
+  }
+
+  .blocco-info table {
+    margin-top: 1rem;
+  }
+</style>

@@ -1,0 +1,609 @@
+---
+/**
+ * Il walk planner: scegli itinerario, tratto, senso, passo e tempo,
+ * e ottieni un piano chiaro con tappe passo-passo.
+ * È un'isola autonoma: i dati arrivano dalle content collection e vengono
+ * serializzati qui sotto; la mappa viene aggiornata via evento
+ * «via-cifalco:itinerario».
+ */
+import { caricaPercorso } from '../lib/percorso';
+
+const percorso = await caricaPercorso();
+
+const datiPlanner = {
+  itinerari: percorso.itinerari.map((i) => ({
+    id: i.id,
+    nome: i.nome,
+    difficolta: i.difficolta,
+    segnavia: i.segnavia,
+    giorniConsigliati: i.giorniConsigliati,
+    anello: i.anello,
+    tappe: i.tappe,
+  })),
+  tappe: Object.fromEntries(
+    percorso.tappe.map((t) => [
+      t.id,
+      {
+        nome: t.nome,
+        da: t.da,
+        a: t.a,
+        distanzaKm: t.distanzaKm,
+        salitaM: t.salitaM,
+        discesaM: t.discesaM,
+        oreBase: t.oreBase,
+        punti: t.punti,
+        passi: t.passi,
+      },
+    ])
+  ),
+  punti: Object.fromEntries(
+    percorso.punti.map((p) => [
+      p.id,
+      { nome: p.nome, acquaPotabile: p.acquaPotabile },
+    ])
+  ),
+};
+---
+
+<section class="planner" aria-label="Pianifica la tua camminata">
+  <form class="planner__modulo card">
+    <h3 class="planner__titolo">Costruisci il tuo piano</h3>
+    <p class="planner__sottotitolo">
+      Cinque scelte, nessun calcolo da fare: al resto pensiamo noi.
+    </p>
+
+    <div class="planner__campi">
+      <div class="planner__campo planner__campo--largo">
+        <label for="pl-itinerario">Itinerario</label>
+        <select id="pl-itinerario" name="itinerario">
+          {
+            percorso.itinerari.map((i) => (
+              <option value={i.id}>
+                {i.nome} — {i.sottotitolo.toLowerCase()}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+
+      <div class="planner__campo">
+        <label for="pl-partenza">Parti da</label>
+        <select id="pl-partenza" name="partenza"></select>
+      </div>
+
+      <div class="planner__campo">
+        <label for="pl-arrivo">Arrivi a</label>
+        <select id="pl-arrivo" name="arrivo"></select>
+      </div>
+
+      <div class="planner__campo">
+        <label for="pl-senso">Senso di percorrenza</label>
+        <select id="pl-senso" name="senso">
+          <option value="classico">Classico (verso la Rocca)</option>
+          <option value="inverso">Inverso</option>
+        </select>
+      </div>
+
+      <div class="planner__campo">
+        <label for="pl-passo">Il tuo passo</label>
+        <select id="pl-passo" name="passo">
+          <option value="1.25">Tranquillo — prime uscite, famiglie</option>
+          <option value="1" selected>Medio — cammino abitualmente</option>
+          <option value="0.85">Allenato — montagna frequente</option>
+        </select>
+      </div>
+
+      <div class="planner__campo">
+        <label for="pl-tempo">Ore di cammino al giorno</label>
+        <select id="pl-tempo" name="tempo">
+          <option value="4">Fino a 4 ore</option>
+          <option value="6" selected>Fino a 6 ore</option>
+          <option value="8">Fino a 8 ore</option>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <div class="planner__risultato">
+    <h3>Il tuo piano</h3>
+
+    <dl class="planner__dati">
+      <div class="dato"><dt>Distanza</dt><dd data-esito="distanza"></dd></div>
+      <div class="dato"><dt>Salita</dt><dd data-esito="salita"></dd></div>
+      <div class="dato"><dt>Discesa</dt><dd data-esito="discesa"></dd></div>
+      <div class="dato"><dt>Tempo stimato</dt><dd data-esito="tempo"></dd></div>
+      <div class="dato"><dt>Difficoltà</dt><dd data-esito="difficolta"></dd></div>
+    </dl>
+
+    <p class="planner__segnavia">
+      <strong>Segnavia da seguire:</strong> <span data-esito="segnavia"></span>
+    </p>
+
+    <p class="planner__direzione" data-esito="direzione"></p>
+
+    <div class="planner__avviso" data-esito="avviso" role="status" hidden></div>
+
+    <div data-esito="giornate"></div>
+
+    <div class="planner__colonne">
+      <section class="planner__blocco planner__blocco--acqua" aria-label="Acqua lungo il tratto">
+        <h4>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 3 C 12 3 6 10.5 6 14.5 C 6 18 8.7 20.5 12 20.5 C 15.3 20.5 18 18 18 14.5 C 18 10.5 12 3 12 3 Z"></path>
+          </svg>
+          Acqua lungo il tratto
+        </h4>
+        <ul data-esito="acqua"></ul>
+      </section>
+
+      <section class="planner__blocco" aria-label="Cosa portare">
+        <h4>Cosa portare</h4>
+        <ul data-esito="zaino"></ul>
+      </section>
+    </div>
+
+    <section class="planner__tappe" aria-label="Le tappe in sequenza">
+      <h4>Le tappe, una alla volta</h4>
+      <p class="planner__nota-inverso" data-esito="nota-inverso" hidden>
+        Le indicazioni sono descritte nel senso classico: in senso inverso
+        usale come riferimento dei luoghi che attraversi, in ordine contrario.
+      </p>
+      <article class="planner__passo card" aria-live="polite">
+        <p class="occhiello" data-esito="passo-tappa"></p>
+        <h5 data-esito="passo-titolo"></h5>
+        <p data-esito="passo-testo"></p>
+      </article>
+      <div class="planner__navigazione">
+        <button type="button" class="bottone bottone--contorno" data-azione="indietro">
+          ← Indietro
+        </button>
+        <span class="planner__contatore" data-esito="passo-contatore"></span>
+        <button type="button" class="bottone bottone--pieno" data-azione="avanti">
+          Avanti →
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <script type="application/json" data-dati-planner set:html={JSON.stringify(datiPlanner)} />
+</section>
+
+<style>
+  .planner {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+  }
+
+  @media (max-width: 56rem) {
+    .planner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .planner__titolo {
+    margin-bottom: 0.2rem;
+  }
+
+  .planner__sottotitolo {
+    color: var(--inchiostro-tenue);
+    font-size: 0.97rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .planner__campi {
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .planner__campo--largo {
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 26rem) {
+    .planner__campi {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .planner__campo label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--umbra);
+    margin-bottom: 0.3rem;
+  }
+
+  .planner__campo select {
+    width: 100%;
+    font: inherit;
+    font-size: 0.97rem;
+    color: var(--inchiostro);
+    background: var(--carta);
+    border: 1.5px solid var(--sabbia);
+    border-radius: var(--raggio);
+    padding: 0.55rem 0.6rem;
+  }
+
+  .planner__dati {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    margin: 0 0 1rem;
+  }
+
+  .planner__segnavia {
+    margin-bottom: 0.4rem;
+  }
+
+  .planner__direzione {
+    color: var(--inchiostro-tenue);
+    margin-bottom: 1rem;
+  }
+
+  .planner__avviso {
+    background: var(--carta-scura);
+    border-left: 3px solid var(--umbra);
+    border-radius: 0 var(--raggio) var(--raggio) 0;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1rem;
+    max-width: var(--misura);
+  }
+  .planner__avviso p { margin: 0; font-size: 0.97rem; }
+
+  .planner__colonne {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    margin-block: 1rem 1.5rem;
+  }
+
+  .planner__blocco h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .planner__blocco--acqua h4 {
+    color: var(--acqua);
+  }
+
+  .planner__blocco ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.97rem;
+  }
+
+  .planner__blocco li {
+    margin-bottom: 0.3rem;
+  }
+
+  .planner__giornate {
+    margin: 0 0 1rem;
+    padding-left: 1.2rem;
+  }
+
+  .planner__nota-inverso {
+    font-size: 0.92rem;
+    color: var(--inchiostro-tenue);
+    font-style: italic;
+  }
+
+  .planner__passo {
+    min-height: 11rem;
+  }
+
+  .planner__passo h5 {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    margin: 0 0 0.4rem;
+    color: var(--bosco-scuro);
+  }
+
+  .planner__passo p:last-child {
+    margin-bottom: 0;
+  }
+
+  .planner__navigazione {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 0.9rem;
+  }
+
+  .planner__navigazione .bottone[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .planner__contatore {
+    font-size: 0.92rem;
+    color: var(--inchiostro-tenue);
+    text-align: center;
+  }
+</style>
+
+<script>
+  interface TappaDati {
+    nome: string;
+    da: string;
+    a: string;
+    distanzaKm: number;
+    salitaM: number;
+    discesaM: number;
+    oreBase: number;
+    punti: string[];
+    passi: { titolo: string; testo: string }[];
+  }
+
+  const sezione = document.querySelector<HTMLElement>('.planner');
+
+  if (sezione) {
+    const dati = JSON.parse(
+      sezione.querySelector('[data-dati-planner]')!.textContent!
+    ) as {
+      itinerari: {
+        id: string;
+        nome: string;
+        difficolta: string;
+        segnavia: string;
+        giorniConsigliati: string;
+        anello: boolean;
+        tappe: string[];
+      }[];
+      tappe: Record<string, TappaDati>;
+      punti: Record<string, { nome: string; acquaPotabile: boolean }>;
+    };
+
+    const campo = {
+      itinerario: sezione.querySelector<HTMLSelectElement>('#pl-itinerario')!,
+      partenza: sezione.querySelector<HTMLSelectElement>('#pl-partenza')!,
+      arrivo: sezione.querySelector<HTMLSelectElement>('#pl-arrivo')!,
+      senso: sezione.querySelector<HTMLSelectElement>('#pl-senso')!,
+      passo: sezione.querySelector<HTMLSelectElement>('#pl-passo')!,
+      tempo: sezione.querySelector<HTMLSelectElement>('#pl-tempo')!,
+    };
+
+    const esito = (nome: string) =>
+      sezione.querySelector<HTMLElement>(`[data-esito="${nome}"]`)!;
+
+    const ETICHETTA_DIFFICOLTA: Record<string, string> = {
+      facile: 'Facile',
+      medio: 'Medio',
+      impegnativo: 'Impegnativo',
+    };
+
+    function formattaOre(ore: number): string {
+      const h = Math.floor(ore);
+      const min = Math.round((ore - h) * 60);
+      if (h === 0) return `${min} min`;
+      return min === 0 ? `${h} h` : `${h} h ${min} min`;
+    }
+
+    function itinerarioScelto() {
+      return dati.itinerari.find((i) => i.id === campo.itinerario.value)!;
+    }
+
+    /** Le tappe del tratto scelto, nell'ordine in cui verranno camminate. */
+    function tappeScelte(): TappaDati[] {
+      const itinerario = itinerarioScelto();
+      const da = Number(campo.partenza.value);
+      const a = Number(campo.arrivo.value);
+      const ids = itinerario.tappe.slice(da, a + 1);
+      const tappe = ids.map((id) => dati.tappe[id]);
+      return campo.senso.value === 'inverso' ? [...tappe].reverse() : tappe;
+    }
+
+    /** Ripopola le tendine «Parti da» / «Arrivi a» per l'itinerario scelto. */
+    function aggiornaTratto() {
+      const itinerario = itinerarioScelto();
+      const tappe = itinerario.tappe.map((id) => dati.tappe[id]);
+
+      campo.partenza.innerHTML = '';
+      tappe.forEach((tappa, i) => {
+        campo.partenza.add(new Option(tappa.da, String(i)));
+      });
+      campo.partenza.value = '0';
+      aggiornaArrivo();
+    }
+
+    function aggiornaArrivo() {
+      const itinerario = itinerarioScelto();
+      const tappe = itinerario.tappe.map((id) => dati.tappe[id]);
+      const da = Number(campo.partenza.value);
+      const precedente = campo.arrivo.value;
+
+      campo.arrivo.innerHTML = '';
+      tappe.forEach((tappa, i) => {
+        if (i >= da) campo.arrivo.add(new Option(tappa.a, String(i)));
+      });
+      campo.arrivo.value =
+        [...campo.arrivo.options].some((o) => o.value === precedente)
+          ? precedente
+          : String(tappe.length - 1);
+    }
+
+    // --- Stepper delle tappe ---------------------------------------------
+    let passi: { tappa: string; titolo: string; testo: string }[] = [];
+    let passoCorrente = 0;
+
+    const bottoneIndietro = sezione.querySelector<HTMLButtonElement>('[data-azione="indietro"]')!;
+    const bottoneAvanti = sezione.querySelector<HTMLButtonElement>('[data-azione="avanti"]')!;
+
+    function mostraPasso() {
+      const passo = passi[passoCorrente];
+      if (!passo) return;
+      esito('passo-tappa').textContent = passo.tappa;
+      esito('passo-titolo').textContent = passo.titolo;
+      esito('passo-testo').textContent = passo.testo;
+      esito('passo-contatore').textContent =
+        `Passo ${passoCorrente + 1} di ${passi.length}`;
+      bottoneIndietro.disabled = passoCorrente === 0;
+      bottoneAvanti.disabled = passoCorrente === passi.length - 1;
+    }
+
+    bottoneIndietro.addEventListener('click', () => {
+      if (passoCorrente > 0) {
+        passoCorrente--;
+        mostraPasso();
+      }
+    });
+    bottoneAvanti.addEventListener('click', () => {
+      if (passoCorrente < passi.length - 1) {
+        passoCorrente++;
+        mostraPasso();
+      }
+    });
+
+    // --- Calcolo del piano -------------------------------------------------
+    function calcola() {
+      const itinerario = itinerarioScelto();
+      const tappe = tappeScelte();
+      const inverso = campo.senso.value === 'inverso';
+      const fattore = Number(campo.passo.value);
+      const orePerGiorno = Number(campo.tempo.value);
+
+      const distanza = tappe.reduce((s, t) => s + t.distanzaKm, 0);
+      const salita = tappe.reduce((s, t) => s + (inverso ? t.discesaM : t.salitaM), 0);
+      const discesa = tappe.reduce((s, t) => s + (inverso ? t.salitaM : t.discesaM), 0);
+      const ore = tappe.reduce((s, t) => s + t.oreBase, 0) * fattore;
+
+      esito('distanza').textContent = `${distanza.toLocaleString('it-IT', { maximumFractionDigits: 1 })} km`;
+      esito('salita').textContent = `${salita} m`;
+      esito('discesa').textContent = `${discesa} m`;
+      esito('tempo').textContent = formattaOre(ore);
+      esito('difficolta').textContent = ETICHETTA_DIFFICOLTA[itinerario.difficolta];
+      esito('segnavia').textContent = itinerario.segnavia;
+
+      const prima = tappe[0];
+      const ultima = tappe[tappe.length - 1];
+      const partenza = inverso ? prima.a : prima.da;
+      const arrivo = inverso ? ultima.da : ultima.a;
+      esito('direzione').textContent = itinerario.anello
+        ? `Anello con partenza e ritorno a ${partenza}. Il tempo stimato non comprende le soste.`
+        : `Da ${partenza} a ${arrivo}, in senso ${inverso ? 'inverso' : 'classico'}. Il tempo stimato non comprende le soste.`;
+
+      // Suddivisione in giornate, rispettando le ore disponibili al giorno.
+      const giornate: { tappe: TappaDati[]; ore: number }[] = [];
+      let giornataLunga = false;
+      for (const tappa of tappe) {
+        const oreTappa = tappa.oreBase * fattore;
+        const corrente = giornate[giornate.length - 1];
+        if (corrente && corrente.ore + oreTappa <= orePerGiorno) {
+          corrente.tappe.push(tappa);
+          corrente.ore += oreTappa;
+        } else {
+          giornate.push({ tappe: [tappa], ore: oreTappa });
+          if (oreTappa > orePerGiorno) giornataLunga = true;
+        }
+      }
+
+      const blocchoGiornate = esito('giornate');
+      if (giornate.length > 1) {
+        const voci = giornate
+          .map((giornata, i) => {
+            const g0 = giornata.tappe[0];
+            const g1 = giornata.tappe[giornata.tappe.length - 1];
+            const da = inverso ? g0.a : g0.da;
+            const a = inverso ? g1.da : g1.a;
+            return `<li><strong>Giorno ${i + 1}:</strong> da ${da} a ${a} — ${formattaOre(giornata.ore)}</li>`;
+          })
+          .join('');
+        blocchoGiornate.innerHTML = `<ol class="planner__giornate">${voci}</ol>`;
+      } else {
+        blocchoGiornate.innerHTML = '';
+      }
+
+      const avviso = esito('avviso');
+      if (giornataLunga) {
+        avviso.innerHTML =
+          '<p><strong>Giornata lunga per il tempo che hai indicato.</strong> Parti presto al mattino, oppure scegli un tratto più corto o un passo più realistico: la Via resta lì, non scappa.</p>';
+        avviso.hidden = false;
+      } else if (giornate.length > 1) {
+        avviso.innerHTML = `<p><strong>Servono ${giornate.length} giorni con le ore che hai a disposizione.</strong> Le notti si fanno nelle locande di tappa: trovi i recapiti nelle <a href="/info-pratiche">info pratiche</a>.</p>`;
+        avviso.hidden = false;
+      } else {
+        avviso.hidden = true;
+      }
+
+      // Acqua lungo il tratto, nell'ordine in cui la incontri.
+      const vistiAcqua = new Set<string>();
+      const vociAcqua: string[] = [];
+      for (const tappa of tappe) {
+        const puntiTappa = inverso ? [...tappa.punti].reverse() : tappa.punti;
+        for (const id of puntiTappa) {
+          const punto = dati.punti[id];
+          if (punto?.acquaPotabile && !vistiAcqua.has(id)) {
+            vistiAcqua.add(id);
+            vociAcqua.push(`<li>${punto.nome}</li>`);
+          }
+        }
+      }
+      esito('acqua').innerHTML =
+        vociAcqua.join('') ||
+        '<li>Nessuna fonte su questo tratto: parti con tutta l’acqua che ti serve.</li>';
+
+      // Zaino: base + aggiunte legate a durata, quota e difficoltà.
+      const zaino = [
+        'Scarpe da trekking già rodate',
+        'Borraccia da almeno 1 litro',
+        'Guscio antipioggia',
+        'Cappello e crema solare',
+        'Telefono carico (e mappa scaricata: sul sentiero il campo va e viene)',
+        'Qualcosa da mangiare lungo il cammino',
+      ];
+      if (ore > 4) zaino.splice(2, 0, 'Scorta d’acqua: almeno 1,5 litri a persona');
+      if (tappe.some((t) => t.punti.includes('valico-delle-tre-querce')))
+        zaino.push('Uno strato caldo in più: il valico è ventoso anche d’estate');
+      if (itinerario.difficolta === 'impegnativo')
+        zaino.push('Bastoncini da trekking per la discesa');
+      if (giornate.length > 1)
+        zaino.push('Sacco lenzuolo e un ricambio per le notti in locanda', 'La credenziale del cammino, per i timbri');
+      esito('zaino').innerHTML = zaino.map((voce) => `<li>${voce}</li>`).join('');
+
+      // Stepper.
+      esito('nota-inverso').hidden = !inverso;
+      passi = tappe.flatMap((tappa) => {
+        const passiTappa = inverso ? [...tappa.passi].reverse() : tappa.passi;
+        return passiTappa.map((passo) => ({
+          tappa: tappa.nome,
+          titolo: passo.titolo,
+          testo: passo.testo,
+        }));
+      });
+      passoCorrente = 0;
+      mostraPasso();
+
+      // Dillo anche alla mappa, se c'è. Il rinvio di un tick garantisce che
+      // al primo calcolo lo script della mappa abbia già registrato l'ascolto.
+      setTimeout(() =>
+        window.dispatchEvent(
+          new CustomEvent('via-cifalco:itinerario', {
+            detail: { id: itinerario.id },
+          })
+        )
+      );
+    }
+
+    campo.itinerario.addEventListener('change', () => {
+      aggiornaTratto();
+      calcola();
+    });
+    campo.partenza.addEventListener('change', () => {
+      aggiornaArrivo();
+      calcola();
+    });
+    [campo.arrivo, campo.senso, campo.passo, campo.tempo].forEach((select) =>
+      select.addEventListener('change', calcola)
+    );
+
+    aggiornaTratto();
+    calcola();
+  }
+</script>

@@ -1,0 +1,152 @@
+---
+/**
+ * Segnaposto illustrato per le immagini reali che arriveranno più avanti.
+ * Ogni segnaposto dichiara il nome file suggerito e l'alt text definitivo:
+ * per sostituirlo basterà mettere la foto in `public/immagini/` con quel nome
+ * e cambiare questo componente in un normale <img> (istruzioni nel README).
+ */
+interface Props {
+  scena: 'colline' | 'borgo' | 'fonte' | 'bosco' | 'locanda';
+  alt: string;
+  nomeFile: string;
+  /** Rapporto d'aspetto, es. "16/9" o "4/3". */
+  rapporto?: string;
+  /** Nasconde l'etichetta col nome file (per gli sfondi decorativi). */
+  senzaEtichetta?: boolean;
+}
+const {
+  scena,
+  alt,
+  nomeFile,
+  rapporto = '16/9',
+  senzaEtichetta = false,
+} = Astro.props;
+---
+
+<figure class="illustrazione" style={`aspect-ratio: ${rapporto};`}>
+  <svg
+    viewBox="0 0 800 450"
+    preserveAspectRatio="xMidYMid slice"
+    role="img"
+    aria-label={alt}
+  >
+    <rect width="800" height="450" fill="var(--carta-scura)"></rect>
+
+    {/* Cielo e sole, comuni a tutte le scene */}
+    <circle cx="650" cy="90" r="42" fill="var(--sabbia)"></circle>
+
+    {
+      scena === 'colline' && (
+        <g>
+          <path d="M0 290 Q 200 180 420 260 T 800 230 V450 H0 Z" fill="var(--salvia)" />
+          <path d="M0 340 Q 250 250 520 330 T 800 310 V450 H0 Z" fill="var(--campagna)" opacity="0.85" />
+          <path d="M0 400 Q 300 330 800 390 V450 H0 Z" fill="var(--bosco)" />
+          <path d="M80 430 C 220 380, 320 410, 450 350 S 660 320, 740 270" stroke="var(--carta)" stroke-width="6" stroke-dasharray="14 16" fill="none" stroke-linecap="round" />
+        </g>
+      )
+    }
+    {
+      scena === 'borgo' && (
+        <g>
+          <path d="M0 320 Q 400 240 800 310 V450 H0 Z" fill="var(--salvia)" />
+          <g fill="var(--carta)" stroke="var(--umbra)" stroke-width="5" stroke-linejoin="round">
+            <path d="M300 330 V250 L340 215 L380 250 V330 Z" />
+            <path d="M395 330 V235 H450 V330 Z" />
+            <path d="M395 235 L422 200 L450 235" fill="var(--umbra)" />
+            <path d="M220 330 V270 L260 240 L300 270 V330 Z" />
+            <path d="M465 330 V265 L505 235 L545 265 V330 Z" />
+          </g>
+          <path d="M0 420 Q 400 380 800 415 V450 H0 Z" fill="var(--bosco)" />
+        </g>
+      )
+    }
+    {
+      scena === 'fonte' && (
+        <g>
+          <path d="M0 300 Q 400 230 800 290 V450 H0 Z" fill="var(--salvia)" />
+          <g stroke="var(--pietra)" stroke-width="6" fill="var(--carta)" stroke-linejoin="round">
+            <rect x="280" y="230" width="240" height="80" rx="10" />
+            <rect x="370" y="160" width="60" height="70" rx="6" />
+          </g>
+          <path d="M400 195 q 14 18 0 36" stroke="var(--acqua)" stroke-width="6" fill="none" stroke-linecap="round" />
+          <rect x="292" y="262" width="216" height="38" rx="7" fill="var(--acqua-chiara)" />
+          <path d="M0 420 Q 400 385 800 415 V450 H0 Z" fill="var(--campagna)" />
+        </g>
+      )
+    }
+    {
+      scena === 'bosco' && (
+        <g>
+          <path d="M0 330 Q 400 270 800 320 V450 H0 Z" fill="var(--bosco)" />
+          <g fill="var(--campagna)">
+            <path d="M160 330 C 110 330 95 270 130 235 C 150 160 250 160 270 235 C 305 270 290 330 240 330 Z" />
+            <path d="M430 330 C 380 330 365 260 400 225 C 420 150 520 150 540 225 C 575 260 560 330 510 330 Z" opacity="0.92" />
+            <path d="M650 330 C 615 330 605 285 630 258 C 645 205 715 205 730 258 C 755 285 745 330 710 330 Z" opacity="0.85" />
+          </g>
+          <g stroke="var(--umbra)" stroke-width="9" stroke-linecap="round">
+            <path d="M200 330 V370" />
+            <path d="M470 330 V375" />
+            <path d="M680 330 V365" />
+          </g>
+          <path d="M60 430 C 250 400, 480 430, 740 395" stroke="var(--carta)" stroke-width="6" stroke-dasharray="14 16" fill="none" stroke-linecap="round" />
+        </g>
+      )
+    }
+    {
+      scena === 'locanda' && (
+        <g>
+          <path d="M0 320 Q 400 260 800 310 V450 H0 Z" fill="var(--salvia)" />
+          <g fill="var(--carta)" stroke="var(--umbra)" stroke-width="6" stroke-linejoin="round">
+            <path d="M280 340 V230 L400 160 L520 230 V340 Z" />
+            <rect x="370" y="280" width="60" height="60" />
+            <rect x="305" y="250" width="40" height="38" rx="4" />
+            <rect x="455" y="250" width="40" height="38" rx="4" />
+          </g>
+          <path d="M455 175 C 445 188 465 198 455 211" stroke="var(--pietra)" stroke-width="6" fill="none" stroke-linecap="round" />
+          <circle cx="565" cy="300" r="5" fill="var(--umbra)" />
+          <path d="M540 340 q 25 -55 50 0" stroke="var(--umbra)" stroke-width="6" fill="none" />
+          <path d="M0 425 Q 400 390 800 420 V450 H0 Z" fill="var(--bosco)" />
+        </g>
+      )
+    }
+  </svg>
+  {
+    !senzaEtichetta && (
+      <figcaption class="illustrazione__etichetta">
+        Illustrazione segnaposto · sostituire con{' '}
+        <code>immagini/{nomeFile}</code>
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .illustrazione {
+    position: relative;
+    margin: 0;
+    border-radius: var(--raggio-grande);
+    overflow: hidden;
+    box-shadow: var(--ombra);
+  }
+
+  .illustrazione svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .illustrazione__etichetta {
+    position: absolute;
+    bottom: 0.6rem;
+    right: 0.6rem;
+    font-size: 0.72rem;
+    color: var(--inchiostro-tenue);
+    background: color-mix(in srgb, var(--carta) 88%, transparent);
+    border-radius: 999px;
+    padding: 0.15rem 0.7rem;
+  }
+
+  .illustrazione__etichetta code {
+    font-size: 0.72rem;
+  }
+</style>

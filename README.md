@@ -1,0 +1,163 @@
+# L'Antica Via del Cifalco — sito web
+
+Il sito del cammino: informa chi è sul sentiero, promuove il territorio e
+racconta la storia della Via con approccio critico.
+
+Costruito con [Astro](https://astro.build): pagine statiche velocissime, con
+due sole «isole» interattive (la mappa illustrata e il walk planner).
+**Tutti i contenuti sono separati dal codice**: per aggiornare il sito non
+serve essere programmatori, basta modificare file di testo. Questa guida
+spiega come.
+
+> **Nota:** tutti i contenuti attuali (nomi dei luoghi, distanze, recapiti,
+> citazioni) sono **segnaposto** in attesa dei dati reali. Sono scritti nel
+> tono giusto, ma vanno sostituiti.
+
+---
+
+## Come avviare il sito sul proprio computer
+
+Serve [Node.js](https://nodejs.org) (versione 20 o successiva). Poi, nella
+cartella del progetto:
+
+```bash
+npm install        # solo la prima volta
+npm run dev        # apre il sito su http://localhost:4321
+```
+
+Ogni modifica ai file si vede subito nel browser. Per produrre la versione
+da pubblicare:
+
+```bash
+npm run build      # crea la cartella dist/ pronta da pubblicare
+```
+
+---
+
+## Dove vive ogni cosa
+
+```
+src/
+├── content/             ⟵ TUTTI I CONTENUTI (è qui che si lavora di solito)
+│   ├── itinerari/       ⟵ un file JSON per itinerario
+│   ├── tappe/           ⟵ un file JSON per tappa (con i passi del planner)
+│   ├── punti/           ⟵ un file JSON per punto d'interesse
+│   └── articoli/        ⟵ un file Markdown per articolo di Storia e Territorio
+├── pages/               ⟵ le pagine del sito (testi delle pagine fisse)
+├── components/          ⟵ i blocchi riusabili (mappa, planner, note…)
+├── lib/percorso.ts      ⟵ il codice che legge i contenuti
+└── styles/global.css    ⟵ colori, font e stile di tutto il sito
+```
+
+---
+
+## Le operazioni più comuni
+
+### Modificare un testo
+
+I testi delle pagine fisse (Home, Info pratiche, Chi siamo…) sono nei file di
+`src/pages/`: si aprono con qualunque editor di testo, il testo è leggibile
+tra i tag HTML. Gli articoli sono in `src/content/articoli/` e sono semplice
+Markdown.
+
+### Aggiungere un punto d'interesse
+
+1. Copia un file esistente in `src/content/punti/`, ad esempio
+   `fonte-vecchia.json`, e rinominalo (minuscole e trattini: il nome del file
+   diventa l'indirizzo del punto).
+2. Compila i campi:
+   - `nome`, `descrizione`, `quota` (metri, facoltativa);
+   - `tipo`: uno tra `borgo`, `fonte`, `valico`, `natura`, `storia`, `ristoro`;
+   - `acquaPotabile`: `true` solo se c'è acqua potabile;
+   - `x` e `y`: la posizione sulla mappa illustrata (vedi sotto).
+3. Se il punto è lungo una tappa, aggiungi il suo nome-file nell'elenco
+   `punti` della tappa in `src/content/tappe/`: comparirà nel tracciato e
+   nel planner.
+
+**Le coordinate `x` e `y`** sono sulla griglia della mappa: `x` da 0 (sinistra)
+a 1000 (destra), `y` da 0 (alto) a 700 (basso). Si va a occhio e si controlla
+con `npm run dev`: due o tre tentativi e il punto è al suo posto.
+
+### Aggiungere o modificare un itinerario
+
+1. Le tappe sono in `src/content/tappe/`: ogni tappa ha distanza, dislivelli,
+   ore di cammino, l'elenco dei `punti` attraversati **in ordine** e i
+   `passi` (le indicazioni che il planner mostra una alla volta).
+2. Gli itinerari sono in `src/content/itinerari/`: un itinerario è soprattutto
+   un elenco di tappe in ordine, più difficoltà, segnavia e descrizione.
+3. Mappa e planner si aggiornano da soli: leggono questi file.
+
+### Aggiungere un articolo
+
+Copia un file in `src/content/articoli/`, rinominalo e modifica
+l'intestazione tra i due `---` (titolo, estratto, data in formato
+`AAAA-MM-GG`, tema tra `storia`, `natura`, `cultura`) e il testo sotto, in
+Markdown. L'articolo compare da solo nell'elenco e in Home.
+
+### Sostituire un'illustrazione segnaposto con una foto vera
+
+Ogni segnaposto dichiara il nome del file atteso (l'etichetta in basso a
+destra, es. `immagini/home-hero-via-del-cifalco.jpg`).
+
+1. Metti la foto in `public/immagini/` con quel nome (creando la cartella la
+   prima volta).
+2. Nel file della pagina (es. `src/pages/index.astro`) sostituisci il blocco
+   `<Illustrazione … />` con:
+
+   ```html
+   <img src="/immagini/home-hero-via-del-cifalco.jpg"
+        alt="Lo stesso alt text che era nel componente" />
+   ```
+
+   L'`alt` è già scritto nel componente segnaposto: riusalo.
+
+### Sostituire la base della mappa con la mappa illustrata definitiva
+
+La mappa interattiva (`src/components/MappaVia.astro`) è un disegno SVG con
+sopra i punti cliccabili. Quando la mappa illustrata definitiva sarà pronta:
+
+1. Esportala come immagine con le stesse proporzioni 1000 × 700.
+2. Salvala in `public/immagini/mappa-illustrata.jpg` (o `.png`/`.svg`).
+3. In `MappaVia.astro`, dentro l'`<svg>` di sfondo, sostituisci le forme
+   segnaposto (commentate come tali) con:
+
+   ```html
+   <image href="/immagini/mappa-illustrata.jpg" width="1000" height="700" />
+   ```
+
+4. I punti interattivi restano dove sono: se sulla nuova mappa un punto non
+   coincide, si correggono `x` e `y` nel suo file JSON.
+
+I tracciati delle tappe sono disegnati automaticamente passando per i punti;
+se la mappa definitiva include già il tracciato disegnato, si può abbassare
+l'opacità dei tracciati automatici o lasciarli come evidenziazione.
+
+---
+
+## Pubblicare il sito
+
+Il sito è statico: si pubblica gratuitamente su Netlify, Vercel o GitHub
+Pages. La via più semplice (Netlify):
+
+1. Crea un account su [netlify.com](https://www.netlify.com) e collega questo
+   repository.
+2. Impostazioni di build: comando `npm run build`, cartella `dist`.
+3. A ogni modifica caricata sul repository, il sito si ripubblica da solo.
+
+Quando il dominio definitivo è attivo, aggiorna l'indirizzo in
+`astro.config.mjs` (riga `site:`): serve per la sitemap e le anteprime
+social.
+
+---
+
+## Scelte di design (per chi metterà mano allo stile)
+
+- **Palette** in `src/styles/global.css`, tutta a variabili CSS: verdi del
+  bosco e della campagna, sabbia/terra come «carta» del quaderno, grigio
+  pietra, e un acqua desaturato usato solo per i richiami all'acqua.
+- **Font**: Source Serif 4 per i titoli, Source Sans 3 per il corpo, Caveat
+  **solo** per il titoletto delle «note a margine». Self-hosted, niente
+  richieste a server esterni.
+- **Tono dell'interfaccia**: il quaderno vive nella struttura (note a
+  margine, sezioni come pagine), mai in texture finte. Niente effetto
+  «medioevo da fiera».

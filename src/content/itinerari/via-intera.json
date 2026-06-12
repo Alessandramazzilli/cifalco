@@ -1,0 +1,11 @@
+{
+  "nome": "La Via intera",
+  "sottotitolo": "Tre giorni di cammino da Pietrafonte alla Rocca",
+  "descrizione": "Il cammino completo: 41 chilometri e mezzo in tre tappe, da borgo a borgo, sul tracciato che muli, commercianti e compagnie di giro hanno battuto per secoli. Si dorme alle locande di tappa e si timbra la credenziale lungo il percorso.",
+  "difficolta": "medio",
+  "tappe": ["tappa-1", "tappa-2", "tappa-3"],
+  "segnavia": "Bandierina bianco-rossa con sigla «VC»",
+  "giorniConsigliati": "3 giorni / 2 notti",
+  "ordine": 1,
+  "anello": false
+}

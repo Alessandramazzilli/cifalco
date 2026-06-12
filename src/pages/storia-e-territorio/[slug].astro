@@ -1,0 +1,64 @@
+---
+import Base from '../../layouts/Base.astro';
+import NotaMargine from '../../components/NotaMargine.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articoli = await getCollection('articoli');
+  return articoli.map((articolo) => ({
+    params: { slug: articolo.id },
+    props: { articolo },
+  }));
+}
+
+const { articolo } = Astro.props;
+const { Content } = await render(articolo);
+
+const dataLeggibile = articolo.data.data.toLocaleDateString('it-IT', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<Base titolo={articolo.data.titolo} descrizione={articolo.data.estratto}>
+  <article class="contenitore sezione">
+    <header class="articolo__testata">
+      <p class="occhiello">{articolo.data.occhiello}</p>
+      <h1>{articolo.data.titolo}</h1>
+      <p class="articolo__data">
+        Dal quaderno della Via ·
+        <time datetime={articolo.data.data.toISOString().slice(0, 10)}>
+          {dataLeggibile}
+        </time>
+      </p>
+    </header>
+
+    <div class="prosa">
+      <Content />
+    </div>
+
+    <NotaMargine titolo="Hai qualcosa da aggiungere?">
+      <p>
+        Ricordi di famiglia, documenti, fotografie: ogni contributo aiuta a
+        raccontare meglio la Via. <a href="/chi-siamo">Scrivici</a>.
+      </p>
+    </NotaMargine>
+
+    <p style="margin-top: 2rem;">
+      <a href="/storia-e-territorio">← Tutte le storie</a>
+    </p>
+  </article>
+</Base>
+
+<style>
+  .articolo__testata {
+    max-width: var(--misura);
+    margin-bottom: 2rem;
+  }
+
+  .articolo__data {
+    color: var(--inchiostro-tenue);
+    font-size: 0.95rem;
+  }
+</style>

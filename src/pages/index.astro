@@ -1,0 +1,281 @@
+---
+import Base from '../layouts/Base.astro';
+import Illustrazione from '../components/Illustrazione.astro';
+import CardItinerario from '../components/CardItinerario.astro';
+import NotaMargine from '../components/NotaMargine.astro';
+import { caricaPercorso } from '../lib/percorso';
+import { getCollection } from 'astro:content';
+
+const percorso = await caricaPercorso();
+const articoli = (await getCollection('articoli'))
+  .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf())
+  .slice(0, 3);
+---
+
+<Base
+  titolo="L’Antica Via del Cifalco"
+  descrizione="Il cammino di muli, commercianti, saltimbanchi e briganti: tre giorni a piedi tra borghi, fonti e faggete. Itinerari, mappa illustrata e tutto quello che serve per partire."
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="contenitore hero__griglia">
+      <div class="hero__testo">
+        <p class="occhiello">Un cammino di comunità</p>
+        <h1>La strada che i muli conoscevano a memoria</h1>
+        <p class="hero__sottotitolo">
+          Per secoli muli, commercianti, saltimbanchi e briganti hanno unito
+          due valli passando di qui. Oggi l’Antica Via del Cifalco è un cammino
+          segnato e accudito: tre giorni a piedi — o anche solo mezza giornata —
+          tra borghi, fonti e faggete.
+        </p>
+        <div class="hero__azioni">
+          <a class="bottone bottone--pieno" href="/percorso#pianifica">
+            Pianifica la camminata
+          </a>
+          <a class="bottone bottone--contorno" href="/mappa">
+            Guarda la mappa
+          </a>
+        </div>
+      </div>
+      <Illustrazione
+        scena="colline"
+        alt="Il sentiero della Via del Cifalco sale tra colline coltivate verso il valico"
+        nomeFile="home-hero-via-del-cifalco.jpg"
+        rapporto="4/3"
+      />
+    </div>
+  </section>
+
+  <!-- I tre richiami -->
+  <section class="sezione sezione--alternata">
+    <div class="contenitore">
+      <div class="griglia">
+        <article class="richiamo">
+          <h2 class="richiamo__titolo">Cammina</h2>
+          <p>
+            Tre itinerari segnati, dall’anello di mezza giornata alla Via
+            intera. Distanze, acqua, segnavia: tutto spiegato in modo che non
+            ci si possa perdere.
+          </p>
+          <a href="/percorso">Vai al percorso →</a>
+        </article>
+        <article class="richiamo">
+          <h2 class="richiamo__titolo">Scopri il territorio</h2>
+          <p>
+            Borghi di crinale, locande che cucinano quel che cresce qui,
+            fontanili che dissetano da tre secoli. Il cammino è anche quello
+            che trovi quando ti fermi.
+          </p>
+          <a href="/punti-di-interesse">I punti d’interesse →</a>
+        </article>
+        <article class="richiamo">
+          <h2 class="richiamo__titolo">La storia</h2>
+          <p>
+            Muli e mulattieri, fiere e saltimbanchi, briganti veri e
+            leggendari. Raccontati con affetto e con rigore: i documenti da
+            una parte, le leggende dall’altra.
+          </p>
+          <a href="/storia-e-territorio">Storia e territorio →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gli itinerari -->
+  <section class="sezione">
+    <div class="contenitore">
+      <p class="occhiello">Scegli il tuo passo</p>
+      <h2>Tre modi di camminare la Via</h2>
+      <p>
+        Non serve essere camminatori esperti: serve scegliere l’itinerario
+        giusto. Questi sono i tre classici; il
+        <a href="/percorso#pianifica">planner</a> ti aiuta a cucirli sul tempo
+        e sulle gambe che hai.
+      </p>
+      <div class="griglia" style="margin-top: 1.5rem;">
+        {
+          percorso.itinerari.map((itinerario) => (
+            <CardItinerario itinerario={itinerario} percorso={percorso} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Il quaderno protegge: nota + acqua -->
+  <section class="sezione sezione--bosco">
+    <div class="contenitore home-acqua">
+      <div>
+        <p class="occhiello">Il filo dell’acqua</p>
+        <h2>Una Via ricca di fonti</h2>
+        <p>
+          La Via esiste perché qui l’acqua non manca: sorgenti, fontanili e
+          abbeveratoi scandiscono il percorso a distanza regolare, come hanno
+          sempre fatto per le carovane. In ogni scheda e nel planner trovi
+          indicato dove riempire le borracce — e dove invece non fidarti.
+        </p>
+        <a class="bottone bottone--contorno" href="/percorso#acqua">
+          I punti acqua della Via
+        </a>
+      </div>
+      <Illustrazione
+        scena="fonte"
+        alt="Fontanile in pietra con abbeveratoio lungo la Via"
+        nomeFile="home-fonte-della-via.jpg"
+        rapporto="4/3"
+      />
+    </div>
+  </section>
+
+  <!-- Voci del territorio -->
+  <section class="sezione">
+    <div class="contenitore">
+      <p class="occhiello">Le voci della Via</p>
+      <h2>Chi tiene aperta la strada</h2>
+      <div class="griglia" style="margin-top: 1.5rem;">
+        <blockquote class="voce card">
+          <p>
+            «I camminatori arrivano stanchi e ripartono che parlano del valico
+            come di un amico. È per quello che teniamo la fontana in ordine.»
+          </p>
+          <footer>
+            — La locandiera del Casale dell’Orso <em>(testo segnaposto)</em>
+          </footer>
+        </blockquote>
+        <blockquote class="voce card">
+          <p>
+            «Mio nonno faceva il mulattiere su questa strada. Quando ridipingo
+            un segnavia mi sembra di salutarlo.»
+          </p>
+          <footer>
+            — Un volontario della manutenzione <em>(testo segnaposto)</em>
+          </footer>
+        </blockquote>
+        <blockquote class="voce card">
+          <p>
+            «La leggenda del tesoro? Inventata, quasi di sicuro. Ma intanto la
+            gente sale, guarda, ascolta. E il paese rivive.»
+          </p>
+          <footer>
+            — Una maestra di San Lorenzo in Colle <em>(testo segnaposto)</em>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approfondimenti -->
+  <section class="sezione sezione--alternata">
+    <div class="contenitore">
+      <p class="occhiello">Dal quaderno</p>
+      <h2>Storie per il cammino</h2>
+      <div class="griglia" style="margin-top: 1.5rem;">
+        {
+          articoli.map((articolo) => (
+            <article class="card anteprima">
+              <p class="occhiello">{articolo.data.occhiello}</p>
+              <h3>
+                <a href={`/storia-e-territorio/${articolo.id}`}>
+                  {articolo.data.titolo}
+                </a>
+              </h3>
+              <p>{articolo.data.estratto}</p>
+            </article>
+          ))
+        }
+      </div>
+      <NotaMargine titolo="Prima di partire">
+        <p>
+          La Via è ben segnata, ma resta un sentiero di montagna: guarda le
+          previsioni, parti con l’acqua piena e di’ a qualcuno dove vai. Tutto
+          il resto è nelle <a href="/info-pratiche">info pratiche</a>.
+        </p>
+      </NotaMargine>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(2.5rem, 7vw, 5rem);
+  }
+
+  .hero__griglia {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    align-items: center;
+  }
+
+  @media (max-width: 56rem) {
+    .hero__griglia {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .hero__sottotitolo {
+    font-size: 1.15rem;
+    color: var(--inchiostro-tenue);
+  }
+
+  .hero__azioni {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .richiamo__titolo {
+    font-size: 1.45rem;
+  }
+
+  .richiamo a {
+    font-weight: 650;
+  }
+
+  .home-acqua {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    align-items: center;
+  }
+
+  @media (max-width: 56rem) {
+    .home-acqua {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .home-acqua .bottone {
+    margin-top: 0.5rem;
+  }
+
+  .voce {
+    margin: 0;
+    font-family: var(--serif);
+  }
+
+  .voce p {
+    font-size: 1.08rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .voce footer {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    color: var(--inchiostro-tenue);
+  }
+
+  .anteprima h3 {
+    font-size: 1.2rem;
+  }
+
+  .anteprima h3 a {
+    color: var(--bosco-scuro);
+    text-decoration: none;
+  }
+
+  .anteprima h3 a:hover {
+    text-decoration: underline;
+  }
+</style>

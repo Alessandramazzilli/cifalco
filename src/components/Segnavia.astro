@@ -1,0 +1,40 @@
+---
+/**
+ * Il segnavia della Via: bandierina bianco-rossa con sigla «VC»,
+ * disegnata come la si trova dipinta su pietre, muretti e tronchi.
+ */
+interface Props {
+  larghezza?: number;
+}
+const { larghezza = 120 } = Astro.props;
+---
+
+<svg
+  width={larghezza}
+  viewBox="0 0 120 84"
+  role="img"
+  aria-label="Segnavia della Via del Cifalco: bandierina bianco-rossa con la sigla VC"
+>
+  <!-- La pietra su cui è dipinto -->
+  <path
+    d="M8 62 Q 4 38 22 28 Q 40 14 70 16 Q 104 18 112 42 Q 118 62 100 72 Q 70 84 34 78 Q 12 74 8 62 Z"
+    fill="var(--pietra-chiara)"
+    opacity="0.45"
+  />
+  <!-- La bandierina -->
+  <g transform="translate(30 26)">
+    <rect x="0" y="0" width="60" height="11" fill="#c4452e" rx="1.5" />
+    <rect x="0" y="11" width="60" height="11" fill="#f6f1e6" rx="0" />
+    <rect x="0" y="22" width="60" height="11" fill="#c4452e" rx="1.5" />
+    <text
+      x="30"
+      y="20.5"
+      text-anchor="middle"
+      font-family="var(--sans)"
+      font-size="10.5"
+      font-weight="700"
+      fill="#3d3a33"
+      letter-spacing="1">VC</text
+    >
+  </g>
+</svg>

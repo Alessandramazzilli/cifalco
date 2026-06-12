@@ -1,0 +1,39 @@
+{
+  "nome": "Tappa 2 · Dal Casale dell'Orso a San Lorenzo in Colle",
+  "da": "Casale dell'Orso",
+  "a": "San Lorenzo in Colle",
+  "distanzaKm": 15.2,
+  "salitaM": 780,
+  "discesaM": 690,
+  "oreBase": 6,
+  "descrizione": "La tappa di montagna, la più impegnativa e la più bella: la lunga salita nella Faggeta di Colle Alto, il passaggio al Valico delle Tre Querce — il punto più alto della Via — e la discesa per la Fonte del Brigante fino al borgo di San Lorenzo in Colle.",
+  "punti": [
+    "casale-dell-orso",
+    "faggeta-di-colle-alto",
+    "valico-delle-tre-querce",
+    "fonte-del-brigante",
+    "san-lorenzo-in-colle"
+  ],
+  "passi": [
+    {
+      "titolo": "Partenza dal Casale dell'Orso",
+      "testo": "Borracce piene alla fontana dell'aia: fino al versante est del valico non c'è altra acqua. Il sentiero parte dietro il fienile, indicato dal palo con la freccia «Valico»."
+    },
+    {
+      "titolo": "Dentro la faggeta",
+      "testo": "Due ore di salita costante all'ombra dei faggi. Il fondo è buono ma con radici affioranti: occhio ai piedi nei tratti ripidi. I segnavia sono sui tronchi, ad altezza d'occhio."
+    },
+    {
+      "titolo": "Il Valico delle Tre Querce",
+      "testo": "Usciti dal bosco, venti minuti di prato in pendenza portano al valico (1180 m). È esposto al vento anche d'estate: mettiti uno strato addosso prima di fermarti a goderti la vista."
+    },
+    {
+      "titolo": "Discesa alla Fonte del Brigante",
+      "testo": "Dal valico scendi a sinistra sul versante est. Mezz'ora di discesa ripida su fondo sassoso fino alla fonte: acqua abbondante, è il posto giusto per la sosta lunga."
+    },
+    {
+      "titolo": "Arrivo a San Lorenzo in Colle",
+      "testo": "Dalla fonte il sentiero si fa dolce e segue il crinale fino al borgo, che vedi davanti a te per tutta l'ultima ora. Timbro al forno o in locanda, fontana ottagonale in piazza."
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+---
+import Base from '../../layouts/Base.astro';
+import Illustrazione from '../../components/Illustrazione.astro';
+import { getCollection } from 'astro:content';
+
+const articoli = (await getCollection('articoli')).sort(
+  (a, b) => b.data.data.valueOf() - a.data.data.valueOf()
+);
+
+const ETICHETTA_TEMA = {
+  storia: 'Storia',
+  natura: 'Natura',
+  cultura: 'Cultura',
+} as const;
+---
+
+<Base
+  titolo="Storia e Territorio"
+  descrizione="Muli e mulattieri, saltimbanchi e briganti, faggete e fonti: le storie della Via del Cifalco raccontate con rigore — i documenti da una parte, le leggende dall’altra."
+>
+  <div class="contenitore sezione">
+    <p class="occhiello">Storia e Territorio</p>
+    <h1>Le storie della Via, senza inventarne</h1>
+    <p style="font-size: 1.12rem; max-width: var(--misura);">
+      La Via del Cifalco è una storia di muli, commercianti, saltimbanchi e
+      briganti. È una storia bellissima anche senza abbellimenti: per questo
+      qui distinguiamo sempre quello che <strong>dicono i documenti</strong>
+      da quello che <strong>racconta la leggenda</strong> — e diamo a
+      entrambi il rispetto che meritano.
+    </p>
+
+    <Illustrazione
+      scena="borgo"
+      alt="Il borgo di San Lorenzo in Colle visto dal sentiero di crinale"
+      nomeFile="storia-borgo-san-lorenzo.jpg"
+      rapporto="21/9"
+    />
+
+    <div class="archivio">
+      {
+        articoli.map((articolo) => (
+          <article class="archivio__voce">
+            <p class="occhiello">
+              {ETICHETTA_TEMA[articolo.data.tema]} · {articolo.data.occhiello}
+            </p>
+            <h2>
+              <a href={`/storia-e-territorio/${articolo.id}`}>
+                {articolo.data.titolo}
+              </a>
+            </h2>
+            <p>{articolo.data.estratto}</p>
+            <a class="archivio__leggi" href={`/storia-e-territorio/${articolo.id}`}>
+              Leggi l’articolo →
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</Base>
+
+<style>
+  .archivio {
+    margin-top: 3rem;
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .archivio__voce {
+    max-width: var(--misura);
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--sabbia);
+  }
+
+  .archivio__voce h2 {
+    font-size: 1.55rem;
+  }
+
+  .archivio__voce h2 a {
+    color: var(--bosco-scuro);
+    text-decoration: none;
+  }
+
+  .archivio__voce h2 a:hover {
+    text-decoration: underline;
+  }
+
+  .archivio__leggi {
+    font-weight: 650;
+  }
+</style>

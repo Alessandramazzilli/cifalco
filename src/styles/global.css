@@ -1,0 +1,314 @@
+/* ==========================================================================
+   L'Antica Via del Cifalco — sistema di design "Il Cammino Umano"
+   Quaderno digitale: caldo, sobrio, leggibile. Niente texture finte.
+   ========================================================================== */
+
+/* --- Font self-hosted (vedi node_modules/@fontsource…) ------------------- */
+@import '@fontsource-variable/source-serif-4';
+@import '@fontsource-variable/source-sans-3';
+@import '@fontsource/caveat';
+
+/* --- Tavolozza ------------------------------------------------------------
+   Verde dei faggi, sabbia/terra, grigio delle rocce, accento acquatico.
+   I nomi sono semantici: usa le variabili, non i codici esadecimali.
+--------------------------------------------------------------------------- */
+:root {
+  /* Verde dei faggi / campagna */
+  --bosco: #344e3a;          /* verde bosco profondo: testi su sabbia, blocchi scuri */
+  --bosco-scuro: #26392b;
+  --salvia: #8da27c;         /* verde salvia: bordi, dettagli */
+  --campagna: #5f7d4d;       /* verde fresco: richiami alla campagna, link su chiaro */
+
+  /* Sabbia / terra — anche il colore "carta" del quaderno */
+  --carta: #f5f0e6;          /* fondo principale */
+  --carta-scura: #ece4d3;    /* blocchi alternati, card */
+  --sabbia: #d9cdb2;
+  --tortora: #a89a82;
+  --umbra: #6c5840;          /* terra bruciata: dettagli caldi, didascalie */
+
+  /* Grigio delle rocce */
+  --pietra: #6e6a61;
+  --pietra-chiara: #989287;
+
+  /* Accento acquatico — fonti, fontane, torrenti. Dosato. */
+  --acqua: #4e7f7b;
+  --acqua-chiara: #7da6a2;
+  --acqua-fondo: #e3ebe8;
+
+  /* Testo */
+  --inchiostro: #2c2a24;     /* quasi-nero caldo, mai #000 */
+  --inchiostro-tenue: #56524a;
+
+  /* Tipografia */
+  --serif: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
+  --sans: 'Source Sans 3 Variable', -apple-system, 'Segoe UI', sans-serif;
+  --mano: 'Caveat', cursive; /* SOLO per le note a margine */
+
+  /* Ritmo */
+  --raggio: 0.625rem;        /* angoli addolciti ma misurati */
+  --raggio-grande: 1rem;
+  --ombra: 0 1px 2px rgb(44 42 36 / 0.06), 0 4px 14px rgb(44 42 36 / 0.07);
+  --misura: 68ch;            /* larghezza massima del testo corrente */
+  --colonna: 72rem;          /* larghezza massima del layout */
+}
+
+/* --- Base ----------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--carta);
+  color: var(--inchiostro);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 620;
+  line-height: 1.18;
+  color: var(--bosco-scuro);
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.1rem); }
+h2 { font-size: clamp(1.55rem, 3.5vw, 2.15rem); }
+h3 { font-size: clamp(1.2rem, 2.5vw, 1.45rem); }
+h4 { font-size: 1.1rem; }
+
+p, ul, ol {
+  margin: 0 0 1em;
+  max-width: var(--misura);
+}
+
+a {
+  color: var(--campagna);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover { color: var(--bosco); }
+
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--acqua);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+img, svg { max-width: 100%; height: auto; }
+
+hr.divisore {
+  border: none;
+  height: 2px;
+  max-width: 6rem;
+  margin: 2.5rem auto;
+  border-radius: 2px;
+  background: var(--salvia);
+}
+
+/* Per screen reader */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.salta-al-contenuto {
+  position: absolute;
+  left: 1rem; top: -4rem;
+  z-index: 100;
+  background: var(--bosco);
+  color: var(--carta);
+  padding: 0.6rem 1rem;
+  border-radius: var(--raggio);
+  transition: top 0.15s ease;
+}
+.salta-al-contenuto:focus { top: 1rem; color: var(--carta); }
+
+/* --- Layout ---------------------------------------------------------------- */
+.contenitore {
+  width: min(100% - 2.5rem, var(--colonna));
+  margin-inline: auto;
+}
+
+.sezione { padding-block: clamp(2.5rem, 7vw, 5rem); }
+
+.sezione--alternata { background: var(--carta-scura); }
+
+.sezione--bosco {
+  background: var(--bosco);
+  color: var(--carta);
+}
+.sezione--bosco h2, .sezione--bosco h3 { color: var(--carta); }
+.sezione--bosco a { color: var(--acqua-chiara); }
+.sezione--bosco a:hover { color: var(--carta); }
+
+.occhiello {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--umbra);
+  margin-bottom: 0.6rem;
+}
+.sezione--bosco .occhiello { color: var(--salvia); }
+
+/* --- Componenti ------------------------------------------------------------ */
+
+/* Bottoni */
+.bottone {
+  display: inline-block;
+  font-family: var(--sans);
+  font-weight: 650;
+  font-size: 1rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.bottone--pieno {
+  background: var(--bosco);
+  color: var(--carta);
+}
+.bottone--pieno:hover { background: var(--bosco-scuro); color: var(--carta); }
+
+.bottone--contorno {
+  background: transparent;
+  color: var(--bosco);
+  border-color: var(--bosco);
+}
+.bottone--contorno:hover { background: var(--bosco); color: var(--carta); }
+
+.sezione--bosco .bottone--pieno { background: var(--carta); color: var(--bosco-scuro); }
+.sezione--bosco .bottone--pieno:hover { background: var(--sabbia); }
+.sezione--bosco .bottone--contorno { color: var(--carta); border-color: var(--salvia); }
+.sezione--bosco .bottone--contorno:hover { background: var(--carta); color: var(--bosco-scuro); border-color: var(--carta); }
+
+/* Card leggere */
+.card {
+  background: var(--carta-scura);
+  border: 1px solid var(--sabbia);
+  border-radius: var(--raggio-grande);
+  padding: 1.5rem;
+  box-shadow: var(--ombra);
+}
+
+.card--su-scuro {
+  background: rgb(255 255 255 / 0.07);
+  border-color: rgb(255 255 255 / 0.15);
+}
+
+/* Griglia ospitale */
+.griglia {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+/* Dati essenziali (distanza, dislivello…) */
+.dato {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.dato dt {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--umbra);
+}
+.dato dd {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--bosco-scuro);
+}
+
+/* Etichette di difficoltà */
+.etichetta {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+}
+.etichetta--facile { color: var(--campagna); }
+.etichetta--medio { color: var(--umbra); }
+.etichetta--impegnativo { color: #8a4a2b; }
+
+/* Richiamo all'acqua: filo conduttore acquatico, dosato */
+.acqua-punto {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--acqua);
+  font-weight: 650;
+}
+
+/* Tabelle sobrie */
+table.tabella {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.97rem;
+}
+table.tabella th, table.tabella td {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--sabbia);
+}
+table.tabella th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--umbra);
+}
+
+/* Prosa degli articoli */
+.prosa h2 { margin-top: 2rem; }
+.prosa h3 { margin-top: 1.5rem; }
+.prosa blockquote {
+  margin: 1.5rem 0;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 3px solid var(--salvia);
+  color: var(--inchiostro-tenue);
+  font-family: var(--serif);
+  font-size: 1.1em;
+}

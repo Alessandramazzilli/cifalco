@@ -1,0 +1,196 @@
+---
+const voci = [
+  { href: '/percorso', testo: 'Il Percorso' },
+  { href: '/mappa', testo: 'Mappa' },
+  { href: '/storia-e-territorio', testo: 'Storia e Territorio' },
+  { href: '/punti-di-interesse', testo: 'Punti d’interesse' },
+  { href: '/info-pratiche', testo: 'Info pratiche' },
+  { href: '/chi-siamo', testo: 'Chi siamo' },
+];
+const percorsoAttuale = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="testata">
+  <div class="contenitore testata__riga">
+    <a class="testata__marchio" href="/">
+      <svg
+        width="34"
+        height="34"
+        viewBox="0 0 34 34"
+        aria-hidden="true"
+        fill="none"
+      >
+        <!-- Marchio: il valico e il sentiero, in due tratti -->
+        <path
+          d="M3 24 L12 11 L17 17 L22 8 L31 24"
+          stroke="var(--bosco)"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M5 29 C 12 26, 14 31, 21 28 S 29 29, 30 27"
+          stroke="var(--acqua)"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-dasharray="4 4"
+        />
+      </svg>
+      <span class="testata__nome">
+        L’Antica Via <em>del Cifalco</em>
+      </span>
+    </a>
+
+    <button
+      class="testata__bottone-menu"
+      type="button"
+      aria-expanded="false"
+      aria-controls="menu-principale"
+    >
+      <span aria-hidden="true" class="testata__icona-menu"></span>
+      Menu
+    </button>
+
+    <nav aria-label="Navigazione principale">
+      <ul id="menu-principale" class="testata__menu">
+        {
+          voci.map((voce) => (
+            <li>
+              <a
+                href={voce.href}
+                aria-current={
+                  percorsoAttuale === voce.href ? 'page' : undefined
+                }
+              >
+                {voce.testo}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .testata {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--carta) 92%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--sabbia);
+  }
+
+  .testata__riga {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    padding-block: 0.7rem;
+  }
+
+  .testata__marchio {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+  }
+
+  .testata__nome {
+    font-family: var(--serif);
+    font-weight: 650;
+    font-size: 1.15rem;
+    color: var(--bosco-scuro);
+    line-height: 1.1;
+  }
+  .testata__nome em {
+    font-style: italic;
+    color: var(--umbra);
+  }
+
+  .testata__bottone-menu {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    font: inherit;
+    font-weight: 650;
+    color: var(--bosco-scuro);
+    background: none;
+    border: 1.5px solid var(--sabbia);
+    border-radius: var(--raggio);
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+  }
+
+  .testata__icona-menu {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: currentColor;
+    box-shadow: 0 -5px 0 currentColor, 0 5px 0 currentColor;
+  }
+
+  .testata__menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.4rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .testata__menu a {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--inchiostro-tenue);
+    padding-block: 0.35rem;
+    display: inline-block;
+  }
+
+  .testata__menu a:hover {
+    color: var(--bosco);
+  }
+
+  .testata__menu a[aria-current='page'] {
+    color: var(--bosco);
+    box-shadow: inset 0 -2.5px 0 var(--salvia);
+  }
+
+  @media (max-width: 56rem) {
+    .testata__bottone-menu {
+      display: flex;
+    }
+    .testata__menu {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      width: 100%;
+      padding-block: 0.5rem 1rem;
+      border-top: 1px solid var(--sabbia);
+      margin-top: 0.5rem;
+    }
+    .testata__menu.aperto {
+      display: flex;
+    }
+    .testata__menu a {
+      display: block;
+      padding: 0.55rem 0.25rem;
+      font-size: 1.05rem;
+    }
+    nav {
+      width: 100%;
+      order: 3;
+    }
+  }
+</style>
+
+<script>
+  const bottone = document.querySelector<HTMLButtonElement>('.testata__bottone-menu');
+  const menu = document.getElementById('menu-principale');
+  bottone?.addEventListener('click', () => {
+    const aperto = menu?.classList.toggle('aperto') ?? false;
+    bottone.setAttribute('aria-expanded', String(aperto));
+  });
+</script>

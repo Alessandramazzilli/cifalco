@@ -1,0 +1,85 @@
+---
+const anno = new Date().getFullYear();
+---
+
+<footer class="pie">
+  <div class="contenitore pie__griglia">
+    <div>
+      <p class="pie__titolo">L’Antica Via del Cifalco</p>
+      <p>
+        Un cammino di comunità tra borghi, fonti e faggete, sulla strada di
+        muli, commercianti, saltimbanchi e briganti.
+      </p>
+    </div>
+    <nav aria-label="Collegamenti del piè di pagina">
+      <p class="pie__titolo">Cammina</p>
+      <ul>
+        <li><a href="/percorso">Il Percorso</a></li>
+        <li><a href="/mappa">Mappa interattiva</a></li>
+        <li><a href="/info-pratiche">Info pratiche</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Collegamenti di approfondimento">
+      <p class="pie__titolo">Scopri</p>
+      <ul>
+        <li><a href="/storia-e-territorio">Storia e Territorio</a></li>
+        <li><a href="/punti-di-interesse">Punti d’interesse</a></li>
+        <li><a href="/chi-siamo">Chi siamo e come contribuire</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="contenitore pie__nota">
+    <p>
+      © {anno} L’Antica Via del Cifalco · Cammina con prudenza: la montagna
+      chiede rispetto, non coraggio.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .pie {
+    background: var(--bosco-scuro);
+    color: var(--carta-scura);
+    padding-block: 2.5rem 1.5rem;
+    margin-top: 4rem;
+    font-size: 0.97rem;
+  }
+
+  .pie__griglia {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    padding-bottom: 2rem;
+  }
+
+  .pie__titolo {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 650;
+    color: var(--carta);
+    margin-bottom: 0.6rem;
+  }
+
+  .pie ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pie li {
+    margin-bottom: 0.4rem;
+  }
+
+  .pie a {
+    color: var(--carta-scura);
+  }
+  .pie a:hover {
+    color: var(--carta);
+  }
+
+  .pie__nota {
+    border-top: 1px solid rgb(255 255 255 / 0.18);
+    padding-top: 1.25rem;
+    color: var(--salvia);
+  }
+</style>

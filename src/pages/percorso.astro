@@ -1,0 +1,272 @@
+---
+import Base from '../layouts/Base.astro';
+import WalkPlanner from '../components/WalkPlanner.astro';
+import MappaVia from '../components/MappaVia.astro';
+import Segnavia from '../components/Segnavia.astro';
+import NotaMargine from '../components/NotaMargine.astro';
+import IconaPunto from '../components/IconaPunto.astro';
+import { caricaPercorso, formattaOre, ETICHETTE_TIPO } from '../lib/percorso';
+
+const percorso = await caricaPercorso();
+
+const viaIntera = percorso.itinerari.find((i) => i.id === 'via-intera')!;
+const tappeVia = viaIntera.tappe.map(
+  (id) => percorso.tappe.find((t) => t.id === id)!
+);
+const distanzaTotale = tappeVia.reduce((s, t) => s + t.distanzaKm, 0);
+const salitaTotale = tappeVia.reduce((s, t) => s + t.salitaM, 0);
+const oreTotali = tappeVia.reduce((s, t) => s + t.oreBase, 0);
+
+const fonti = percorso.punti.filter((p) => p.acquaPotabile);
+---
+
+<Base
+  titolo="Il Percorso"
+  descrizione="Tutto quello che serve per camminare la Via del Cifalco: itinerari e varianti, walk planner, mappa interattiva, segnavia, punti acqua, sicurezza e periodo migliore."
+>
+  <div class="contenitore sezione">
+    <p class="occhiello">Il Percorso</p>
+    <h1>Tutto quello che serve per camminare la Via</h1>
+    <p style="font-size: 1.15rem;">
+      Questa pagina è il quaderno di chi parte: i numeri della Via, il planner
+      per costruire il tuo piano, la mappa, i segnavia e l’acqua. È pensata per
+      essere consultata anche dal telefono, sul sentiero.
+    </p>
+
+    <dl class="planner__dati dati-via">
+      <div class="dato">
+        <dt>Lunghezza totale</dt>
+        <dd>{distanzaTotale.toLocaleString('it-IT', { maximumFractionDigits: 1 })} km</dd>
+      </div>
+      <div class="dato"><dt>Salita totale</dt><dd>{salitaTotale} m</dd></div>
+      <div class="dato"><dt>Tempo di cammino</dt><dd>{formattaOre(oreTotali)}</dd></div>
+      <div class="dato"><dt>Tappe</dt><dd>{tappeVia.length}</dd></div>
+      <div class="dato"><dt>Quota massima</dt><dd>1180 m</dd></div>
+    </dl>
+
+    <NotaMargine>
+      <p>
+        Sul sentiero il telefono prende a tratti: salva questa pagina prima di
+        partire e porta con te anche la cartina cartacea, che trovi nei punti
+        tappa.
+      </p>
+    </NotaMargine>
+  </div>
+
+  <!-- Segnavia -->
+  <section class="sezione sezione--alternata" aria-labelledby="titolo-segnavia">
+    <div class="contenitore segnavia">
+      <div>
+        <p class="occhiello">Come è segnato il cammino</p>
+        <h2 id="titolo-segnavia">Il segnavia: bandierina bianco-rossa «VC»</h2>
+        <p>
+          La Via è segnata in entrambi i sensi con la bandierina bianco-rossa e
+          la sigla <strong>«VC»</strong>, dipinta su pietre, muretti, tronchi e
+          pali, sempre ad altezza d’occhio. La regola è una sola:
+          <strong>se da qualche minuto non vedi segni, torna all’ultimo che hai
+          visto</strong> e riparti da lì.
+        </p>
+        <ul>
+          <li>Nei bivi il segnavia è doppio: prima e subito dopo la svolta.</li>
+          <li>
+            L’Anello delle Fonti aggiunge un <strong>bollo giallo «AF»</strong>
+            nei tratti in cui si separa dalla Via.
+          </li>
+          <li>
+            Le frecce gialle con i nomi dei luoghi indicano direzioni e tempi
+            ai punti principali.
+          </li>
+        </ul>
+      </div>
+      <figure class="segnavia__figura">
+        <Segnavia larghezza={220} />
+        <figcaption>
+          Illustrazione segnaposto · sostituire con
+          <code>immagini/percorso-segnavia-vc.jpg</code> (foto reale del segnavia)
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Walk planner -->
+  <section class="sezione" id="pianifica" aria-labelledby="titolo-planner">
+    <div class="contenitore">
+      <p class="occhiello">Walk planner</p>
+      <h2 id="titolo-planner">Pianifica la tua camminata</h2>
+      <p>
+        Scegli itinerario, tratto e passo: il piano qui sotto si aggiorna da
+        solo, e la mappa evidenzia il tratto scelto.
+      </p>
+      <WalkPlanner />
+    </div>
+  </section>
+
+  <!-- Mappa -->
+  <section class="sezione sezione--alternata" id="mappa" aria-labelledby="titolo-mappa">
+    <div class="contenitore">
+      <p class="occhiello">La mappa</p>
+      <h2 id="titolo-mappa">La Via, punto per punto</h2>
+      <MappaVia />
+    </div>
+  </section>
+
+  <!-- Acqua -->
+  <section class="sezione" id="acqua" aria-labelledby="titolo-acqua">
+    <div class="contenitore">
+      <p class="occhiello">Il filo dell’acqua</p>
+      <h2 id="titolo-acqua">Dove riempire le borracce</h2>
+      <p>
+        Le fonti sono il metronomo della Via: una ogni due o tre ore di
+        cammino. Queste sono le fonti con <strong>acqua potabile</strong>,
+        nell’ordine in cui le incontri nel senso classico:
+      </p>
+      <ol class="acqua-elenco">
+        {
+          ['borgo-pietrafonte', 'fonte-del-mulattiere', 'casale-dell-orso', 'fonte-del-brigante', 'san-lorenzo-in-colle', 'fonte-vecchia', 'rocca-del-cifalco']
+            .map((id) => fonti.find((p) => p.id === id)!)
+            .map((punto) => (
+              <li>
+                <span class="acqua-punto">
+                  <IconaPunto tipo="fonte" dimensione={16} />
+                  {punto.nome}
+                </span>
+                <span class="acqua-elenco__tipo">
+                  {ETICHETTE_TIPO[punto.tipo]}
+                  {punto.quota ? ` · ${punto.quota} m` : ''}
+                </span>
+              </li>
+            ))
+        }
+      </ol>
+      <NotaMargine tono="acqua" titolo="Regola dell'acqua">
+        <p>
+          Il tratto più lungo senza fonti è la salita al valico: dal Casale
+          dell’Orso alla Fonte del Brigante non c’è acqua per circa tre ore.
+          Parti sempre da lì con le borracce piene. Torrenti e lavatoi
+          <strong>non</strong> sono potabili, anche quando l’acqua sembra
+          limpida.
+        </p>
+      </NotaMargine>
+    </div>
+  </section>
+
+  <!-- Sicurezza, quando andare -->
+  <section class="sezione sezione--alternata" aria-labelledby="titolo-sicurezza">
+    <div class="contenitore">
+      <div class="due-colonne">
+        <div>
+          <p class="occhiello">Sicurezza</p>
+          <h2 id="titolo-sicurezza">Camminare con la testa</h2>
+          <ul>
+            <li>
+              <strong>Di’ a qualcuno dove vai</strong> e quando pensi di
+              arrivare, specie se cammini da solo.
+            </li>
+            <li>
+              <strong>Guarda le previsioni la sera prima:</strong> al valico i
+              temporali arrivano in fretta. Se il tempo gira, scendi.
+            </li>
+            <li>
+              <strong>Il numero per le emergenze è il 112.</strong> Nei punti
+              indicati sui pali gialli trovi il codice di posizione da
+              comunicare ai soccorsi.
+            </li>
+            <li>
+              <strong>Non raccogliere scorciatoie:</strong> i tagli fuori
+              sentiero rovinano il versante e sono il modo più rapido di farsi
+              male.
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p class="occhiello">Quando andare</p>
+          <h2>Le stagioni della Via</h2>
+          <ul>
+            <li>
+              <strong>Da aprile a giugno:</strong> il periodo migliore — acqua
+              abbondante, fioriture, giornate lunghe.
+            </li>
+            <li>
+              <strong>Luglio e agosto:</strong> si cammina bene nella faggeta,
+              ma i tratti aperti vanno fatti al mattino presto.
+            </li>
+            <li>
+              <strong>Settembre e ottobre:</strong> luce d’oro e la faggeta in
+              colore: per molti la stagione più bella.
+            </li>
+            <li>
+              <strong>Da novembre a marzo:</strong> la Via resta percorribile
+              a tratti bassi, ma il valico può avere neve e ghiaccio: solo per
+              escursionisti attrezzati.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .dati-via {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+    margin-block: 2rem 0.5rem;
+  }
+
+  .segnavia {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    align-items: center;
+  }
+
+  @media (max-width: 56rem) {
+    .segnavia {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .segnavia__figura {
+    margin: 0;
+    text-align: center;
+    background: var(--carta);
+    border-radius: var(--raggio-grande);
+    border: 1px solid var(--sabbia);
+    padding: 2rem 1rem 1rem;
+  }
+
+  .segnavia__figura figcaption {
+    font-size: 0.78rem;
+    color: var(--inchiostro-tenue);
+    margin-top: 0.75rem;
+  }
+
+  .acqua-elenco {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0;
+    max-width: 34rem;
+  }
+
+  .acqua-elenco li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 0.55rem;
+    border-bottom: 1px solid var(--sabbia);
+  }
+
+  .acqua-elenco__tipo {
+    font-size: 0.88rem;
+    color: var(--inchiostro-tenue);
+    white-space: nowrap;
+  }
+
+  .due-colonne {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  }
+</style>

@@ -1,0 +1,489 @@
+---
+/**
+ * La mappa illustrata interattiva della Via.
+ *
+ * Tecnica scelta: una base illustrata SVG (segnaposto, in palette) con uno
+ * strato di punti interattivi in HTML posizionati in percentuale sulle stesse
+ * coordinate dei dati. Niente librerie di mappe: è la via più leggera, funziona
+ * anche offline e quando arriverà la mappa illustrata definitiva basterà
+ * inserirla come livello immagine sotto gli stessi punti (vedi README).
+ */
+import { caricaPercorso, tracciaTappa, ETICHETTE_TIPO } from '../lib/percorso';
+import IconaPunto from './IconaPunto.astro';
+
+const percorso = await caricaPercorso();
+
+const tracciati = percorso.tappe.map((tappa) => ({
+  id: tappa.id,
+  d: tracciaTappa(tappa, percorso),
+}));
+
+// Dati per lo strato interattivo (schede dei punti, evidenziazione itinerari).
+const datiMappa = {
+  punti: Object.fromEntries(
+    percorso.punti.map((p) => [
+      p.id,
+      {
+        nome: p.nome,
+        tipo: p.tipo,
+        etichettaTipo: ETICHETTE_TIPO[p.tipo],
+        descrizione: p.descrizione,
+        quota: p.quota ?? null,
+        acquaPotabile: p.acquaPotabile,
+      },
+    ])
+  ),
+  tappe: Object.fromEntries(percorso.tappe.map((t) => [t.id, t.punti])),
+  itinerari: Object.fromEntries(
+    percorso.itinerari.map((i) => [i.id, i.tappe])
+  ),
+};
+
+// Etichetta visibile sulla mappa per i luoghi «di riferimento».
+const conEtichetta = new Set(['borgo', 'valico', 'ristoro']);
+
+const tipiLegenda = Object.entries(ETICHETTE_TIPO) as [
+  keyof typeof ETICHETTE_TIPO,
+  string,
+][];
+---
+
+<section class="mappa" aria-label="Mappa illustrata interattiva della Via del Cifalco">
+  <div class="mappa__comandi" role="group" aria-label="Evidenzia un itinerario sulla mappa">
+    <button type="button" class="mappa__chip" data-itinerario="" aria-pressed="true">
+      Tutta la Via
+    </button>
+    {
+      percorso.itinerari.map((itinerario) => (
+        <button
+          type="button"
+          class="mappa__chip"
+          data-itinerario={itinerario.id}
+          aria-pressed="false"
+        >
+          {itinerario.nome}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="mappa__tela">
+    <svg viewBox="0 0 1000 700" aria-hidden="true" class="mappa__sfondo">
+      <!-- Base illustrata segnaposto: sarà sostituita dalla mappa illustrata
+           definitiva (stesso viewBox, stesse coordinate dei punti). -->
+      <rect width="1000" height="700" fill="var(--carta-scura)"></rect>
+
+      <!-- Colline di fondo -->
+      <path d="M0 260 Q 180 150 360 220 T 700 180 T 1000 200 V700 H0 Z" fill="var(--sabbia)" opacity="0.55"></path>
+      <path d="M0 380 Q 250 280 520 350 T 1000 330 V700 H0 Z" fill="var(--salvia)" opacity="0.4"></path>
+      <path d="M0 520 Q 300 440 620 500 T 1000 480 V700 H0 Z" fill="var(--campagna)" opacity="0.25"></path>
+
+      <!-- Il massiccio del Cifalco, dietro il valico -->
+      <g stroke="var(--pietra)" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7">
+        <path d="M470 200 L 530 110 L 575 170"></path>
+        <path d="M545 170 L 600 95 L 665 185"></path>
+        <path d="M630 185 L 690 130 L 740 200"></path>
+      </g>
+
+      <!-- Macchie di faggeta -->
+      <g fill="var(--campagna)" opacity="0.35">
+        <ellipse cx="430" cy="330" rx="85" ry="48"></ellipse>
+        <ellipse cx="500" cy="285" rx="60" ry="38"></ellipse>
+        <ellipse cx="860" cy="480" rx="70" ry="40"></ellipse>
+        <ellipse cx="240" cy="560" rx="80" ry="42"></ellipse>
+      </g>
+
+      <!-- Il torrente di fondovalle (accento acquatico) -->
+      <path
+        d="M0 600 C 150 570, 240 640, 330 600 S 520 560, 640 600 S 880 640, 1000 590"
+        stroke="var(--acqua-chiara)"
+        stroke-width="10"
+        fill="none"
+        stroke-linecap="round"
+        opacity="0.6"
+      ></path>
+
+      <!-- I tracciati delle tappe (evidenziabili) -->
+      <g class="mappa__tracciati">
+        {
+          tracciati.map((t) => (
+            <path
+              class="mappa__tappa"
+              data-tappa={t.id}
+              d={t.d}
+              fill="none"
+              stroke="var(--umbra)"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-dasharray="2 14"
+            />
+          ))
+        }
+      </g>
+
+      <!-- Rosa dei venti essenziale -->
+      <g transform="translate(60 70)" stroke="var(--pietra)" fill="var(--pietra)">
+        <circle r="22" fill="none" stroke-width="2"></circle>
+        <path d="M0 -16 L5 4 L0 0 L-5 4 Z" stroke="none"></path>
+        <text y="-30" text-anchor="middle" font-size="16" font-family="var(--serif)" stroke="none">N</text>
+      </g>
+      <text x="940" y="678" text-anchor="end" font-size="15" font-family="var(--sans)" fill="var(--pietra)">
+        Mappa illustrata · non in scala
+      </text>
+    </svg>
+
+    <!-- Strato dei punti interattivi -->
+    <div class="mappa__punti">
+      {
+        percorso.punti.map((punto) => (
+          <button
+            type="button"
+            class:list={['mappa__punto', `mappa__punto--${punto.tipo}`]}
+            data-punto={punto.id}
+            style={`left:${(punto.x / 1000) * 100}%; top:${(punto.y / 700) * 100}%;`}
+            aria-label={`${punto.nome} — ${ETICHETTE_TIPO[punto.tipo]}`}
+          >
+            <span class="mappa__punto-icona" aria-hidden="true">
+              <IconaPunto tipo={punto.tipo} dimensione={15} />
+            </span>
+            {conEtichetta.has(punto.tipo) && (
+              <span class="mappa__punto-nome" aria-hidden="true">
+                {punto.nome}
+              </span>
+            )}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Scheda del punto selezionato -->
+  <aside class="mappa__scheda card" aria-live="polite">
+    <p class="mappa__scheda-invito">
+      Tocca un punto sulla mappa per leggerne la scheda: borghi, fonti, valichi
+      e luoghi del racconto.
+    </p>
+    <div class="mappa__scheda-contenuto" hidden>
+      <p class="mappa__scheda-tipo occhiello" data-campo="tipo"></p>
+      <h3 data-campo="nome"></h3>
+      <p class="mappa__scheda-meta">
+        <span data-campo="quota"></span>
+        <span class="acqua-punto" data-campo="acqua" hidden>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 3 C 12 3 6 10.5 6 14.5 C 6 18 8.7 20.5 12 20.5 C 15.3 20.5 18 18 18 14.5 C 18 10.5 12 3 12 3 Z"></path>
+          </svg>
+          Acqua potabile
+        </span>
+      </p>
+      <p data-campo="descrizione"></p>
+      <button type="button" class="mappa__scheda-chiudi bottone bottone--contorno">
+        Chiudi scheda
+      </button>
+    </div>
+  </aside>
+
+  <ul class="mappa__legenda" aria-label="Legenda della mappa">
+    {
+      tipiLegenda.map(([tipo, etichetta]) => (
+        <li class={`mappa__legenda-voce mappa__legenda-voce--${tipo}`}>
+          <IconaPunto tipo={tipo} dimensione={16} />
+          {etichetta}
+        </li>
+      ))
+    }
+    <li class="mappa__legenda-voce">
+      <svg width="26" height="10" viewBox="0 0 26 10" aria-hidden="true">
+        <path d="M2 5 H24" stroke="var(--umbra)" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 7"></path>
+      </svg>
+      Sentiero della Via
+    </li>
+  </ul>
+
+  <script type="application/json" data-dati-mappa set:html={JSON.stringify(datiMappa)} />
+</section>
+
+<style>
+  .mappa__comandi {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .mappa__chip {
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 650;
+    color: var(--bosco);
+    background: var(--carta);
+    border: 1.5px solid var(--salvia);
+    border-radius: 999px;
+    padding: 0.35rem 1rem;
+    cursor: pointer;
+  }
+
+  .mappa__chip[aria-pressed='true'] {
+    background: var(--bosco);
+    border-color: var(--bosco);
+    color: var(--carta);
+  }
+
+  .mappa__tela {
+    position: relative;
+    border-radius: var(--raggio-grande);
+    overflow: hidden;
+    border: 1px solid var(--sabbia);
+    box-shadow: var(--ombra);
+    background: var(--carta-scura);
+  }
+
+  .mappa__sfondo {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .mappa__tappa {
+    transition: stroke 0.2s ease, opacity 0.2s ease;
+  }
+
+  /* Con un itinerario selezionato: il tratto attivo in verde pieno,
+     il resto della Via resta visibile ma in secondo piano. */
+  .mappa--filtrata .mappa__tappa {
+    opacity: 0.3;
+  }
+  .mappa--filtrata .mappa__tappa.attiva {
+    opacity: 1;
+    stroke: var(--bosco);
+    stroke-width: 6;
+  }
+
+  .mappa__punti {
+    position: absolute;
+    inset: 0;
+  }
+
+  .mappa__punto {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    background: none;
+    border: none;
+    padding: 0.2rem;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .mappa__punto-icona {
+    display: grid;
+    place-items: center;
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 50%;
+    background: var(--carta);
+    border: 2px solid var(--umbra);
+    color: var(--umbra);
+    box-shadow: var(--ombra);
+    transition: transform 0.15s ease;
+  }
+
+  .mappa__punto:hover .mappa__punto-icona,
+  .mappa__punto:focus-visible .mappa__punto-icona,
+  .mappa__punto.selezionato .mappa__punto-icona {
+    transform: scale(1.18);
+  }
+
+  .mappa__punto.selezionato .mappa__punto-icona {
+    background: var(--bosco);
+    border-color: var(--bosco);
+    color: var(--carta);
+  }
+
+  .mappa__punto--fonte .mappa__punto-icona { border-color: var(--acqua); color: var(--acqua); }
+  .mappa__punto--borgo .mappa__punto-icona { border-color: var(--bosco); color: var(--bosco); }
+  .mappa__punto--valico .mappa__punto-icona { border-color: var(--pietra); color: var(--pietra); }
+  .mappa__punto--natura .mappa__punto-icona { border-color: var(--campagna); color: var(--campagna); }
+
+  .mappa__punto-nome {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--bosco-scuro);
+    background: color-mix(in srgb, var(--carta) 85%, transparent);
+    padding: 0.05rem 0.45rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .mappa--filtrata .mappa__punto.fuori-itinerario {
+    opacity: 0.35;
+  }
+
+  .mappa__scheda {
+    margin-top: 1rem;
+  }
+
+  .mappa__scheda-invito {
+    margin: 0;
+    color: var(--inchiostro-tenue);
+  }
+
+  .mappa__scheda-meta {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    color: var(--inchiostro-tenue);
+    font-size: 0.95rem;
+  }
+
+  .mappa__scheda-chiudi {
+    font-size: 0.9rem;
+    padding: 0.4rem 1rem;
+  }
+
+  .mappa__legenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.4rem;
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    font-size: 0.88rem;
+    color: var(--inchiostro-tenue);
+  }
+
+  .mappa__legenda-voce {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .mappa__legenda-voce--fonte { color: var(--acqua); }
+  .mappa__legenda-voce--borgo { color: var(--bosco); }
+  .mappa__legenda-voce--valico { color: var(--pietra); }
+  .mappa__legenda-voce--natura { color: var(--campagna); }
+  .mappa__legenda-voce--storia,
+  .mappa__legenda-voce--ristoro { color: var(--umbra); }
+
+  @media (max-width: 40rem) {
+    .mappa__punto-nome {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Strato interattivo della mappa: schede dei punti + evidenziazione itinerari.
+  // Il planner comunica con la mappa tramite l'evento «via-cifalco:itinerario».
+  const sezione = document.querySelector<HTMLElement>('.mappa');
+
+  if (sezione) {
+    const dati = JSON.parse(
+      sezione.querySelector('[data-dati-mappa]')!.textContent!
+    ) as {
+      punti: Record<
+        string,
+        {
+          nome: string;
+          etichettaTipo: string;
+          descrizione: string;
+          quota: number | null;
+          acquaPotabile: boolean;
+        }
+      >;
+      tappe: Record<string, string[]>;
+      itinerari: Record<string, string[]>;
+    };
+
+    const scheda = sezione.querySelector<HTMLElement>('.mappa__scheda')!;
+    const invito = scheda.querySelector<HTMLElement>('.mappa__scheda-invito')!;
+    const contenuto = scheda.querySelector<HTMLElement>('.mappa__scheda-contenuto')!;
+    const campo = (nome: string) =>
+      contenuto.querySelector<HTMLElement>(`[data-campo="${nome}"]`)!;
+
+    let puntoSelezionato: HTMLElement | null = null;
+
+    function chiudiScheda() {
+      contenuto.hidden = true;
+      invito.hidden = false;
+      puntoSelezionato?.classList.remove('selezionato');
+      puntoSelezionato = null;
+    }
+
+    function apriScheda(bottone: HTMLElement) {
+      const punto = dati.punti[bottone.dataset.punto!];
+      if (!punto) return;
+      puntoSelezionato?.classList.remove('selezionato');
+      puntoSelezionato = bottone;
+      bottone.classList.add('selezionato');
+      campo('tipo').textContent = punto.etichettaTipo;
+      campo('nome').textContent = punto.nome;
+      campo('quota').textContent = punto.quota ? `${punto.quota} m s.l.m.` : '';
+      campo('acqua').hidden = !punto.acquaPotabile;
+      campo('descrizione').textContent = punto.descrizione;
+      invito.hidden = true;
+      contenuto.hidden = false;
+    }
+
+    sezione.querySelectorAll<HTMLElement>('.mappa__punto').forEach((bottone) => {
+      bottone.addEventListener('click', () => apriScheda(bottone));
+    });
+
+    scheda
+      .querySelector('.mappa__scheda-chiudi')!
+      .addEventListener('click', chiudiScheda);
+
+    sezione.addEventListener('keydown', (evento) => {
+      if (evento.key === 'Escape') chiudiScheda();
+    });
+
+    function evidenziaItinerario(id: string | null) {
+      const tappeAttive = id ? new Set(dati.itinerari[id] ?? []) : null;
+      const puntiAttivi = new Set<string>();
+      tappeAttive?.forEach((tappa) =>
+        (dati.tappe[tappa] ?? []).forEach((p) => puntiAttivi.add(p))
+      );
+
+      sezione!.classList.toggle('mappa--filtrata', Boolean(tappeAttive));
+      sezione!
+        .querySelectorAll<SVGPathElement>('.mappa__tappa')
+        .forEach((path) =>
+          path.classList.toggle(
+            'attiva',
+            Boolean(tappeAttive?.has(path.dataset.tappa!))
+          )
+        );
+      sezione!
+        .querySelectorAll<HTMLElement>('.mappa__punto')
+        .forEach((bottone) =>
+          bottone.classList.toggle(
+            'fuori-itinerario',
+            Boolean(tappeAttive) && !puntiAttivi.has(bottone.dataset.punto!)
+          )
+        );
+      sezione!
+        .querySelectorAll<HTMLButtonElement>('.mappa__chip')
+        .forEach((chip) =>
+          chip.setAttribute(
+            'aria-pressed',
+            String((chip.dataset.itinerario || null) === id)
+          )
+        );
+    }
+
+    sezione.querySelectorAll<HTMLButtonElement>('.mappa__chip').forEach((chip) => {
+      chip.addEventListener('click', () =>
+        evidenziaItinerario(chip.dataset.itinerario || null)
+      );
+    });
+
+    // Il walk planner (e qualunque altro componente) può evidenziare un
+    // itinerario inviando questo evento.
+    window.addEventListener('via-cifalco:itinerario', (evento) => {
+      const id = (evento as CustomEvent<{ id: string | null }>).detail.id;
+      evidenziaItinerario(id);
+    });
+  }
+</script>
