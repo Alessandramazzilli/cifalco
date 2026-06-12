@@ -1,0 +1,69 @@
+---
+import Base from '../../layouts/Base.astro';
+import NotaMargine from '../../components/NotaMargine.astro';
+---
+
+<Base
+  titolo="Voci d’autore dal Cifalco"
+  descrizione="Scrittori, camminatori e gente del posto raccontano l’Antica Via del Cifalco con la propria voce: una raccolta in costruzione."
+>
+  <div class="contenitore sezione">
+    <p class="occhiello">Approfondimenti</p>
+    <h1>Voci d’autore dal Cifalco</h1>
+    <p style="font-size: 1.12rem; max-width: var(--misura);">
+      Una raccolta di testi, letture e testimonianze sulla Via e sulle sue
+      terre: la voce di chi le ha scritte, camminate e abitate.
+      <em>(Sezione in costruzione: i contributi qui sotto sono segnaposto.)</em>
+    </p>
+
+    <div class="voci">
+      <blockquote class="card voce">
+        <p>
+          «Qui il sentiero non lo disegna la carta: lo disegna l’acqua, e chi
+          per secoli l’ha seguita.»
+        </p>
+        <footer>— Contributo d’autore in arrivo <em>(testo segnaposto)</em></footer>
+      </blockquote>
+      <blockquote class="card voce">
+        <p>
+          «Dal crinale si vede il mare due giorni prima di toccarlo: è la
+          promessa che fa camminare.»
+        </p>
+        <footer>— Contributo d’autore in arrivo <em>(testo segnaposto)</em></footer>
+      </blockquote>
+    </div>
+
+    <NotaMargine>
+      <p>
+        Hai scritto della Via, dei suoi borghi o delle sue montagne — o
+        conosci chi l’ha fatto? <a href="/contatti">Scrivici</a>: questa
+        pagina cresce un contributo alla volta.
+      </p>
+    </NotaMargine>
+  </div>
+</Base>
+
+<style>
+  .voci {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    margin-block: 2rem;
+  }
+
+  .voce {
+    margin: 0;
+    font-family: var(--serif);
+  }
+
+  .voce p {
+    font-size: 1.12rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .voce footer {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    color: var(--inchiostro-tenue);
+  }
+</style>

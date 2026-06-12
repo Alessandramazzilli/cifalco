@@ -7,6 +7,15 @@ export default defineConfig({
   site: 'https://anticaviadelcifalco.it',
   integrations: [sitemap()],
   trailingSlash: 'never',
+  // I vecchi indirizzi continuano a funzionare.
+  redirects: {
+    '/percorso': '/itinerario',
+    '/mappa': '/itinerario#mappa',
+    '/info-pratiche': '/itinerario/informazioni-pratiche',
+    '/punti-di-interesse': '/itinerario#mappa',
+    '/storia-e-territorio': '/approfondimenti',
+    '/storia-e-territorio/[slug]': '/approfondimenti/[slug]',
+  },
   build: {
     inlineStylesheets: 'auto',
   },

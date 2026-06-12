@@ -1,0 +1,44 @@
+{
+  "nome": "Tratta 6 · Da Barbagelata a Neirone",
+  "da": "Barbagelata",
+  "a": "Neirone",
+  "distanzaKm": 12.5,
+  "salitaM": 520,
+  "discesaM": 1300,
+  "oreBase": 4,
+  "segnavia": "«Tre pallini rossi pieni»/«A13» fino all'Acquapendente, «triangolo rosso pieno» fino alla vetta del Caucaso, «rombo rosso vuoto» fino a Neirone",
+  "descrizione": "La tratta del Caucaso: dall'incrocio con l'Alta Via dei Monti Liguri al Passo della Scoglina, la salita per l'Acquapendente alla vetta del Monte Caucaso (1245 m) col suo rifugio, poi la lunga discesa per Faggio Rotondo e Pian del Pero fino a Neirone.",
+  "punti": ["barbagelata", "passo-della-scoglina", "acquapendente", "monte-caucaso", "faggio-rotondo", "neirone"],
+  "passi": [
+    {
+      "titolo": "Barbagelata e l'Alta Via",
+      "testo": "Da Barbagelata si continua sull'asfaltata fino all'uscita del paese, dove un bivio evidente segna l'incrocio con l'Alta Via dei Monti Liguri. Imboccala a sinistra (verso est), in leggera discesa: in 15 minuti sei al Passo della Scoglina (920 m), riconoscibile per il trivio di asfaltate."
+    },
+    {
+      "titolo": "L'Acquapendente",
+      "testo": "Dal passo, prendi il sentiero in salita («tre pallini rossi pieni» e «A13») che, dopo vari guadi dei primi tratti dell'Aveto, porta all'Acquapendente (1075 m) in 1 h 15. Il rio è noto per un curioso fenomeno di cattura fluviale."
+    },
+    {
+      "titolo": "La vetta del Monte Caucaso",
+      "testo": "Dall'Acquapendente, una ripida e faticosa salita di circa 30 minuti porta alla vetta del Caucaso (1245 m, «triangolo rosso pieno») e al suo rifugio-ristorante, con vista a 360 gradi sull'Appennino ligure e sul Tigullio."
+    },
+    {
+      "titolo": "La cresta e il bivio nascosto",
+      "testo": "Dalla vetta segui la cresta verso ovest (mare a sinistra), risalendo il «Caucasino» e scendendo in circa un'ora a Faggio Rotondo («rombo rosso vuoto»). Occhio: a circa 40 minuti dall'inizio della discesa, quando il sentiero è affiancato da muretti a secco, il segnavia devia improvvisamente a destra verso una casa abbandonata, da aggirare in senso orario."
+    },
+    {
+      "titolo": "Da Faggio Rotondo a Neirone",
+      "testo": "Da Faggio Rotondo si passa per Pian del Pero (30 minuti), dove il «rombo rosso vuoto» ritrova l'asfaltata e la segue fino alla Cascina Arsena — non indicata, ma è l'unica sul percorso, appena sotto la strada. Da lì il sentiero scende dritto al centro di Neirone (30 minuti da Pian del Pero)."
+    },
+    {
+      "titolo": "Variante veloce (per chi deve recuperare tempo)",
+      "testo": "Da Barbagelata, imboccando l'Alta Via a destra (verso ovest) si taglia direttamente sulla vetta del Caucaso risparmiando circa 45 minuti, o si scende a Neirone con almeno un'ora in meno. Si perdono però la salita sul crinale tra Aveto e Malvaro e l'Acquapendente: scorciatoia consigliata solo a chi ha tempi stretti."
+    }
+  ],
+  "deviazioni": [
+    {
+      "titolo": "Il B&B Ca' da Nonna",
+      "testo": "Unico punto di ristoro e alloggio notturno a Neirone, oltre al Faggio Rotondo. Dalla Cascina Arsena, seguire l'asfaltata anziché il sentiero «rombo rosso vuoto» per circa 15 minuti (circa 30 da Pian del Pero). Davanti al B&B, una strada non segnata supera due cancelli (da aprire e richiudere) e riprende l'asfaltata in discesa a sinistra, che porta a Neirone paese in 25 minuti."
+    }
+  ]
+}

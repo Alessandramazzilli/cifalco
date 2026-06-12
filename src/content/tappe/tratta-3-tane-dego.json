@@ -1,0 +1,48 @@
+{
+  "nome": "Tratta 3 · Dalle pendici del Monte delle Tane alle pendici del Monte Dego",
+  "da": "Pendici del Monte delle Tane",
+  "a": "Pendici del Monte Dego",
+  "distanzaKm": 9,
+  "salitaM": 520,
+  "discesaM": 140,
+  "oreBase": 3,
+  "segnavia": "Sentieri CAI 179, 129 e 127",
+  "descrizione": "La lunga cavalcata di crinale: il Bivio Veri (1080 m), la vetta non segnata del Monte Veri (1223 m) e l'avvicinamento al Monte Dego (1427 m), con le deviazioni per Ottone, Cariseto e Toveraia.",
+  "punti": ["monte-delle-tane", "monte-veri", "monte-dego"],
+  "passi": [
+    {
+      "titolo": "Fino al Bivio Veri",
+      "testo": "Il sentiero CAI 179 prosegue fino al Bivio Veri (1080 m, 1 h 15 dalle pendici delle Tane). La continuazione del 179 si ritrova imboccando per pochi metri l'asfaltata a destra, verso Ottone, e poi riprendendo il sentiero sulla sinistra."
+    },
+    {
+      "titolo": "Il Monte Veri e il bivio con il CAI 129",
+      "testo": "Si arriva in vetta al Monte Veri (1223 m, non segnata né visibile) e si incontra il bivio con il sentiero CAI 129, 35 minuti dal Bivio Veri. Al bivio, prendi a sinistra."
+    },
+    {
+      "titolo": "Verso la carrozzabile del Dego",
+      "testo": "Dal bivio con il CAI 129, in 20 minuti raggiungi il bivio con la carrozzabile per il Monte Dego: tieni la sinistra. Dopo altri 20 minuti la carrozzabile si biforca vistosamente: nessuna delle due vie è quella buona! Pochi metri prima della biforcazione, segui la segnaletica CAI che si inerpica sulla destra (cartello per il Monte Dego)."
+    },
+    {
+      "titolo": "Il tratto segnato sopra la carrozzabile",
+      "testo": "Inerpicandoti, tieni ancora la destra — in particolare dopo 5 minuti di salita, a un bivio poco visibile ma segnalato. Dopo qualche centinaio di metri il sentiero ritorna sulla carrozzabile abbandonata prima: guardala sulla sinistra e imboccala verso destra, evitando la strada che scende nel bosco."
+    },
+    {
+      "titolo": "Le pendici del Monte Dego",
+      "testo": "Dal bivio per Toveraia/Ottone, in 10 minuti sei alle pendici del Dego."
+    }
+  ],
+  "deviazioni": [
+    {
+      "titolo": "Ottone Soprano, Ottone e Cariseto",
+      "testo": "Dopo circa 25 minuti di cammino dalle pendici del Monte delle Tane si incrocia il sentiero CAI 133, che porta a Ottone Soprano (1 h) e Ottone (1 h 30) sulla destra, mentre conduce a Cariseto (30 minuti) sulla sinistra."
+    },
+    {
+      "titolo": "Toveraia e Ottone",
+      "testo": "Dopo circa 40 minuti dal primo bivio con la carrozzabile per il Monte Dego si vede — oltre il cancello di un pascolo — il sentiero 127 scendere a Toveraia in 1 h 30 e a Ottone in 2 h. Dallo stesso punto, sul lato opposto della strada, un sentiero non segnato e molto impervio porta sulla vetta del Monte Dego in pochi minuti."
+    },
+    {
+      "titolo": "La vetta del Monte Dego (1427 m)",
+      "testo": "Sulla sinistra al bivio: 10 minuti tra salita e discesa."
+    }
+  ]
+}

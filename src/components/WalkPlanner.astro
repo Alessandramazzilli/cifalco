@@ -15,7 +15,6 @@ const datiPlanner = {
     id: i.id,
     nome: i.nome,
     difficolta: i.difficolta,
-    segnavia: i.segnavia,
     giorniConsigliati: i.giorniConsigliati,
     anello: i.anello,
     tappe: i.tappe,
@@ -31,6 +30,7 @@ const datiPlanner = {
         salitaM: t.salitaM,
         discesaM: t.discesaM,
         oreBase: t.oreBase,
+        segnavia: t.segnavia,
         punti: t.punti,
         passi: t.passi,
       },
@@ -39,7 +39,7 @@ const datiPlanner = {
   punti: Object.fromEntries(
     percorso.punti.map((p) => [
       p.id,
-      { nome: p.nome, acquaPotabile: p.acquaPotabile },
+      { nome: p.nome, acquaPotabile: p.acquaPotabile, quota: p.quota ?? null },
     ])
   ),
 };
@@ -79,7 +79,7 @@ const datiPlanner = {
       <div class="planner__campo">
         <label for="pl-senso">Senso di percorrenza</label>
         <select id="pl-senso" name="senso">
-          <option value="classico">Classico (verso la Rocca)</option>
+          <option value="classico">Classico (verso Portofino)</option>
           <option value="inverso">Inverso</option>
         </select>
       </div>
@@ -115,9 +115,10 @@ const datiPlanner = {
       <div class="dato"><dt>Difficoltà</dt><dd data-esito="difficolta"></dd></div>
     </dl>
 
-    <p class="planner__segnavia">
-      <strong>Segnavia da seguire:</strong> <span data-esito="segnavia"></span>
-    </p>
+    <div class="planner__segnavia">
+      <strong>Segnavia da seguire, tratta per tratta:</strong>
+      <ul data-esito="segnavia"></ul>
+    </div>
 
     <p class="planner__direzione" data-esito="direzione"></p>
 
@@ -240,6 +241,16 @@ const datiPlanner = {
     margin-bottom: 0.4rem;
   }
 
+  .planner__segnavia ul {
+    margin: 0.3rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .planner__segnavia li {
+    margin-bottom: 0.25rem;
+  }
+
   .planner__direzione {
     color: var(--inchiostro-tenue);
     margin-bottom: 1rem;
@@ -338,6 +349,7 @@ const datiPlanner = {
     salitaM: number;
     discesaM: number;
     oreBase: number;
+    segnavia: string;
     punti: string[];
     passi: { titolo: string; testo: string }[];
   }
@@ -358,7 +370,10 @@ const datiPlanner = {
         tappe: string[];
       }[];
       tappe: Record<string, TappaDati>;
-      punti: Record<string, { nome: string; acquaPotabile: boolean }>;
+      punti: Record<
+        string,
+        { nome: string; acquaPotabile: boolean; quota: number | null }
+      >;
     };
 
     const campo = {
@@ -479,7 +494,12 @@ const datiPlanner = {
       esito('discesa').textContent = `${discesa} m`;
       esito('tempo').textContent = formattaOre(ore);
       esito('difficolta').textContent = ETICHETTA_DIFFICOLTA[itinerario.difficolta];
-      esito('segnavia').textContent = itinerario.segnavia;
+      esito('segnavia').innerHTML = tappe
+        .map((t) => {
+          const tratto = inverso ? `${t.a} → ${t.da}` : `${t.da} → ${t.a}`;
+          return `<li><strong>${tratto}:</strong> ${t.segnavia}</li>`;
+        })
+        .join('');
 
       const prima = tappe[0];
       const ultima = tappe[tappe.length - 1];
@@ -526,7 +546,7 @@ const datiPlanner = {
           '<p><strong>Giornata lunga per il tempo che hai indicato.</strong> Parti presto al mattino, oppure scegli un tratto più corto o un passo più realistico: la Via resta lì, non scappa.</p>';
         avviso.hidden = false;
       } else if (giornate.length > 1) {
-        avviso.innerHTML = `<p><strong>Servono ${giornate.length} giorni con le ore che hai a disposizione.</strong> Le notti si fanno nelle locande di tappa: trovi i recapiti nelle <a href="/info-pratiche">info pratiche</a>.</p>`;
+        avviso.innerHTML = `<p><strong>Servono ${giornate.length} giorni con le ore che hai a disposizione.</strong> Le notti si organizzano nei punti d’appoggio lungo la Via: li trovi nelle <a href="/itinerario/informazioni-pratiche">informazioni pratiche</a>.</p>`;
         avviso.hidden = false;
       } else {
         avviso.hidden = true;
@@ -559,12 +579,12 @@ const datiPlanner = {
         'Qualcosa da mangiare lungo il cammino',
       ];
       if (ore > 4) zaino.splice(2, 0, 'Scorta d’acqua: almeno 1,5 litri a persona');
-      if (tappe.some((t) => t.punti.includes('valico-delle-tre-querce')))
-        zaino.push('Uno strato caldo in più: il valico è ventoso anche d’estate');
+      if (tappe.some((t) => t.punti.some((id) => (dati.punti[id]?.quota ?? 0) >= 1000)))
+        zaino.push('Uno strato caldo in più: i crinali sopra i mille metri sono ventosi anche d’estate');
       if (itinerario.difficolta === 'impegnativo')
-        zaino.push('Bastoncini da trekking per la discesa');
+        zaino.push('Bastoncini da trekking per le lunghe discese');
       if (giornate.length > 1)
-        zaino.push('Sacco lenzuolo e un ricambio per le notti in locanda', 'La credenziale del cammino, per i timbri');
+        zaino.push('Sacco lenzuolo e un ricambio per le notti nei punti d’appoggio');
       esito('zaino').innerHTML = zaino.map((voce) => `<li>${voce}</li>`).join('');
 
       // Stepper.

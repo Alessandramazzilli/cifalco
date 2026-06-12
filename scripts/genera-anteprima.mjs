@@ -11,16 +11,21 @@ await mkdir(destinazione, { recursive: true });
 
 const rotte = {
   '/': 'home.html',
-  '/percorso': 'percorso.html',
-  '/mappa': 'mappa.html',
-  '/punti-di-interesse': 'punti-di-interesse.html',
-  '/storia-e-territorio': 'storia-e-territorio.html',
-  '/storia-e-territorio/muli-e-mulattieri': 'articolo-muli-e-mulattieri.html',
-  '/storia-e-territorio/briganti-tra-carte-e-leggenda': 'articolo-briganti.html',
-  '/storia-e-territorio/saltimbanchi-e-fiere': 'articolo-saltimbanchi.html',
-  '/storia-e-territorio/faggete-e-acque': 'articolo-faggete-e-acque.html',
-  '/info-pratiche': 'info-pratiche.html',
+  '/progetto': 'progetto.html',
+  '/itinerario': 'itinerario.html',
+  '/itinerario/descrizione-dettagliata': 'descrizione-dettagliata.html',
+  '/itinerario/informazioni-pratiche': 'informazioni-pratiche.html',
+  '/approfondimenti': 'approfondimenti.html',
+  '/approfondimenti/muli-e-mulattieri': 'articolo-muli-e-mulattieri.html',
+  '/approfondimenti/briganti-tra-carte-e-leggenda': 'articolo-briganti.html',
+  '/approfondimenti/saltimbanchi-e-fiere': 'articolo-saltimbanchi.html',
+  '/approfondimenti/faggete-e-acque': 'articolo-faggete-e-acque.html',
+  '/approfondimenti/voci-d-autore': 'voci-d-autore.html',
+  '/approfondimenti/diario-di-bordo': 'diario-di-bordo.html',
+  '/rete-di-cammini': 'rete-di-cammini.html',
+  '/dicono-di-noi': 'dicono-di-noi.html',
   '/chi-siamo': 'chi-siamo.html',
+  '/contatti': 'contatti.html',
 };
 
 const favicon = await readFile('public/favicon.svg', 'utf8');
@@ -75,3 +80,4 @@ for (const [rotta, nomeFile] of Object.entries(rotte)) {
 }
 
 console.log(`\nAnteprima generata in ${destinazione}/ — apri home.html`);
+// Nota: le rotte di solo reindirizzamento (es. /percorso) non sono incluse.

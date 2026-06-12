@@ -1,0 +1,16 @@
+{
+  "nome": "I crinali dell'alta Val Trebbia",
+  "sottotitolo": "Da Ponte Organasco a Barbagelata",
+  "descrizione": "La metà appenninica della Via: i borghi di Cerignale e Oneto, i monti Tane, Veri e Dego, il Passo di Vallersone e la lunga traversata dei passi fino a Barbagelata, con le deviazioni alle vette di Oramara e Montarlone. Quota quasi sempre sopra i mille metri.",
+  "difficolta": "medio",
+  "tappe": [
+    "tratta-1-ponte-organasco-oneto",
+    "tratta-2-oneto-monte-delle-tane",
+    "tratta-3-tane-dego",
+    "tratta-4-dego-vallersone",
+    "tratta-5-vallersone-barbagelata"
+  ],
+  "giorniConsigliati": "2–3 giorni",
+  "ordine": 2,
+  "anello": false
+}

@@ -1,0 +1,40 @@
+{
+  "nome": "Tratta 7 · Da Neirone al Passo dei Casetti",
+  "da": "Neirone",
+  "a": "Passo dei Casetti",
+  "distanzaKm": 7.5,
+  "salitaM": 500,
+  "discesaM": 280,
+  "oreBase": 2.5,
+  "segnavia": "Asfaltata fino a Gattorna (nessun segnavia), poi «barra rossa e cerchio rosso», infine segnavia bianco-rosso dell'Itinerario Storico Colombiano",
+  "descrizione": "La tratta di collegamento attraverso la Fontanabuona: la discesa a Gattorna, il ponticello di legno sul Lavagna e la risalita per Cassanesi al Passo dei Casetti (550 m), col suo caratteristico ponte sopra il sentiero.",
+  "punti": ["neirone", "gattorna", "passo-dei-casetti"],
+  "passi": [
+    {
+      "titolo": "Da Neirone a Gattorna",
+      "testo": "Dallo snodo principale di Neirone (parcheggio di fianco alla chiesa) si scende per la strada asfaltata fino a Gattorna in circa 50 minuti. Il sentiero dell'Itinerario dei Feudi Fliscani, ben più affascinante, al momento non è purtroppo agibile."
+    },
+    {
+      "titolo": "Il ponticello di legno",
+      "testo": "Dalla chiesa di Gattorna scendi alla strada principale lungo il torrente Lavagna e risalila per qualche centinaio di metri: tra la Pasticceria Torre e il bar La Ciuccheria, una stradina a sinistra scende al ponticello di legno sul torrente. Qui inizia il segnavia «barra rossa e cerchio rosso». Se il ponticello fosse chiuso per manutenzione, fai il giro dal ponte asfaltato del Bar Beneitin e riacciuffa il segnavia che sale sulla sinistra."
+    },
+    {
+      "titolo": "Per Cassanesi al Passo dei Casetti",
+      "testo": "Dopo il ponte tieni la sinistra (evita la salita immediata per Pian dei Preti), attraversa l'antico ponticello in pietra sul Rio Rosso e segui il sentiero che, tagliando più volte l'asfalto, attraversa Cassanesi e porta al Passo dei Casetti (550 m, 1 h 40 da Gattorna). Negli ultimi 10 minuti si cammina sotto l'egida del segnavia bianco-rosso dell'Itinerario Storico Colombiano, da prendere a destra."
+    },
+    {
+      "titolo": "Avvertenza presso Cassanesi",
+      "testo": "Il Comune di Tribogna (ordinanza n. 19 del 16 dicembre 2025) vieta il passaggio nel tratto accanto alla casa in rovina presso Cassanesi. Se l'ordinanza fosse ancora in vigore: torna giù qualche centinaio di metri fino all'ultimo taglio con l'asfaltata, prendila (a sinistra per chi sale) e riprendi il segnavia dopo la trattoria Madia, sulla destra."
+    }
+  ],
+  "deviazioni": [
+    {
+      "titolo": "Colle Caprile",
+      "testo": "Dal Passo dei Casetti, il segnavia della Via del Mare (a ritroso) porta a Colle Caprile in 40 minuti, dove si trovano ristoro e alloggio (Albergo Caprile)."
+    },
+    {
+      "titolo": "Uscio",
+      "testo": "Dal Passo dei Casetti, passando sotto il ponticello e seguendo il sentiero dell'Itinerario Storico Colombiano, si giunge a Uscio in circa 30 minuti: caratteristico paesino dell'entroterra ligure, con possibilità di alloggio e ristoro."
+    }
+  ]
+}

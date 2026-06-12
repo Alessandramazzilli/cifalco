@@ -1,0 +1,327 @@
+---
+import Base from '../../layouts/Base.astro';
+import WalkPlanner from '../../components/WalkPlanner.astro';
+import MappaVia from '../../components/MappaVia.astro';
+import Segnavia from '../../components/Segnavia.astro';
+import NotaMargine from '../../components/NotaMargine.astro';
+import IconaPunto from '../../components/IconaPunto.astro';
+import { caricaPercorso, formattaOre, ETICHETTE_TIPO } from '../../lib/percorso';
+
+const percorso = await caricaPercorso();
+
+const viaIntera = percorso.itinerari.find((i) => i.id === 'via-intera')!;
+const tappeVia = viaIntera.tappe.map(
+  (id) => percorso.tappe.find((t) => t.id === id)!
+);
+const distanzaTotale = tappeVia.reduce((s, t) => s + t.distanzaKm, 0);
+const salitaTotale = tappeVia.reduce((s, t) => s + t.salitaM, 0);
+const oreTotali = tappeVia.reduce((s, t) => s + t.oreBase, 0);
+
+// I punti con acqua sicura, nell'ordine del cammino (senso classico).
+const ordineAcqua = [
+  'ponte-organasco',
+  'cerignale',
+  'rifugio-casermetta',
+  'barbagelata',
+  'neirone',
+  'gattorna',
+  'ruta',
+  'portofino-mare',
+];
+const puntiAcqua = ordineAcqua.map(
+  (id) => percorso.punti.find((p) => p.id === id)!
+);
+---
+
+<Base
+  titolo="L’itinerario"
+  descrizione="L’Antica Via del Cifalco tratta per tratta: walk planner, mappa illustrata interattiva, segnavia, punti acqua e tutto quello che serve per camminare da Ponte Organasco a Portofino."
+>
+  <div class="contenitore sezione">
+    <p class="occhiello">L’itinerario</p>
+    <h1>Da Ponte Organasco a Portofino, a piedi</h1>
+    <p style="font-size: 1.15rem;">
+      Questa pagina è il quaderno di chi parte: i numeri della Via, il planner
+      per costruire il piano sulle proprie gambe, la mappa illustrata e
+      l’acqua. Per il racconto passo-passo di ogni tratta c’è la
+      <a href="/itinerario/descrizione-dettagliata">descrizione dettagliata</a>;
+      per dormire, mangiare e arrivare ci sono le
+      <a href="/itinerario/informazioni-pratiche">informazioni pratiche</a>.
+    </p>
+
+    <dl class="planner__dati dati-via">
+      <div class="dato">
+        <dt>Lunghezza totale</dt>
+        <dd>{distanzaTotale.toLocaleString('it-IT', { maximumFractionDigits: 1 })} km circa</dd>
+      </div>
+      <div class="dato"><dt>Salita totale</dt><dd>{salitaTotale.toLocaleString('it-IT')} m circa</dd></div>
+      <div class="dato"><dt>Tempo di cammino</dt><dd>{formattaOre(oreTotali)}</dd></div>
+      <div class="dato"><dt>Tratte</dt><dd>{tappeVia.length}</dd></div>
+      <div class="dato"><dt>Quota massima</dt><dd>1427 m</dd></div>
+    </dl>
+
+    <NotaMargine>
+      <p>
+        I tempi di percorrenza vengono dalle note di chi ha tracciato la Via e
+        non comprendono soste né deviazioni. Distanze e dislivelli sono
+        <strong>stime in corso di verifica sul campo</strong>: prendili come
+        ordine di grandezza, i tempi sono il dato affidabile. E salva questa
+        pagina prima di partire: sul sentiero il telefono prende a tratti.
+      </p>
+    </NotaMargine>
+  </div>
+
+  <!-- Segnavia -->
+  <section class="sezione sezione--alternata" aria-labelledby="titolo-segnavia">
+    <div class="contenitore segnavia">
+      <div>
+        <p class="occhiello">Come è segnato il cammino</p>
+        <h2 id="titolo-segnavia">I segnavia: una Via, molti segni</h2>
+        <p>
+          La Via del Cifalco segue sentieri esistenti — CAI, FIE, Alta Via dei
+          Monti Liguri — e <strong>cambia segnavia lungo il percorso</strong>:
+          bandierine bianco-rosse numerate, pallini e quadrati gialli, cerchi e
+          rombi rossi. Per ogni tratta, il planner qui sotto e la
+          <a href="/itinerario/descrizione-dettagliata">descrizione dettagliata</a>
+          ti dicono esattamente quale segno seguire.
+        </p>
+        <ul>
+          <li>
+            La regola d’oro è una sola: <strong>se da qualche minuto non vedi
+            segni, torna all’ultimo che hai visto</strong> e riparti da lì.
+          </li>
+          <li>
+            Ai bivi importanti le note di percorso segnalano i punti in cui il
+            segnavia è poco visibile: leggile prima di partire.
+          </li>
+          <li>
+            Per alcune varianti non segnate servono GPS o conoscenza dei
+            luoghi: lo indichiamo sempre, e in dubbio si segue la via segnata.
+          </li>
+        </ul>
+      </div>
+      <figure class="segnavia__figura">
+        <Segnavia larghezza={300} />
+        <figcaption>
+          Illustrazione segnaposto · sostituire con
+          <code>immagini/itinerario-segnavia.jpg</code> (foto reali dei segnavia)
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Walk planner -->
+  <section class="sezione" id="pianifica" aria-labelledby="titolo-planner">
+    <div class="contenitore">
+      <p class="occhiello">Walk planner</p>
+      <h2 id="titolo-planner">Pianifica la tua camminata</h2>
+      <p>
+        Scegli itinerario, tratto e passo: il piano si aggiorna da solo e la
+        mappa evidenzia il tratto scelto.
+      </p>
+      <WalkPlanner />
+    </div>
+  </section>
+
+  <!-- Mappa -->
+  <section class="sezione sezione--alternata" id="mappa" aria-labelledby="titolo-mappa">
+    <div class="contenitore">
+      <p class="occhiello">La mappa</p>
+      <h2 id="titolo-mappa">La Via, punto per punto</h2>
+      <p>
+        Una mappa illustrata, non una carta topografica: serve a capire la
+        forma del cammino e cosa incontri. Tocca i punti per aprire le schede;
+        per orientarti sul sentiero affidati ai segnavia e a una carta vera.
+      </p>
+      <MappaVia />
+    </div>
+  </section>
+
+  <!-- Acqua -->
+  <section class="sezione" id="acqua" aria-labelledby="titolo-acqua">
+    <div class="contenitore">
+      <p class="occhiello">Il filo dell’acqua</p>
+      <h2 id="titolo-acqua">Dove riempire le borracce</h2>
+      <p>
+        Fonti, fontane e paesi con acqua, nell’ordine in cui li incontri nel
+        senso classico:
+      </p>
+      <ol class="acqua-elenco">
+        {
+          puntiAcqua.map((punto) => (
+            <li>
+              <span class="acqua-punto">
+                <IconaPunto tipo="fonte" dimensione={16} />
+                {punto.nome}
+              </span>
+              <span class="acqua-elenco__tipo">
+                {ETICHETTE_TIPO[punto.tipo]}
+                {punto.quota ? ` · ${punto.quota} m` : ''}
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+      <NotaMargine tono="acqua" titolo="Regola dell'acqua">
+        <p>
+          Il tratto più asciutto è quello alto: dalla fonte del Rifugio
+          Casermetta fino a Barbagelata non ci sono punti acqua certi sul
+          percorso principale — quasi una giornata di cammino. Parti con
+          scorta abbondante; in deviazione trovi la Fontana del Figliolo
+          (dal Rifugio Prati di Foppiano) e le fonti sorgive verso Casanova.
+          Rii e guadi <strong>non</strong> sono potabili, anche quando l’acqua
+          sembra limpida.
+        </p>
+      </NotaMargine>
+    </div>
+  </section>
+
+  <!-- Sicurezza, quando andare -->
+  <section class="sezione sezione--alternata" aria-labelledby="titolo-sicurezza">
+    <div class="contenitore">
+      <div class="due-colonne">
+        <div>
+          <p class="occhiello">Sicurezza</p>
+          <h2 id="titolo-sicurezza">Camminare con la testa</h2>
+          <ul>
+            <li>
+              <strong>Di’ a qualcuno dove vai</strong> e quando pensi di
+              arrivare, specie se cammini da solo.
+            </li>
+            <li>
+              <strong>Guarda le previsioni la sera prima:</strong> sui crinali
+              sopra i mille metri i temporali arrivano in fretta. Se il tempo
+              gira, scendi.
+            </li>
+            <li>
+              <strong>Il numero per le emergenze è il 112.</strong> Lungo la
+              tratta finale, la discesa a Recco (con stazione ferroviaria) è
+              la classica «uscita di emergenza» per chi deve accorciare.
+            </li>
+            <li>
+              <strong>Alcune deviazioni sono per esperti:</strong> la vetta
+              del Gifarco è ripida e spesso scivolosa, il Manico del Lume è
+              attrezzato con catene (EEA). Sono extra, non la Via.
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p class="occhiello">Quando andare</p>
+          <h2>Le stagioni della Via</h2>
+          <ul>
+            <li>
+              <strong>Maggio e giugno:</strong> fioriture di ginestra sulla
+              cresta del Caucaso, i girini del Lago della Nave, giornate
+              lunghe.
+            </li>
+            <li>
+              <strong>Luglio e agosto:</strong> bene in quota, ma le tratte
+              basse e il Parco di Portofino vanno camminati al mattino presto.
+            </li>
+            <li>
+              <strong>Settembre e ottobre:</strong> luce d’oro, faggete in
+              colore e mare ancora buono per il bagno d’arrivo.
+            </li>
+            <li>
+              <strong>Da novembre ad aprile:</strong> i crinali alti possono
+              avere neve e ghiaccio e il Lago della Nave ghiaccia: solo per
+              escursionisti attrezzati.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rimandi -->
+  <section class="sezione">
+    <div class="contenitore griglia">
+      <article class="card">
+        <h3>La descrizione dettagliata</h3>
+        <p>
+          Tutte le otto tratte raccontate passo per passo, con bivi, tempi
+          parziali, avvertenze e tutte le deviazioni: vette, borghi, fontane e
+          discese al treno.
+        </p>
+        <a class="bottone bottone--contorno" href="/itinerario/descrizione-dettagliata">
+          Leggi tratta per tratta
+        </a>
+      </article>
+      <article class="card">
+        <h3>Informazioni pratiche</h3>
+        <p>
+          Come arrivare a Ponte Organasco e come tornare da Portofino, i punti
+          d’appoggio per dormire e mangiare, le avvertenze aggiornate.
+        </p>
+        <a class="bottone bottone--contorno" href="/itinerario/informazioni-pratiche">
+          Prima di partire
+        </a>
+      </article>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .dati-via {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+    margin-block: 2rem 0.5rem;
+  }
+
+  .segnavia {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    align-items: center;
+  }
+
+  @media (max-width: 56rem) {
+    .segnavia {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .segnavia__figura {
+    margin: 0;
+    text-align: center;
+    background: var(--carta);
+    border-radius: var(--raggio-grande);
+    border: 1px solid var(--sabbia);
+    padding: 2rem 1rem 1rem;
+  }
+
+  .segnavia__figura figcaption {
+    font-size: 0.78rem;
+    color: var(--inchiostro-tenue);
+    margin-top: 0.75rem;
+  }
+
+  .acqua-elenco {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0;
+    max-width: 34rem;
+  }
+
+  .acqua-elenco li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 0.55rem;
+    border-bottom: 1px solid var(--sabbia);
+  }
+
+  .acqua-elenco__tipo {
+    font-size: 0.88rem;
+    color: var(--inchiostro-tenue);
+    white-space: nowrap;
+  }
+
+  .due-colonne {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  }
+</style>

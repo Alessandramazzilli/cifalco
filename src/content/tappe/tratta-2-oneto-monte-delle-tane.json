@@ -1,0 +1,32 @@
+{
+  "nome": "Tratta 2 · Oneto – Pendici del Monte delle Tane",
+  "da": "Oneto",
+  "a": "Pendici del Monte delle Tane",
+  "distanzaKm": 3,
+  "salitaM": 250,
+  "discesaM": 60,
+  "oreBase": 0.92,
+  "segnavia": "Sentieri CAI 177 e 179",
+  "descrizione": "Breve tratta di crinale sul sentiero CAI 177, che al bivio con il CAI 179 si «dissolve» in quest'ultimo. Lungo la salita, il Rifugio Casermetta con la sua fonte e la possibile deviazione alla vetta erbosa del Monte delle Tane.",
+  "punti": ["oneto", "rifugio-casermetta", "monte-delle-tane"],
+  "passi": [
+    {
+      "titolo": "Da Oneto verso il bivio con il CAI 179",
+      "testo": "Dopo 50 minuti si giunge al bivio con il sentiero CAI 179. Prima del bivio, superate due postazioni per l'avvistamento di uccelli sulla sinistra, ignora un quadrivio dove sulla destra è segnato un sentiero non CAI (rettangolo bianco con banda rossa centrale): prosegui dritto."
+    },
+    {
+      "titolo": "Il Rifugio Casermetta",
+      "testo": "Appena sotto il bivio, sulla sinistra venendo da Oneto, c'è il Rifugio Casermetta: non attrezzato, ma con una fonte. Riempi le borracce."
+    },
+    {
+      "titolo": "Le pendici del Monte delle Tane",
+      "testo": "Dal bivio, continuando dritto, il CAI 177 si dissolve nel CAI 179: in 5 minuti sei alle pendici del Monte delle Tane."
+    }
+  ],
+  "deviazioni": [
+    {
+      "titolo": "La vetta del Monte delle Tane",
+      "testo": "Bella vetta erbosa e panoramica su tutto il Cifalco! Attacco alla sommità non segnato ma vistoso, circa 5 minuti dopo il bivio con il sentiero 179, sulla sinistra. Tempo: 10 minuti tra salita e discesa."
+    }
+  ]
+}

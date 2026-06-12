@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro';
+import Illustrazione from '../components/Illustrazione.astro';
+import NotaMargine from '../components/NotaMargine.astro';
+---
+
+<Base
+  titolo="Il progetto"
+  descrizione="Che cos’è l’Antica Via del Cifalco: l’idea, le motivazioni e gli obiettivi di un cammino che unisce l’alta Val Trebbia al mare di Portofino."
+>
+  <div class="contenitore sezione">
+    <p class="occhiello">Il progetto</p>
+    <h1>Che cos’è l’Antica Via del Cifalco?</h1>
+
+    <div class="prosa" style="max-width: var(--misura);">
+      <p style="font-size: 1.12rem;">
+        L’Antica Via del Cifalco è un cammino di più giorni che unisce
+        l’Appennino dell’alta Val Trebbia al mare di Portofino: otto tratte su
+        sentieri esistenti, cuciti insieme in un itinerario unico che passa per
+        crinali, faggete, passi e borghi, fino a scendere nel Parco del Monte
+        di Portofino. <em>(Testo segnaposto, da rivedere con la voce del
+        progetto.)</em>
+      </p>
+
+      <h2>L’idea</h2>
+      <p>
+        Queste montagne sono attraversate da una rete fittissima di sentieri
+        — CAI, FIE, l’Alta Via dei Monti Liguri, le antiche vie del sale —
+        che la geografia dei cammini moderni ha lasciato in ombra. L’idea
+        della Via è semplice: scegliere il filo più bello di questa rete e
+        percorrerlo da cima a mare, dandogli un nome, una cura e un racconto.
+        <em>(Testo segnaposto.)</em>
+      </p>
+
+      <h2>Le motivazioni</h2>
+      <p>
+        La Via attraversa terre che si stanno spopolando, dove ogni locanda,
+        ogni rifugio e ogni fontana mantenuta è un presidio. Un cammino
+        camminato porta persone, e le persone portano attenzione: ai borghi
+        dell’alta valle, ai pascoli del crinale, alla memoria di chi su queste
+        mulattiere ha lavorato, commerciato e vissuto.
+        <em>(Testo segnaposto.)</em>
+      </p>
+
+      <h2>Gli obiettivi</h2>
+      <ul>
+        <li>
+          <strong>Rendere la Via percorribile a chiunque</strong> cammini con
+          gambe e testa: descrizioni a prova di errore, segnavia documentati,
+          punti d’appoggio organizzati.
+        </li>
+        <li>
+          <strong>Completare la segnaletica:</strong> a partire
+          dall’«Anello dei Borghi», il tratto iniziale di prossima
+          realizzazione.
+        </li>
+        <li>
+          <strong>Raccontare il territorio con rigore:</strong> storia,
+          natura e cultura, distinguendo sempre i documenti dalle leggende.
+        </li>
+        <li>
+          <strong>Fare rete</strong> con i cammini che la Via incrocia e con
+          chi li mantiene vivi.
+        </li>
+      </ul>
+    </div>
+
+    <Illustrazione
+      scena="colline"
+      alt="Il crinale appenninico della Via del Cifalco, con il sentiero che corre verso il mare"
+      nomeFile="progetto-crinale-verso-il-mare.jpg"
+      rapporto="21/9"
+    />
+
+    <NotaMargine>
+      <p>
+        Vuoi dare una mano? Il progetto vive di chi cammina, segnala e
+        racconta: trovi come contribuire nella pagina
+        <a href="/chi-siamo">Chi siamo</a>.
+      </p>
+    </NotaMargine>
+  </div>
+</Base>

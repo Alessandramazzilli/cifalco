@@ -11,7 +11,7 @@ const dist = path.resolve('dist');
 // jsdom non esegue gli script `type="module"`: li convertiamo in script
 // classici in fondo al body (equivalente al comportamento deferred),
 // inglobando quelli esterni /_astro/*.js.
-let html = await readFile(path.join(dist, 'percorso/index.html'), 'utf8');
+let html = await readFile(path.join(dist, 'itinerario/index.html'), 'utf8');
 const codici = [];
 for (const m of html.matchAll(
   /<script type="module"(?: src="(\/_astro\/[^"]+)")?>([\s\S]*?)<\/script>/g
@@ -28,7 +28,7 @@ const virtualConsole = new VirtualConsole();
 virtualConsole.on('jsdomError', (e) => console.error('ERRORE PAGINA:', e.message));
 
 const dom = new JSDOM(html, {
-  url: 'https://anticaviadelcifalco.it/percorso',
+  url: 'https://anticaviadelcifalco.it/itinerario',
   runScripts: 'dangerously',
   pretendToBeVisual: true,
   virtualConsole,
@@ -46,18 +46,18 @@ const verifica = (nome, condizione) => {
 
 // --- Planner -----------------------------------------------------------
 const partenza = document.querySelector('#pl-partenza');
-verifica('planner: tendina partenza popolata', partenza.options.length === 3);
+verifica('planner: tendina partenza popolata', partenza.options.length === 8);
 verifica(
   'planner: distanza calcolata',
-  document.querySelector('[data-esito="distanza"]').textContent.includes('41,5 km')
+  document.querySelector('[data-esito="distanza"]').textContent.includes('69 km')
 );
 verifica(
   'planner: tempo stimato presente',
   /h/.test(document.querySelector('[data-esito="tempo"]').textContent)
 );
 verifica(
-  'planner: piano in giornate presente (via intera, 6 h/giorno)',
-  document.querySelectorAll('.planner__giornate li').length === 3
+  'planner: piano in 5 giornate (via intera, 6 h/giorno)',
+  document.querySelectorAll('.planner__giornate li').length === 5
 );
 verifica(
   'planner: acqua elencata',
@@ -79,17 +79,17 @@ verifica(
 const mappa = document.querySelector('.mappa');
 verifica('mappa: itinerario del planner evidenziato', mappa.classList.contains('mappa--filtrata'));
 verifica(
-  'mappa: tre tracciati attivi (via intera)',
-  mappa.querySelectorAll('.mappa__tappa.attiva').length === 3
+  'mappa: otto tracciati attivi (via intera)',
+  mappa.querySelectorAll('.mappa__tappa.attiva').length === 8
 );
 
 // --- Mappa: scheda punto -------------------------------------------------
-document.querySelector('[data-punto="fonte-del-brigante"]').click();
+document.querySelector('[data-punto="rifugio-casermetta"]').click();
 const scheda = document.querySelector('.mappa__scheda-contenuto');
 verifica('mappa: la scheda del punto si apre', !scheda.hidden);
 verifica(
   'mappa: nome del punto nella scheda',
-  scheda.querySelector('[data-campo="nome"]').textContent === 'Fonte del Brigante'
+  scheda.querySelector('[data-campo="nome"]').textContent === 'Rifugio Casermetta'
 );
 verifica(
   'mappa: badge acqua potabile visibile',
@@ -98,16 +98,16 @@ verifica(
 
 // --- Planner → mappa: cambio itinerario ---------------------------------
 const tendina = document.querySelector('#pl-itinerario');
-tendina.value = 'anello-delle-fonti';
+tendina.value = 'dal-crinale-al-mare';
 tendina.dispatchEvent(new dom.window.Event('change'));
 await new Promise((resolve) => dom.window.setTimeout(resolve, 20));
 verifica(
-  'planner→mappa: anello evidenziato dopo il cambio',
-  [...mappa.querySelectorAll('.mappa__tappa.attiva')].map((p) => p.dataset.tappa).join() === 'anello-delle-fonti'
+  'planner→mappa: «Dal crinale al mare» evidenziato dopo il cambio',
+  [...mappa.querySelectorAll('.mappa__tappa.attiva')].map((p) => p.dataset.tappa).join() === 'tratta-6-barbagelata-neirone,tratta-7-neirone-casetti,tratta-8-casetti-portofino'
 );
 verifica(
-  'planner: distanza anello aggiornata',
-  document.querySelector('[data-esito="distanza"]').textContent.includes('8,5 km')
+  'planner: distanza aggiornata dopo il cambio',
+  document.querySelector('[data-esito="distanza"]').textContent.includes('35 km')
 );
 
 process.exit(errori ? 1 : 0);

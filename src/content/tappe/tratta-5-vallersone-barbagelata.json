@@ -1,0 +1,52 @@
+{
+  "nome": "Tratta 5 · Dal Passo di Vallersone a Barbagelata",
+  "da": "Passo di Vallersone",
+  "a": "Barbagelata",
+  "distanzaKm": 12,
+  "salitaM": 350,
+  "discesaM": 545,
+  "oreBase": 4,
+  "segnavia": "«Pallino giallo pieno»",
+  "descrizione": "La grande traversata dei passi: Ertola, Esola, Gifarco, il Passo del Fante e il Valico del Fregarolo, il Lago della Nave e il Passo della Rocca, poi le due cappellette e — presso il Monte Pietrabianca — la prima vista del mare, fino a Barbagelata (1115 m).",
+  "punti": ["passo-di-vallersone", "lago-della-nave", "passo-della-rocca", "cappelletta-di-cardenosa", "barbagelata"],
+  "passi": [
+    {
+      "titolo": "La sequenza dei passi",
+      "testo": "Dal Passo Vallersone, a destra, il «pallino giallo pieno» tocca in successione il Passo Ertola (1287 m, 15 minuti), il Passo Esola (1307 m, altri 15), il bivio per la vetta del Monte Roccabruna (30 minuti dall'Esola) e il Passo Gifarco, 5 minuti dopo. Attenzione: il Passo Gifarco è davvero poco visibile venendo dall'Esola — il cartello è rivolto a chi arriva in senso opposto."
+    },
+    {
+      "titolo": "Dal Passo del Fante al Fregarolo",
+      "testo": "Il sentiero prosegue al Passo del Fante (5 minuti dal Gifarco) e al Valico del Fregarolo (50 minuti dal Fante). A cinque minuti dal passo, sulla destra, c'è la Trattoria del Valico di Fregarolo."
+    },
+    {
+      "titolo": "Il Lago della Nave e il Passo della Rocca",
+      "testo": "Dal Fregarolo, in 1 h 10 si arriva al Passo della Rocca (1250 m) superando il Lago della Nave, la conca che ghiaccia d'inverno e a maggio brulica di girini. Al passo, il segnavia punta a destra verso Aia di Gallo, Canale e Due Ponti, ma le abbandona dopo 5 minuti per continuare a sinistra."
+    },
+    {
+      "titolo": "Le cappellette e la prima vista del mare",
+      "testo": "Si superano la Cappelletta di Cardenosa (in buono stato, 30 minuti dal Passo della Rocca) e quella di Costa Finale (in totale rovina, 50 minuti dopo). Tra le due, presso il Monte Pietrabianca, sulla sinistra si vede per la prima volta il mare."
+    },
+    {
+      "titolo": "Arrivo a Barbagelata",
+      "testo": "Dalla Cappelletta di Costa Finale, Barbagelata (1115 m) è a 30 minuti. Massima attenzione circa 5 minuti dopo i ruderi: il segnavia prosegue sulla destra, su un sentiero più stretto di quello principale."
+    }
+  ],
+  "deviazioni": [
+    {
+      "titolo": "Rezzoaglio",
+      "testo": "Dal Passo Ertola, scendendo a sinistra, si arriva prima a Ertola e poi a Rezzoaglio (segnavia «rombo giallo pieno», 50 minuti a scendere, 1 h 10 a salire)."
+    },
+    {
+      "titolo": "La vetta del Monte Roccabruna (1415 m)",
+      "testo": "Dal bivio per la vetta: 15 minuti a salire, 10 a scendere, segnavia «pallino giallo vuoto», a tratti sbiadito ma visibile. In teoria si potrebbe tagliare verso la vetta del Gifarco senza tornare al bivio, ma il punto di attacco non è chiaro e il risparmio di tempo è minimo."
+    },
+    {
+      "titolo": "La vetta del Monte Gifarco (1380 m)",
+      "testo": "Dal Passo Gifarco: salita (e discesa!) estremamente ripide e spesso scivolose, anche nelle belle giornate. Pur senza catene, l'ultimo tratto può richiedere di appoggiare le mani. 10 minuti a salire e altri 10 a scendere. Segnavia «tre pallini gialli pieni»."
+    },
+    {
+      "titolo": "La Trattoria del Valico di Fregarolo",
+      "testo": "A cinque minuti dal Passo del Fregarolo, sulla destra, si incrocia la trattoria."
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "nome": "Tratta 4 · Dalle pendici del Monte Dego al Passo di Vallersone",
+  "da": "Pendici del Monte Dego",
+  "a": "Passo di Vallersone",
+  "distanzaKm": 4.5,
+  "salitaM": 150,
+  "discesaM": 220,
+  "oreBase": 1.5,
+  "segnavia": "Sentiero CAI 127, poi «pallino giallo pieno»",
+  "descrizione": "Dalle pendici del Dego al Rifugio Prati di Foppiano e al Passo di Vallersone, dove si aggancia il segnavia «pallino giallo pieno» che accompagnerà fino a Barbagelata. Intorno, le deviazioni più belle: Oramara, Montarlone e la discesa a Casanova.",
+  "punti": ["monte-dego", "rifugio-prati-di-foppiano", "passo-di-vallersone"],
+  "passi": [
+    {
+      "titolo": "Il Rifugio Prati di Foppiano",
+      "testo": "Dalle pendici del Dego, in un'ora raggiungi il Rifugio Prati di Foppiano: niente posti letto, ma ci si può riparare e cucinare sul posto. Poco prima del rifugio il CAI 127 incontra il segnavia «pallino giallo pieno»: da quando lo incontri, non lo lasci più."
+    },
+    {
+      "titolo": "Il bivio dopo il rifugio",
+      "testo": "Cinque minuti dopo il rifugio, a un bivio, tieni la sinistra. (A destra, su sentiero non segnato, si va in 20 minuti alla Fontana del Figliolo.)"
+    },
+    {
+      "titolo": "Il Passo di Vallersone",
+      "testo": "In 30 minuti dal rifugio sei al Passo Vallersone — indicato erroneamente come «Passo Montarlone» da una lapide con vernice gialla sulla destra."
+    }
+  ],
+  "deviazioni": [
+    {
+      "titolo": "La vetta del Monte Oramara (1522 m)",
+      "testo": "La vetta più alta di tutto il percorso. Poco prima del Rifugio Prati di Foppiano, il sentiero CAI 127 e il «pallino giallo pieno» corrono insieme, finché il pallino giallo lascia sulla sinistra il CAI 127, che conduce in vetta all'Oramara."
+    },
+    {
+      "titolo": "La Fontana del Figliolo",
+      "testo": "Prendendo a destra al bivio dopo il Rifugio Prati di Foppiano, si giunge in 20 minuti, su sentiero non segnato, alla fontana del Figliolo."
+    },
+    {
+      "titolo": "La vetta del Montarlone (1501 m)",
+      "testo": "Conviene seguire per il Passo Vallersone: pochi minuti prima del passo sale un sentiero segnato «quadrato giallo pieno» che in circa un'ora porta comodamente in vetta, con l'iconica croce e una vista meravigliosa su Val Trebbia e Val d'Aveto. La via diretta dal bivio dopo il rifugio non è segnata né visibile: sconsigliata senza GPS o conoscenza del tracciato."
+    },
+    {
+      "titolo": "Casanova di Rovegno",
+      "testo": "Dal Passo Vallersone, un sentiero spettacolare («quadrato giallo pieno») scende a Casanova in 1 h 30, attraversando numerose fonti sorgive e la Fontana del Vino, alternando faggete a zone semi-aride dove l'elicriso cresce sulla roccia (i locali chiamano queste elevazioni «Monte Nero»). Contare 2 h per la risalita; al ritorno, subito dopo il primo cancello del pascolo, tenere la destra sulla strada in falsopiano."
+    },
+    {
+      "titolo": "Fontanigorda (da Casanova)",
+      "testo": "Dalla chiesa di Casanova, guardando la facciata, a sinistra parte una discesa (segnavia rettangolare rosso-bianco con taglio diagonale, poi croce gialla «+»). Al torrente Pescia: a destra si va al mulino di fronte allo spettacolare Ponte di Canfernasca, gioiello di architettura romana simbolo del Comune di Rovegno; a sinistra, in circa 15 minuti, al Bosco delle Fate e in altri 5 a Fontanigorda. Totale da Casanova: 25 minuti a scendere, 30 a salire."
+    }
+  ]
+}

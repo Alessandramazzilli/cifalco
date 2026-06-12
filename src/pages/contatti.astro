@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import NotaMargine from '../components/NotaMargine.astro';
+---
+
+<Base
+  titolo="Contatti"
+  descrizione="Come contattare la Compagnia del Cifalco: informazioni sul percorso, segnalazioni dal sentiero, contributi e collaborazioni."
+>
+  <div class="contenitore sezione">
+    <p class="occhiello">Contatti</p>
+    <h1>Scriviamoci</h1>
+
+    <div class="prosa" style="max-width: var(--misura);">
+      <p style="font-size: 1.12rem;">
+        Per informazioni sul percorso, segnalazioni dal sentiero, contributi
+        agli approfondimenti o collaborazioni tra cammini:
+      </p>
+      <ul>
+        <li>
+          Posta elettronica:
+          <a href="mailto:info@anticaviadelcifalco.it">info@anticaviadelcifalco.it</a>
+          <em>(segnaposto)</em>
+        </li>
+        <li>Telefono: 000 0000000 <em>(segnaposto)</em></li>
+      </ul>
+      <p>
+        Per sapere chi c’è dietro la Via:
+        <a href="/chi-siamo">la Compagnia del Cifalco</a>.
+      </p>
+    </div>
+
+    <NotaMargine>
+      <p>
+        Una segnalazione dal sentiero vale doppio: scrivici dove (il punto
+        più vicino va benissimo — «cinque minuti dopo il Passo Gifarco») e,
+        se puoi, allega una foto.
+      </p>
+    </NotaMargine>
+  </div>
+</Base>

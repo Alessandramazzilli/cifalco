@@ -37,6 +37,8 @@ const tappe = defineCollection({
     // Ore di cammino a passo medio, soste escluse.
     oreBase: z.number(),
     descrizione: z.string(),
+    // Segnavia da seguire su questa tratta (può cambiare lungo la Via).
+    segnavia: z.string(),
     // Id dei punti attraversati, in ordine: disegnano la tappa sulla mappa.
     punti: z.array(z.string()),
     // Le indicazioni passo-passo mostrate dal planner («avanti»).
@@ -46,6 +48,15 @@ const tappe = defineCollection({
         testo: z.string(),
       })
     ),
+    // Le deviazioni dalla via principale (mostrate nella descrizione dettagliata).
+    deviazioni: z
+      .array(
+        z.object({
+          titolo: z.string(),
+          testo: z.string(),
+        })
+      )
+      .default([]),
   }),
 });
 
@@ -58,8 +69,6 @@ const itinerari = defineCollection({
     difficolta: z.enum(['facile', 'medio', 'impegnativo']),
     // Id delle tappe che compongono l'itinerario, in ordine.
     tappe: z.array(z.string()),
-    // Segnavia da seguire su questo itinerario.
-    segnavia: z.string(),
     giorniConsigliati: z.string(),
     // Ordine di presentazione nelle liste.
     ordine: z.number(),

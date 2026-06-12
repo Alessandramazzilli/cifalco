@@ -1,0 +1,56 @@
+{
+  "nome": "Tratta 8 · Dal Passo dei Casetti a Portofino mare",
+  "da": "Passo dei Casetti",
+  "a": "Portofino mare",
+  "distanzaKm": 15,
+  "salitaM": 450,
+  "discesaM": 1000,
+  "oreBase": 5.25,
+  "segnavia": "«Due cerchi rossi vuoti» fino a Ruta, poi «quadrato rosso pieno» fino a Portofino mare",
+  "descrizione": "Il gran finale sulla Via del Sale/Via del Mare: il Passo Spinarola, il Passo del Gallo, le Piane di Caravaggio e la Chiesa «Millenaria» di Ruta, poi l'ingresso nel Parco di Portofino e la discesa per Pietre Strette e San Sebastiano fino al mare.",
+  "punti": ["passo-dei-casetti", "ruta", "pietre-strette", "portofino-mare"],
+  "passi": [
+    {
+      "titolo": "Dal Passo dei Casetti al Passo Spinarola",
+      "testo": "Il segnavia «due cerchi rossi vuoti» arriva al Passo Spinarola in 40 minuti, scendendo prima verso Uscio: serve una deviazione a sinistra non evidente 5 minuti dopo il passo, poi 20 minuti di asfalto fino alla Colonia Arnaldi. Per saltare la Colonia: proprio al cartello «Benvenuti», un taglio non segnato sale a sinistra con cartello per il Passo Spinarola."
+    },
+    {
+      "titolo": "Fino alla «Millenaria» di Ruta",
+      "testo": "Lo stesso segnavia prosegue al Passo del Gallo (55 minuti dallo Spinarola), alle Piane di Caravaggio (30 minuti) e alla Chiesa «Millenaria» di Ruta (55 minuti). Dalle Piane, in deviazione: il Santuario di Caravaggio (20 minuti, vista su Rapallo) e la discesa a Recco (1 h, con stazione ferroviaria — l'«uscita di emergenza» di chi deve accorciare)."
+    },
+    {
+      "titolo": "Ruta e l'ingresso nel Parco",
+      "testo": "Dalla «Millenaria», 10 minuti di asfaltata a destra fino al centro di Ruta, dove si incrocia l'Aurelia. Davanti alle panchine con vista sul mare gira a sinistra; superato il bar Egidio, appena prima della galleria, il cartello «quadrato rosso pieno» segna la scalinata verso la Chiesa di San Michele. Lasciata la chiesa a sinistra, a destra parte il sentiero per Portofino mare: sei nel Parco del Monte di Portofino."
+    },
+    {
+      "titolo": "La discesa al mare",
+      "testo": "In 2 h 15 dall'ultimo cartello a Ruta si arriva a Portofino mare per la Sella della Gaixella, Pietre Strette e San Sebastiano. A Portofino non c'è stazione: si raggiungono via mare Santa Margherita, Rapallo e Camogli, oppure Santa Margherita a piedi in 1 h 15 («tre pallini rossi pieni» fino a Paraggi, poi lungomare)."
+    }
+  ],
+  "deviazioni": [
+    {
+      "titolo": "Passo della Serra e Manico del Lume",
+      "testo": "Dalle pendici di Monte Bello, il segnavia FIE «triangolo rosso vuoto» porta in 1 h al Passo della Serra e in 1 h 30 al Manico del Lume. Per la parte sommitale del Manico del Lume ci sono catene: sentiero per escursionisti esperti e attrezzati (EEA). Lo stesso sentiero porta anche al Santuario di Montallegro in 3 h 30, ma più che una deviazione è una gita a sé."
+    },
+    {
+      "titolo": "Il Santuario di Caravaggio",
+      "testo": "Dalle Piane di Caravaggio, il segnavia «tre pallini rossi pieni», sulla sinistra, porta al santuario in circa 20 minuti: vista spettacolare sul Tigullio e in particolare su Rapallo."
+    },
+    {
+      "titolo": "Recco, l'«uscita di emergenza»",
+      "testo": "Dopo circa 45 minuti dalle Piane di Caravaggio, sulla destra parte un sentiero che scende a Recco in 1 h (segnavia «tre pallini rossi pieni»). Oltre alla celebre focaccia, Recco ha la stazione ferroviaria: chi deve accorciare l'ultima tappa può usarla come uscita di emergenza."
+    },
+    {
+      "titolo": "San Rocco, Camogli e Punta Chiappa",
+      "testo": "Superata Portofino Vetta, sulla destra il segnavia «cerchio rosso vuoto» scende a San Rocco in circa 45 minuti. Da lì si può scendere a Punta Chiappa per un bagno memorabile (40 minuti, «due quadrati rossi pieni») oppure a Camogli (25 minuti, «due cerchi rossi pieni»), dove c'è la stazione."
+    },
+    {
+      "titolo": "Santa Margherita Ligure",
+      "testo": "Poco dopo Pietre Strette, sulla sinistra, parte il segnavia «due rombi rossi pieni» che in circa 50 minuti porta al centro di Santa Margherita Ligure."
+    },
+    {
+      "titolo": "Nozarego",
+      "testo": "Dopo 1 h 30 di cammino da Ruta, in località Crocetta, si stacca a sinistra un sentiero che in 45 minuti conduce a Nozarego (segnavia «T» rossa). Da Nozarego varie vie scendono a Santa Margherita, compresa un'asfaltata."
+    }
+  ]
+}

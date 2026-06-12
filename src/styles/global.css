@@ -13,31 +13,34 @@
    I nomi sono semantici: usa le variabili, non i codici esadecimali.
 --------------------------------------------------------------------------- */
 :root {
-  /* Verde dei faggi / campagna */
-  --bosco: #344e3a;          /* verde bosco profondo: testi su sabbia, blocchi scuri */
-  --bosco-scuro: #26392b;
-  --salvia: #8da27c;         /* verde salvia: bordi, dettagli */
-  --campagna: #5f7d4d;       /* verde fresco: richiami alla campagna, link su chiaro */
+  /* Verde dei faggi — verde bosco spento/salvia, mai squillante */
+  --bosco: #4A5D44;
+  --bosco-scuro: #39482F;
+  --campagna: #6B7D5C;
+  --salvia: #8A9A7B;
 
-  /* Sabbia / terra — anche il colore "carta" del quaderno */
-  --carta: #f5f0e6;          /* fondo principale */
-  --carta-scura: #ece4d3;    /* blocchi alternati, card */
-  --sabbia: #d9cdb2;
-  --tortora: #a89a82;
-  --umbra: #6c5840;          /* terra bruciata: dettagli caldi, didascalie */
+  /* Marrone della terra — anche il colore «carta» del quaderno.
+     I fondi carta sono tinte chiare derivate dal tortora #A8957E. */
+  --umbra: #5C4A3A;
+  --terra: #7A6450;
+  --tortora: #A8957E;
+  --carta: #F2EDE5;          /* fondo principale */
+  --carta-scura: #E8E0D3;    /* blocchi alternati, card */
+  --sabbia: #D8CDBB;         /* bordi, divisori */
 
   /* Grigio delle rocce */
-  --pietra: #6e6a61;
-  --pietra-chiara: #989287;
+  --pietra-scura: #3D3D3A;
+  --pietra: #6E6E68;
+  --pietra-chiara: #B5B3AC;
 
-  /* Accento acquatico — fonti, fontane, torrenti. Dosato. */
-  --acqua: #4e7f7b;
-  --acqua-chiara: #7da6a2;
-  --acqua-fondo: #e3ebe8;
+  /* Accento acquatico — fonti, fontane, abbeveratoi e torrenti. Discreto. */
+  --acqua: #5B7C7D;
+  --acqua-chiara: #7FA0A0;
+  --acqua-fondo: #E4EBEA;
 
   /* Testo */
-  --inchiostro: #2c2a24;     /* quasi-nero caldo, mai #000 */
-  --inchiostro-tenue: #56524a;
+  --inchiostro: #3D3D3A;     /* il grigio roccia scuro, mai #000 */
+  --inchiostro-tenue: #5C5C57;
 
   /* Tipografia */
   --serif: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;

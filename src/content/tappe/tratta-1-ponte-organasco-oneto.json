@@ -1,0 +1,26 @@
+{
+  "nome": "Tratta 1 · Ponte Organasco – Cerignale – Oneto",
+  "da": "Ponte Organasco",
+  "a": "Oneto",
+  "distanzaKm": 5.5,
+  "salitaM": 480,
+  "discesaM": 130,
+  "oreBase": 1.67,
+  "segnavia": "«Anello dei Borghi» (di prossima realizzazione) fino a Cerignale, poi sentiero CAI 177",
+  "descrizione": "L'avvio della Via: da Ponte Organasco (457 m) si sale a Cerignale (725 m) in un'ora e da lì, con il sentiero CAI 177, si raggiunge Oneto (811 m) in quaranta minuti, venti dei quali su asfaltata.",
+  "punti": ["ponte-organasco", "cerignale", "oneto"],
+  "passi": [
+    {
+      "titolo": "Partenza dalla Locanda Rosa",
+      "testo": "Dalla Locanda Rosa procedi pochi metri sull'asfaltata verso Genova. Sulla sinistra inizia un'ampia carrareccia: dopo pochi metri arrivi a una fontana dove si apre un trivio. Prendi la via più a sinistra, che risale dapprima a Carisasca e a Castello."
+    },
+    {
+      "titolo": "Salita a Cerignale",
+      "testo": "Un'ora di salita fino a Cerignale. In paese, prendi il sentiero CAI 177 sulla destra, appena prima di arrivare all'Albergo del Pino."
+    },
+    {
+      "titolo": "Da Cerignale a Oneto",
+      "testo": "Quaranta minuti fino a Oneto, venti dei quali su asfaltata. In alternativa, per saltare Cerignale e risparmiare tempo (perdendo però l'appoggio dell'Albergo del Pino): segnavia «tre pallini gialli» per Abrà – La Serra – Oneto, che incrocia due volte l'asfaltata e arriva a Oneto in circa 45 minuti da Ponte Organasco."
+    }
+  ]
+}

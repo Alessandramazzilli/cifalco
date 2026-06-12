@@ -1,0 +1,177 @@
+---
+import Base from '../../layouts/Base.astro';
+import NotaMargine from '../../components/NotaMargine.astro';
+import Illustrazione from '../../components/Illustrazione.astro';
+---
+
+<Base
+  titolo="Informazioni pratiche e avvertenze"
+  descrizione="Come arrivare a Ponte Organasco e tornare da Portofino, i punti di appoggio per dormire e mangiare lungo l’Antica Via del Cifalco, le avvertenze aggiornate sul percorso."
+>
+  <div class="contenitore sezione">
+    <p class="occhiello">L’itinerario</p>
+    <h1>Informazioni pratiche e avvertenze</h1>
+    <p style="font-size: 1.12rem;">
+      Le cose concrete: come si arriva alla partenza, come si torna
+      dall’arrivo, dove si dorme e si mangia. <em>I recapiti sono segnaposto,
+      in attesa dei dati definitivi.</em>
+    </p>
+
+    <section aria-labelledby="titolo-arrivare" class="blocco-info">
+      <h2 id="titolo-arrivare">Arrivare e tornare</h2>
+      <ul>
+        <li>
+          <strong>Alla partenza — Ponte Organasco (alta Val Trebbia):</strong>
+          si raggiunge in auto lungo la statale della Val Trebbia o con le
+          autolinee di valle <em>(orari e collegamenti: segnaposto, in
+          aggiornamento)</em>. Punto d’appoggio alla partenza: la Locanda Rosa.
+        </li>
+        <li>
+          <strong>Dall’arrivo — Portofino mare:</strong> a Portofino non c’è
+          stazione ferroviaria. Si raggiungono via mare le stazioni di Santa
+          Margherita Ligure, Rapallo e Camogli; Santa Margherita anche a piedi
+          in 1 h 15 («tre pallini rossi pieni» fino a Paraggi, poi lungomare).
+        </li>
+        <li>
+          <strong>Uscite intermedie:</strong> la discesa a Recco (1 h dalle
+          Piane di Caravaggio) porta a una stazione ferroviaria ed è la
+          classica «uscita di emergenza»; anche Camogli, da San Rocco, ha la
+          stazione.
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titolo-appoggio" class="blocco-info">
+      <h2 id="titolo-appoggio">Punti di appoggio</h2>
+      <p>
+        La Via non è (ancora) un cammino a tappe attrezzate: i punti
+        d’appoggio vanno organizzati prima di partire e conviene
+        <strong>prenotare sempre</strong>, soprattutto nei fine settimana.
+      </p>
+      <table class="tabella">
+        <caption class="sr-only">Punti di appoggio lungo la Via</caption>
+        <thead>
+          <tr>
+            <th scope="col">Dove</th>
+            <th scope="col">Struttura</th>
+            <th scope="col">Offre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ponte Organasco</td>
+            <td>Locanda Rosa</td>
+            <td>Ristoro e alloggio alla partenza</td>
+          </tr>
+          <tr>
+            <td>Cerignale</td>
+            <td>Albergo del Pino</td>
+            <td>Ristoro e alloggio</td>
+          </tr>
+          <tr>
+            <td>Sotto il bivio CAI 177/179</td>
+            <td>Rifugio Casermetta</td>
+            <td>Solo riparo (non attrezzato) e fonte</td>
+          </tr>
+          <tr>
+            <td>Prati di Foppiano</td>
+            <td>Rifugio Prati di Foppiano</td>
+            <td>Riparo e possibilità di cucinare, niente posti letto</td>
+          </tr>
+          <tr>
+            <td>Valico del Fregarolo</td>
+            <td>Trattoria del Valico di Fregarolo</td>
+            <td>Ristoro, a 5 minuti dal passo</td>
+          </tr>
+          <tr>
+            <td>Vetta del Monte Caucaso</td>
+            <td>Rifugio del Caucaso</td>
+            <td>Ristorante con vista a 360°</td>
+          </tr>
+          <tr>
+            <td>Faggio Rotondo</td>
+            <td>Struttura di Faggio Rotondo</td>
+            <td>Ristoro e alloggio</td>
+          </tr>
+          <tr>
+            <td>Neirone (verso Gattorna)</td>
+            <td>B&amp;B Ca’ da Nonna</td>
+            <td>Alloggio, unico punto a Neirone col Faggio Rotondo</td>
+          </tr>
+          <tr>
+            <td>Colle Caprile <em>(deviazione, 40 min)</em></td>
+            <td>Albergo Caprile</td>
+            <td>Ristoro e alloggio</td>
+          </tr>
+          <tr>
+            <td>Uscio <em>(deviazione, 30 min)</em></td>
+            <td>Strutture del paese</td>
+            <td>Ristoro e alloggio</td>
+          </tr>
+          <tr>
+            <td>Ruta, Camogli, Santa Margherita, Portofino</td>
+            <td>Ricettività diffusa</td>
+            <td>Bar, ristoranti e alloggi di ogni tipo</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <Illustrazione
+      scena="locanda"
+      alt="Una locanda lungo la Via, con i tavoli all’aperto e il bosco alle spalle"
+      nomeFile="pratiche-punto-di-appoggio.jpg"
+      rapporto="21/9"
+    />
+
+    <section aria-labelledby="titolo-avvertenze" class="blocco-info">
+      <h2 id="titolo-avvertenze">Avvertenze aggiornate</h2>
+      <ul>
+        <li>
+          <strong>Cassanesi (Comune di Tribogna):</strong> l’ordinanza n. 19
+          del 16 dicembre 2025 vieta il passaggio nel tratto accanto alla casa
+          in rovina. Se ancora in vigore, segui l’aggiramento descritto nella
+          <a href="/itinerario/descrizione-dettagliata#tratta-7">tratta 7</a>.
+        </li>
+        <li>
+          <strong>Ponticello di legno di Gattorna:</strong> agibile ma non in
+          perfetta manutenzione. Controlla che non vi siano ordinanze di
+          chiusura; in tal caso passa dal ponte asfaltato del Bar Beneitin.
+        </li>
+        <li>
+          <strong>Itinerario dei Feudi Fliscani (Neirone–Gattorna):</strong>
+          al momento non agibile; si scende per la strada asfaltata.
+        </li>
+        <li>
+          <strong>Deviazioni per esperti:</strong> la vetta del Gifarco è
+          estremamente ripida e spesso scivolosa; il Manico del Lume richiede
+          passaggi attrezzati con catene (EEA).
+        </li>
+        <li>
+          <strong>Varianti non segnate</strong> (Monte Tugio, attacco diretto
+          al Montarlone, vetta del Dego dal pascolo): solo con GPS o
+          conoscenza dei luoghi.
+        </li>
+      </ul>
+    </section>
+
+    <NotaMargine titolo="Una cortesia">
+      <p>
+        La Via attraversa pascoli e borghi abitati: ogni cancello che si apre
+        si richiude, i cani si tengono al guinzaglio dove ci sono greggi, e
+        nelle ore del riposo si passa parlando piano.
+      </p>
+    </NotaMargine>
+  </div>
+</Base>
+
+<style>
+  .blocco-info {
+    margin-block: 2.5rem;
+    max-width: 52rem;
+  }
+
+  .blocco-info table {
+    margin-top: 1rem;
+  }
+</style>

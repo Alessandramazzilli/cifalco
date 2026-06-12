@@ -40,7 +40,7 @@ npm run build      # crea la cartella dist/ pronta da pubblicare
 src/
 ├── content/             ⟵ TUTTI I CONTENUTI (è qui che si lavora di solito)
 │   ├── itinerari/       ⟵ un file JSON per itinerario
-│   ├── tappe/           ⟵ un file JSON per tappa (con i passi del planner)
+│   ├── tappe/           ⟵ un file JSON per tratta (passi e deviazioni comprese)
 │   ├── punti/           ⟵ un file JSON per punto d'interesse
 │   └── articoli/        ⟵ un file Markdown per articolo di Storia e Territorio
 ├── pages/               ⟵ le pagine del sito (testi delle pagine fisse)
@@ -63,8 +63,8 @@ Markdown.
 ### Aggiungere un punto d'interesse
 
 1. Copia un file esistente in `src/content/punti/`, ad esempio
-   `fonte-vecchia.json`, e rinominalo (minuscole e trattini: il nome del file
-   diventa l'indirizzo del punto).
+   `rifugio-casermetta.json`, e rinominalo (minuscole e trattini: il nome del
+   file diventa l'identificativo del punto).
 2. Compila i campi:
    - `nome`, `descrizione`, `quota` (metri, facoltativa);
    - `tipo`: uno tra `borgo`, `fonte`, `valico`, `natura`, `storia`, `ristoro`;
@@ -80,9 +80,11 @@ con `npm run dev`: due o tre tentativi e il punto è al suo posto.
 
 ### Aggiungere o modificare un itinerario
 
-1. Le tappe sono in `src/content/tappe/`: ogni tappa ha distanza, dislivelli,
-   ore di cammino, l'elenco dei `punti` attraversati **in ordine** e i
-   `passi` (le indicazioni che il planner mostra una alla volta).
+1. Le tratte sono in `src/content/tappe/`: ogni tratta ha distanza,
+   dislivelli, ore di cammino, il `segnavia`, l'elenco dei `punti`
+   attraversati **in ordine**, i `passi` (le indicazioni che il planner
+   mostra una alla volta) e le `deviazioni` (mostrate nella descrizione
+   dettagliata).
 2. Gli itinerari sono in `src/content/itinerari/`: un itinerario è soprattutto
    un elenco di tappe in ordine, più difficoltà, segnavia e descrizione.
 3. Mappa e planner si aggiornano da soli: leggono questi file.

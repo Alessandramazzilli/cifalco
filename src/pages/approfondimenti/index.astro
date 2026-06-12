@@ -1,0 +1,117 @@
+---
+import Base from '../../layouts/Base.astro';
+import Illustrazione from '../../components/Illustrazione.astro';
+import { getCollection } from 'astro:content';
+
+const articoli = (await getCollection('articoli')).sort(
+  (a, b) => b.data.data.valueOf() - a.data.data.valueOf()
+);
+
+const ETICHETTA_TEMA = {
+  storia: 'Storia',
+  natura: 'Natura',
+  cultura: 'Cultura',
+} as const;
+---
+
+<Base
+  titolo="Approfondimenti"
+  descrizione="Storia, cultura e natura dell’Antica Via del Cifalco, le voci d’autore e il diario di bordo: il quaderno del cammino, scritto con rigore."
+>
+  <div class="contenitore sezione">
+    <p class="occhiello">Approfondimenti</p>
+    <h1>Il quaderno della Via</h1>
+    <p style="font-size: 1.12rem; max-width: var(--misura);">
+      La Via del Cifalco è una storia di muli, commercianti, saltimbanchi e
+      briganti. È una storia bellissima anche senza abbellimenti: per questo
+      qui distinguiamo sempre quello che <strong>dicono i documenti</strong>
+      da quello che <strong>racconta la leggenda</strong> — e diamo a
+      entrambi il rispetto che meritano.
+    </p>
+
+    <Illustrazione
+      scena="borgo"
+      alt="Un borgo dell’alta Val Trebbia visto dal sentiero"
+      nomeFile="approfondimenti-borgo-val-trebbia.jpg"
+      rapporto="21/9"
+    />
+
+    <h2 style="margin-top: 2.5rem;">Storia, cultura e natura</h2>
+    <div class="archivio">
+      {
+        articoli.map((articolo) => (
+          <article class="archivio__voce">
+            <p class="occhiello">
+              {ETICHETTA_TEMA[articolo.data.tema]} · {articolo.data.occhiello}
+            </p>
+            <h3>
+              <a href={`/approfondimenti/${articolo.id}`}>
+                {articolo.data.titolo}
+              </a>
+            </h3>
+            <p>{articolo.data.estratto}</p>
+            <a class="archivio__leggi" href={`/approfondimenti/${articolo.id}`}>
+              Leggi l’articolo →
+            </a>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="griglia" style="margin-top: 3rem;">
+      <article class="card">
+        <p class="occhiello">Le voci</p>
+        <h2 style="font-size: 1.3rem;">Voci d’autore dal Cifalco</h2>
+        <p>
+          Scrittori, camminatori e gente del posto raccontano la Via con la
+          propria voce: una raccolta in costruzione.
+        </p>
+        <a class="bottone bottone--contorno" href="/approfondimenti/voci-d-autore">
+          Ascolta le voci
+        </a>
+      </article>
+      <article class="card">
+        <p class="occhiello">Il cammino raccontato</p>
+        <h2 style="font-size: 1.3rem;">Diario di bordo</h2>
+        <p>
+          Le note dal campo di chi sta tracciando e percorrendo la Via:
+          sopralluoghi, segnature, incontri e stagioni.
+        </p>
+        <a class="bottone bottone--contorno" href="/approfondimenti/diario-di-bordo">
+          Apri il diario
+        </a>
+      </article>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .archivio {
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 2.25rem;
+  }
+
+  .archivio__voce {
+    max-width: var(--misura);
+    padding-bottom: 2.25rem;
+    border-bottom: 1px solid var(--sabbia);
+  }
+
+  .archivio__voce h3 {
+    font-size: 1.45rem;
+  }
+
+  .archivio__voce h3 a {
+    color: var(--bosco-scuro);
+    text-decoration: none;
+  }
+
+  .archivio__voce h3 a:hover {
+    text-decoration: underline;
+  }
+
+  .archivio__leggi {
+    font-weight: 650;
+  }
+</style>

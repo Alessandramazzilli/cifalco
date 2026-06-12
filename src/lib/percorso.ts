@@ -23,8 +23,10 @@ export interface Tappa {
   discesaM: number;
   oreBase: number;
   descrizione: string;
+  segnavia: string;
   punti: string[];
   passi: { titolo: string; testo: string }[];
+  deviazioni: { titolo: string; testo: string }[];
 }
 
 export interface Itinerario {
@@ -34,7 +36,6 @@ export interface Itinerario {
   descrizione: string;
   difficolta: 'facile' | 'medio' | 'impegnativo';
   tappe: string[];
-  segnavia: string;
   giorniConsigliati: string;
   ordine: number;
   anello: boolean;

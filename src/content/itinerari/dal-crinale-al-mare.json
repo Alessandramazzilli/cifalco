@@ -1,0 +1,14 @@
+{
+  "nome": "Dal crinale al mare",
+  "sottotitolo": "Da Barbagelata a Portofino mare",
+  "descrizione": "La metà che scende al mare: la vetta del Monte Caucaso con il suo rifugio, Faggio Rotondo e la Fontanabuona, il Passo dei Casetti e il gran finale nel Parco di Portofino, da Ruta a Portofino mare per Pietre Strette e San Sebastiano.",
+  "difficolta": "medio",
+  "tappe": [
+    "tratta-6-barbagelata-neirone",
+    "tratta-7-neirone-casetti",
+    "tratta-8-casetti-portofino"
+  ],
+  "giorniConsigliati": "2 giorni",
+  "ordine": 3,
+  "anello": false
+}

@@ -1,11 +1,19 @@
 {
   "nome": "La Via intera",
-  "sottotitolo": "Tre giorni di cammino da Pietrafonte alla Rocca",
-  "descrizione": "Il cammino completo: 41 chilometri e mezzo in tre tappe, da borgo a borgo, sul tracciato che muli, commercianti e compagnie di giro hanno battuto per secoli. Si dorme alle locande di tappa e si timbra la credenziale lungo il percorso.",
-  "difficolta": "medio",
-  "tappe": ["tappa-1", "tappa-2", "tappa-3"],
-  "segnavia": "Bandierina bianco-rossa con sigla «VC»",
-  "giorniConsigliati": "3 giorni / 2 notti",
+  "sottotitolo": "Da Ponte Organasco a Portofino mare",
+  "descrizione": "La traversata completa: dall'alta Val Trebbia al mare di Portofino in otto tratte, circa 23 ore di cammino effettivo. Crinali appenninici, passi, faggete e l'arrivo nel Parco di Portofino: un cammino vero, da costruire sulle proprie gambe in 4 o 5 giorni.",
+  "difficolta": "impegnativo",
+  "tappe": [
+    "tratta-1-ponte-organasco-oneto",
+    "tratta-2-oneto-monte-delle-tane",
+    "tratta-3-tane-dego",
+    "tratta-4-dego-vallersone",
+    "tratta-5-vallersone-barbagelata",
+    "tratta-6-barbagelata-neirone",
+    "tratta-7-neirone-casetti",
+    "tratta-8-casetti-portofino"
+  ],
+  "giorniConsigliati": "4–5 giorni",
   "ordine": 1,
   "anello": false
 }

@@ -1,23 +1,23 @@
 ---
 titolo: "Faggete e acque: la natura che ha reso possibile la Via"
 occhiello: "Natura"
-estratto: "Una dorsale ricca di sorgenti e una faggeta che dà ombra alla salita: la Via esiste perché la montagna l'ha permessa. Cosa guardare lungo il cammino, stagione per stagione."
+estratto: "Le faggete del crinale, l'elicriso del «Monte Nero», la cattura fluviale dell'Acquapendente e il lago che a maggio brulica di girini: cosa guardare lungo il cammino, stagione per stagione."
 data: 2026-06-01
 tema: natura
 ---
 
 > Testo segnaposto, già nel tono del sito: da sostituire con i contenuti definitivi e la consulenza naturalistica.
 
-Un cammino di carovane ha due bisogni non negoziabili: **acqua a distanza regolare** e **ombra nelle salite**. La dorsale del Cifalco offriva entrambe le cose, ed è questa — prima di ogni storia umana — la ragione per cui la Via passa di qui.
+Un cammino di carovane ha due bisogni non negoziabili: **acqua a distanza regolare** e **ombra nelle salite**. Le dorsali tra Trebbia, Aveto e Fontanabuona offrivano entrambe le cose, ed è questa — prima di ogni storia umana — la ragione per cui di qui si è sempre passati.
 
-## L'acqua
+## Due mondi in pochi metri
 
-La struttura del massiccio restituisce a mezza costa l'acqua che assorbe in quota: ne nasce la collana di sorgenti che la Via infila una dopo l'altra — Fonte del Mulattiere, Fonte del Brigante, Fonte Vecchia. Quasi tutte sono state captate in fontanili e abbeveratoi tra Sette e Ottocento, ed è in quella forma che le incontri oggi. Nelle schede dei punti indichiamo sempre **se l'acqua è potabile** e come varia la portata d'estate.
+La sorpresa botanica della Via sta nei suoi contrasti: scendendo dal Passo Vallersone verso Casanova si alternano **faggete fresche e zone semi-aride** dove l'elicriso e altre piante mediterranee crescono su superfici rocciose — i locali chiamano queste elevazioni «Monte Nero». Pochi chilometri, e si passa dal bosco di montagna a una macchia che profuma di costa.
 
-## La faggeta
+## Le curiosità geologiche
 
-La Faggeta di Colle Alto accompagna tutta la salita al valico: d'estate abbassa la temperatura percepita di parecchi gradi, in autunno è la ragione per cui molti scelgono di camminare proprio in ottobre. Nel sottobosco: agrifogli, anemoni a primavera, e — per chi sa stare in silenzio — il picchio nero che qui nidifica.
+Il **Rio dell'Acquapendente**, sulla salita al Caucaso, è noto per un fenomeno di cattura fluviale: un corso d'acqua che ha «rubato» il bacino a un altro. Poco oltre il Valico del Fregarolo, il **Lago della Nave** è una conca curiosa che ghiaccia d'inverno e a maggio dà vita a una sterminata riproduzione di girini: vale la sosta, in punta di piedi.
 
-## Una nota di rispetto
+## Le stagioni
 
-La ricchezza d'acqua non è scontata: alcune sorgenti minori si sono già spente negli ultimi decenni. Bevi, riempi le borracce, ma non lavare stoviglie né immergere nulla nei fontanili: a valle quell'acqua serve ancora a campi e animali.
+A maggio le fioriture di ginestra accendono la cresta del Caucaso; in autunno le faggete del crinale virano al rame; d'inverno i passi alti chiedono attrezzatura e esperienza. E in ogni stagione vale la regola dell'acqua: bevi e riempi le borracce alle fonti, ma non lavarci nulla — a valle quell'acqua serve ancora a campi e animali.

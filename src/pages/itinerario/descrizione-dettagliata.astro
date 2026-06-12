@@ -1,0 +1,162 @@
+---
+import Base from '../../layouts/Base.astro';
+import NotaMargine from '../../components/NotaMargine.astro';
+import { caricaPercorso, formattaOre } from '../../lib/percorso';
+
+const percorso = await caricaPercorso();
+const viaIntera = percorso.itinerari.find((i) => i.id === 'via-intera')!;
+const tratte = viaIntera.tappe.map(
+  (id) => percorso.tappe.find((t) => t.id === id)!
+);
+---
+
+<Base
+  titolo="Descrizione dettagliata dell’itinerario"
+  descrizione="L’Antica Via del Cifalco tratta per tratta: bivi, tempi parziali, segnavia, avvertenze e tutte le deviazioni, da Ponte Organasco a Portofino mare."
+>
+  <div class="contenitore sezione">
+    <p class="occhiello">L’itinerario</p>
+    <h1>La Via, tratta per tratta</h1>
+    <p style="font-size: 1.12rem;">
+      Le note di percorso complete, nel senso classico da Ponte Organasco a
+      Portofino: ogni tratta con i suoi tempi, il segnavia da seguire, i punti
+      in cui serve attenzione e le deviazioni che meritano.
+    </p>
+
+    <NotaMargine>
+      <p>
+        I tempi indicati alla fine di ogni tratta riguardano la sola
+        percorrenza del sentiero principale: <strong>le deviazioni non sono
+        comprese</strong>. Aggiungi sempre il tempo delle soste.
+      </p>
+    </NotaMargine>
+
+    <nav aria-label="Indice delle tratte" class="indice">
+      <p class="occhiello">Indice</p>
+      <ol>
+        {
+          tratte.map((tratta, i) => (
+            <li>
+              <a href={`#tratta-${i + 1}`}>{tratta.da} – {tratta.a}</a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    {
+      tratte.map((tratta, i) => (
+        <article class="tratta" id={`tratta-${i + 1}`}>
+          <h2>{tratta.nome}</h2>
+          <dl class="planner__dati tratta__dati">
+            <div class="dato">
+              <dt>Tempo</dt>
+              <dd>{formattaOre(tratta.oreBase)}</dd>
+            </div>
+            <div class="dato">
+              <dt>Distanza (stima)</dt>
+              <dd>{tratta.distanzaKm.toLocaleString('it-IT')} km</dd>
+            </div>
+            <div class="dato">
+              <dt>Salita (stima)</dt>
+              <dd>{tratta.salitaM} m</dd>
+            </div>
+            <div class="dato">
+              <dt>Discesa (stima)</dt>
+              <dd>{tratta.discesaM} m</dd>
+            </div>
+          </dl>
+          <p class="tratta__segnavia">
+            <strong>Segnavia:</strong> {tratta.segnavia}
+          </p>
+          <p>{tratta.descrizione}</p>
+
+          <h3>Il percorso</h3>
+          <ol class="tratta__passi">
+            {
+              tratta.passi.map((passo) => (
+                <li>
+                  <strong>{passo.titolo}.</strong> {passo.testo}
+                </li>
+              ))
+            }
+          </ol>
+
+          {
+            tratta.deviazioni.length > 0 && (
+              <>
+                <h3>Deviazioni</h3>
+                <ul class="tratta__deviazioni">
+                  {tratta.deviazioni.map((deviazione) => (
+                    <li>
+                      <strong>{deviazione.titolo}.</strong> {deviazione.testo}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )
+          }
+        </article>
+      ))
+    }
+
+    <p style="margin-top: 2.5rem;">
+      <a class="bottone bottone--pieno" href="/itinerario#pianifica">
+        Pianifica la tua camminata
+      </a>
+    </p>
+  </div>
+</Base>
+
+<style>
+  .indice {
+    margin-block: 2rem;
+  }
+
+  .indice ol {
+    margin: 0;
+    padding-left: 1.3rem;
+  }
+
+  .indice li {
+    margin-bottom: 0.25rem;
+  }
+
+  .tratta {
+    max-width: var(--misura);
+    padding-block: 2.25rem;
+    border-top: 1px solid var(--sabbia);
+  }
+
+  .tratta h2 {
+    font-size: 1.5rem;
+  }
+
+  .tratta__dati {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+    margin: 1rem 0;
+  }
+
+  .tratta__dati dd {
+    font-size: 1.15rem;
+  }
+
+  .tratta__segnavia {
+    background: var(--carta-scura);
+    border-radius: var(--raggio);
+    padding: 0.6rem 0.9rem;
+    font-size: 0.97rem;
+  }
+
+  .tratta h3 {
+    font-size: 1.15rem;
+    margin-top: 1.5rem;
+  }
+
+  .tratta__passi li,
+  .tratta__deviazioni li {
+    margin-bottom: 0.8rem;
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import Base from '../../layouts/Base.astro';
+import NotaMargine from '../../components/NotaMargine.astro';
+---
+
+<Base
+  titolo="Diario di bordo"
+  descrizione="Le note dal campo di chi sta tracciando e percorrendo l’Antica Via del Cifalco: sopralluoghi, segnature, incontri e stagioni."
+>
+  <div class="contenitore sezione">
+    <p class="occhiello">Approfondimenti</p>
+    <h1>Diario di bordo</h1>
+    <p style="font-size: 1.12rem; max-width: var(--misura);">
+      Il cammino, mentre nasce: sopralluoghi, verifiche dei tempi, segnavia
+      ridipinti, incontri lungo la strada. <em>(Le voci qui sotto sono
+      segnaposto: il diario vero comincerà con le prossime uscite.)</em>
+    </p>
+
+    <div class="diario">
+      <article class="diario__voce">
+        <p class="occhiello">Voce di esempio · primavera</p>
+        <h2>Sopralluogo sulla tratta del Caucaso</h2>
+        <p>
+          Verificati i tempi da Barbagelata alla vetta e la deviazione del
+          bivio nascosto tra i muretti a secco nella discesa verso Faggio
+          Rotondo. La ginestra è all’inizio della fioritura.
+          <em>(Testo segnaposto.)</em>
+        </p>
+      </article>
+      <article class="diario__voce">
+        <p class="occhiello">Voce di esempio · inverno</p>
+        <h2>Il punto sull’«Anello dei Borghi»</h2>
+        <p>
+          Incontro con i volontari per la segnatura del tratto iniziale da
+          Ponte Organasco a Cerignale: si parte con la bella stagione.
+          <em>(Testo segnaposto.)</em>
+        </p>
+      </article>
+    </div>
+
+    <NotaMargine>
+      <p>
+        Cammini la Via e vuoi mandarci le tue note — tempi verificati, fonti
+        attive, segnavia sbiaditi? <a href="/contatti">Sono oro</a>: è così
+        che il quaderno resta aggiornato.
+      </p>
+    </NotaMargine>
+  </div>
+</Base>
+
+<style>
+  .diario {
+    display: grid;
+    gap: 2rem;
+    margin-block: 2rem;
+    max-width: var(--misura);
+  }
+
+  .diario__voce {
+    border-left: 3px solid var(--salvia);
+    padding-left: 1.25rem;
+  }
+
+  .diario__voce h2 {
+    font-size: 1.3rem;
+  }
+
+  .diario__voce p:last-child {
+    margin-bottom: 0;
+  }
+</style>

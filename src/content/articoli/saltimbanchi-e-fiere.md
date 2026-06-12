@@ -1,19 +1,19 @@
 ---
-titolo: "Saltimbanchi in cammino: le fiere che univano le due valli"
+titolo: "Saltimbanchi in cammino: le fiere che univano monte e mare"
 occhiello: "Cultura"
-estratto: "Compagnie di giro, musicanti e cantastorie usavano la Via per raggiungere le fiere stagionali. Un ponte porta ancora il loro nome — e un pedaggio che, raccontano i registri, si poteva pagare in spettacolo."
+estratto: "Compagnie di giro, musicanti e cantastorie si spostavano a piedi tra le fiere dell'Appennino e quelle della costa, sugli stessi sentieri dei mulattieri. Un patrimonio fragile, da raccogliere prima che la memoria si spenga."
 data: 2026-05-25
 tema: cultura
 ---
 
 > Testo segnaposto, già nel tono del sito: da sostituire con i contenuti definitivi e le fonti documentarie.
 
-Tra chi percorreva la Via non c'erano solo muli e mercanti. Le **fiere stagionali** dei borghi — quella di primavera a Pietrafonte, quella d'autunno a San Lorenzo — richiamavano compagnie di giro, musicanti, cantastorie e giocolieri che si spostavano a piedi da una valle all'altra, seguendo il calendario delle feste.
+Tra chi percorreva questi sentieri non c'erano solo muli e mercanti. Le **fiere e le feste patronali** — quelle dei borghi dell'alta valle come quelle dei paesi della costa — richiamavano compagnie di giro, musicanti, cantastorie e giocolieri che si spostavano a piedi da una valle all'altra, seguendo il calendario delle feste come i mulattieri seguivano quello dei mercati.
 
-## Il pedaggio in spettacolo
+## Gente di strada, in tutti i sensi
 
-Il Ponte dei Saltimbanchi deve il suo nome a una consuetudine registrata in più di un documento d'archivio: il passaggio del torrente prevedeva un pedaggio, e per le compagnie di giro era ammesso **pagarlo in spettacolo**, un'esibizione alla fiera del borgo. Quanto la consuetudine fosse rispettata, e quanto fosse invece occasione di liti memorabili, lo lasciamo immaginare.
+Per chi viveva di spettacolo, la strada era casa e bottega: si arrivava a piedi, si dormiva dove capitava, si ripartiva con la fiera successiva. I sentieri di crinale — più corti e più sicuri delle strade di fondovalle — erano la loro rete di trasporto, la stessa che la Via oggi ripercorre.
 
 ## Un patrimonio fragile
 
-Di questo mondo resta poco di materiale: qualche strumento nei musei di valle, i nomi dei luoghi, brani di repertorio raccolti dai ricercatori nel secondo Novecento. È il patrimonio più fragile della Via, e uno dei motivi per cui questo progetto esiste: raccogliere, verificare e raccontare prima che la memoria si spenga del tutto. Se hai ricordi di famiglia, registrazioni o fotografie, [scrivici](/chi-siamo).
+Di questo mondo resta poco di materiale: i nomi di qualche luogo, strumenti nei musei di valle, brani di repertorio raccolti dai ricercatori nel secondo Novecento, fotografie nelle case. È il patrimonio più fragile della Via, e uno dei motivi per cui questo progetto esiste: **raccogliere, verificare e raccontare** prima che la memoria si spenga del tutto. Se hai ricordi di famiglia, registrazioni o fotografie, [scrivici](/contatti).
