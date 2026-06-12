@@ -8,3 +8,6 @@ dist/
 
 # Log
 npm-debug.log*
+
+# Anteprima autosufficiente generata (scripts/genera-anteprima.mjs)
+anteprima/
