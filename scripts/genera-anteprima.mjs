@@ -16,13 +16,6 @@ const rotte = {
   '/itinerario/descrizione-dettagliata': 'descrizione-dettagliata.html',
   '/itinerario/informazioni-pratiche': 'informazioni-pratiche.html',
   '/approfondimenti': 'approfondimenti.html',
-  '/approfondimenti/muli-e-mulattieri': 'articolo-muli-e-mulattieri.html',
-  '/approfondimenti/briganti-tra-carte-e-leggenda': 'articolo-briganti.html',
-  '/approfondimenti/saltimbanchi-e-fiere': 'articolo-saltimbanchi.html',
-  '/approfondimenti/faggete-e-acque': 'articolo-faggete-e-acque.html',
-  '/approfondimenti/voci-d-autore': 'voci-d-autore.html',
-  '/approfondimenti/diario-di-bordo': 'diario-di-bordo.html',
-  '/rete-di-cammini': 'rete-di-cammini.html',
   '/dicono-di-noi': 'dicono-di-noi.html',
   '/chi-siamo': 'chi-siamo.html',
   '/contatti': 'contatti.html',
@@ -68,6 +61,15 @@ for (const [rotta, nomeFile] of Object.entries(rotte)) {
   html = html
     .replace(/<link rel="icon"[^>]*>/, `<link rel="icon" type="image/svg+xml" href="${faviconDataUri}">`)
     .replace(/<link rel="sitemap"[^>]*>/, '');
+
+  // Immagini /immagini/*.jpg → data URI, così l'anteprima è autosufficiente.
+  for (const file of new Set(
+    [...html.matchAll(/\/immagini\/([A-Za-z0-9._-]+)/g)].map((m) => m[1])
+  )) {
+    const buf = await readFile(path.join(dist, 'immagini', file));
+    const dataUri = `data:image/jpeg;base64,${buf.toString('base64')}`;
+    html = html.split(`/immagini/${file}`).join(dataUri);
+  }
 
   // Collegamenti interni → file locali (conservando le àncore #...).
   html = html.replace(/href="(\/[^"#]*)(#[^"]*)?"/g, (tutto, percorso, ancora = '') => {

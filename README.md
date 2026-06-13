@@ -41,12 +41,14 @@ src/
 ├── content/             ⟵ TUTTI I CONTENUTI (è qui che si lavora di solito)
 │   ├── itinerari/       ⟵ un file JSON per itinerario
 │   ├── tappe/           ⟵ un file JSON per tratta (passi e deviazioni comprese)
-│   ├── punti/           ⟵ un file JSON per punto d'interesse
-│   └── articoli/        ⟵ un file Markdown per articolo di Storia e Territorio
+│   └── punti/           ⟵ un file JSON per punto d'interesse
 ├── pages/               ⟵ le pagine del sito (testi delle pagine fisse)
-├── components/          ⟵ i blocchi riusabili (mappa, planner, note…)
+├── components/          ⟵ i blocchi riusabili (mappa, planner, foto, note…)
 ├── lib/percorso.ts      ⟵ il codice che legge i contenuti
 └── styles/global.css    ⟵ colori, font e stile di tutto il sito
+
+public/
+└── immagini/            ⟵ le foto del sito (vedi «Sostituire una foto»)
 ```
 
 ---
@@ -55,10 +57,9 @@ src/
 
 ### Modificare un testo
 
-I testi delle pagine fisse (Home, Info pratiche, Chi siamo…) sono nei file di
-`src/pages/`: si aprono con qualunque editor di testo, il testo è leggibile
-tra i tag HTML. Gli articoli sono in `src/content/articoli/` e sono semplice
-Markdown.
+I testi delle pagine fisse (Home, Il progetto, L'itinerario, Approfondimenti,
+Chi siamo…) sono nei file di `src/pages/`: si aprono con qualunque editor di
+testo, il testo è leggibile tra i tag HTML.
 
 ### Aggiungere un punto d'interesse
 
@@ -89,29 +90,44 @@ con `npm run dev`: due o tre tentativi e il punto è al suo posto.
    un elenco di tappe in ordine, più difficoltà, segnavia e descrizione.
 3. Mappa e planner si aggiornano da soli: leggono questi file.
 
-### Aggiungere un articolo
+### Aggiungere o modificare un membro della Compagnia del Cifalco
 
-Copia un file in `src/content/articoli/`, rinominalo e modifica
-l'intestazione tra i due `---` (titolo, estratto, data in formato
-`AAAA-MM-GG`, tema tra `storia`, `natura`, `cultura`) e il testo sotto, in
-Markdown. L'articolo compare da solo nell'elenco e in Home.
+Le persone della Compagnia stanno nella pagina `src/pages/progetto.astro`,
+nell'elenco `compagnia` in cima al file: ogni voce ha `nome`, `ruolo` (la
+descrizione, anche simpatica) e `foto` (il nome del file della foto).
 
-### Sostituire un'illustrazione segnaposto con una foto vera
+Per la **foto vera**: metti un'immagine quadrata in `public/immagini/` con il
+nome indicato in `foto` (es. `compagnia-luchino-ferraris.jpg`) e, in
+`progetto.astro`, sostituisci `<PersonaPlaceholder nomeFile={persona.foto} />`
+con:
 
-Ogni segnaposto dichiara il nome del file atteso (l'etichetta in basso a
-destra, es. `immagini/home-hero-via-del-cifalco.jpg`).
+```html
+<img class="ritratto" src={`/immagini/${persona.foto}`} alt={persona.nome} />
+```
 
-1. Metti la foto in `public/immagini/` con quel nome (creando la cartella la
-   prima volta).
-2. Nel file della pagina (es. `src/pages/index.astro`) sostituisci il blocco
-   `<Illustrazione … />` con:
+### Sostituire o aggiungere una foto
 
-   ```html
-   <img src="/immagini/home-hero-via-del-cifalco.jpg"
-        alt="Lo stesso alt text che era nel componente" />
-   ```
+Le foto stanno in `public/immagini/`. Per cambiarne una, sostituisci il file
+mantenendo lo stesso nome: comparirà subito al posto della vecchia. Le foto
+attualmente usate sono:
 
-   L'`alt` è già scritto nel componente segnaposto: riusalo.
+| Pagina | File | Dove |
+| --- | --- | --- |
+| Home | `home-banner-valle-del-cifalco.jpg` | banner in cima |
+| Il progetto | `borgo-val-trebbia.jpg` | sotto il titolo |
+| L'itinerario | `faggeta.jpg` | sotto i numeri della Via |
+| Informazioni pratiche | `carro-e-attrezzi.jpg` | tra le tabelle |
+| Approfondimenti | `muro-ruota-carro.jpg` | sotto il titolo |
+
+Per **aggiungere** una foto in una pagina, metti il file in
+`public/immagini/` e usa il componente `Foto`:
+
+```html
+<Foto src="/immagini/nome-file.jpg" alt="Descrizione della foto" rapporto="16/9" />
+```
+
+Conviene ridimensionare le foto prima di caricarle (lato lungo circa 2000 px):
+mantiene il sito veloce anche con segnale debole.
 
 ### Sostituire la base della mappa con la mappa illustrata definitiva
 
@@ -154,12 +170,16 @@ social.
 
 ## Scelte di design (per chi metterà mano allo stile)
 
-- **Palette** in `src/styles/global.css`, tutta a variabili CSS: verdi del
-  bosco e della campagna, sabbia/terra come «carta» del quaderno, grigio
-  pietra, e un acqua desaturato usato solo per i richiami all'acqua.
-- **Font**: Source Serif 4 per i titoli, Source Sans 3 per il corpo, Caveat
-  **solo** per il titoletto delle «note a margine». Self-hosted, niente
-  richieste a server esterni.
+- **Palette** in `src/styles/global.css`, tutta a variabili CSS: verde dei
+  faggi, grigio delle rocce, accento acquatico e marrone della terra. Gli
+  sfondi sono verdi/grigi/acqua (niente fondo «crema»): le sezioni a tinta
+  piena si ottengono con le classi `sezione--bosco`, `sezione--acqua` e
+  `sezione--pietra`.
+- **Font**: Source Serif 4 per i titoli, Source Sans 3 per il corpo.
+  Self-hosted, niente richieste a server esterni.
+- **Walk planner**: il bottone «Scarica il piano» genera un file di testo con
+  l'intero piano (numeri, segnavia, acqua, cosa portare e tutte le tappe in
+  sequenza), utile da consultare sul sentiero anche senza campo.
 - **Tono dell'interfaccia**: il quaderno vive nella struttura (note a
   margine, sezioni come pagine), mai in texture finte. Niente effetto
   «medioevo da fiera».

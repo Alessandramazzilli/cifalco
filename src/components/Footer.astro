@@ -23,10 +23,11 @@ const anno = new Date().getFullYear();
       <p class="pie__titolo">Scopri</p>
       <ul>
         <li><a href="/progetto">Il progetto</a></li>
-        <li><a href="/approfondimenti">Approfondimenti</a></li>
-        <li><a href="/rete-di-cammini">Una rete di cammini</a></li>
+        <li><a href="/approfondimenti#voci">Voci d’autore</a></li>
+        <li><a href="/approfondimenti#diario">Diario di bordo</a></li>
+        <li><a href="/approfondimenti#rete">Una rete di cammini</a></li>
         <li><a href="/dicono-di-noi">Dicono di noi</a></li>
-        <li><a href="/chi-siamo">Chi siamo</a></li>
+        <li><a href="/chi-siamo">Chi siamo e contatti</a></li>
       </ul>
     </nav>
   </div>
@@ -41,7 +42,7 @@ const anno = new Date().getFullYear();
 <style>
   .pie {
     background: var(--bosco-scuro);
-    color: var(--carta-scura);
+    color: var(--chiaro);
     padding-block: 2.5rem 1.5rem;
     margin-top: 4rem;
     font-size: 0.97rem;
@@ -58,7 +59,7 @@ const anno = new Date().getFullYear();
     font-family: var(--serif);
     font-size: 1.1rem;
     font-weight: 650;
-    color: var(--carta);
+    color: var(--chiaro);
     margin-bottom: 0.6rem;
   }
 
@@ -73,10 +74,10 @@ const anno = new Date().getFullYear();
   }
 
   .pie a {
-    color: var(--carta-scura);
+    color: var(--chiaro);
   }
   .pie a:hover {
-    color: var(--carta);
+    color: var(--acqua-chiara);
   }
 
   .pie__nota {

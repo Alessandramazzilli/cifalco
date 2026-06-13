@@ -1,5 +1,5 @@
 {
-  "nome": "Tratta 1 · Ponte Organasco – Cerignale – Oneto",
+  "nome": "Tratta 1 · Ponte Organasco, Cerignale, Oneto",
   "da": "Ponte Organasco",
   "a": "Oneto",
   "distanzaKm": 5.5,
@@ -20,7 +20,7 @@
     },
     {
       "titolo": "Da Cerignale a Oneto",
-      "testo": "Quaranta minuti fino a Oneto, venti dei quali su asfaltata. In alternativa, per saltare Cerignale e risparmiare tempo (perdendo però l'appoggio dell'Albergo del Pino): segnavia «tre pallini gialli» per Abrà – La Serra – Oneto, che incrocia due volte l'asfaltata e arriva a Oneto in circa 45 minuti da Ponte Organasco."
+      "testo": "Quaranta minuti fino a Oneto, venti dei quali su asfaltata. In alternativa, per saltare Cerignale e risparmiare tempo (perdendo però l'appoggio dell'Albergo del Pino): segnavia «tre pallini gialli» per Abrà, La Serra, Oneto, che incrocia due volte l'asfaltata e arriva a Oneto in circa 45 minuti da Ponte Organasco."
     }
   ]
 }

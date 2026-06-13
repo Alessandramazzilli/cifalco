@@ -1,83 +1,190 @@
 ---
 import Base from '../layouts/Base.astro';
-import Illustrazione from '../components/Illustrazione.astro';
+import Foto from '../components/Foto.astro';
+import PersonaPlaceholder from '../components/PersonaPlaceholder.astro';
 import NotaMargine from '../components/NotaMargine.astro';
+
+// La Compagnia del Cifalco: le persone che hanno reso possibile il progetto.
+// Nomi, ruoli e descrizioni sono SEGNAPOSTO. Per aggiungere la foto vera vedi
+// il README: basta mettere il file in public/immagini/ con il nome indicato.
+const compagnia = [
+  {
+    nome: 'Luchino Ferraris',
+    ruolo: 'Avido camminatore e sussurratore di api',
+    foto: 'compagnia-luchino-ferraris.jpg',
+  },
+  {
+    nome: 'Marisa Tonni',
+    ruolo: 'Custode delle fontane e memoria vivente del paese',
+    foto: 'compagnia-marisa-tonni.jpg',
+  },
+  {
+    nome: 'Pietro «Gambadilegno» Calvi',
+    ruolo: 'Segnatore di sentieri, non ha mai perso un bivio (parola sua)',
+    foto: 'compagnia-pietro-calvi.jpg',
+  },
+  {
+    nome: 'Adele Sbarbaro',
+    ruolo: 'Raccoglitrice di storie e di funghi, rigorosamente in quest’ordine',
+    foto: 'compagnia-adele-sbarbaro.jpg',
+  },
+  {
+    nome: 'Tommaso Repetto',
+    ruolo: 'Cartografo della domenica e oste a tempo perso',
+    foto: 'compagnia-tommaso-repetto.jpg',
+  },
+];
 ---
 
 <Base
   titolo="Il progetto"
-  descrizione="Che cos’è l’Antica Via del Cifalco: l’idea, le motivazioni e gli obiettivi di un cammino che unisce l’alta Val Trebbia al mare di Portofino."
+  descrizione="Che cos’è l’Antica Via del Cifalco: l’idea, le motivazioni, gli obiettivi e la Compagnia del Cifalco, le persone che hanno reso possibile il cammino."
 >
   <div class="contenitore sezione">
     <p class="occhiello">Il progetto</p>
     <h1>Che cos’è l’Antica Via del Cifalco?</h1>
 
-    <div class="prosa" style="max-width: var(--misura);">
-      <p style="font-size: 1.12rem;">
-        L’Antica Via del Cifalco è un cammino di più giorni che unisce
-        l’Appennino dell’alta Val Trebbia al mare di Portofino: otto tratte su
-        sentieri esistenti, cuciti insieme in un itinerario unico che passa per
-        crinali, faggete, passi e borghi, fino a scendere nel Parco del Monte
-        di Portofino. <em>(Testo segnaposto, da rivedere con la voce del
-        progetto.)</em>
+    <p class="intro">
+      L’Antica Via del Cifalco è un cammino di più giorni che unisce
+      l’Appennino dell’alta Val Trebbia al mare di Portofino: otto tratte su
+      sentieri esistenti, cucite insieme in un itinerario unico che passa per
+      crinali, faggete, passi e borghi, fino a scendere nel Parco del Monte di
+      Portofino. <em>(Testo segnaposto, da rivedere con la voce del progetto.)</em>
+    </p>
+
+    <Foto
+      src="/immagini/borgo-val-trebbia.jpg"
+      alt="Un borgo dell’alta Val Trebbia con le case in pietra e i monti sullo sfondo"
+      rapporto="3/1"
+    />
+  </div>
+
+  <section class="sezione sezione--alternata">
+    <div class="contenitore due-colonne">
+      <div>
+        <h2>L’idea</h2>
+        <p>
+          Queste montagne sono attraversate da una rete fittissima di sentieri
+          (CAI, FIE, l’Alta Via dei Monti Liguri, le antiche vie del sale) che
+          la geografia dei cammini moderni ha lasciato in ombra. L’idea della
+          Via è semplice: scegliere il filo più bello di questa rete e
+          percorrerlo dalla cima al mare, dandogli un nome, una cura e un
+          racconto. <em>(Testo segnaposto.)</em>
+        </p>
+
+        <h2>Le motivazioni</h2>
+        <p>
+          La Via attraversa terre che si stanno spopolando, dove ogni locanda,
+          ogni rifugio e ogni fontana mantenuta è un presidio. Un cammino
+          camminato porta persone, e le persone portano attenzione: ai borghi
+          dell’alta valle, ai pascoli del crinale, alla memoria di chi su
+          queste mulattiere ha lavorato, commerciato e vissuto.
+          <em>(Testo segnaposto.)</em>
+        </p>
+      </div>
+      <div>
+        <h2>Gli obiettivi</h2>
+        <ul class="obiettivi">
+          <li>
+            <strong>Rendere la Via percorribile a chiunque</strong> cammini con
+            gambe e testa: descrizioni a prova di errore, segnavia documentati,
+            punti d’appoggio organizzati.
+          </li>
+          <li>
+            <strong>Completare la segnaletica,</strong> a partire dall’«Anello
+            dei Borghi», il tratto iniziale di prossima realizzazione.
+          </li>
+          <li>
+            <strong>Raccontare il territorio con rigore:</strong> storia,
+            natura e cultura, distinguendo sempre i documenti dalle leggende.
+          </li>
+          <li>
+            <strong>Fare rete</strong> con i cammini che la Via incrocia e con
+            chi li mantiene vivi.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- La Compagnia del Cifalco -->
+  <section class="sezione" aria-labelledby="t-compagnia">
+    <div class="contenitore">
+      <p class="occhiello">Le persone</p>
+      <h2 id="t-compagnia">La Compagnia del Cifalco</h2>
+      <p class="intro">
+        Dietro la Via c’è un gruppo di camminatori, abitanti e teste dure
+        innamorate di questi monti: sono loro che fanno i sopralluoghi,
+        ridipingono i segnavia, tengono i rapporti con i comuni e raccolgono le
+        storie. <em>(Nomi, ruoli e foto qui sotto sono segnaposto: si
+        sostituiscono uno per uno, vedi il README.)</em>
       </p>
 
-      <h2>L’idea</h2>
-      <p>
-        Queste montagne sono attraversate da una rete fittissima di sentieri
-        — CAI, FIE, l’Alta Via dei Monti Liguri, le antiche vie del sale —
-        che la geografia dei cammini moderni ha lasciato in ombra. L’idea
-        della Via è semplice: scegliere il filo più bello di questa rete e
-        percorrerlo da cima a mare, dandogli un nome, una cura e un racconto.
-        <em>(Testo segnaposto.)</em>
-      </p>
-
-      <h2>Le motivazioni</h2>
-      <p>
-        La Via attraversa terre che si stanno spopolando, dove ogni locanda,
-        ogni rifugio e ogni fontana mantenuta è un presidio. Un cammino
-        camminato porta persone, e le persone portano attenzione: ai borghi
-        dell’alta valle, ai pascoli del crinale, alla memoria di chi su queste
-        mulattiere ha lavorato, commerciato e vissuto.
-        <em>(Testo segnaposto.)</em>
-      </p>
-
-      <h2>Gli obiettivi</h2>
-      <ul>
-        <li>
-          <strong>Rendere la Via percorribile a chiunque</strong> cammini con
-          gambe e testa: descrizioni a prova di errore, segnavia documentati,
-          punti d’appoggio organizzati.
-        </li>
-        <li>
-          <strong>Completare la segnaletica:</strong> a partire
-          dall’«Anello dei Borghi», il tratto iniziale di prossima
-          realizzazione.
-        </li>
-        <li>
-          <strong>Raccontare il territorio con rigore:</strong> storia,
-          natura e cultura, distinguendo sempre i documenti dalle leggende.
-        </li>
-        <li>
-          <strong>Fare rete</strong> con i cammini che la Via incrocia e con
-          chi li mantiene vivi.
-        </li>
+      <ul class="compagnia">
+        {
+          compagnia.map((persona) => (
+            <li class="persona">
+              <PersonaPlaceholder nomeFile={persona.foto} />
+              <h3 class="persona__nome">{persona.nome}</h3>
+              <p class="persona__ruolo">{persona.ruolo}</p>
+            </li>
+          ))
+        }
       </ul>
     </div>
+  </section>
 
-    <Illustrazione
-      scena="colline"
-      alt="Il crinale appenninico della Via del Cifalco, con il sentiero che corre verso il mare"
-      nomeFile="progetto-crinale-verso-il-mare.jpg"
-      rapporto="21/9"
-    />
-
-    <NotaMargine>
+  <div class="contenitore sezione">
+    <NotaMargine titolo="Vuoi entrare nella Compagnia?">
       <p>
-        Vuoi dare una mano? Il progetto vive di chi cammina, segnala e
-        racconta: trovi come contribuire nella pagina
-        <a href="/chi-siamo">Chi siamo</a>.
+        Il progetto vive di chi cammina, segnala e racconta. Trovi come dare
+        una mano nella pagina <a href="/chi-siamo">Chi siamo</a> o scrivendoci
+        dai <a href="/contatti">contatti</a>.
       </p>
     </NotaMargine>
   </div>
 </Base>
+
+<style>
+  .intro {
+    font-size: 1.12rem;
+    max-width: var(--misura);
+  }
+
+  .due-colonne {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  }
+  .due-colonne h2:first-child {
+    margin-top: 0;
+  }
+
+  .obiettivi li {
+    margin-bottom: 0.7rem;
+  }
+
+  .compagnia {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  }
+
+  .persona {
+    text-align: center;
+  }
+
+  .persona__nome {
+    font-size: 1.2rem;
+    margin: 0.9rem 0 0.2rem;
+  }
+
+  .persona__ruolo {
+    color: var(--inchiostro-tenue);
+    font-size: 0.97rem;
+    margin: 0;
+  }
+</style>

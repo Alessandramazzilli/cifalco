@@ -154,7 +154,7 @@ const tipiLegenda = Object.entries(ETICHETTE_TIPO) as [
             class:list={['mappa__punto', `mappa__punto--${punto.tipo}`]}
             data-punto={punto.id}
             style={`left:${(punto.x / 1000) * 100}%; top:${(punto.y / 700) * 100}%;`}
-            aria-label={`${punto.nome} — ${ETICHETTE_TIPO[punto.tipo]}`}
+            aria-label={`${punto.nome}, ${ETICHETTE_TIPO[punto.tipo]}`}
           >
             <span class="mappa__punto-icona" aria-hidden="true">
               <IconaPunto tipo={punto.tipo} dimensione={15} />

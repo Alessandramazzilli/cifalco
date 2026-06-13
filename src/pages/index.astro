@@ -1,48 +1,37 @@
 ---
 import Base from '../layouts/Base.astro';
-import Illustrazione from '../components/Illustrazione.astro';
 import CardItinerario from '../components/CardItinerario.astro';
-import NotaMargine from '../components/NotaMargine.astro';
 import { caricaPercorso } from '../lib/percorso';
-import { getCollection } from 'astro:content';
 
 const percorso = await caricaPercorso();
-const articoli = (await getCollection('articoli'))
-  .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf())
-  .slice(0, 3);
 ---
 
 <Base
   titolo="L’Antica Via del Cifalco"
   descrizione="Dall’alta Val Trebbia al mare di Portofino, a piedi: l’Antica Via del Cifalco è un cammino di più giorni tra crinali, faggete, passi e borghi. Itinerari, walk planner e mappa illustrata."
 >
-  <!-- Hero -->
-  <section class="hero">
-    <div class="contenitore hero__griglia">
-      <div class="hero__testo">
-        <p class="occhiello">Un cammino di comunità</p>
-        <h1>Dalla Val Trebbia al mare, sulla strada dei muli</h1>
-        <p class="hero__sottotitolo">
-          L’Antica Via del Cifalco unisce l’Appennino dell’alta Val Trebbia al
-          mare di Portofino: otto tratte tra crinali, faggete, passi e borghi,
-          sulla rete di sentieri che muli, commercianti, saltimbanchi e
-          briganti hanno battuto per secoli.
-        </p>
-        <div class="hero__azioni">
-          <a class="bottone bottone--pieno" href="/itinerario#pianifica">
-            Pianifica la camminata
-          </a>
-          <a class="bottone bottone--contorno" href="/itinerario#mappa">
-            Guarda la mappa
-          </a>
-        </div>
+  <!-- Banner -->
+  <section
+    class="hero"
+    style="background-image: linear-gradient(180deg, rgba(46,51,44,0.15) 0%, rgba(46,51,44,0.30) 45%, rgba(46,51,44,0.78) 100%), url('/immagini/home-banner-valle-del-cifalco.jpg');"
+  >
+    <div class="contenitore hero__contenuto">
+      <p class="occhiello hero__occhiello">Un cammino di comunità</p>
+      <h1>Dalla Val Trebbia al mare, sulla strada dei muli</h1>
+      <p class="hero__sottotitolo">
+        L’Antica Via del Cifalco unisce l’Appennino dell’alta Val Trebbia al
+        mare di Portofino: otto tratte tra crinali, faggete, passi e borghi,
+        sulla rete di sentieri che muli, commercianti, saltimbanchi e briganti
+        hanno battuto per secoli.
+      </p>
+      <div class="hero__azioni">
+        <a class="bottone bottone--pieno" href="/itinerario#pianifica">
+          Pianifica la camminata
+        </a>
+        <a class="bottone bottone--contorno hero__bottone-chiaro" href="/itinerario#mappa">
+          Guarda la mappa
+        </a>
       </div>
-      <Illustrazione
-        scena="colline"
-        alt="Il sentiero della Via del Cifalco corre sul crinale appenninico verso il mare"
-        nomeFile="home-hero-via-del-cifalco.jpg"
-        rapporto="4/3"
-      />
     </div>
   </section>
 
@@ -53,7 +42,7 @@ const articoli = (await getCollection('articoli'))
         <article class="richiamo">
           <h2 class="richiamo__titolo">Cammina</h2>
           <p>
-            Tre itinerari sul filo della Via: la traversata intera in 4–5
+            Tre itinerari sul filo della Via: la traversata intera in 4-5
             giorni, i crinali dell’alta Val Trebbia, la discesa dal crinale al
             mare. Tempi, segnavia e acqua spiegati in modo che non ci si possa
             perdere.
@@ -103,28 +92,20 @@ const articoli = (await getCollection('articoli'))
   </section>
 
   <!-- Il filo dell'acqua -->
-  <section class="sezione sezione--bosco">
-    <div class="contenitore home-acqua">
-      <div>
-        <p class="occhiello">Il filo dell’acqua</p>
-        <h2>Dalle fonti del crinale al Mar Ligure</h2>
-        <p>
-          La Via è scandita dall’acqua: la fontana del trivio a Ponte
-          Organasco, la fonte della Casermetta, le sorgive e la Fontana del
-          Vino verso Casanova, i guadi dell’Aveto, il Rio dell’Acquapendente —
-          fino all’acqua che chiude il cammino, quella del mare di Portofino.
-          Nelle schede e nel planner trovi sempre dove riempire le borracce.
-        </p>
-        <a class="bottone bottone--contorno" href="/itinerario#acqua">
-          I punti acqua della Via
-        </a>
-      </div>
-      <Illustrazione
-        scena="fonte"
-        alt="Fontana in pietra con abbeveratoio lungo la Via"
-        nomeFile="home-fonte-della-via.jpg"
-        rapporto="4/3"
-      />
+  <section class="sezione sezione--acqua">
+    <div class="contenitore">
+      <p class="occhiello">Il filo dell’acqua</p>
+      <h2>Dalle fonti del crinale al Mar Ligure</h2>
+      <p style="font-size: 1.1rem;">
+        La Via è scandita dall’acqua: la fontana del trivio a Ponte Organasco,
+        la fonte della Casermetta, le sorgive e la Fontana del Vino verso
+        Casanova, i guadi dell’Aveto, il Rio dell’Acquapendente, fino all’acqua
+        che chiude il cammino, quella del mare di Portofino. Nelle schede e nel
+        planner trovi sempre dove riempire le borracce.
+      </p>
+      <a class="bottone bottone--contorno" href="/itinerario#acqua">
+        I punti acqua della Via
+      </a>
     </div>
   </section>
 
@@ -140,85 +121,79 @@ const articoli = (await getCollection('articoli'))
             crinale come di un amico. È per quello che teniamo la fontana in
             ordine.»
           </p>
-          <footer>
-            — Una locandiera dell’alta valle <em>(testo segnaposto)</em>
-          </footer>
+          <footer>Una locandiera dell’alta valle <em>(testo segnaposto)</em></footer>
         </blockquote>
         <blockquote class="voce card">
           <p>
             «Mio nonno portava le some su questi sentieri. Quando ridipingo un
             segnavia mi sembra di salutarlo.»
           </p>
-          <footer>
-            — Un volontario della Compagnia <em>(testo segnaposto)</em>
-          </footer>
+          <footer>Un volontario della Compagnia <em>(testo segnaposto)</em></footer>
         </blockquote>
         <blockquote class="voce card">
           <p>
             «Il giorno che dal Pietrabianca vedi il mare per la prima volta,
             capisci perché questa strada non è mai stata abbandonata davvero.»
           </p>
-          <footer>
-            — Un camminatore della prima ora <em>(testo segnaposto)</em>
-          </footer>
+          <footer>Un camminatore della prima ora <em>(testo segnaposto)</em></footer>
         </blockquote>
       </div>
     </div>
   </section>
 
-  <!-- Approfondimenti -->
+  <!-- Prima di partire -->
   <section class="sezione sezione--alternata">
     <div class="contenitore">
-      <p class="occhiello">Dal quaderno</p>
-      <h2>Storie per il cammino</h2>
-      <div class="griglia" style="margin-top: 1.5rem;">
-        {
-          articoli.map((articolo) => (
-            <article class="card anteprima">
-              <p class="occhiello">{articolo.data.occhiello}</p>
-              <h3>
-                <a href={`/approfondimenti/${articolo.id}`}>
-                  {articolo.data.titolo}
-                </a>
-              </h3>
-              <p>{articolo.data.estratto}</p>
-            </article>
-          ))
-        }
+      <p class="occhiello">Prima di partire</p>
+      <h2>Un cammino vero, da preparare con cura</h2>
+      <p style="font-size: 1.1rem;">
+        La Via è descritta tratta per tratta, ma resta un cammino di montagna:
+        guarda le previsioni, parti con l’acqua piena e di’ a qualcuno dove
+        vai. Negli approfondimenti trovi la storia di questi sentieri, le voci
+        di chi li cammina e la rete di cammini che la Via attraversa.
+      </p>
+      <div class="hero__azioni">
+        <a class="bottone bottone--pieno" href="/itinerario/informazioni-pratiche">
+          Informazioni pratiche
+        </a>
+        <a class="bottone bottone--contorno" href="/approfondimenti">
+          Approfondimenti
+        </a>
       </div>
-      <NotaMargine titolo="Prima di partire">
-        <p>
-          La Via è descritta con cura, ma resta un cammino di montagna: guarda
-          le previsioni, parti con l’acqua piena e di’ a qualcuno dove vai.
-          Tutto il resto è nelle
-          <a href="/itinerario/informazioni-pratiche">informazioni pratiche</a>.
-        </p>
-      </NotaMargine>
     </div>
   </section>
 </Base>
 
 <style>
   .hero {
-    padding-block: clamp(2.5rem, 7vw, 5rem);
+    background-size: cover;
+    background-position: center;
+    color: var(--chiaro);
+    display: flex;
+    align-items: flex-end;
+    min-height: clamp(26rem, 70vh, 40rem);
+    padding-block: clamp(2.5rem, 7vw, 4.5rem);
   }
 
-  .hero__griglia {
-    display: grid;
-    gap: 2.5rem;
-    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
-    align-items: center;
+  .hero__contenuto {
+    max-width: 46rem;
   }
 
-  @media (max-width: 56rem) {
-    .hero__griglia {
-      grid-template-columns: 1fr;
-    }
+  .hero h1 {
+    color: var(--chiaro);
+    font-size: clamp(2.1rem, 5.5vw, 3.4rem);
+    text-shadow: 0 1px 14px rgb(46 51 44 / 0.5);
+  }
+
+  .hero__occhiello {
+    color: var(--salvia);
   }
 
   .hero__sottotitolo {
     font-size: 1.15rem;
-    color: var(--inchiostro-tenue);
+    color: var(--chiaro);
+    max-width: 40rem;
+    text-shadow: 0 1px 10px rgb(46 51 44 / 0.55);
   }
 
   .hero__azioni {
@@ -228,29 +203,22 @@ const articoli = (await getCollection('articoli'))
     margin-top: 1.5rem;
   }
 
+  /* Sul banner scuro: bottone a contorno chiaro. */
+  .hero__bottone-chiaro {
+    color: var(--chiaro);
+    border-color: var(--chiaro);
+  }
+  .hero__bottone-chiaro:hover {
+    background: var(--chiaro);
+    color: var(--bosco-scuro);
+  }
+
   .richiamo__titolo {
     font-size: 1.45rem;
   }
 
   .richiamo a {
     font-weight: 650;
-  }
-
-  .home-acqua {
-    display: grid;
-    gap: 2.5rem;
-    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
-    align-items: center;
-  }
-
-  @media (max-width: 56rem) {
-    .home-acqua {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .home-acqua .bottone {
-    margin-top: 0.5rem;
   }
 
   .voce {
@@ -267,18 +235,5 @@ const articoli = (await getCollection('articoli'))
     font-family: var(--sans);
     font-size: 0.92rem;
     color: var(--inchiostro-tenue);
-  }
-
-  .anteprima h3 {
-    font-size: 1.2rem;
-  }
-
-  .anteprima h3 a {
-    color: var(--bosco-scuro);
-    text-decoration: none;
-  }
-
-  .anteprima h3 a:hover {
-    text-decoration: underline;
   }
 </style>

@@ -1,0 +1,39 @@
+---
+/**
+ * Foto reale. Le immagini stanno in public/immagini/ (vedi README).
+ * Per ora non passa per l'ottimizzatore di Astro perché i file in public/
+ * sono serviti così come sono: sono già stati ridimensionati e compressi.
+ */
+interface Props {
+  src: string; // es. "/immagini/faggeta.jpg"
+  alt: string;
+  rapporto?: string; // es. "16/9", "4/3", "3/4"
+  didascalia?: string;
+  classe?: string;
+}
+const { src, alt, rapporto = '16/9', didascalia, classe } = Astro.props;
+---
+
+<figure class:list={['foto', classe]}>
+  <img src={src} alt={alt} loading="lazy" decoding="async" style={`aspect-ratio: ${rapporto};`} />
+  {didascalia && <figcaption>{didascalia}</figcaption>}
+</figure>
+
+<style>
+  .foto {
+    margin: 0;
+    border-radius: var(--raggio-grande);
+    overflow: hidden;
+    box-shadow: var(--ombra);
+  }
+  .foto img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+  }
+  .foto figcaption {
+    font-size: 0.85rem;
+    color: var(--inchiostro-tenue);
+    padding: 0.5rem 0.2rem 0;
+  }
+</style>

@@ -6,10 +6,10 @@
 /* --- Font self-hosted (vedi node_modules/@fontsource…) ------------------- */
 @import '@fontsource-variable/source-serif-4';
 @import '@fontsource-variable/source-sans-3';
-@import '@fontsource/caveat';
 
 /* --- Tavolozza ------------------------------------------------------------
-   Verde dei faggi, sabbia/terra, grigio delle rocce, accento acquatico.
+   Verde dei faggi, grigio delle rocce, accento acquatico, marrone della terra.
+   Gli sfondi sono verdi/grigi/acqua: niente fondo «carta».
    I nomi sono semantici: usa le variabili, non i codici esadecimali.
 --------------------------------------------------------------------------- */
 :root {
@@ -19,39 +19,47 @@
   --campagna: #6B7D5C;
   --salvia: #8A9A7B;
 
-  /* Marrone della terra — anche il colore «carta» del quaderno.
-     I fondi carta sono tinte chiare derivate dal tortora #A8957E. */
-  --umbra: #5C4A3A;
-  --terra: #7A6450;
-  --tortora: #A8957E;
-  --carta: #F2EDE5;          /* fondo principale */
-  --carta-scura: #E8E0D3;    /* blocchi alternati, card */
-  --sabbia: #D8CDBB;         /* bordi, divisori */
-
   /* Grigio delle rocce */
   --pietra-scura: #3D3D3A;
   --pietra: #6E6E68;
   --pietra-chiara: #B5B3AC;
 
-  /* Accento acquatico — fonti, fontane, abbeveratoi e torrenti. Discreto. */
+  /* Accento acquatico — fonti, fontane, abbeveratoi e torrenti. */
   --acqua: #5B7C7D;
+  --acqua-scura: #455F60;
   --acqua-chiara: #7FA0A0;
-  --acqua-fondo: #E4EBEA;
+  --acqua-fondo: #DCE6E4;
+
+  /* Marrone della terra — dettagli caldi, calore delle locande. */
+  --umbra: #5C4A3A;
+  --terra: #7A6450;
+  --tortora: #A8957E;
+
+  /* Sfondi: tinte chiare di verde salvia e grigio pietra (niente crema) */
+  --fondo: #DDE3D8;          /* fondo principale, salvia-pietra chiaro */
+  --fondo-scuro: #CBD4C5;    /* blocchi alternati */
+  --superficie: #EEF1EA;     /* card, campi: si stacca dal fondo */
+  --sabbia: #B7C0AD;         /* bordi, divisori */
+  --chiaro: #F1F3EE;         /* testo ed elementi chiari sui fondi scuri */
+
+  /* Alias di compatibilità: i vecchi nomi «carta» ora puntano ai fondi
+     verde-salvia/pietra (niente più crema). */
+  --carta: var(--superficie);
+  --carta-scura: var(--fondo-scuro);
 
   /* Testo */
-  --inchiostro: #3D3D3A;     /* il grigio roccia scuro, mai #000 */
-  --inchiostro-tenue: #5C5C57;
+  --inchiostro: #2E332C;     /* verde-grigio quasi nero, mai #000 */
+  --inchiostro-tenue: #54594E;
 
   /* Tipografia */
   --serif: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
   --sans: 'Source Sans 3 Variable', -apple-system, 'Segoe UI', sans-serif;
-  --mano: 'Caveat', cursive; /* SOLO per le note a margine */
 
   /* Ritmo */
   --raggio: 0.625rem;        /* angoli addolciti ma misurati */
   --raggio-grande: 1rem;
-  --ombra: 0 1px 2px rgb(44 42 36 / 0.06), 0 4px 14px rgb(44 42 36 / 0.07);
-  --misura: 68ch;            /* larghezza massima del testo corrente */
+  --ombra: 0 1px 2px rgb(46 51 44 / 0.07), 0 4px 14px rgb(46 51 44 / 0.09);
+  --misura: 60rem;           /* larghezza massima dei blocchi di prosa lunga */
   --colonna: 72rem;          /* larghezza massima del layout */
 }
 
@@ -80,7 +88,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--carta);
+  background: var(--fondo);
   color: var(--inchiostro);
   font-family: var(--sans);
   font-size: 1.0625rem;
@@ -104,7 +112,6 @@ h4 { font-size: 1.1rem; }
 
 p, ul, ol {
   margin: 0 0 1em;
-  max-width: var(--misura);
 }
 
 a {
@@ -152,12 +159,12 @@ hr.divisore {
   left: 1rem; top: -4rem;
   z-index: 100;
   background: var(--bosco);
-  color: var(--carta);
+  color: var(--chiaro);
   padding: 0.6rem 1rem;
   border-radius: var(--raggio);
   transition: top 0.15s ease;
 }
-.salta-al-contenuto:focus { top: 1rem; color: var(--carta); }
+.salta-al-contenuto:focus { top: 1rem; color: var(--chiaro); }
 
 /* --- Layout ---------------------------------------------------------------- */
 .contenitore {
@@ -167,15 +174,25 @@ hr.divisore {
 
 .sezione { padding-block: clamp(2.5rem, 7vw, 5rem); }
 
-.sezione--alternata { background: var(--carta-scura); }
+.sezione--alternata { background: var(--fondo-scuro); }
 
-.sezione--bosco {
-  background: var(--bosco);
-  color: var(--carta);
+/* Bande a tinta piena: portano verde, acqua e pietra sugli sfondi. */
+.sezione--bosco { background: var(--bosco); }
+.sezione--acqua { background: var(--acqua-scura); }
+.sezione--pietra { background: var(--pietra-scura); }
+
+.sezione--bosco,
+.sezione--acqua,
+.sezione--pietra {
+  color: var(--chiaro);
 }
-.sezione--bosco h2, .sezione--bosco h3 { color: var(--carta); }
-.sezione--bosco a { color: var(--acqua-chiara); }
-.sezione--bosco a:hover { color: var(--carta); }
+.sezione--bosco h1, .sezione--bosco h2, .sezione--bosco h3, .sezione--bosco h4,
+.sezione--acqua h1, .sezione--acqua h2, .sezione--acqua h3, .sezione--acqua h4,
+.sezione--pietra h1, .sezione--pietra h2, .sezione--pietra h3, .sezione--pietra h4 {
+  color: var(--chiaro);
+}
+.sezione--bosco a, .sezione--acqua a, .sezione--pietra a { color: var(--chiaro); }
+.sezione--bosco a:hover, .sezione--acqua a:hover, .sezione--pietra a:hover { color: var(--acqua-chiara); }
 
 .occhiello {
   font-family: var(--sans);
@@ -186,7 +203,9 @@ hr.divisore {
   color: var(--umbra);
   margin-bottom: 0.6rem;
 }
-.sezione--bosco .occhiello { color: var(--salvia); }
+.sezione--bosco .occhiello,
+.sezione--acqua .occhiello,
+.sezione--pietra .occhiello { color: var(--salvia); }
 
 /* --- Componenti ------------------------------------------------------------ */
 
@@ -206,25 +225,34 @@ hr.divisore {
 
 .bottone--pieno {
   background: var(--bosco);
-  color: var(--carta);
+  color: var(--chiaro);
 }
-.bottone--pieno:hover { background: var(--bosco-scuro); color: var(--carta); }
+.bottone--pieno:hover { background: var(--bosco-scuro); color: var(--chiaro); }
 
 .bottone--contorno {
   background: transparent;
   color: var(--bosco);
   border-color: var(--bosco);
 }
-.bottone--contorno:hover { background: var(--bosco); color: var(--carta); }
+.bottone--contorno:hover { background: var(--bosco); color: var(--chiaro); }
 
-.sezione--bosco .bottone--pieno { background: var(--carta); color: var(--bosco-scuro); }
-.sezione--bosco .bottone--pieno:hover { background: var(--sabbia); }
-.sezione--bosco .bottone--contorno { color: var(--carta); border-color: var(--salvia); }
-.sezione--bosco .bottone--contorno:hover { background: var(--carta); color: var(--bosco-scuro); border-color: var(--carta); }
+/* Bottoni sulle bande scure */
+.sezione--bosco .bottone--pieno,
+.sezione--acqua .bottone--pieno,
+.sezione--pietra .bottone--pieno { background: var(--chiaro); color: var(--bosco-scuro); }
+.sezione--bosco .bottone--pieno:hover,
+.sezione--acqua .bottone--pieno:hover,
+.sezione--pietra .bottone--pieno:hover { background: var(--salvia); color: var(--bosco-scuro); }
+.sezione--bosco .bottone--contorno,
+.sezione--acqua .bottone--contorno,
+.sezione--pietra .bottone--contorno { color: var(--chiaro); border-color: var(--chiaro); }
+.sezione--bosco .bottone--contorno:hover,
+.sezione--acqua .bottone--contorno:hover,
+.sezione--pietra .bottone--contorno:hover { background: var(--chiaro); color: var(--bosco-scuro); border-color: var(--chiaro); }
 
 /* Card leggere */
 .card {
-  background: var(--carta-scura);
+  background: var(--superficie);
   border: 1px solid var(--sabbia);
   border-radius: var(--raggio-grande);
   padding: 1.5rem;
@@ -304,7 +332,8 @@ table.tabella th {
   color: var(--umbra);
 }
 
-/* Prosa degli articoli */
+/* Prosa lunga: testo continuo, con una misura di lettura comoda. */
+.prosa { max-width: var(--misura); }
 .prosa h2 { margin-top: 2rem; }
 .prosa h3 { margin-top: 1.5rem; }
 .prosa blockquote {

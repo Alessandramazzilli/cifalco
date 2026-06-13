@@ -59,7 +59,7 @@ const datiPlanner = {
           {
             percorso.itinerari.map((i) => (
               <option value={i.id}>
-                {i.nome} — {i.sottotitolo.toLowerCase()}
+                {i.nome}, {i.sottotitolo.toLowerCase()}
               </option>
             ))
           }
@@ -87,9 +87,9 @@ const datiPlanner = {
       <div class="planner__campo">
         <label for="pl-passo">Il tuo passo</label>
         <select id="pl-passo" name="passo">
-          <option value="1.25">Tranquillo — prime uscite, famiglie</option>
-          <option value="1" selected>Medio — cammino abitualmente</option>
-          <option value="0.85">Allenato — montagna frequente</option>
+          <option value="1.25">Tranquillo, prime uscite, famiglie</option>
+          <option value="1" selected>Medio, cammino abitualmente</option>
+          <option value="0.85">Allenato, montagna frequente</option>
         </select>
       </div>
 
@@ -105,7 +105,12 @@ const datiPlanner = {
   </form>
 
   <div class="planner__risultato">
-    <h3>Il tuo piano</h3>
+    <div class="planner__intestazione">
+      <h3>Il tuo piano</h3>
+      <button type="button" class="bottone bottone--contorno planner__scarica" data-azione="scarica">
+        Scarica il piano
+      </button>
+    </div>
 
     <dl class="planner__dati">
       <div class="dato"><dt>Distanza</dt><dd data-esito="distanza"></dd></div>
@@ -185,6 +190,22 @@ const datiPlanner = {
 
   .planner__titolo {
     margin-bottom: 0.2rem;
+  }
+
+  .planner__intestazione {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .planner__intestazione h3 {
+    margin: 0;
+  }
+  .planner__scarica {
+    font-size: 0.92rem;
+    padding: 0.45rem 1.1rem;
   }
 
   .planner__sottotitolo {
@@ -447,6 +468,8 @@ const datiPlanner = {
     // --- Stepper delle tappe ---------------------------------------------
     let passi: { tappa: string; titolo: string; testo: string }[] = [];
     let passoCorrente = 0;
+    let testoPiano = ''; // il piano corrente in testo, pronto da scaricare
+    let nomePiano = 'piano-via-del-cifalco.txt';
 
     const bottoneIndietro = sezione.querySelector<HTMLButtonElement>('[data-azione="indietro"]')!;
     const bottoneAvanti = sezione.querySelector<HTMLButtonElement>('[data-azione="avanti"]')!;
@@ -532,7 +555,7 @@ const datiPlanner = {
             const g1 = giornata.tappe[giornata.tappe.length - 1];
             const da = inverso ? g0.a : g0.da;
             const a = inverso ? g1.da : g1.a;
-            return `<li><strong>Giorno ${i + 1}:</strong> da ${da} a ${a} — ${formattaOre(giornata.ore)}</li>`;
+            return `<li><strong>Giorno ${i + 1}:</strong> da ${da} a ${a} (${formattaOre(giornata.ore)})</li>`;
           })
           .join('');
         blocchoGiornate.innerHTML = `<ol class="planner__giornate">${voci}</ol>`;
@@ -554,19 +577,19 @@ const datiPlanner = {
 
       // Acqua lungo il tratto, nell'ordine in cui la incontri.
       const vistiAcqua = new Set<string>();
-      const vociAcqua: string[] = [];
+      const acquaNomi: string[] = [];
       for (const tappa of tappe) {
         const puntiTappa = inverso ? [...tappa.punti].reverse() : tappa.punti;
         for (const id of puntiTappa) {
           const punto = dati.punti[id];
           if (punto?.acquaPotabile && !vistiAcqua.has(id)) {
             vistiAcqua.add(id);
-            vociAcqua.push(`<li>${punto.nome}</li>`);
+            acquaNomi.push(punto.nome);
           }
         }
       }
       esito('acqua').innerHTML =
-        vociAcqua.join('') ||
+        acquaNomi.map((nome) => `<li>${nome}</li>`).join('') ||
         '<li>Nessuna fonte su questo tratto: parti con tutta l’acqua che ti serve.</li>';
 
       // Zaino: base + aggiunte legate a durata, quota e difficoltà.
@@ -600,6 +623,74 @@ const datiPlanner = {
       passoCorrente = 0;
       mostraPasso();
 
+      // Prepara il testo del piano completo, pronto da scaricare.
+      const senso = inverso ? 'inverso' : 'classico';
+      const r: string[] = [];
+      r.push('L’ANTICA VIA DEL CIFALCO');
+      r.push(`Piano di cammino: ${itinerario.nome}`);
+      r.push('');
+      r.push(
+        itinerario.anello
+          ? `Anello con partenza e ritorno a ${partenza}.`
+          : `Da ${partenza} a ${arrivo} (senso ${senso}).`
+      );
+      r.push('');
+      r.push('IN SINTESI');
+      r.push(`  Distanza stimata: ${distanza.toLocaleString('it-IT', { maximumFractionDigits: 1 })} km`);
+      r.push(`  Salita: ${salita} m   Discesa: ${discesa} m`);
+      r.push(`  Tempo di cammino (soste escluse): ${formattaOre(ore)}`);
+      r.push(`  Difficoltà: ${ETICHETTA_DIFFICOLTA[itinerario.difficolta]}`);
+      r.push('');
+      r.push('SEGNAVIA, TRATTA PER TRATTA');
+      tappe.forEach((t) => {
+        const tratto = inverso ? `${t.a} > ${t.da}` : `${t.da} > ${t.a}`;
+        r.push(`  ${tratto}`);
+        r.push(`    ${t.segnavia}`);
+      });
+      if (giornate.length > 1) {
+        r.push('');
+        r.push('SUDDIVISIONE IN GIORNATE');
+        giornate.forEach((g, i) => {
+          const da = inverso ? g.tappe[0].a : g.tappe[0].da;
+          const a = inverso ? g.tappe[g.tappe.length - 1].da : g.tappe[g.tappe.length - 1].a;
+          r.push(`  Giorno ${i + 1}: da ${da} a ${a} (${formattaOre(g.ore)})`);
+        });
+      }
+      r.push('');
+      r.push('ACQUA LUNGO IL TRATTO');
+      if (acquaNomi.length) acquaNomi.forEach((n) => r.push(`  - ${n}`));
+      else r.push('  Nessuna fonte: parti con tutta l’acqua che ti serve.');
+      r.push('');
+      r.push('COSA PORTARE');
+      zaino.forEach((v) => r.push(`  - ${v}`));
+      r.push('');
+      r.push('LE TAPPE, PASSO PER PASSO');
+      let tappaTitoloPrec = '';
+      passi.forEach((p) => {
+        if (p.tappa !== tappaTitoloPrec) {
+          r.push('');
+          r.push(`  ${p.tappa}`);
+          tappaTitoloPrec = p.tappa;
+        }
+        r.push(`    • ${p.titolo}`);
+        r.push(`      ${p.testo}`);
+      });
+      if (inverso) {
+        r.push('');
+        r.push('NB: le indicazioni passo per passo sono descritte nel senso');
+        r.push('classico; in senso inverso usale come riferimento dei luoghi,');
+        r.push('in ordine contrario.');
+      }
+      r.push('');
+      r.push('Buon cammino. La montagna chiede rispetto, non coraggio.');
+      r.push('anticaviadelcifalco.it');
+      testoPiano = r.join('\n');
+      nomePiano =
+        'piano-' +
+        itinerario.id +
+        (itinerario.anello ? '' : '-' + senso) +
+        '.txt';
+
       // Dillo anche alla mappa, se c'è. Il rinvio di un tick garantisce che
       // al primo calcolo lo script della mappa abbia già registrato l'ascolto.
       setTimeout(() =>
@@ -622,6 +713,24 @@ const datiPlanner = {
     [campo.arrivo, campo.senso, campo.passo, campo.tempo].forEach((select) =>
       select.addEventListener('change', calcola)
     );
+
+    // Scarica il piano corrente come file di testo (utile sul sentiero,
+    // anche senza campo: si apre da qualunque telefono).
+    sezione
+      .querySelector<HTMLButtonElement>('[data-azione="scarica"]')!
+      .addEventListener('click', () => {
+        const blob = new Blob([testoPiano], {
+          type: 'text/plain;charset=utf-8',
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = nomePiano;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      });
 
     aggiornaTratto();
     calcola();

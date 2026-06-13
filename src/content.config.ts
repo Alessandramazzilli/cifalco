@@ -4,7 +4,6 @@ import { glob } from 'astro/loaders';
 /**
  * Le tre collection «di percorso» (punti, tappe, itinerari) sono file JSON:
  * aggiornare il cammino significa modificare quei file, non il codice.
- * Gli articoli di Storia e Territorio sono file Markdown.
  * Le istruzioni passo-passo sono nel README.
  */
 
@@ -77,16 +76,4 @@ const itinerari = defineCollection({
   }),
 });
 
-const articoli = defineCollection({
-  loader: glob({ pattern: '*.md', base: './src/content/articoli' }),
-  schema: z.object({
-    titolo: z.string(),
-    occhiello: z.string(),
-    estratto: z.string(),
-    data: z.coerce.date(),
-    // Tema dell'articolo: storia, natura o cultura.
-    tema: z.enum(['storia', 'natura', 'cultura']),
-  }),
-});
-
-export const collections = { punti, tappe, itinerari, articoli };
+export const collections = { punti, tappe, itinerari };

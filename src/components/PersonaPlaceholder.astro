@@ -1,0 +1,37 @@
+---
+/**
+ * Ritratto segnaposto per i membri della Compagnia, in attesa della foto
+ * vera. Per sostituirlo: metti la foto quadrata in public/immagini/ con il
+ * nome indicato e rimpiazza questo componente con un <img> (vedi README).
+ */
+interface Props {
+  nomeFile: string;
+}
+const { nomeFile } = Astro.props;
+---
+
+<span class="ritratto" title={`Foto segnaposto: ${nomeFile}`}>
+  <svg viewBox="0 0 120 120" role="img" aria-label="Ritratto segnaposto" aria-hidden="true">
+    <rect width="120" height="120" fill="var(--fondo-scuro)"></rect>
+    <circle cx="60" cy="46" r="22" fill="var(--salvia)"></circle>
+    <path d="M18 112 C 18 82 42 70 60 70 C 78 70 102 82 102 112 Z" fill="var(--salvia)"></path>
+  </svg>
+</span>
+
+<style>
+  .ritratto {
+    display: block;
+    width: 8.5rem;
+    height: 8.5rem;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--superficie);
+    box-shadow: var(--ombra);
+  }
+  .ritratto svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

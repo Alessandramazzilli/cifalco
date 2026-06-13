@@ -5,6 +5,7 @@ import MappaVia from '../../components/MappaVia.astro';
 import Segnavia from '../../components/Segnavia.astro';
 import NotaMargine from '../../components/NotaMargine.astro';
 import IconaPunto from '../../components/IconaPunto.astro';
+import Foto from '../../components/Foto.astro';
 import { caricaPercorso, formattaOre, ETICHETTE_TIPO } from '../../lib/percorso';
 
 const percorso = await caricaPercorso();
@@ -60,6 +61,12 @@ const puntiAcqua = ordineAcqua.map(
       <div class="dato"><dt>Quota massima</dt><dd>1427 m</dd></div>
     </dl>
 
+    <Foto
+      src="/immagini/faggeta.jpg"
+      alt="La faggeta che la Via attraversa sui crinali dell’alta valle"
+      rapporto="3/1"
+    />
+
     <NotaMargine>
       <p>
         I tempi di percorrenza vengono dalle note di chi ha tracciato la Via e
@@ -78,8 +85,8 @@ const puntiAcqua = ordineAcqua.map(
         <p class="occhiello">Come è segnato il cammino</p>
         <h2 id="titolo-segnavia">I segnavia: una Via, molti segni</h2>
         <p>
-          La Via del Cifalco segue sentieri esistenti — CAI, FIE, Alta Via dei
-          Monti Liguri — e <strong>cambia segnavia lungo il percorso</strong>:
+          La Via del Cifalco segue sentieri esistenti, CAI, FIE, Alta Via dei
+          Monti Liguri, e <strong>cambia segnavia lungo il percorso</strong>:
           bandierine bianco-rosse numerate, pallini e quadrati gialli, cerchi e
           rombi rossi. Per ogni tratta, il planner qui sotto e la
           <a href="/itinerario/descrizione-dettagliata">descrizione dettagliata</a>
@@ -166,7 +173,7 @@ const puntiAcqua = ordineAcqua.map(
         <p>
           Il tratto più asciutto è quello alto: dalla fonte del Rifugio
           Casermetta fino a Barbagelata non ci sono punti acqua certi sul
-          percorso principale — quasi una giornata di cammino. Parti con
+          percorso principale, quasi una giornata di cammino. Parti con
           scorta abbondante; in deviazione trovi la Fontana del Figliolo
           (dal Rifugio Prati di Foppiano) e le fonti sorgive verso Casanova.
           Rii e guadi <strong>non</strong> sono potabili, anche quando l’acqua

@@ -25,10 +25,10 @@ const { titolo = 'Nota a margine', tono = 'terra' } = Astro.props;
   .nota {
     max-width: var(--misura);
     margin-block: 1.5rem;
-    padding: 1rem 1.25rem 1rem 1.4rem;
-    border-left: 3px solid var(--tortora);
+    padding: 1.1rem 1.35rem 1.1rem 1.5rem;
+    border-left: 4px solid var(--terra);
     border-radius: 0 var(--raggio) var(--raggio) 0;
-    background: var(--carta-scura);
+    background: var(--fondo-scuro);
   }
 
   .nota--acqua {
@@ -37,16 +37,17 @@ const { titolo = 'Nota a margine', tono = 'terra' } = Astro.props;
   }
 
   .nota__titolo {
-    /* L'unico uso dell'accento manoscritto in tutto il sito. */
-    font-family: var(--mano);
-    font-size: 1.45rem;
-    line-height: 1;
-    color: var(--umbra);
-    margin: 0 0 0.35rem;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin: 0 0 0.4rem;
   }
 
   .nota--acqua .nota__titolo {
-    color: var(--acqua);
+    color: var(--acqua-scura);
   }
 
   .nota__testo :global(p) {

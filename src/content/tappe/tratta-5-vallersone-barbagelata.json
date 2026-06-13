@@ -7,12 +7,12 @@
   "discesaM": 545,
   "oreBase": 4,
   "segnavia": "«Pallino giallo pieno»",
-  "descrizione": "La grande traversata dei passi: Ertola, Esola, Gifarco, il Passo del Fante e il Valico del Fregarolo, il Lago della Nave e il Passo della Rocca, poi le due cappellette e — presso il Monte Pietrabianca — la prima vista del mare, fino a Barbagelata (1115 m).",
+  "descrizione": "La grande traversata dei passi: Ertola, Esola, Gifarco, il Passo del Fante e il Valico del Fregarolo, il Lago della Nave e il Passo della Rocca, poi le due cappellette e, presso il Monte Pietrabianca, la prima vista del mare, fino a Barbagelata (1115 m).",
   "punti": ["passo-di-vallersone", "lago-della-nave", "passo-della-rocca", "cappelletta-di-cardenosa", "barbagelata"],
   "passi": [
     {
       "titolo": "La sequenza dei passi",
-      "testo": "Dal Passo Vallersone, a destra, il «pallino giallo pieno» tocca in successione il Passo Ertola (1287 m, 15 minuti), il Passo Esola (1307 m, altri 15), il bivio per la vetta del Monte Roccabruna (30 minuti dall'Esola) e il Passo Gifarco, 5 minuti dopo. Attenzione: il Passo Gifarco è davvero poco visibile venendo dall'Esola — il cartello è rivolto a chi arriva in senso opposto."
+      "testo": "Dal Passo Vallersone, a destra, il «pallino giallo pieno» tocca in successione il Passo Ertola (1287 m, 15 minuti), il Passo Esola (1307 m, altri 15), il bivio per la vetta del Monte Roccabruna (30 minuti dall'Esola) e il Passo Gifarco, 5 minuti dopo. Attenzione: il Passo Gifarco è davvero poco visibile venendo dall'Esola, il cartello è rivolto a chi arriva in senso opposto."
     },
     {
       "titolo": "Dal Passo del Fante al Fregarolo",

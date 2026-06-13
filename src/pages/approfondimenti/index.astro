@@ -1,117 +1,232 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Illustrazione from '../../components/Illustrazione.astro';
-import { getCollection } from 'astro:content';
+import Foto from '../../components/Foto.astro';
+import NotaMargine from '../../components/NotaMargine.astro';
 
-const articoli = (await getCollection('articoli')).sort(
-  (a, b) => b.data.data.valueOf() - a.data.data.valueOf()
-);
-
-const ETICHETTA_TEMA = {
-  storia: 'Storia',
-  natura: 'Natura',
-  cultura: 'Cultura',
-} as const;
+const cammini = [
+  {
+    nome: 'I sentieri CAI dell’alta Val Trebbia',
+    testo:
+      'La spina dorsale della prima metà della Via: i sentieri 177, 179, 129 e 127 del Club Alpino Italiano, con le classiche bandierine bianco-rosse numerate, da Cerignale fino al Passo di Vallersone e alle vette di Oramara e Montarlone.',
+  },
+  {
+    nome: 'L’Alta Via dei Monti Liguri',
+    testo:
+      'La grande dorsale ligure. La Via la incrocia a Barbagelata e ne condivide il primo tratto verso il Passo della Scoglina: chi arriva dall’Alta Via può agganciare la Via del Cifalco in entrambe le direzioni.',
+  },
+  {
+    nome: 'La Via del Sale e la Via del Mare',
+    testo:
+      'L’ultimo tratto della Via, dal Passo dei Casetti a Portofino, ricalca integralmente la Via del Sale e Via del Mare: la strada storica con cui l’entroterra scendeva al mare a scambiare sale, olio e acciughe.',
+  },
+  {
+    nome: 'L’Itinerario Storico Colombiano',
+    testo:
+      'Il cammino che collega i luoghi colombiani dell’entroterra ligure. La Via lo incontra prima del Passo dei Casetti e ne segue il segnavia bianco-rosso per gli ultimi dieci minuti della settima tratta.',
+  },
+  {
+    nome: 'L’Itinerario dei Feudi Fliscani',
+    testo:
+      'Il sentiero dei feudi dei Fieschi in Fontanabuona (segnavia «IFF» su rettangolo azzurro e giallo). Scenderebbe da Neirone a Gattorna sotto l’asfaltata: al momento non è agibile, ma il suo recupero renderebbe più bella la settima tratta.',
+  },
+  {
+    nome: 'I sentieri del Parco di Portofino',
+    testo:
+      'Il gran finale: dalla scalinata di Ruta, il «quadrato rosso pieno» entra nel Parco del Monte di Portofino e scende al mare per la Sella della Gaixella, Pietre Strette e San Sebastiano, in una delle reti escursionistiche più celebri d’Italia.',
+  },
+];
 ---
 
 <Base
   titolo="Approfondimenti"
-  descrizione="Storia, cultura e natura dell’Antica Via del Cifalco, le voci d’autore e il diario di bordo: il quaderno del cammino, scritto con rigore."
+  descrizione="Le voci d’autore, il diario di bordo e la rete di cammini dell’Antica Via del Cifalco: il quaderno del cammino, scritto con rigore."
 >
   <div class="contenitore sezione">
     <p class="occhiello">Approfondimenti</p>
     <h1>Il quaderno della Via</h1>
-    <p style="font-size: 1.12rem; max-width: var(--misura);">
+    <p class="intro">
       La Via del Cifalco è una storia di muli, commercianti, saltimbanchi e
-      briganti. È una storia bellissima anche senza abbellimenti: per questo
-      qui distinguiamo sempre quello che <strong>dicono i documenti</strong>
-      da quello che <strong>racconta la leggenda</strong> — e diamo a
-      entrambi il rispetto che meritano.
+      briganti. Qui raccogliamo le voci di chi la racconta, le note dal campo
+      di chi la sta tracciando e la rete di cammini che la Via attraversa.
+      Quando un fatto è documentato lo diciamo; quando è leggenda, anche.
     </p>
 
-    <Illustrazione
-      scena="borgo"
-      alt="Un borgo dell’alta Val Trebbia visto dal sentiero"
-      nomeFile="approfondimenti-borgo-val-trebbia.jpg"
-      rapporto="21/9"
+    <Foto
+      src="/immagini/muro-ruota-carro.jpg"
+      alt="Una vecchia ruota di carro in legno appoggiata a un muro di pietra di un borgo"
+      rapporto="3/1"
     />
 
-    <h2 style="margin-top: 2.5rem;">Storia, cultura e natura</h2>
-    <div class="archivio">
-      {
-        articoli.map((articolo) => (
-          <article class="archivio__voce">
-            <p class="occhiello">
-              {ETICHETTA_TEMA[articolo.data.tema]} · {articolo.data.occhiello}
-            </p>
-            <h3>
-              <a href={`/approfondimenti/${articolo.id}`}>
-                {articolo.data.titolo}
-              </a>
-            </h3>
-            <p>{articolo.data.estratto}</p>
-            <a class="archivio__leggi" href={`/approfondimenti/${articolo.id}`}>
-              Leggi l’articolo →
-            </a>
-          </article>
-        ))
-      }
-    </div>
+    <nav aria-label="Sezioni degli approfondimenti" class="indice">
+      <a href="#voci">Voci d’autore</a>
+      <a href="#diario">Diario di bordo</a>
+      <a href="#rete">Una rete di cammini</a>
+    </nav>
+  </div>
 
-    <div class="griglia" style="margin-top: 3rem;">
-      <article class="card">
-        <p class="occhiello">Le voci</p>
-        <h2 style="font-size: 1.3rem;">Voci d’autore dal Cifalco</h2>
-        <p>
-          Scrittori, camminatori e gente del posto raccontano la Via con la
-          propria voce: una raccolta in costruzione.
-        </p>
-        <a class="bottone bottone--contorno" href="/approfondimenti/voci-d-autore">
-          Ascolta le voci
-        </a>
-      </article>
-      <article class="card">
-        <p class="occhiello">Il cammino raccontato</p>
-        <h2 style="font-size: 1.3rem;">Diario di bordo</h2>
-        <p>
-          Le note dal campo di chi sta tracciando e percorrendo la Via:
-          sopralluoghi, segnature, incontri e stagioni.
-        </p>
-        <a class="bottone bottone--contorno" href="/approfondimenti/diario-di-bordo">
-          Apri il diario
-        </a>
-      </article>
+  <!-- Voci d'autore -->
+  <section class="sezione sezione--alternata" id="voci" aria-labelledby="t-voci">
+    <div class="contenitore">
+      <p class="occhiello">Le voci</p>
+      <h2 id="t-voci">Voci d’autore dal Cifalco</h2>
+      <p class="intro">
+        Scrittori, camminatori e gente del posto raccontano la Via con la
+        propria voce: una raccolta in costruzione.
+        <em>(I contributi qui sotto sono segnaposto.)</em>
+      </p>
+      <div class="griglia" style="margin-top: 1.5rem;">
+        <blockquote class="card voce">
+          <p>
+            «Qui il sentiero non lo disegna la carta: lo disegna l’acqua, e chi
+            per secoli l’ha seguita.»
+          </p>
+          <footer>Contributo d’autore in arrivo <em>(testo segnaposto)</em></footer>
+        </blockquote>
+        <blockquote class="card voce">
+          <p>
+            «Dal crinale si vede il mare due giorni prima di toccarlo: è la
+            promessa che fa camminare.»
+          </p>
+          <footer>Contributo d’autore in arrivo <em>(testo segnaposto)</em></footer>
+        </blockquote>
+      </div>
     </div>
+  </section>
+
+  <!-- Diario di bordo -->
+  <section class="sezione" id="diario" aria-labelledby="t-diario">
+    <div class="contenitore">
+      <p class="occhiello">Il cammino raccontato</p>
+      <h2 id="t-diario">Diario di bordo</h2>
+      <p class="intro">
+        Il cammino mentre nasce: sopralluoghi, verifiche dei tempi, segnavia
+        ridipinti, incontri lungo la strada.
+        <em>(Le voci qui sotto sono segnaposto: il diario vero comincerà con le
+        prossime uscite.)</em>
+      </p>
+      <div class="diario">
+        <article class="diario__voce">
+          <p class="occhiello">Voce di esempio · primavera</p>
+          <h3>Sopralluogo sulla tratta del Caucaso</h3>
+          <p>
+            Verificati i tempi da Barbagelata alla vetta e la deviazione del
+            bivio nascosto tra i muretti a secco nella discesa verso Faggio
+            Rotondo. La ginestra è all’inizio della fioritura.
+            <em>(Testo segnaposto.)</em>
+          </p>
+        </article>
+        <article class="diario__voce">
+          <p class="occhiello">Voce di esempio · inverno</p>
+          <h3>Il punto sull’«Anello dei Borghi»</h3>
+          <p>
+            Incontro con i volontari per la segnatura del tratto iniziale da
+            Ponte Organasco a Cerignale: si parte con la bella stagione.
+            <em>(Testo segnaposto.)</em>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Una rete di cammini -->
+  <section class="sezione sezione--bosco" id="rete" aria-labelledby="t-rete">
+    <div class="contenitore">
+      <p class="occhiello">Una rete di cammini</p>
+      <h2 id="t-rete">La Via non cammina da sola</h2>
+      <p class="intro">
+        L’Antica Via del Cifalco è un filo che cuce sentieri già vivi: ognuno
+        ha la sua storia, i suoi manutentori e il suo segnavia. Conoscerli
+        serve a orientarsi e a rendere onore a chi quei sentieri li tiene
+        aperti.
+      </p>
+      <div class="cammini">
+        {
+          cammini.map((cammino) => (
+            <article class="card card--su-scuro">
+              <h3>{cammino.nome}</h3>
+              <p>{cammino.testo}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="contenitore sezione">
+    <NotaMargine titolo="Hai qualcosa da aggiungere?">
+      <p>
+        Ricordi di famiglia, documenti, fotografie, tempi verificati sul
+        sentiero: ogni contributo aiuta a raccontare meglio la Via.
+        <a href="/contatti">Scrivici</a>.
+      </p>
+    </NotaMargine>
   </div>
 </Base>
 
 <style>
-  .archivio {
-    margin-top: 1.5rem;
-    display: grid;
-    gap: 2.25rem;
-  }
-
-  .archivio__voce {
+  .intro {
+    font-size: 1.12rem;
     max-width: var(--misura);
-    padding-bottom: 2.25rem;
-    border-bottom: 1px solid var(--sabbia);
   }
 
-  .archivio__voce h3 {
-    font-size: 1.45rem;
+  .indice {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-top: 2rem;
   }
-
-  .archivio__voce h3 a {
-    color: var(--bosco-scuro);
-    text-decoration: none;
-  }
-
-  .archivio__voce h3 a:hover {
-    text-decoration: underline;
-  }
-
-  .archivio__leggi {
+  .indice a {
     font-weight: 650;
+    text-decoration: none;
+    padding: 0.4rem 1rem;
+    border: 1.5px solid var(--sabbia);
+    border-radius: 999px;
+  }
+  .indice a:hover {
+    background: var(--superficie);
+  }
+
+  .voce {
+    margin: 0;
+    font-family: var(--serif);
+  }
+  .voce p {
+    font-size: 1.12rem;
+    margin-bottom: 0.75rem;
+  }
+  .voce footer {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    color: var(--inchiostro-tenue);
+  }
+
+  .diario {
+    display: grid;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  }
+  .diario__voce {
+    border-left: 3px solid var(--salvia);
+    padding-left: 1.25rem;
+  }
+  .diario__voce h3 {
+    font-size: 1.25rem;
+  }
+  .diario__voce p:last-child {
+    margin-bottom: 0;
+  }
+
+  .cammini {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    margin-top: 1.5rem;
+  }
+  .cammini h3 {
+    font-size: 1.2rem;
+  }
+  .cammini p {
+    margin: 0;
   }
 </style>

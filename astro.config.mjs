@@ -14,7 +14,7 @@ export default defineConfig({
     '/info-pratiche': '/itinerario/informazioni-pratiche',
     '/punti-di-interesse': '/itinerario#mappa',
     '/storia-e-territorio': '/approfondimenti',
-    '/storia-e-territorio/[slug]': '/approfondimenti/[slug]',
+    '/rete-di-cammini': '/approfondimenti#rete',
   },
   build: {
     inlineStylesheets: 'auto',
