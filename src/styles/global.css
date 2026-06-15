@@ -28,22 +28,23 @@
   --acqua: #5B7C7D;
   --acqua-scura: #455F60;
   --acqua-chiara: #7FA0A0;
-  --acqua-fondo: #DCE6E4;
+  --acqua-fondo: #CDDED9;
 
   /* Marrone della terra — dettagli caldi, calore delle locande. */
   --umbra: #5C4A3A;
   --terra: #7A6450;
   --tortora: #A8957E;
 
-  /* Sfondi: tinte chiare di verde salvia e grigio pietra (niente crema) */
-  --fondo: #DDE3D8;          /* fondo principale, salvia-pietra chiaro */
-  --fondo-scuro: #CBD4C5;    /* blocchi alternati */
-  --superficie: #EEF1EA;     /* card, campi: si stacca dal fondo */
-  --sabbia: #B7C0AD;         /* bordi, divisori */
+  /* Sfondi: verde dei faggi e grigio delle rocce, mescolati con acqua e
+     terra. Tinte percepibili, mai crema. */
+  --fondo: #C7CFBE;          /* fondo principale: verde salvia spento */
+  --fondo-scuro: #C2C6B7;    /* blocchi alternati: grigio pietra caldo */
+  --superficie: #DBE1D3;     /* card e campi: verde-grigio chiaro */
+  --sabbia: #A9B49B;         /* bordi, divisori */
   --chiaro: #F1F3EE;         /* testo ed elementi chiari sui fondi scuri */
 
   /* Alias di compatibilità: i vecchi nomi «carta» ora puntano ai fondi
-     verde-salvia/pietra (niente più crema). */
+     verde/grigio (niente più crema). */
   --carta: var(--superficie);
   --carta-scura: var(--fondo-scuro);
 
@@ -180,19 +181,22 @@ hr.divisore {
 .sezione--bosco { background: var(--bosco); }
 .sezione--acqua { background: var(--acqua-scura); }
 .sezione--pietra { background: var(--pietra-scura); }
+.sezione--terra { background: var(--umbra); }
 
 .sezione--bosco,
 .sezione--acqua,
-.sezione--pietra {
+.sezione--pietra,
+.sezione--terra {
   color: var(--chiaro);
 }
-.sezione--bosco h1, .sezione--bosco h2, .sezione--bosco h3, .sezione--bosco h4,
-.sezione--acqua h1, .sezione--acqua h2, .sezione--acqua h3, .sezione--acqua h4,
-.sezione--pietra h1, .sezione--pietra h2, .sezione--pietra h3, .sezione--pietra h4 {
+.sezione--bosco :is(h1, h2, h3, h4),
+.sezione--acqua :is(h1, h2, h3, h4),
+.sezione--pietra :is(h1, h2, h3, h4),
+.sezione--terra :is(h1, h2, h3, h4) {
   color: var(--chiaro);
 }
-.sezione--bosco a, .sezione--acqua a, .sezione--pietra a { color: var(--chiaro); }
-.sezione--bosco a:hover, .sezione--acqua a:hover, .sezione--pietra a:hover { color: var(--acqua-chiara); }
+.sezione--bosco a, .sezione--acqua a, .sezione--pietra a, .sezione--terra a { color: var(--chiaro); }
+.sezione--bosco a:hover, .sezione--acqua a:hover, .sezione--pietra a:hover, .sezione--terra a:hover { color: var(--acqua-chiara); }
 
 .occhiello {
   font-family: var(--sans);
@@ -205,7 +209,8 @@ hr.divisore {
 }
 .sezione--bosco .occhiello,
 .sezione--acqua .occhiello,
-.sezione--pietra .occhiello { color: var(--salvia); }
+.sezione--pietra .occhiello,
+.sezione--terra .occhiello { color: var(--salvia); }
 
 /* --- Componenti ------------------------------------------------------------ */
 
@@ -239,16 +244,20 @@ hr.divisore {
 /* Bottoni sulle bande scure */
 .sezione--bosco .bottone--pieno,
 .sezione--acqua .bottone--pieno,
-.sezione--pietra .bottone--pieno { background: var(--chiaro); color: var(--bosco-scuro); }
+.sezione--pietra .bottone--pieno,
+.sezione--terra .bottone--pieno { background: var(--chiaro); color: var(--bosco-scuro); }
 .sezione--bosco .bottone--pieno:hover,
 .sezione--acqua .bottone--pieno:hover,
-.sezione--pietra .bottone--pieno:hover { background: var(--salvia); color: var(--bosco-scuro); }
+.sezione--pietra .bottone--pieno:hover,
+.sezione--terra .bottone--pieno:hover { background: var(--salvia); color: var(--bosco-scuro); }
 .sezione--bosco .bottone--contorno,
 .sezione--acqua .bottone--contorno,
-.sezione--pietra .bottone--contorno { color: var(--chiaro); border-color: var(--chiaro); }
+.sezione--pietra .bottone--contorno,
+.sezione--terra .bottone--contorno { color: var(--chiaro); border-color: var(--chiaro); }
 .sezione--bosco .bottone--contorno:hover,
 .sezione--acqua .bottone--contorno:hover,
-.sezione--pietra .bottone--contorno:hover { background: var(--chiaro); color: var(--bosco-scuro); border-color: var(--chiaro); }
+.sezione--pietra .bottone--contorno:hover,
+.sezione--terra .bottone--contorno:hover { background: var(--chiaro); color: var(--bosco-scuro); border-color: var(--chiaro); }
 
 /* Card leggere */
 .card {
