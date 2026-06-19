@@ -10,6 +10,7 @@ export interface Punto {
   y: number;
   descrizione: string;
   acquaPotabile: boolean;
+  appoggio: boolean;
   quota?: number;
 }
 

@@ -23,6 +23,7 @@
   --pietra-scura: #3D3D3A;
   --pietra: #6E6E68;
   --pietra-chiara: #B5B3AC;
+  --pietra-banda: #5E635C;   /* grigio medio per le bande: meno cupo */
 
   /* Accento acquatico — fonti, fontane, abbeveratoi e torrenti. */
   --acqua: #5B7C7D;
@@ -199,7 +200,7 @@ hr.divisore {
 /* Bande a tinta piena: portano verde, acqua e pietra sugli sfondi. */
 .sezione--bosco { background: var(--bosco); }
 .sezione--acqua { background: var(--acqua-scura); }
-.sezione--pietra { background: var(--pietra-scura); }
+.sezione--pietra { background: var(--pietra-banda); }
 .sezione--terra { background: var(--umbra); }
 
 .sezione--bosco,

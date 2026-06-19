@@ -29,6 +29,17 @@ const { titolo = 'Nota a margine', tono = 'terra' } = Astro.props;
     border-left: 4px solid var(--terra);
     border-radius: 0 var(--raggio) var(--raggio) 0;
     background: var(--fondo-scuro);
+    /* La nota è sempre chiara con testo scuro, anche dentro le bande scure. */
+    color: var(--inchiostro);
+  }
+  .nota :global(a) {
+    color: var(--campagna);
+  }
+  .nota :global(a:hover) {
+    color: var(--bosco);
+  }
+  .nota :global(strong) {
+    color: var(--inchiostro);
   }
 
   .nota--acqua {

@@ -39,7 +39,12 @@ const datiPlanner = {
   punti: Object.fromEntries(
     percorso.punti.map((p) => [
       p.id,
-      { nome: p.nome, acquaPotabile: p.acquaPotabile, quota: p.quota ?? null },
+      {
+        nome: p.nome,
+        acquaPotabile: p.acquaPotabile,
+        appoggio: p.appoggio,
+        quota: p.quota ?? null,
+      },
     ])
   ),
 };
@@ -158,6 +163,7 @@ const datiPlanner = {
         <p class="occhiello" data-esito="passo-tappa"></p>
         <h5 data-esito="passo-titolo"></h5>
         <p data-esito="passo-testo"></p>
+        <div class="planner__servizi" data-esito="passo-servizi"></div>
       </article>
       <div class="planner__navigazione">
         <button type="button" class="bottone bottone--contorno" data-azione="indietro">
@@ -359,6 +365,35 @@ const datiPlanner = {
     color: var(--inchiostro-tenue);
     text-align: center;
   }
+
+  /* Servizi segnalati a ogni step: acqua e punti d'appoggio */
+  .planner__servizi {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+  }
+  .planner__servizio {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 650;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    border: 1.5px solid;
+  }
+  .planner__servizio--acqua {
+    color: var(--acqua-scura);
+    border-color: var(--acqua-chiara);
+    background: var(--acqua-fondo);
+  }
+  .planner__servizio--appoggio {
+    color: var(--umbra);
+    border-color: var(--tortora);
+    background: var(--fondo-scuro);
+  }
+  .planner__servizio svg { flex: none; }
 </style>
 
 <script>
@@ -373,6 +408,12 @@ const datiPlanner = {
     segnavia: string;
     punti: string[];
     passi: { titolo: string; testo: string }[];
+  }
+
+  // Acqua e appoggi presenti in un singolo step (riconosciuti dal testo).
+  interface Servizi {
+    acqua: string[];
+    appoggi: string[];
   }
 
   const sezione = document.querySelector<HTMLElement>('.planner');
@@ -393,7 +434,12 @@ const datiPlanner = {
       tappe: Record<string, TappaDati>;
       punti: Record<
         string,
-        { nome: string; acquaPotabile: boolean; quota: number | null }
+        {
+          nome: string;
+          acquaPotabile: boolean;
+          appoggio: boolean;
+          quota: number | null;
+        }
       >;
     };
 
@@ -466,13 +512,47 @@ const datiPlanner = {
     }
 
     // --- Stepper delle tappe ---------------------------------------------
-    let passi: { tappa: string; titolo: string; testo: string }[] = [];
+    let passi: {
+      tappa: string;
+      titolo: string;
+      testo: string;
+      punti: string[];
+    }[] = [];
     let passoCorrente = 0;
     let htmlPiano = ''; // il piano corrente in HTML, pronto da stampare in PDF
     let titoloPiano = 'Piano di cammino';
 
     const bottoneIndietro = sezione.querySelector<HTMLButtonElement>('[data-azione="indietro"]')!;
     const bottoneAvanti = sezione.querySelector<HTMLButtonElement>('[data-azione="avanti"]')!;
+
+    /** Nome «corto» di un punto, per riconoscerlo anche dove il testo lo cita
+     *  senza il suffisso (es. «Ruta» per «Ruta di Camogli»). */
+    function nomeCorto(nome: string): string {
+      return nome.split(/ (?:di|in|del|della|dei|mare)\b/i)[0].trim();
+    }
+
+    /** Acqua e appoggi citati in uno step (cercati tra i punti della tratta). */
+    function serviziDiPasso(passo: { testo: string; titolo: string; punti: string[] }): Servizi {
+      const testo = `${passo.titolo} ${passo.testo}`.toLowerCase();
+      const acqua: string[] = [];
+      const appoggi: string[] = [];
+      for (const id of passo.punti) {
+        const p = dati.punti[id];
+        if (!p) continue;
+        const nome = p.nome.toLowerCase();
+        const corto = nomeCorto(p.nome).toLowerCase();
+        const citato = testo.includes(nome) || (corto.length >= 4 && testo.includes(corto));
+        if (!citato) continue;
+        if (p.acquaPotabile) acqua.push(p.nome);
+        if (p.appoggio) appoggi.push(p.nome);
+      }
+      return { acqua, appoggi };
+    }
+
+    const ICONA_ACQUA =
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3 C 12 3 6 10.5 6 14.5 C 6 18 8.7 20.5 12 20.5 C 15.3 20.5 18 18 18 14.5 C 18 10.5 12 3 12 3 Z"></path></svg>';
+    const ICONA_APPOGGIO =
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 20 V11 L12 5 L20 11 V20 Z"></path><path d="M9 20 V14 H15 V20"></path></svg>';
 
     function mostraPasso() {
       const passo = passi[passoCorrente];
@@ -482,6 +562,19 @@ const datiPlanner = {
       esito('passo-testo').textContent = passo.testo;
       esito('passo-contatore').textContent =
         `Passo ${passoCorrente + 1} di ${passi.length}`;
+
+      const servizi = serviziDiPasso(passo);
+      const badge: string[] = [];
+      if (servizi.acqua.length)
+        badge.push(
+          `<span class="planner__servizio planner__servizio--acqua">${ICONA_ACQUA} Acqua: ${servizi.acqua.join(', ')}</span>`
+        );
+      if (servizi.appoggi.length)
+        badge.push(
+          `<span class="planner__servizio planner__servizio--appoggio">${ICONA_APPOGGIO} Punto d’appoggio: ${servizi.appoggi.join(', ')}</span>`
+        );
+      esito('passo-servizi').innerHTML = badge.join('');
+
       bottoneIndietro.disabled = passoCorrente === 0;
       bottoneAvanti.disabled = passoCorrente === passi.length - 1;
     }
@@ -569,7 +662,7 @@ const datiPlanner = {
           '<p><strong>Giornata lunga per il tempo che hai indicato.</strong> Parti presto al mattino, oppure scegli un tratto più corto o un passo più realistico: la Via resta lì, non scappa.</p>';
         avviso.hidden = false;
       } else if (giornate.length > 1) {
-        avviso.innerHTML = `<p><strong>Servono ${giornate.length} giorni con le ore che hai a disposizione.</strong> Le notti si organizzano nei punti d’appoggio lungo la Via: li trovi nelle <a href="/itinerario/informazioni-pratiche">informazioni pratiche</a>.</p>`;
+        avviso.innerHTML = `<p><strong>Servono ${giornate.length} giorni con le ore che hai a disposizione.</strong> Le notti si organizzano nei <a href="/itinerario#appoggio">punti d’appoggio</a> lungo la Via.</p>`;
         avviso.hidden = false;
       } else {
         avviso.hidden = true;
@@ -618,6 +711,7 @@ const datiPlanner = {
           tappa: tappa.nome,
           titolo: passo.titolo,
           testo: passo.testo,
+          punti: tappa.punti,
         }));
       });
       passoCorrente = 0;
@@ -680,6 +774,11 @@ const datiPlanner = {
           tappaTitoloPrec = p.tappa;
         }
         h.push(`<p class="passo"><strong>${esc(p.titolo)}.</strong> ${esc(p.testo)}</p>`);
+        const s = serviziDiPasso(p);
+        const note: string[] = [];
+        if (s.acqua.length) note.push(`Acqua: ${s.acqua.join(', ')}`);
+        if (s.appoggi.length) note.push(`Punto d’appoggio: ${s.appoggi.join(', ')}`);
+        if (note.length) h.push(`<p class="servizi">${esc(note.join(' · '))}</p>`);
       });
       if (inverso) {
         h.push(
@@ -723,7 +822,8 @@ const datiPlanner = {
       h3 { font-size: 1rem; margin: 1rem 0 0.3rem; color: #4A5D44; }
       ul, ol { margin: 0.3rem 0 0.6rem 1.2rem; padding: 0; }
       li { margin-bottom: 0.2rem; }
-      .passo { margin: 0.2rem 0 0.5rem; }
+      .passo { margin: 0.2rem 0 0.2rem; }
+      .servizi { margin: 0 0 0.5rem; font-size: 0.9rem; color: #455F60; font-weight: bold; }
       .nb, .chiusura { color: #54594E; font-size: 0.95rem; }
       .chiusura { margin-top: 1.5rem; border-top: 1px solid #A9B49B; padding-top: 0.6rem; }
     `;

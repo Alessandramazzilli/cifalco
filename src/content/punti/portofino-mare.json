@@ -4,5 +4,6 @@
   "x": 805,
   "y": 588,
   "acquaPotabile": true,
-  "descrizione": "L'arrivo della Via: dal Passo dei Casetti, per la Sella della Gaixella, Pietre Strette e San Sebastiano, si scende al mare di Portofino. Non c'è stazione ferroviaria: si raggiungono via mare quelle di Santa Margherita Ligure, Rapallo e Camogli, oppure Santa Margherita a piedi («tre pallini rossi pieni» fino a Paraggi, poi lungomare, 1 h 15)."
+  "descrizione": "L'arrivo della Via: dal Passo dei Casetti, per la Sella della Gaixella, Pietre Strette e San Sebastiano, si scende al mare di Portofino. Non c'è stazione ferroviaria: si raggiungono via mare quelle di Santa Margherita Ligure, Rapallo e Camogli, oppure Santa Margherita a piedi («tre pallini rossi pieni» fino a Paraggi, poi lungomare, 1 h 15).",
+  "appoggio": true
 }

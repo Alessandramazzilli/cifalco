@@ -19,6 +19,8 @@ const punti = defineCollection({
     descrizione: z.string(),
     // true se qui c'è acqua potabile (fonte, fontana, abbeveratoio attivo).
     acquaPotabile: z.boolean().default(false),
+    // true se qui c'è un punto di appoggio (locanda, rifugio, B&B, ristoro).
+    appoggio: z.boolean().default(false),
     // Quota in metri (facoltativa, mostrata nelle schede).
     quota: z.number().optional(),
   }),

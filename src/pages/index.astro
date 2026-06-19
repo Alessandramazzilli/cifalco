@@ -67,26 +67,6 @@ const oreTotali = tappeVia.reduce((s, t) => s + t.oreBase, 0);
     </div>
   </section>
 
-  <!-- I tre itinerari: il cuore della home -->
-  <section class="sezione sezione--alternata">
-    <div class="contenitore">
-      <p class="occhiello">Scegli il tuo passo</p>
-      <h2>Tre modi di camminare la Via</h2>
-      <p class="testo-largo">
-        Non serve farla tutta: la Via si lascia camminare anche a metà giornata.
-        Scegli un itinerario e il <a href="/itinerario">planner</a> lo costruisce
-        sul tempo e sulle gambe che hai.
-      </p>
-      <div class="griglia" style="margin-top: 1.5rem;">
-        {
-          percorso.itinerari.map((itinerario) => (
-            <CardItinerario itinerario={itinerario} percorso={percorso} />
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
   <!-- Dalla valle al mare: banda acqua + foto della costa -->
   <section class="sezione sezione--acqua">
     <div class="contenitore duo duo--foto-prima">
@@ -107,6 +87,26 @@ const oreTotali = tappeVia.reduce((s, t) => s + t.oreBase, 0);
         src="/immagini/costa-tigullio.jpg"
         alt="Il golfo del Tigullio visto dall’alto, dove la Via arriva al mare"
       />
+    </div>
+  </section>
+
+  <!-- I tre itinerari: il cuore della home -->
+  <section class="sezione sezione--alternata">
+    <div class="contenitore">
+      <p class="occhiello">Scegli il tuo passo</p>
+      <h2>Tre modi di camminare la Via</h2>
+      <p class="testo-largo">
+        Non serve farla tutta: la Via si lascia camminare anche a metà giornata.
+        Scegli un itinerario e il <a href="/itinerario">planner</a> lo costruisce
+        sul tempo e sulle gambe che hai.
+      </p>
+      <div class="griglia" style="margin-top: 1.5rem;">
+        {
+          percorso.itinerari.map((itinerario) => (
+            <CardItinerario itinerario={itinerario} percorso={percorso} />
+          ))
+        }
+      </div>
     </div>
   </section>
 
