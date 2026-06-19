@@ -40,24 +40,26 @@ const compagnia = [
   titolo="Il progetto"
   descrizione="Che cos’è l’Antica Via del Cifalco: l’idea, le motivazioni, gli obiettivi e la Compagnia del Cifalco, le persone che hanno reso possibile il cammino."
 >
-  <div class="contenitore sezione">
-    <p class="occhiello">Il progetto</p>
-    <h1>Che cos’è l’Antica Via del Cifalco?</h1>
-
-    <p class="intro">
-      L’Antica Via del Cifalco è un cammino di più giorni che unisce
-      l’Appennino dell’alta Val Trebbia al mare di Portofino: otto tratte su
-      sentieri esistenti, cucite insieme in un itinerario unico che passa per
-      crinali, faggete, passi e borghi, fino a scendere nel Parco del Monte di
-      Portofino. <em>(Testo segnaposto, da rivedere con la voce del progetto.)</em>
-    </p>
-
-    <Foto
-      src="/immagini/borgo-val-trebbia.jpg"
-      alt="Un borgo dell’alta Val Trebbia con le case in pietra e i monti sullo sfondo"
-      rapporto="16/9"
-    />
-  </div>
+  <section class="sezione">
+    <div class="contenitore duo">
+      <div>
+        <p class="occhiello">Il progetto</p>
+        <h1>Che cos’è l’Antica Via del Cifalco?</h1>
+        <p class="intro">
+          Un cammino di più giorni che unisce l’Appennino dell’alta Val Trebbia
+          al mare di Portofino: otto tratte su sentieri esistenti, cucite
+          insieme in un itinerario unico che passa per crinali, faggete, passi
+          e borghi, fino a scendere nel Parco del Monte di Portofino.
+          <em>(Testo segnaposto, da rivedere con la voce del progetto.)</em>
+        </p>
+      </div>
+      <Foto
+        classe="duo__foto"
+        src="/immagini/muro-ruota-carro.jpg"
+        alt="Una vecchia ruota di carro in legno appoggiata al muro di pietra di un borgo"
+      />
+    </div>
+  </section>
 
   <section class="sezione sezione--alternata">
     <div class="contenitore due-colonne">
@@ -108,7 +110,7 @@ const compagnia = [
   </section>
 
   <!-- La Compagnia del Cifalco -->
-  <section class="sezione" aria-labelledby="t-compagnia">
+  <section class="sezione sezione--bosco" aria-labelledby="t-compagnia">
     <div class="contenitore">
       <p class="occhiello">Le persone</p>
       <h2 id="t-compagnia">La Compagnia del Cifalco</h2>
@@ -150,6 +152,9 @@ const compagnia = [
     font-size: 1.12rem;
     max-width: var(--misura);
   }
+
+  /* Compagnia sulla banda verde: descrizioni leggibili */
+  .sezione--bosco .persona__ruolo { color: var(--chiaro); opacity: 0.85; }
 
   .due-colonne {
     display: grid;

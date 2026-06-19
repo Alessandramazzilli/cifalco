@@ -61,11 +61,12 @@ const puntiAcqua = ordineAcqua.map(
       <div class="dato"><dt>Quota massima</dt><dd>1427 m</dd></div>
     </dl>
 
-    <Foto
-      src="/immagini/vetta-rocca-bruna.jpg"
-      alt="La croce di vetta di Rocca Bruna, lungo i crinali della Via"
-      rapporto="16/9"
-    />
+    <div class="foto-sola">
+      <Foto
+        src="/immagini/vetta-rocca-bruna.jpg"
+        alt="La croce di vetta di Rocca Bruna, lungo i crinali della Via"
+      />
+    </div>
 
     <NotaMargine>
       <p>
@@ -145,7 +146,7 @@ const puntiAcqua = ordineAcqua.map(
   </section>
 
   <!-- Acqua -->
-  <section class="sezione" id="acqua" aria-labelledby="titolo-acqua">
+  <section class="sezione sezione--acqua" id="acqua" aria-labelledby="titolo-acqua">
     <div class="contenitore">
       <p class="occhiello">Il filo dell’acqua</p>
       <h2 id="titolo-acqua">Dove riempire le borracce</h2>
@@ -184,14 +185,17 @@ const puntiAcqua = ordineAcqua.map(
   </section>
 
   <!-- Una pausa visiva: il sentiero vero -->
-  <img
-    class="itinerario-foto"
-    src="/immagini/sentiero-pozza.jpg"
-    alt="Il sentiero della Via tra i boschi, con una pozza dopo la pioggia"
-  />
+  <section class="sezione">
+    <div class="contenitore foto-sola">
+      <Foto
+        src="/immagini/sentiero-pozza.jpg"
+        alt="Il sentiero della Via tra i boschi, con una pozza dopo la pioggia"
+      />
+    </div>
+  </section>
 
   <!-- Sicurezza, quando andare -->
-  <section class="sezione sezione--alternata" aria-labelledby="titolo-sicurezza">
+  <section class="sezione sezione--terra" aria-labelledby="titolo-sicurezza">
     <div class="contenitore">
       <div class="due-colonne">
         <div>
@@ -276,13 +280,10 @@ const puntiAcqua = ordineAcqua.map(
 </Base>
 
 <style>
-  .itinerario-foto {
-    display: block;
-    width: 100%;
-    height: clamp(16rem, 45vh, 26rem);
-    object-fit: cover;
-    object-position: center;
-  }
+  /* Liste e icone dell'acqua sulla banda scura: testo e bordi chiari */
+  .sezione--acqua .acqua-punto { color: var(--chiaro); }
+  .sezione--acqua .acqua-elenco li { border-bottom-color: rgb(255 255 255 / 0.25); }
+  .sezione--acqua .acqua-elenco__tipo { color: var(--chiaro); opacity: 0.85; }
 
   .dati-via {
     display: flex;

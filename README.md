@@ -107,23 +107,37 @@ con:
 
 ### Sostituire o aggiungere una foto
 
-Le foto stanno in `public/immagini/`. Per cambiarne una, sostituisci il file
-mantenendo lo stesso nome: comparirà subito al posto della vecchia. Le foto
-attualmente usate sono:
+Le foto stanno in `public/immagini/` e vengono mostrate **sempre intere**
+(mai tagliate). Per cambiarne una, sostituisci il file mantenendo lo stesso
+nome: comparirà subito al posto della vecchia. Le foto attualmente usate sono:
 
 | Pagina | File | Dove |
 | --- | --- | --- |
-| Home | `home-banner-valle-del-cifalco.jpg` | banner in cima |
-| Il progetto | `borgo-val-trebbia.jpg` | sotto il titolo |
-| L'itinerario | `faggeta.jpg` | sotto i numeri della Via |
-| Informazioni pratiche | `carro-e-attrezzi.jpg` | tra le tabelle |
-| Approfondimenti | `muro-ruota-carro.jpg` | sotto il titolo |
+| Home | `home-banner-valle-del-cifalco.jpg` | accanto al titolo |
+| Home | `costa-tigullio.jpg` | banda «dal crinale al mare» |
+| Il progetto | `muro-ruota-carro.jpg` | accanto all'introduzione |
+| L'itinerario | `vetta-rocca-bruna.jpg` | sotto i numeri della Via |
+| L'itinerario | `sentiero-pozza.jpg` | tra le sezioni |
+| Informazioni pratiche | `portofino-baia.jpg` | «arrivare e tornare» |
+| Informazioni pratiche | `rifugio-terrazza-mare.jpg` | «punti di appoggio» |
+| Approfondimenti | `rocca-bosco.jpg` | sotto il titolo |
+| Chi siamo | `faggeta.jpg` | accanto al titolo |
 
 Per **aggiungere** una foto in una pagina, metti il file in
-`public/immagini/` e usa il componente `Foto`:
+`public/immagini/` e usa il componente `Foto` (mostra l'immagine intera):
 
 ```html
-<Foto src="/immagini/nome-file.jpg" alt="Descrizione della foto" rapporto="16/9" />
+<Foto src="/immagini/nome-file.jpg" alt="Descrizione della foto" />
+```
+
+Per metterla **accanto a un testo** (due colonne), usala dentro un blocco
+`duo`:
+
+```html
+<div class="contenitore duo">
+  <div> …testo… </div>
+  <Foto classe="duo__foto" src="/immagini/nome-file.jpg" alt="…" />
+</div>
 ```
 
 Conviene ridimensionare le foto prima di caricarle (lato lungo circa 2000 px):

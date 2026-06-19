@@ -177,6 +177,25 @@ hr.divisore {
 
 .sezione--alternata { background: var(--fondo-scuro); }
 
+/* Due colonne: testo + foto (la foto resta intera). Su mobile si impila. */
+.duo {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+.duo--foto-prima .duo__foto { order: -1; }
+@media (max-width: 56rem) {
+  .duo { grid-template-columns: 1fr; }
+  .duo--foto-prima .duo__foto { order: 0; }
+}
+
+/* Foto da sola, centrata e di misura comoda (resta intera). */
+.foto-sola {
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
 /* Bande a tinta piena: portano verde, acqua e pietra sugli sfondi. */
 .sezione--bosco { background: var(--bosco); }
 .sezione--acqua { background: var(--acqua-scura); }

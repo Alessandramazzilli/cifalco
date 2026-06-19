@@ -11,41 +11,52 @@ import Foto from '../../components/Foto.astro';
   <div class="contenitore sezione">
     <p class="occhiello">L’itinerario</p>
     <h1>Informazioni pratiche e avvertenze</h1>
-    <p style="font-size: 1.12rem;">
+    <p class="lead">
       Le cose concrete: come si arriva alla partenza, come si torna
       dall’arrivo, dove si dorme e si mangia. <em>I recapiti sono segnaposto,
       in attesa dei dati definitivi.</em>
     </p>
+  </div>
 
-    <section aria-labelledby="titolo-arrivare" class="blocco-info">
-      <h2 id="titolo-arrivare">Arrivare e tornare</h2>
-      <ul>
-        <li>
-          <strong>Alla partenza, Ponte Organasco (alta Val Trebbia):</strong>
-          si raggiunge in auto lungo la statale della Val Trebbia o con le
-          autolinee di valle <em>(orari e collegamenti: segnaposto, in
-          aggiornamento)</em>. Punto d’appoggio alla partenza: la Locanda Rosa.
-        </li>
-        <li>
-          <strong>Dall’arrivo, Portofino mare:</strong> a Portofino non c’è
-          stazione ferroviaria. Si raggiungono via mare le stazioni di Santa
-          Margherita Ligure, Rapallo e Camogli; Santa Margherita anche a piedi
-          in 1 h 15 («tre pallini rossi pieni» fino a Paraggi, poi lungomare).
-        </li>
-        <li>
-          <strong>Uscite intermedie:</strong> la discesa a Recco (1 h dalle
-          Piane di Caravaggio) porta a una stazione ferroviaria ed è la
-          classica «uscita di emergenza»; anche Camogli, da San Rocco, ha la
-          stazione.
-        </li>
-      </ul>
-    </section>
+  <!-- Arrivare e tornare: banda azzurra + foto dell'arrivo al mare -->
+  <section class="sezione sezione--acqua" aria-labelledby="titolo-arrivare">
+    <div class="contenitore duo duo--foto-prima">
+      <div>
+        <h2 id="titolo-arrivare">Arrivare e tornare</h2>
+        <ul>
+          <li>
+            <strong>Alla partenza, Ponte Organasco (alta Val Trebbia):</strong>
+            si raggiunge in auto lungo la statale della Val Trebbia o con le
+            autolinee di valle <em>(orari e collegamenti: segnaposto, in
+            aggiornamento)</em>. Punto d’appoggio: la Locanda Rosa.
+          </li>
+          <li>
+            <strong>Dall’arrivo, Portofino mare:</strong> non c’è stazione
+            ferroviaria. Si raggiungono via mare le stazioni di Santa Margherita
+            Ligure, Rapallo e Camogli; Santa Margherita anche a piedi in 1 h 15.
+          </li>
+          <li>
+            <strong>Uscite intermedie:</strong> la discesa a Recco (1 h dalle
+            Piane di Caravaggio) ha la stazione ed è la classica «uscita di
+            emergenza»; anche Camogli, da San Rocco.
+          </li>
+        </ul>
+      </div>
+      <Foto
+        classe="duo__foto"
+        src="/immagini/portofino-baia.jpg"
+        alt="La baia di Portofino con le barche, arrivo della Via al mare"
+      />
+    </div>
+  </section>
 
-    <section aria-labelledby="titolo-appoggio" class="blocco-info">
+  <!-- Punti di appoggio: tabella + foto di un rifugio -->
+  <section class="sezione" aria-labelledby="titolo-appoggio">
+    <div class="contenitore">
       <h2 id="titolo-appoggio">Punti di appoggio</h2>
-      <p>
-        La Via non è (ancora) un cammino a tappe attrezzate: i punti
-        d’appoggio vanno organizzati prima di partire e conviene
+      <p class="lead">
+        La Via non è (ancora) un cammino a tappe attrezzate: i punti d’appoggio
+        vanno organizzati prima di partire e conviene
         <strong>prenotare sempre</strong>, soprattutto nei fine settimana.
       </p>
       <table class="tabella">
@@ -58,74 +69,35 @@ import Foto from '../../components/Foto.astro';
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Ponte Organasco</td>
-            <td>Locanda Rosa</td>
-            <td>Ristoro e alloggio alla partenza</td>
-          </tr>
-          <tr>
-            <td>Cerignale</td>
-            <td>Albergo del Pino</td>
-            <td>Ristoro e alloggio</td>
-          </tr>
-          <tr>
-            <td>Sotto il bivio CAI 177/179</td>
-            <td>Rifugio Casermetta</td>
-            <td>Solo riparo (non attrezzato) e fonte</td>
-          </tr>
-          <tr>
-            <td>Prati di Foppiano</td>
-            <td>Rifugio Prati di Foppiano</td>
-            <td>Riparo e possibilità di cucinare, niente posti letto</td>
-          </tr>
-          <tr>
-            <td>Valico del Fregarolo</td>
-            <td>Trattoria del Valico di Fregarolo</td>
-            <td>Ristoro, a 5 minuti dal passo</td>
-          </tr>
-          <tr>
-            <td>Vetta del Monte Caucaso</td>
-            <td>Rifugio del Caucaso</td>
-            <td>Ristorante con vista a 360°</td>
-          </tr>
-          <tr>
-            <td>Faggio Rotondo</td>
-            <td>Struttura di Faggio Rotondo</td>
-            <td>Ristoro e alloggio</td>
-          </tr>
-          <tr>
-            <td>Neirone (verso Gattorna)</td>
-            <td>B&amp;B Ca’ da Nonna</td>
-            <td>Alloggio, unico punto a Neirone col Faggio Rotondo</td>
-          </tr>
-          <tr>
-            <td>Colle Caprile <em>(deviazione, 40 min)</em></td>
-            <td>Albergo Caprile</td>
-            <td>Ristoro e alloggio</td>
-          </tr>
-          <tr>
-            <td>Uscio <em>(deviazione, 30 min)</em></td>
-            <td>Strutture del paese</td>
-            <td>Ristoro e alloggio</td>
-          </tr>
-          <tr>
-            <td>Ruta, Camogli, Santa Margherita, Portofino</td>
-            <td>Ricettività diffusa</td>
-            <td>Bar, ristoranti e alloggi di ogni tipo</td>
-          </tr>
+          <tr><td>Ponte Organasco</td><td>Locanda Rosa</td><td>Ristoro e alloggio alla partenza</td></tr>
+          <tr><td>Cerignale</td><td>Albergo del Pino</td><td>Ristoro e alloggio</td></tr>
+          <tr><td>Sotto il bivio CAI 177/179</td><td>Rifugio Casermetta</td><td>Solo riparo (non attrezzato) e fonte</td></tr>
+          <tr><td>Prati di Foppiano</td><td>Rifugio Prati di Foppiano</td><td>Riparo e possibilità di cucinare, niente posti letto</td></tr>
+          <tr><td>Valico del Fregarolo</td><td>Trattoria del Valico di Fregarolo</td><td>Ristoro, a 5 minuti dal passo</td></tr>
+          <tr><td>Vetta del Monte Caucaso</td><td>Rifugio del Caucaso</td><td>Ristorante con vista a 360°</td></tr>
+          <tr><td>Faggio Rotondo</td><td>Struttura di Faggio Rotondo</td><td>Ristoro e alloggio</td></tr>
+          <tr><td>Neirone (verso Gattorna)</td><td>B&amp;B Ca’ da Nonna</td><td>Alloggio</td></tr>
+          <tr><td>Colle Caprile <em>(deviazione, 40 min)</em></td><td>Albergo Caprile</td><td>Ristoro e alloggio</td></tr>
+          <tr><td>Uscio <em>(deviazione, 30 min)</em></td><td>Strutture del paese</td><td>Ristoro e alloggio</td></tr>
+          <tr><td>Ruta, Camogli, Santa Margherita, Portofino</td><td>Ricettività diffusa</td><td>Bar, ristoranti e alloggi</td></tr>
         </tbody>
       </table>
-    </section>
 
-    <Foto
-      src="/immagini/carro-e-attrezzi.jpg"
-      alt="Un vecchio carro agricolo e attrezzi in ferro a riposo in un cortile del borgo"
-      rapporto="16/9"
-    />
+      <div class="foto-sola" style="margin-top: 2rem;">
+        <Foto
+          src="/immagini/rifugio-terrazza-mare.jpg"
+          alt="La terrazza di un rifugio di crinale con i tavoli e la vista sul mare"
+          didascalia="Un rifugio di crinale lungo la Via, con la vista che arriva fino al mare."
+        />
+      </div>
+    </div>
+  </section>
 
-    <section aria-labelledby="titolo-avvertenze" class="blocco-info">
+  <!-- Avvertenze: banda marrone -->
+  <section class="sezione sezione--terra" aria-labelledby="titolo-avvertenze">
+    <div class="contenitore">
       <h2 id="titolo-avvertenze">Avvertenze aggiornate</h2>
-      <ul>
+      <ul class="avvertenze">
         <li>
           <strong>Cassanesi (Comune di Tribogna):</strong> l’ordinanza n. 19
           del 16 dicembre 2025 vieta il passaggio nel tratto accanto alla casa
@@ -152,8 +124,10 @@ import Foto from '../../components/Foto.astro';
           conoscenza dei luoghi.
         </li>
       </ul>
-    </section>
+    </div>
+  </section>
 
+  <div class="contenitore sezione">
     <NotaMargine titolo="Una cortesia">
       <p>
         La Via attraversa pascoli e borghi abitati: ogni cancello che si apre
@@ -165,12 +139,14 @@ import Foto from '../../components/Foto.astro';
 </Base>
 
 <style>
-  .blocco-info {
-    margin-block: 2.5rem;
-    max-width: 52rem;
+  .lead {
+    font-size: 1.12rem;
+    max-width: var(--misura);
   }
-
-  .blocco-info table {
-    margin-top: 1rem;
+  .avvertenze {
+    max-width: var(--misura);
+  }
+  .avvertenze li {
+    margin-bottom: 0.7rem;
   }
 </style>

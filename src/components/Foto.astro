@@ -1,49 +1,33 @@
 ---
 /**
- * Foto reale. Le immagini stanno in public/immagini/ (vedi README).
- * Il rapporto predefinito è 3/2, lo stesso delle foto: così non vengono
- * tagliate. Usa `posizione` per spostare il punto messo a fuoco nel ritaglio.
+ * Foto reale, mostrata SEMPRE per intero (nessun ritaglio).
+ * L'immagine mantiene le sue proporzioni naturali; sta dentro la colonna in
+ * cui la metti. Le immagini stanno in public/immagini/ (vedi README).
  */
 interface Props {
-  src: string; // es. "/immagini/panorama-cifalco.jpg"
+  src: string; // es. "/immagini/portofino-baia.jpg"
   alt: string;
-  rapporto?: string; // es. "3/2", "16/9", "4/3"
-  posizione?: string; // object-position, es. "center", "left top"
   didascalia?: string;
   classe?: string;
 }
-const {
-  src,
-  alt,
-  rapporto = '3/2',
-  posizione = 'center',
-  didascalia,
-  classe,
-} = Astro.props;
+const { src, alt, didascalia, classe } = Astro.props;
 ---
 
 <figure class:list={['foto', classe]}>
-  <img
-    src={src}
-    alt={alt}
-    loading="lazy"
-    decoding="async"
-    style={`aspect-ratio: ${rapporto}; object-position: ${posizione};`}
-  />
+  <img src={src} alt={alt} loading="lazy" decoding="async" />
   {didascalia && <figcaption>{didascalia}</figcaption>}
 </figure>
 
 <style>
   .foto {
     margin: 0;
-    border-radius: var(--raggio-grande);
-    overflow: hidden;
-    box-shadow: var(--ombra);
   }
   .foto img {
     display: block;
     width: 100%;
-    object-fit: cover;
+    height: auto; /* proporzioni naturali: l'immagine non viene mai tagliata */
+    border-radius: var(--raggio-grande);
+    box-shadow: var(--ombra);
   }
   .foto figcaption {
     font-size: 0.85rem;

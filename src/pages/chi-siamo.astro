@@ -1,25 +1,35 @@
 ---
 import Base from '../layouts/Base.astro';
 import NotaMargine from '../components/NotaMargine.astro';
+import Foto from '../components/Foto.astro';
 ---
 
 <Base
   titolo="Chi siamo"
   descrizione="La Compagnia del Cifalco: le persone che tracciano, curano e raccontano l’Antica Via del Cifalco. Il logo, i ringraziamenti e come contribuire."
 >
+  <section class="sezione sezione--bosco">
+    <div class="contenitore duo">
+      <div>
+        <p class="occhiello">Chi siamo</p>
+        <h1>Dietro la Via</h1>
+        <p style="font-size: 1.12rem; margin-bottom: 0;">
+          La Via è un progetto di comunità portato avanti dalla Compagnia del
+          Cifalco: le persone, con nome e volto, le trovi nella pagina
+          <a href="/progetto#t-compagnia">Il progetto</a>. Qui raccontiamo il
+          logo, come dare una mano e chi ringraziare.
+        </p>
+      </div>
+      <Foto
+        classe="duo__foto"
+        src="/immagini/faggeta.jpg"
+        alt="La faggeta che la Via attraversa sui crinali dell’alta valle"
+      />
+    </div>
+  </section>
+
   <div class="contenitore sezione">
-    <p class="occhiello">Chi siamo</p>
-    <h1>Dietro la Via</h1>
-
     <div class="prosa">
-      <p style="font-size: 1.12rem;">
-        La Via è un progetto di comunità portato avanti dalla Compagnia del
-        Cifalco: le persone, con nome e volto, le trovi nella pagina
-        <a href="/progetto#t-compagnia">Il progetto</a>. Qui raccontiamo il
-        logo, come dare una mano e chi ringraziare.
-        <em>(Testo segnaposto: qui andrà anche la forma dell’associazione.)</em>
-      </p>
-
       <h2>Il logo</h2>
       <figure class="logo-figura">
         <svg

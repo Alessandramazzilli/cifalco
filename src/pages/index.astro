@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import CardItinerario from '../components/CardItinerario.astro';
+import Foto from '../components/Foto.astro';
 import { caricaPercorso, formattaOre } from '../lib/percorso';
 
 const percorso = await caricaPercorso();
@@ -17,23 +18,24 @@ const oreTotali = tappeVia.reduce((s, t) => s + t.oreBase, 0);
   titolo="L’Antica Via del Cifalco"
   descrizione="Dall’alta Val Trebbia al mare di Portofino, a piedi: un cammino di più giorni tra crinali, faggete, passi e borghi. Itinerari, walk planner e mappa illustrata."
 >
-  <!-- Hero: la foto non viene mai coperta dal testo -->
-  <img
-    class="hero-foto"
-    src="/immagini/panorama-cifalco.jpg"
-    alt="Il panorama dei crinali del Cifalco, dai borghi della valle alle montagne della Liguria"
-  />
-
+  <!-- Hero: banda verde, testo a sinistra e foto intera a destra -->
   <section class="sezione sezione--bosco">
-    <div class="contenitore hero-testo">
-      <p class="occhiello">Un cammino di comunità</p>
-      <h1>Dalla Val Trebbia al mare, sulla strada dei muli</h1>
-      <p class="hero-testo__intro">
-        Otto tratte a piedi tra crinali, faggete, passi e borghi, sulla rete di
-        sentieri che muli, commercianti, saltimbanchi e briganti hanno battuto
-        per secoli.
-      </p>
-      <a class="bottone bottone--pieno" href="/itinerario">Apri l’itinerario</a>
+    <div class="contenitore duo">
+      <div>
+        <p class="occhiello">Un cammino di comunità</p>
+        <h1>Dalla Val Trebbia al mare, sulla strada dei muli</h1>
+        <p class="hero__intro">
+          Otto tratte a piedi tra crinali, faggete, passi e borghi, sulla rete
+          di sentieri che muli, commercianti, saltimbanchi e briganti hanno
+          battuto per secoli.
+        </p>
+        <a class="bottone bottone--pieno" href="/itinerario">Apri l’itinerario</a>
+      </div>
+      <Foto
+        classe="duo__foto"
+        src="/immagini/home-banner-valle-del-cifalco.jpg"
+        alt="La valle del Cifalco vista dall’alto, con un borgo tra i boschi"
+      />
     </div>
   </section>
 
@@ -85,23 +87,39 @@ const oreTotali = tappeVia.reduce((s, t) => s + t.oreBase, 0);
     </div>
   </section>
 
-  <!-- Una foto a piena pagina, per il piacere di guardarla -->
-  <img
-    class="banda-foto"
-    src="/immagini/rocca-bosco.jpg"
-    alt="Un roccione affiora dai boschi lungo il crinale della Via"
-  />
+  <!-- Dalla valle al mare: banda acqua + foto della costa -->
+  <section class="sezione sezione--acqua">
+    <div class="contenitore duo duo--foto-prima">
+      <div>
+        <p class="occhiello">Il filo dell’acqua</p>
+        <h2>Dalle fonti del crinale al Mar Ligure</h2>
+        <p>
+          La Via è scandita dall’acqua: la fontana del trivio a Ponte Organasco,
+          le sorgive verso Casanova, i guadi dell’Aveto, fino all’acqua che
+          chiude il cammino, quella del mare di Portofino.
+        </p>
+        <a class="bottone bottone--contorno" href="/itinerario#acqua">
+          I punti acqua della Via
+        </a>
+      </div>
+      <Foto
+        classe="duo__foto"
+        src="/immagini/costa-tigullio.jpg"
+        alt="Il golfo del Tigullio visto dall’alto, dove la Via arriva al mare"
+      />
+    </div>
+  </section>
 
-  <!-- Chiusura: una sola porta verso il racconto -->
-  <section class="sezione">
-    <div class="contenitore chiusura">
+  <!-- Chiusura: banda terra, una sola porta verso il racconto -->
+  <section class="sezione sezione--terra">
+    <div class="contenitore">
       <p class="occhiello">Più di un sentiero</p>
       <h2>Muli, fiere, briganti e faggete</h2>
       <p class="testo-largo">
         La Via è anche una storia di lavoro e di comunità, raccontata con
         rigore: i documenti da una parte, le leggende dall’altra.
       </p>
-      <a class="bottone bottone--contorno" href="/approfondimenti">
+      <a class="bottone bottone--pieno" href="/approfondimenti">
         Leggi gli approfondimenti
       </a>
     </div>
@@ -109,19 +127,7 @@ const oreTotali = tappeVia.reduce((s, t) => s + t.oreBase, 0);
 </Base>
 
 <style>
-  .hero-foto,
-  .banda-foto {
-    display: block;
-    width: 100%;
-    height: clamp(18rem, 56vh, 34rem);
-    object-fit: cover;
-    object-position: center;
-  }
-
-  .hero-testo {
-    max-width: 48rem;
-  }
-  .hero-testo__intro {
+  .hero__intro {
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
   }
@@ -136,9 +142,5 @@ const oreTotali = tappeVia.reduce((s, t) => s + t.oreBase, 0);
   .testo-largo {
     max-width: var(--misura);
     font-size: 1.08rem;
-  }
-
-  .chiusura .bottone {
-    margin-top: 0.5rem;
   }
 </style>
