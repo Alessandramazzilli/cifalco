@@ -62,9 +62,9 @@ const puntiAcqua = ordineAcqua.map(
     </dl>
 
     <Foto
-      src="/immagini/faggeta.jpg"
-      alt="La faggeta che la Via attraversa sui crinali dell’alta valle"
-      rapporto="3/1"
+      src="/immagini/vetta-rocca-bruna.jpg"
+      alt="La croce di vetta di Rocca Bruna, lungo i crinali della Via"
+      rapporto="16/9"
     />
 
     <NotaMargine>
@@ -183,6 +183,13 @@ const puntiAcqua = ordineAcqua.map(
     </div>
   </section>
 
+  <!-- Una pausa visiva: il sentiero vero -->
+  <img
+    class="itinerario-foto"
+    src="/immagini/sentiero-pozza.jpg"
+    alt="Il sentiero della Via tra i boschi, con una pozza dopo la pioggia"
+  />
+
   <!-- Sicurezza, quando andare -->
   <section class="sezione sezione--alternata" aria-labelledby="titolo-sicurezza">
     <div class="contenitore">
@@ -269,6 +276,14 @@ const puntiAcqua = ordineAcqua.map(
 </Base>
 
 <style>
+  .itinerario-foto {
+    display: block;
+    width: 100%;
+    height: clamp(16rem, 45vh, 26rem);
+    object-fit: cover;
+    object-position: center;
+  }
+
   .dati-via {
     display: flex;
     flex-wrap: wrap;

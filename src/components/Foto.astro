@@ -1,21 +1,35 @@
 ---
 /**
  * Foto reale. Le immagini stanno in public/immagini/ (vedi README).
- * Per ora non passa per l'ottimizzatore di Astro perché i file in public/
- * sono serviti così come sono: sono già stati ridimensionati e compressi.
+ * Il rapporto predefinito è 3/2, lo stesso delle foto: così non vengono
+ * tagliate. Usa `posizione` per spostare il punto messo a fuoco nel ritaglio.
  */
 interface Props {
-  src: string; // es. "/immagini/faggeta.jpg"
+  src: string; // es. "/immagini/panorama-cifalco.jpg"
   alt: string;
-  rapporto?: string; // es. "16/9", "4/3", "3/4"
+  rapporto?: string; // es. "3/2", "16/9", "4/3"
+  posizione?: string; // object-position, es. "center", "left top"
   didascalia?: string;
   classe?: string;
 }
-const { src, alt, rapporto = '16/9', didascalia, classe } = Astro.props;
+const {
+  src,
+  alt,
+  rapporto = '3/2',
+  posizione = 'center',
+  didascalia,
+  classe,
+} = Astro.props;
 ---
 
 <figure class:list={['foto', classe]}>
-  <img src={src} alt={alt} loading="lazy" decoding="async" style={`aspect-ratio: ${rapporto};`} />
+  <img
+    src={src}
+    alt={alt}
+    loading="lazy"
+    decoding="async"
+    style={`aspect-ratio: ${rapporto}; object-position: ${posizione};`}
+  />
   {didascalia && <figcaption>{didascalia}</figcaption>}
 </figure>
 

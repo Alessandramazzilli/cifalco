@@ -4,38 +4,19 @@ const anno = new Date().getFullYear();
 
 <footer class="pie">
   <div class="contenitore pie__griglia">
-    <div>
-      <p class="pie__titolo">L’Antica Via del Cifalco</p>
-      <p>
-        Un cammino di comunità dall’alta Val Trebbia al mare di Portofino,
-        sulla strada di muli, commercianti, saltimbanchi e briganti.
-      </p>
-    </div>
+    <p class="pie__titolo">L’Antica Via del Cifalco</p>
     <nav aria-label="Collegamenti del piè di pagina">
-      <p class="pie__titolo">Cammina</p>
-      <ul>
-        <li><a href="/itinerario">L’itinerario (planner e mappa)</a></li>
-        <li><a href="/itinerario/descrizione-dettagliata">Descrizione dettagliata</a></li>
-        <li><a href="/itinerario/informazioni-pratiche">Informazioni pratiche</a></li>
-      </ul>
-    </nav>
-    <nav aria-label="Collegamenti di approfondimento">
-      <p class="pie__titolo">Scopri</p>
       <ul>
         <li><a href="/progetto">Il progetto</a></li>
-        <li><a href="/approfondimenti#voci">Voci d’autore</a></li>
-        <li><a href="/approfondimenti#diario">Diario di bordo</a></li>
-        <li><a href="/approfondimenti#rete">Una rete di cammini</a></li>
-        <li><a href="/dicono-di-noi">Dicono di noi</a></li>
-        <li><a href="/chi-siamo">Chi siamo e contatti</a></li>
+        <li><a href="/itinerario">L’itinerario</a></li>
+        <li><a href="/approfondimenti">Approfondimenti</a></li>
+        <li><a href="/chi-siamo">Chi siamo</a></li>
+        <li><a href="/contatti">Contatti</a></li>
       </ul>
     </nav>
   </div>
   <div class="contenitore pie__nota">
-    <p>
-      © {anno} L’Antica Via del Cifalco · Cammina con prudenza: la montagna
-      chiede rispetto, non coraggio.
-    </p>
+    <p>© {anno} L’Antica Via del Cifalco</p>
   </div>
 </footer>
 
@@ -49,28 +30,33 @@ const anno = new Date().getFullYear();
   }
 
   .pie__griglia {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-    padding-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding-bottom: 1.5rem;
   }
 
   .pie__titolo {
     font-family: var(--serif);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 650;
     color: var(--chiaro);
-    margin-bottom: 0.6rem;
+    margin: 0;
   }
 
   .pie ul {
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.4rem;
   }
 
   .pie li {
-    margin-bottom: 0.4rem;
+    margin: 0;
   }
 
   .pie a {

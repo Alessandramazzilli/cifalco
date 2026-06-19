@@ -1,85 +1,79 @@
 ---
 import Base from '../layouts/Base.astro';
 import CardItinerario from '../components/CardItinerario.astro';
-import { caricaPercorso } from '../lib/percorso';
+import { caricaPercorso, formattaOre } from '../lib/percorso';
 
 const percorso = await caricaPercorso();
+
+const viaIntera = percorso.itinerari.find((i) => i.id === 'via-intera')!;
+const tappeVia = viaIntera.tappe.map(
+  (id) => percorso.tappe.find((t) => t.id === id)!
+);
+const distanzaTotale = tappeVia.reduce((s, t) => s + t.distanzaKm, 0);
+const oreTotali = tappeVia.reduce((s, t) => s + t.oreBase, 0);
 ---
 
 <Base
   titolo="L’Antica Via del Cifalco"
-  descrizione="Dall’alta Val Trebbia al mare di Portofino, a piedi: l’Antica Via del Cifalco è un cammino di più giorni tra crinali, faggete, passi e borghi. Itinerari, walk planner e mappa illustrata."
+  descrizione="Dall’alta Val Trebbia al mare di Portofino, a piedi: un cammino di più giorni tra crinali, faggete, passi e borghi. Itinerari, walk planner e mappa illustrata."
 >
-  <!-- Banner -->
-  <section
-    class="hero"
-    style="background-image: linear-gradient(180deg, rgba(46,51,44,0.15) 0%, rgba(46,51,44,0.30) 45%, rgba(46,51,44,0.78) 100%), url('/immagini/home-banner-valle-del-cifalco.jpg');"
-  >
-    <div class="contenitore hero__contenuto">
-      <p class="occhiello hero__occhiello">Un cammino di comunità</p>
+  <!-- Hero: la foto non viene mai coperta dal testo -->
+  <img
+    class="hero-foto"
+    src="/immagini/panorama-cifalco.jpg"
+    alt="Il panorama dei crinali del Cifalco, dai borghi della valle alle montagne della Liguria"
+  />
+
+  <section class="sezione sezione--bosco">
+    <div class="contenitore hero-testo">
+      <p class="occhiello">Un cammino di comunità</p>
       <h1>Dalla Val Trebbia al mare, sulla strada dei muli</h1>
-      <p class="hero__sottotitolo">
-        L’Antica Via del Cifalco unisce l’Appennino dell’alta Val Trebbia al
-        mare di Portofino: otto tratte tra crinali, faggete, passi e borghi,
-        sulla rete di sentieri che muli, commercianti, saltimbanchi e briganti
-        hanno battuto per secoli.
+      <p class="hero-testo__intro">
+        Otto tratte a piedi tra crinali, faggete, passi e borghi, sulla rete di
+        sentieri che muli, commercianti, saltimbanchi e briganti hanno battuto
+        per secoli.
       </p>
-      <div class="hero__azioni">
-        <a class="bottone bottone--pieno" href="/itinerario#pianifica">
-          Pianifica la camminata
-        </a>
-        <a class="bottone bottone--contorno hero__bottone-chiaro" href="/itinerario#mappa">
-          Guarda la mappa
-        </a>
-      </div>
+      <a class="bottone bottone--pieno" href="/itinerario">Apri l’itinerario</a>
     </div>
   </section>
 
-  <!-- I tre richiami -->
-  <section class="sezione sezione--alternata">
-    <div class="contenitore">
-      <div class="griglia">
-        <article class="richiamo">
-          <h2 class="richiamo__titolo">Cammina</h2>
-          <p>
-            Tre itinerari sul filo della Via: la traversata intera in 4-5
-            giorni, i crinali dell’alta Val Trebbia, la discesa dal crinale al
-            mare. Tempi, segnavia e acqua spiegati in modo che non ci si possa
-            perdere.
-          </p>
-          <a href="/itinerario">Vai all’itinerario →</a>
-        </article>
-        <article class="richiamo">
-          <h2 class="richiamo__titolo">Scopri il territorio</h2>
-          <p>
-            Borghi d’alta valle, rifugi di crinale, la vista che dal Caucaso
-            abbraccia l’Appennino e il Tigullio. Il cammino è anche quello che
-            trovi quando ti fermi.
-          </p>
-          <a href="/itinerario#mappa">Esplora la mappa →</a>
-        </article>
-        <article class="richiamo">
-          <h2 class="richiamo__titolo">La storia</h2>
-          <p>
-            Vie del sale, mulattieri, fiere e briganti, raccontati con affetto
-            e con rigore: i documenti da una parte, le leggende dall’altra.
-          </p>
-          <a href="/approfondimenti">Gli approfondimenti →</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Gli itinerari -->
+  <!-- Lo sguardo d'insieme, in numeri (nessun link) -->
   <section class="sezione">
+    <div class="contenitore">
+      <dl class="snapshot">
+        <div class="dato">
+          <dt>Lunghezza</dt>
+          <dd>{distanzaTotale.toLocaleString('it-IT', { maximumFractionDigits: 0 })} km</dd>
+        </div>
+        <div class="dato">
+          <dt>Tratte</dt>
+          <dd>{tappeVia.length}</dd>
+        </div>
+        <div class="dato">
+          <dt>Tempo di cammino</dt>
+          <dd>{formattaOre(oreTotali)}</dd>
+        </div>
+        <div class="dato">
+          <dt>Da</dt>
+          <dd>Ponte Organasco</dd>
+        </div>
+        <div class="dato">
+          <dt>A</dt>
+          <dd>Portofino mare</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- I tre itinerari: il cuore della home -->
+  <section class="sezione sezione--alternata">
     <div class="contenitore">
       <p class="occhiello">Scegli il tuo passo</p>
       <h2>Tre modi di camminare la Via</h2>
-      <p>
-        Non serve fare tutto e subito: la Via si lascia camminare anche a
-        metà. Questi sono i tre tagli classici; il
-        <a href="/itinerario#pianifica">planner</a> li cuce sul tempo e sulle
-        gambe che hai.
+      <p class="testo-largo">
+        Non serve farla tutta: la Via si lascia camminare anche a metà giornata.
+        Scegli un itinerario e il <a href="/itinerario">planner</a> lo costruisce
+        sul tempo e sulle gambe che hai.
       </p>
       <div class="griglia" style="margin-top: 1.5rem;">
         {
@@ -91,149 +85,60 @@ const percorso = await caricaPercorso();
     </div>
   </section>
 
-  <!-- Il filo dell'acqua -->
-  <section class="sezione sezione--acqua">
-    <div class="contenitore">
-      <p class="occhiello">Il filo dell’acqua</p>
-      <h2>Dalle fonti del crinale al Mar Ligure</h2>
-      <p style="font-size: 1.1rem;">
-        La Via è scandita dall’acqua: la fontana del trivio a Ponte Organasco,
-        la fonte della Casermetta, le sorgive e la Fontana del Vino verso
-        Casanova, i guadi dell’Aveto, il Rio dell’Acquapendente, fino all’acqua
-        che chiude il cammino, quella del mare di Portofino. Nelle schede e nel
-        planner trovi sempre dove riempire le borracce.
-      </p>
-      <a class="bottone bottone--contorno" href="/itinerario#acqua">
-        I punti acqua della Via
-      </a>
-    </div>
-  </section>
+  <!-- Una foto a piena pagina, per il piacere di guardarla -->
+  <img
+    class="banda-foto"
+    src="/immagini/rocca-bosco.jpg"
+    alt="Un roccione affiora dai boschi lungo il crinale della Via"
+  />
 
-  <!-- Voci del territorio -->
+  <!-- Chiusura: una sola porta verso il racconto -->
   <section class="sezione">
-    <div class="contenitore">
-      <p class="occhiello">Le voci della Via</p>
-      <h2>Chi tiene aperta la strada</h2>
-      <div class="griglia" style="margin-top: 1.5rem;">
-        <blockquote class="voce card">
-          <p>
-            «I camminatori arrivano stanchi e ripartono che parlano del
-            crinale come di un amico. È per quello che teniamo la fontana in
-            ordine.»
-          </p>
-          <footer>Una locandiera dell’alta valle <em>(testo segnaposto)</em></footer>
-        </blockquote>
-        <blockquote class="voce card">
-          <p>
-            «Mio nonno portava le some su questi sentieri. Quando ridipingo un
-            segnavia mi sembra di salutarlo.»
-          </p>
-          <footer>Un volontario della Compagnia <em>(testo segnaposto)</em></footer>
-        </blockquote>
-        <blockquote class="voce card">
-          <p>
-            «Il giorno che dal Pietrabianca vedi il mare per la prima volta,
-            capisci perché questa strada non è mai stata abbandonata davvero.»
-          </p>
-          <footer>Un camminatore della prima ora <em>(testo segnaposto)</em></footer>
-        </blockquote>
-      </div>
-    </div>
-  </section>
-
-  <!-- Prima di partire -->
-  <section class="sezione sezione--terra">
-    <div class="contenitore">
-      <p class="occhiello">Prima di partire</p>
-      <h2>Un cammino vero, da preparare con cura</h2>
-      <p style="font-size: 1.1rem;">
-        La Via è descritta tratta per tratta, ma resta un cammino di montagna:
-        guarda le previsioni, parti con l’acqua piena e di’ a qualcuno dove
-        vai. Negli approfondimenti trovi la storia di questi sentieri, le voci
-        di chi li cammina e la rete di cammini che la Via attraversa.
+    <div class="contenitore chiusura">
+      <p class="occhiello">Più di un sentiero</p>
+      <h2>Muli, fiere, briganti e faggete</h2>
+      <p class="testo-largo">
+        La Via è anche una storia di lavoro e di comunità, raccontata con
+        rigore: i documenti da una parte, le leggende dall’altra.
       </p>
-      <div class="hero__azioni">
-        <a class="bottone bottone--pieno" href="/itinerario/informazioni-pratiche">
-          Informazioni pratiche
-        </a>
-        <a class="bottone bottone--contorno" href="/approfondimenti">
-          Approfondimenti
-        </a>
-      </div>
+      <a class="bottone bottone--contorno" href="/approfondimenti">
+        Leggi gli approfondimenti
+      </a>
     </div>
   </section>
 </Base>
 
 <style>
-  .hero {
-    background-size: cover;
-    background-position: center;
-    color: var(--chiaro);
-    display: flex;
-    align-items: flex-end;
-    min-height: clamp(26rem, 70vh, 40rem);
-    padding-block: clamp(2.5rem, 7vw, 4.5rem);
+  .hero-foto,
+  .banda-foto {
+    display: block;
+    width: 100%;
+    height: clamp(18rem, 56vh, 34rem);
+    object-fit: cover;
+    object-position: center;
   }
 
-  .hero__contenuto {
-    max-width: 46rem;
+  .hero-testo {
+    max-width: 48rem;
+  }
+  .hero-testo__intro {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
   }
 
-  .hero h1 {
-    color: var(--chiaro);
-    font-size: clamp(2.1rem, 5.5vw, 3.4rem);
-    text-shadow: 0 1px 14px rgb(46 51 44 / 0.5);
-  }
-
-  .hero__occhiello {
-    color: var(--salvia);
-  }
-
-  .hero__sottotitolo {
-    font-size: 1.15rem;
-    color: var(--chiaro);
-    max-width: 40rem;
-    text-shadow: 0 1px 10px rgb(46 51 44 / 0.55);
-  }
-
-  .hero__azioni {
+  .snapshot {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
-  }
-
-  /* Sul banner scuro: bottone a contorno chiaro. */
-  .hero__bottone-chiaro {
-    color: var(--chiaro);
-    border-color: var(--chiaro);
-  }
-  .hero__bottone-chiaro:hover {
-    background: var(--chiaro);
-    color: var(--bosco-scuro);
-  }
-
-  .richiamo__titolo {
-    font-size: 1.45rem;
-  }
-
-  .richiamo a {
-    font-weight: 650;
-  }
-
-  .voce {
+    gap: 1.25rem 3rem;
     margin: 0;
-    font-family: var(--serif);
   }
 
-  .voce p {
+  .testo-largo {
+    max-width: var(--misura);
     font-size: 1.08rem;
-    margin-bottom: 0.75rem;
   }
 
-  .voce footer {
-    font-family: var(--sans);
-    font-size: 0.92rem;
-    color: var(--inchiostro-tenue);
+  .chiusura .bottone {
+    margin-top: 0.5rem;
   }
 </style>
