@@ -108,7 +108,7 @@ const datiPlanner = {
     <div class="planner__intestazione">
       <h3>Il tuo piano</h3>
       <button type="button" class="bottone bottone--contorno planner__scarica" data-azione="scarica">
-        Scarica il piano
+        Scarica il piano (PDF)
       </button>
     </div>
 
@@ -468,8 +468,8 @@ const datiPlanner = {
     // --- Stepper delle tappe ---------------------------------------------
     let passi: { tappa: string; titolo: string; testo: string }[] = [];
     let passoCorrente = 0;
-    let testoPiano = ''; // il piano corrente in testo, pronto da scaricare
-    let nomePiano = 'piano-via-del-cifalco.txt';
+    let htmlPiano = ''; // il piano corrente in HTML, pronto da stampare in PDF
+    let titoloPiano = 'Piano di cammino';
 
     const bottoneIndietro = sezione.querySelector<HTMLButtonElement>('[data-azione="indietro"]')!;
     const bottoneAvanti = sezione.querySelector<HTMLButtonElement>('[data-azione="avanti"]')!;
@@ -623,73 +623,71 @@ const datiPlanner = {
       passoCorrente = 0;
       mostraPasso();
 
-      // Prepara il testo del piano completo, pronto da scaricare.
+      // Prepara il piano completo in HTML, pronto da stampare/salvare in PDF.
       const senso = inverso ? 'inverso' : 'classico';
-      const r: string[] = [];
-      r.push('L’ANTICA VIA DEL CIFALCO');
-      r.push(`Piano di cammino: ${itinerario.nome}`);
-      r.push('');
-      r.push(
-        itinerario.anello
-          ? `Anello con partenza e ritorno a ${partenza}.`
-          : `Da ${partenza} a ${arrivo} (senso ${senso}).`
+      const esc = (s: string) =>
+        s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      titoloPiano = `${itinerario.nome} (${itinerario.anello ? partenza : partenza + ' › ' + arrivo})`;
+
+      const h: string[] = [];
+      h.push(`<h1>L’Antica Via del Cifalco</h1>`);
+      h.push(`<p class="sottotitolo">Piano di cammino: <strong>${esc(itinerario.nome)}</strong></p>`);
+      h.push(
+        `<p>${
+          itinerario.anello
+            ? `Anello con partenza e ritorno a ${esc(partenza)}.`
+            : `Da ${esc(partenza)} a ${esc(arrivo)} (senso ${senso}).`
+        }</p>`
       );
-      r.push('');
-      r.push('IN SINTESI');
-      r.push(`  Distanza stimata: ${distanza.toLocaleString('it-IT', { maximumFractionDigits: 1 })} km`);
-      r.push(`  Salita: ${salita} m   Discesa: ${discesa} m`);
-      r.push(`  Tempo di cammino (soste escluse): ${formattaOre(ore)}`);
-      r.push(`  Difficoltà: ${ETICHETTA_DIFFICOLTA[itinerario.difficolta]}`);
-      r.push('');
-      r.push('SEGNAVIA, TRATTA PER TRATTA');
+      h.push('<h2>In sintesi</h2><ul>');
+      h.push(`<li>Distanza stimata: ${distanza.toLocaleString('it-IT', { maximumFractionDigits: 1 })} km</li>`);
+      h.push(`<li>Salita: ${salita} m &nbsp;·&nbsp; Discesa: ${discesa} m</li>`);
+      h.push(`<li>Tempo di cammino (soste escluse): ${formattaOre(ore)}</li>`);
+      h.push(`<li>Difficoltà: ${ETICHETTA_DIFFICOLTA[itinerario.difficolta]}</li>`);
+      h.push('</ul>');
+
+      h.push('<h2>Segnavia, tratta per tratta</h2><ul>');
       tappe.forEach((t) => {
-        const tratto = inverso ? `${t.a} > ${t.da}` : `${t.da} > ${t.a}`;
-        r.push(`  ${tratto}`);
-        r.push(`    ${t.segnavia}`);
+        const tratto = inverso ? `${t.a} › ${t.da}` : `${t.da} › ${t.a}`;
+        h.push(`<li><strong>${esc(tratto)}:</strong> ${esc(t.segnavia)}</li>`);
       });
+      h.push('</ul>');
+
       if (giornate.length > 1) {
-        r.push('');
-        r.push('SUDDIVISIONE IN GIORNATE');
-        giornate.forEach((g, i) => {
+        h.push('<h2>Suddivisione in giornate</h2><ol>');
+        giornate.forEach((g) => {
           const da = inverso ? g.tappe[0].a : g.tappe[0].da;
           const a = inverso ? g.tappe[g.tappe.length - 1].da : g.tappe[g.tappe.length - 1].a;
-          r.push(`  Giorno ${i + 1}: da ${da} a ${a} (${formattaOre(g.ore)})`);
+          h.push(`<li>Da ${esc(da)} a ${esc(a)} (${formattaOre(g.ore)})</li>`);
         });
+        h.push('</ol>');
       }
-      r.push('');
-      r.push('ACQUA LUNGO IL TRATTO');
-      if (acquaNomi.length) acquaNomi.forEach((n) => r.push(`  - ${n}`));
-      else r.push('  Nessuna fonte: parti con tutta l’acqua che ti serve.');
-      r.push('');
-      r.push('COSA PORTARE');
-      zaino.forEach((v) => r.push(`  - ${v}`));
-      r.push('');
-      r.push('LE TAPPE, PASSO PER PASSO');
+
+      h.push('<h2>Acqua lungo il tratto</h2><ul>');
+      if (acquaNomi.length) acquaNomi.forEach((n) => h.push(`<li>${esc(n)}</li>`));
+      else h.push('<li>Nessuna fonte: parti con tutta l’acqua che ti serve.</li>');
+      h.push('</ul>');
+
+      h.push('<h2>Cosa portare</h2><ul>');
+      zaino.forEach((v) => h.push(`<li>${esc(v)}</li>`));
+      h.push('</ul>');
+
+      h.push('<h2>Le tappe, passo per passo</h2>');
       let tappaTitoloPrec = '';
       passi.forEach((p) => {
         if (p.tappa !== tappaTitoloPrec) {
-          r.push('');
-          r.push(`  ${p.tappa}`);
+          h.push(`<h3>${esc(p.tappa)}</h3>`);
           tappaTitoloPrec = p.tappa;
         }
-        r.push(`    • ${p.titolo}`);
-        r.push(`      ${p.testo}`);
+        h.push(`<p class="passo"><strong>${esc(p.titolo)}.</strong> ${esc(p.testo)}</p>`);
       });
       if (inverso) {
-        r.push('');
-        r.push('NB: le indicazioni passo per passo sono descritte nel senso');
-        r.push('classico; in senso inverso usale come riferimento dei luoghi,');
-        r.push('in ordine contrario.');
+        h.push(
+          '<p class="nb">Le indicazioni passo per passo sono descritte nel senso classico; in senso inverso usale come riferimento dei luoghi, in ordine contrario.</p>'
+        );
       }
-      r.push('');
-      r.push('Buon cammino. La montagna chiede rispetto, non coraggio.');
-      r.push('anticaviadelcifalco.it');
-      testoPiano = r.join('\n');
-      nomePiano =
-        'piano-' +
-        itinerario.id +
-        (itinerario.anello ? '' : '-' + senso) +
-        '.txt';
+      h.push('<p class="chiusura">Buon cammino. La montagna chiede rispetto, non coraggio.<br>anticaviadelcifalco.it</p>');
+      htmlPiano = h.join('\n');
 
       // Dillo anche alla mappa, se c'è. Il rinvio di un tick garantisce che
       // al primo calcolo lo script della mappa abbia già registrato l'ascolto.
@@ -714,22 +712,35 @@ const datiPlanner = {
       select.addEventListener('change', calcola)
     );
 
-    // Scarica il piano corrente come file di testo (utile sul sentiero,
-    // anche senza campo: si apre da qualunque telefono).
+    // Scarica il piano in PDF: apre una pagina pulita e la finestra di stampa,
+    // dove il browser permette di «Salvare come PDF» (funziona anche da telefono).
+    const stiliStampa = `
+      @page { margin: 18mm; }
+      body { font-family: Georgia, 'Times New Roman', serif; color: #2E332C; line-height: 1.5; max-width: 40rem; margin: 0 auto; padding: 1rem; }
+      h1 { font-size: 1.5rem; margin: 0 0 0.2rem; }
+      .sottotitolo { margin: 0 0 1rem; color: #54594E; }
+      h2 { font-size: 1.15rem; margin: 1.4rem 0 0.4rem; border-bottom: 2px solid #8A9A7B; padding-bottom: 0.15rem; }
+      h3 { font-size: 1rem; margin: 1rem 0 0.3rem; color: #4A5D44; }
+      ul, ol { margin: 0.3rem 0 0.6rem 1.2rem; padding: 0; }
+      li { margin-bottom: 0.2rem; }
+      .passo { margin: 0.2rem 0 0.5rem; }
+      .nb, .chiusura { color: #54594E; font-size: 0.95rem; }
+      .chiusura { margin-top: 1.5rem; border-top: 1px solid #A9B49B; padding-top: 0.6rem; }
+    `;
     sezione
       .querySelector<HTMLButtonElement>('[data-azione="scarica"]')!
       .addEventListener('click', () => {
-        const blob = new Blob([testoPiano], {
-          type: 'text/plain;charset=utf-8',
-        });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = nomePiano;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
+        const w = window.open('', '_blank');
+        if (!w) return;
+        w.document.write(
+          `<!doctype html><html lang="it"><head><meta charset="utf-8">` +
+            `<title>${titoloPiano}</title><style>${stiliStampa}</style></head>` +
+            `<body>${htmlPiano}</body></html>`
+        );
+        w.document.close();
+        w.focus();
+        // Lascia un attimo al rendering, poi apre la stampa.
+        w.setTimeout(() => w.print(), 350);
       });
 
     aggiornaTratto();

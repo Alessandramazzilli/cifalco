@@ -7,35 +7,69 @@ import NotaMargine from '../components/NotaMargine.astro';
   titolo="Contatti"
   descrizione="Come contattare la Compagnia del Cifalco: informazioni sul percorso, segnalazioni dal sentiero, contributi e collaborazioni."
 >
-  <div class="contenitore sezione">
-    <p class="occhiello">Contatti</p>
-    <h1>Scriviamoci</h1>
-
-    <div class="prosa" style="max-width: var(--misura);">
-      <p style="font-size: 1.12rem;">
+  <section class="sezione sezione--bosco">
+    <div class="contenitore">
+      <p class="occhiello">Contatti</p>
+      <h1>Scriviamoci</h1>
+      <p class="lead">
         Per informazioni sul percorso, segnalazioni dal sentiero, contributi
-        agli approfondimenti o collaborazioni tra cammini:
-      </p>
-      <ul>
-        <li>
-          Posta elettronica:
-          <a href="mailto:info@anticaviadelcifalco.it">info@anticaviadelcifalco.it</a>
-          <em>(segnaposto)</em>
-        </li>
-        <li>Telefono: 000 0000000 <em>(segnaposto)</em></li>
-      </ul>
-      <p>
-        Per sapere chi c’è dietro la Via:
-        <a href="/chi-siamo">la Compagnia del Cifalco</a>.
+        agli approfondimenti o collaborazioni tra cammini: siamo qui.
+        <em>(I recapiti sono segnaposto, in attesa di quelli definitivi.)</em>
       </p>
     </div>
+  </section>
 
-    <NotaMargine>
-      <p>
-        Una segnalazione dal sentiero vale doppio: scrivici dove (il punto
-        più vicino va benissimo, «cinque minuti dopo il Passo Gifarco») e,
-        se puoi, allega una foto.
-      </p>
-    </NotaMargine>
-  </div>
+  <section class="sezione">
+    <div class="contenitore">
+      <div class="griglia">
+        <article class="card recapito">
+          <h2>Posta elettronica</h2>
+          <p>Per qualsiasi domanda o proposta, il modo più semplice.</p>
+          <p>
+            <a href="mailto:info@anticaviadelcifalco.it">info@anticaviadelcifalco.it</a>
+            <em>(segnaposto)</em>
+          </p>
+        </article>
+        <article class="card recapito">
+          <h2>Telefono</h2>
+          <p>Per informazioni veloci, negli orari di ufficio.</p>
+          <p><strong>000 0000000</strong> <em>(segnaposto)</em></p>
+        </article>
+        <article class="card recapito">
+          <h2>Chi c’è dietro</h2>
+          <p>Le persone della Via e come dare una mano.</p>
+          <p>
+            <a href="/progetto#t-compagnia">La Compagnia del Cifalco</a> ·
+            <a href="/chi-siamo">Chi siamo</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sezione sezione--acqua">
+    <div class="contenitore">
+      <NotaMargine titolo="Una segnalazione dal sentiero">
+        <p>
+          Vale doppio: scrivici dove (il punto più vicino va benissimo,
+          «cinque minuti dopo il Passo Gifarco») e, se puoi, allega una foto.
+          Così teniamo i segnavia e le note sempre aggiornati.
+        </p>
+      </NotaMargine>
+    </div>
+  </section>
 </Base>
+
+<style>
+  .lead {
+    font-size: 1.12rem;
+    max-width: var(--misura);
+    margin-bottom: 0;
+  }
+  .recapito h2 {
+    font-size: 1.2rem;
+  }
+  .recapito p:last-child {
+    margin-bottom: 0;
+  }
+</style>
