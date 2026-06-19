@@ -136,23 +136,6 @@ const datiPlanner = {
 
     <div data-esito="giornate"></div>
 
-    <div class="planner__colonne">
-      <section class="planner__blocco planner__blocco--acqua" aria-label="Acqua lungo il tratto">
-        <h4>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 3 C 12 3 6 10.5 6 14.5 C 6 18 8.7 20.5 12 20.5 C 15.3 20.5 18 18 18 14.5 C 18 10.5 12 3 12 3 Z"></path>
-          </svg>
-          Acqua lungo il tratto
-        </h4>
-        <ul data-esito="acqua"></ul>
-      </section>
-
-      <section class="planner__blocco" aria-label="Cosa portare">
-        <h4>Cosa portare</h4>
-        <ul data-esito="zaino"></ul>
-      </section>
-    </div>
-
     <section class="planner__tappe" aria-label="Le tappe in sequenza">
       <h4>Le tappe, una alla volta</h4>
       <p class="planner__nota-inverso" data-esito="nota-inverso" hidden>
@@ -390,8 +373,8 @@ const datiPlanner = {
   }
   .planner__servizio--appoggio {
     color: var(--umbra);
-    border-color: var(--tortora);
-    background: var(--fondo-scuro);
+    border-color: var(--terra);
+    background: var(--terra-fondo);
   }
   .planner__servizio svg { flex: none; }
 </style>
@@ -681,11 +664,9 @@ const datiPlanner = {
           }
         }
       }
-      esito('acqua').innerHTML =
-        acquaNomi.map((nome) => `<li>${nome}</li>`).join('') ||
-        '<li>Nessuna fonte su questo tratto: parti con tutta l’acqua che ti serve.</li>';
 
       // Zaino: base + aggiunte legate a durata, quota e difficoltà.
+      // Non mostrato qui (sta in «Informazioni pratiche»): serve solo al PDF.
       const zaino = [
         'Scarpe da trekking già rodate',
         'Borraccia da almeno 1 litro',
@@ -701,7 +682,6 @@ const datiPlanner = {
         zaino.push('Bastoncini da trekking per le lunghe discese');
       if (giornate.length > 1)
         zaino.push('Sacco lenzuolo e un ricambio per le notti nei punti d’appoggio');
-      esito('zaino').innerHTML = zaino.map((voce) => `<li>${voce}</li>`).join('');
 
       // Stepper.
       esito('nota-inverso').hidden = !inverso;

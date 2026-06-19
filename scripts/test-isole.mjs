@@ -60,13 +60,27 @@ verifica(
   document.querySelectorAll('.planner__giornate li').length === 5
 );
 verifica(
-  'planner: acqua elencata',
-  document.querySelectorAll('[data-esito="acqua"] li').length >= 5
-);
-verifica(
   'planner: stepper al passo 1',
   document.querySelector('[data-esito="passo-contatore"]').textContent.startsWith('Passo 1 di')
 );
+
+// Scorri tutti gli step e verifica che almeno uno segnali acqua e uno un appoggio.
+{
+  let acqua = false;
+  let appoggio = false;
+  const tot = Number(
+    document.querySelector('[data-esito="passo-contatore"]').textContent.match(/di (\d+)/)[1]
+  );
+  for (let i = 0; i < tot; i++) {
+    if (document.querySelector('.planner__servizio--acqua')) acqua = true;
+    if (document.querySelector('.planner__servizio--appoggio')) appoggio = true;
+    document.querySelector('[data-azione="avanti"]').click();
+  }
+  verifica('planner: almeno uno step segnala acqua', acqua);
+  verifica('planner: almeno uno step segnala un punto d’appoggio', appoggio);
+}
+// Torna all'inizio per i test successivi.
+document.querySelector('#pl-itinerario').dispatchEvent(new dom.window.Event('change'));
 
 // Avanza di un passo.
 document.querySelector('[data-azione="avanti"]').click();

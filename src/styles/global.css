@@ -23,13 +23,14 @@
   --pietra-scura: #3D3D3A;
   --pietra: #6E6E68;
   --pietra-chiara: #B5B3AC;
-  --pietra-banda: #5E635C;   /* grigio medio per le bande: meno cupo */
+  --pietra-banda: #EAE6E1;   /* grigio chiaro per le bande (testo scuro) */
 
   /* Accento acquatico — fonti, fontane, abbeveratoi e torrenti. */
   --acqua: #5B7C7D;
   --acqua-scura: #455F60;
   --acqua-chiara: #7FA0A0;
   --acqua-fondo: #CDDED9;
+  --terra-fondo: #EADDCB;    /* fondo chiaro marrone per i richiami al ristoro */
 
   /* Marrone della terra — dettagli caldi, calore delle locande. */
   --umbra: #5C4A3A;
@@ -197,26 +198,25 @@ hr.divisore {
   margin-inline: auto;
 }
 
-/* Bande a tinta piena: portano verde, acqua e pietra sugli sfondi. */
+/* Bande a tinta piena scure (testo chiaro) */
 .sezione--bosco { background: var(--bosco); }
 .sezione--acqua { background: var(--acqua-scura); }
-.sezione--pietra { background: var(--pietra-banda); }
 .sezione--terra { background: var(--umbra); }
+/* Banda grigio chiaro (testo scuro): tono neutro e luminoso */
+.sezione--pietra { background: var(--pietra-banda); }
 
 .sezione--bosco,
 .sezione--acqua,
-.sezione--pietra,
 .sezione--terra {
   color: var(--chiaro);
 }
 .sezione--bosco :is(h1, h2, h3, h4),
 .sezione--acqua :is(h1, h2, h3, h4),
-.sezione--pietra :is(h1, h2, h3, h4),
 .sezione--terra :is(h1, h2, h3, h4) {
   color: var(--chiaro);
 }
-.sezione--bosco a, .sezione--acqua a, .sezione--pietra a, .sezione--terra a { color: var(--chiaro); }
-.sezione--bosco a:hover, .sezione--acqua a:hover, .sezione--pietra a:hover, .sezione--terra a:hover { color: var(--acqua-chiara); }
+.sezione--bosco a, .sezione--acqua a, .sezione--terra a { color: var(--chiaro); }
+.sezione--bosco a:hover, .sezione--acqua a:hover, .sezione--terra a:hover { color: var(--acqua-chiara); }
 
 .occhiello {
   font-family: var(--sans);
@@ -229,7 +229,6 @@ hr.divisore {
 }
 .sezione--bosco .occhiello,
 .sezione--acqua .occhiello,
-.sezione--pietra .occhiello,
 .sezione--terra .occhiello { color: var(--salvia); }
 
 /* --- Componenti ------------------------------------------------------------ */
@@ -264,19 +263,15 @@ hr.divisore {
 /* Bottoni sulle bande scure */
 .sezione--bosco .bottone--pieno,
 .sezione--acqua .bottone--pieno,
-.sezione--pietra .bottone--pieno,
 .sezione--terra .bottone--pieno { background: var(--chiaro); color: var(--bosco-scuro); }
 .sezione--bosco .bottone--pieno:hover,
 .sezione--acqua .bottone--pieno:hover,
-.sezione--pietra .bottone--pieno:hover,
 .sezione--terra .bottone--pieno:hover { background: var(--salvia); color: var(--bosco-scuro); }
 .sezione--bosco .bottone--contorno,
 .sezione--acqua .bottone--contorno,
-.sezione--pietra .bottone--contorno,
 .sezione--terra .bottone--contorno { color: var(--chiaro); border-color: var(--chiaro); }
 .sezione--bosco .bottone--contorno:hover,
 .sezione--acqua .bottone--contorno:hover,
-.sezione--pietra .bottone--contorno:hover,
 .sezione--terra .bottone--contorno:hover { background: var(--chiaro); color: var(--bosco-scuro); border-color: var(--chiaro); }
 
 /* Card leggere */

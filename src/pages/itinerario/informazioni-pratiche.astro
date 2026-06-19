@@ -14,10 +14,9 @@ import Foto from '../../components/Foto.astro';
       <h1>Informazioni pratiche e avvertenze</h1>
       <p class="lead">
         Le cose concrete: come si arriva alla partenza e come si torna
-        dall’arrivo, più le avvertenze aggiornate. I
-        <a href="/itinerario#appoggio">punti di appoggio</a> per dormire e
-        mangiare sono nella pagina dell’itinerario.
-        <em>I recapiti sono segnaposto, in attesa dei dati definitivi.</em>
+        dall’arrivo, cosa mettere nello zaino e le avvertenze aggiornate sul
+        percorso. <em>I recapiti sono segnaposto, in attesa dei dati
+        definitivi.</em>
       </p>
     </div>
   </section>
@@ -54,7 +53,39 @@ import Foto from '../../components/Foto.astro';
     </div>
   </section>
 
-  <!-- Punti di appoggio: tabella + foto di un rifugio -->
+  <!-- Cosa portare -->
+  <section class="sezione" aria-labelledby="titolo-zaino">
+    <div class="contenitore">
+      <h2 id="titolo-zaino">Cosa mettere nello zaino</h2>
+      <p class="lead">
+        L’essenziale per camminare in sicurezza. Il
+        <a href="/itinerario#pianifica">walk planner</a> adatta questi consigli
+        al tratto e al passo che scegli, e li riporta nel piano in PDF.
+      </p>
+      <div class="due-zaino">
+        <div>
+          <h3>Sempre</h3>
+          <ul>
+            <li>Scarpe da trekking già rodate</li>
+            <li>Borraccia (almeno 1 litro; 1,5 sui tratti lunghi)</li>
+            <li>Guscio antipioggia</li>
+            <li>Cappello e crema solare</li>
+            <li>Telefono carico, con la mappa scaricata</li>
+            <li>Qualcosa da mangiare lungo il cammino</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Secondo il tratto</h3>
+          <ul>
+            <li>Uno strato caldo in più sui crinali sopra i mille metri, ventosi anche d’estate</li>
+            <li>Bastoncini da trekking per le lunghe discese</li>
+            <li>Per più giorni: sacco lenzuolo e un ricambio per le notti nei punti d’appoggio</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Avvertenze -->
   <section class="sezione sezione--alternata" aria-labelledby="titolo-avvertenze">
     <div class="contenitore">
@@ -104,6 +135,15 @@ import Foto from '../../components/Foto.astro';
   .lead {
     font-size: 1.12rem;
     max-width: var(--misura);
+  }
+  .due-zaino {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    margin-top: 1.25rem;
+  }
+  .due-zaino h3 {
+    font-size: 1.15rem;
   }
   .avvertenze {
     max-width: var(--misura);
