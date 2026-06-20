@@ -27,11 +27,6 @@ const compagnia = [
     ruolo: 'Raccoglitrice di storie e di funghi, in quest’ordine',
     foto: 'compagnia-adele-sbarbaro.jpg',
   },
-  {
-    nome: 'Tommaso Repetto',
-    ruolo: 'Cartografo della domenica e oste a tempo perso',
-    foto: 'compagnia-tommaso-repetto.jpg',
-  },
 ];
 ---
 
@@ -87,42 +82,42 @@ const compagnia = [
     </div>
   </section>
 
-  <!-- La Compagnia del Cifalco: foto intera in apertura, poi i compagni -->
+  <!-- La Compagnia del Cifalco: foto a sinistra, testo e persone a destra -->
   <section class="sezione sezione--bosco" aria-labelledby="t-compagnia">
-    <div class="contenitore">
+    <div class="contenitore compagnia-layout">
       <Foto
         classe="compagnia__foto"
         src="/immagini/spada-nella-roccia.jpg"
         alt="La spada infissa nella roccia su una vetta della Via, tra i crinali"
       />
-      <p class="occhiello">Le persone</p>
-      <h2 id="t-compagnia">La Compagnia del Cifalco</h2>
-      <p class="intro">
-        Dietro la Via c’è un gruppo di camminatori, abitanti e teste dure
-        innamorate di questi monti: sono loro che fanno i sopralluoghi,
-        ridipingono i segnavia, tengono i rapporti con i comuni e raccolgono le
-        storie. <em>(Nomi, ruoli e foto qui sotto sono segnaposto: si
-        sostituiscono uno per uno, vedi il README.)</em>
-      </p>
-
-      <ul class="compagnia">
-        {
-          compagnia.map((persona) => (
-            <li class="persona">
-              <PersonaPlaceholder nomeFile={persona.foto} />
-              <h3 class="persona__nome">{persona.nome}</h3>
-              <p class="persona__ruolo">{persona.ruolo}</p>
-            </li>
-          ))
-        }
-      </ul>
+      <div class="compagnia-corpo">
+        <p class="occhiello">Le persone</p>
+        <h2 id="t-compagnia">La Compagnia del Cifalco</h2>
+        <p class="intro">
+          Dietro la Via c’è un gruppo di camminatori, abitanti e teste dure
+          innamorate di questi monti: sono loro che fanno i sopralluoghi,
+          ridipingono i segnavia, tengono i rapporti con i comuni e raccolgono
+          le storie. <em>(Nomi, ruoli e foto sono segnaposto: si sostituiscono
+          uno per uno, vedi il README.)</em>
+        </p>
+        <ul class="compagnia">
+          {
+            compagnia.map((persona) => (
+              <li class="persona">
+                <PersonaPlaceholder nomeFile={persona.foto} />
+                <h3 class="persona__nome">{persona.nome}</h3>
+                <p class="persona__ruolo">{persona.ruolo}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
   </section>
 
-  <!-- Logo, come contribuire, ringraziamenti -->
+  <!-- Il logo: testo di fianco al simbolo -->
   <section class="sezione">
-    <div class="contenitore prosa">
-      <h2>Il logo</h2>
+    <div class="contenitore duo">
       <figure class="logo-figura">
         <svg
           width="120"
@@ -150,39 +145,53 @@ const compagnia = [
           Logo provvisorio · sostituire con <code>immagini/logo-via-del-cifalco.svg</code>
         </figcaption>
       </figure>
-      <p>
-        Il segno racconta la Via in due tratti: il crinale dell’Appennino
-        sopra, il filo dell’acqua sotto, le fonti, i torrenti e il mare a cui
-        tutto scende. <em>(Testo segnaposto: qui andrà la storia del logo
-        definitivo e di chi l’ha disegnato.)</em>
-      </p>
+      <div>
+        <p class="occhiello">Il simbolo</p>
+        <h2>Il logo</h2>
+        <p>
+          Il segno racconta la Via in due tratti: il crinale dell’Appennino
+          sopra, il filo dell’acqua sotto, le fonti, i torrenti e il mare a cui
+          tutto scende. <em>(Testo segnaposto: qui andranno il nome
+          dell’artista che ha disegnato il logo, qualche riga sulla sua storia
+          e il significato completo del simbolo, dai due profili di monte alla
+          linea d’acqua tratteggiata.)</em>
+        </p>
+      </div>
+    </div>
+  </section>
 
-      <h2>Come contribuire</h2>
-      <ul>
-        <li>
-          <strong>Con le gambe:</strong> cammina la Via e mandaci le tue note,
-          tempi verificati, fonti attive, segnavia da ridipingere.
-        </li>
-        <li>
-          <strong>Con la memoria:</strong> cerchiamo fotografie, documenti e
-          ricordi legati a questi sentieri e ai loro mestieri. Tutto viene
-          catalogato e, se vuoi, pubblicato con il tuo nome.
-        </li>
-        <li>
-          <strong>Con le mani:</strong> le giornate di segnatura e manutenzione
-          sono aperte a tutti, a cominciare dall’«Anello dei Borghi» di prossima
-          realizzazione.
-        </li>
-      </ul>
-
-      <h2 id="ringraziamenti">Ringraziamenti</h2>
-      <p>
-        La Via esiste perché molti l’hanno resa possibile: le sezioni CAI e FIE
-        che curano i sentieri, i comuni attraversati, i gestori di locande,
-        rifugi e trattorie che danno appoggio a chi cammina, e chi ha condiviso
-        conoscenza dei luoghi e memoria. <em>(Testo segnaposto: qui andrà
-        l’elenco vero e proprio, nome per nome.)</em>
-      </p>
+  <!-- Come contribuire e ringraziamenti, banner a due colonne -->
+  <section class="sezione sezione--alternata">
+    <div class="contenitore due-colonne">
+      <div>
+        <h2>Come contribuire</h2>
+        <ul>
+          <li>
+            <strong>Con le gambe:</strong> cammina la Via e mandaci le tue
+            note, tempi verificati, fonti attive, segnavia da ridipingere.
+          </li>
+          <li>
+            <strong>Con la memoria:</strong> cerchiamo fotografie, documenti e
+            ricordi legati a questi sentieri e ai loro mestieri. Tutto viene
+            catalogato e, se vuoi, pubblicato con il tuo nome.
+          </li>
+          <li>
+            <strong>Con le mani:</strong> le giornate di segnatura e
+            manutenzione sono aperte a tutti, a cominciare dall’«Anello dei
+            Borghi» di prossima realizzazione.
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2 id="ringraziamenti">Ringraziamenti</h2>
+        <p>
+          La Via esiste perché molti l’hanno resa possibile: le sezioni CAI e
+          FIE che curano i sentieri, i comuni attraversati, i gestori di
+          locande, rifugi e trattorie che danno appoggio a chi cammina, e chi
+          ha condiviso conoscenza dei luoghi e memoria. <em>(Testo segnaposto:
+          qui andrà l’elenco vero e proprio, nome per nome.)</em>
+        </p>
+      </div>
     </div>
   </section>
 
@@ -215,9 +224,17 @@ const compagnia = [
     margin-top: 0;
   }
 
-  /* Compagnia: foto intera in apertura, poi i compagni in griglia */
-  .compagnia__foto {
-    margin-bottom: 2rem;
+  /* Compagnia: foto a sinistra, testo e persone a destra */
+  .compagnia-layout {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+  }
+  @media (max-width: 56rem) {
+    .compagnia-layout {
+      grid-template-columns: 1fr;
+    }
   }
   .sezione--bosco .persona__ruolo {
     color: var(--chiaro);
@@ -226,11 +243,16 @@ const compagnia = [
 
   .compagnia {
     list-style: none;
-    margin: 1.75rem 0 0;
+    margin: 1.5rem 0 0;
     padding: 0;
     display: grid;
     gap: 1.5rem 1.25rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (max-width: 26rem) {
+    .compagnia {
+      grid-template-columns: 1fr;
+    }
   }
   .persona {
     text-align: center;

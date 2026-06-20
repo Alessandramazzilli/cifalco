@@ -8,6 +8,34 @@ const viaIntera = percorso.itinerari.find((i) => i.id === 'via-intera')!;
 const tratte = viaIntera.tappe.map(
   (id) => percorso.tappe.find((t) => t.id === id)!
 );
+
+// Documento HTML completo per il download in PDF (tutte le tratte).
+const esc = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const h: string[] = [];
+h.push('<h1>L’Antica Via del Cifalco</h1>');
+h.push(
+  '<p class="sottotitolo">Descrizione dettagliata dell’itinerario, da Ponte Organasco a Portofino mare. Senso classico; i tempi non comprendono soste né deviazioni.</p>'
+);
+for (const tratta of tratte) {
+  h.push(`<h2>${esc(tratta.nome)}</h2>`);
+  h.push(
+    `<p class="dati">Tempo ${formattaOre(tratta.oreBase)} · Distanza ~${tratta.distanzaKm.toLocaleString('it-IT')} km · Salita ${tratta.salitaM} m · Discesa ${tratta.discesaM} m</p>`
+  );
+  h.push(`<p><strong>Segnavia:</strong> ${esc(tratta.segnavia)}</p>`);
+  h.push(`<p>${esc(tratta.descrizione)}</p>`);
+  h.push('<h3>Il percorso</h3><ol>');
+  for (const passo of tratta.passi)
+    h.push(`<li><strong>${esc(passo.titolo)}.</strong> ${esc(passo.testo)}</li>`);
+  h.push('</ol>');
+  if (tratta.deviazioni.length) {
+    h.push('<h3>Deviazioni</h3><ul>');
+    for (const d of tratta.deviazioni)
+      h.push(`<li><strong>${esc(d.titolo)}.</strong> ${esc(d.testo)}</li>`);
+    h.push('</ul>');
+  }
+}
+const htmlPdf = h.join('\n');
 ---
 
 <Base
@@ -21,6 +49,12 @@ const tratte = viaIntera.tappe.map(
       Le note di percorso complete, nel senso classico da Ponte Organasco a
       Portofino: ogni tratta con i suoi tempi, il segnavia da seguire, i punti
       in cui serve attenzione e le deviazioni che meritano.
+    </p>
+
+    <p>
+      <button type="button" class="bottone bottone--contorno" data-azione="scarica-pdf">
+        Scarica tutto in PDF
+      </button>
     </p>
 
     <NotaMargine>
@@ -100,13 +134,52 @@ const tratte = viaIntera.tappe.map(
       ))
     }
 
-    <p style="margin-top: 2.5rem;">
+    <p style="margin-top: 2.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
       <a class="bottone bottone--pieno" href="/itinerario#pianifica">
         Pianifica la tua camminata
       </a>
+      <button type="button" class="bottone bottone--contorno" data-azione="scarica-pdf">
+        Scarica tutto in PDF
+      </button>
     </p>
   </div>
+
+  <script type="application/json" data-pdf set:html={JSON.stringify(htmlPdf)} />
 </Base>
+
+<script>
+  // Scarica la descrizione completa in PDF: apre una pagina pulita e la stampa
+  // (il browser permette di «Salvare come PDF», anche da telefono).
+  const dati = document.querySelector('[data-pdf]');
+  const stili = `
+    @page { margin: 18mm; }
+    body { font-family: Georgia, 'Times New Roman', serif; color: #2E332C; line-height: 1.5; max-width: 42rem; margin: 0 auto; padding: 1rem; }
+    h1 { font-size: 1.6rem; margin: 0 0 0.2rem; }
+    .sottotitolo { margin: 0 0 1.4rem; color: #54594E; }
+    h2 { font-size: 1.2rem; margin: 1.6rem 0 0.3rem; border-bottom: 2px solid #8A9A7B; padding-bottom: 0.15rem; page-break-after: avoid; }
+    h3 { font-size: 1rem; margin: 1rem 0 0.3rem; color: #4A5D44; page-break-after: avoid; }
+    .dati { margin: 0.2rem 0; color: #54594E; font-size: 0.95rem; }
+    ol, ul { margin: 0.3rem 0 0.6rem 1.2rem; padding: 0; }
+    li { margin-bottom: 0.35rem; }
+  `;
+  if (dati) {
+    const html = JSON.parse(dati.textContent!);
+    document.querySelectorAll('[data-azione="scarica-pdf"]').forEach((b) =>
+      b.addEventListener('click', () => {
+        const w = window.open('', '_blank');
+        if (!w) return;
+        w.document.write(
+          `<!doctype html><html lang="it"><head><meta charset="utf-8">` +
+            `<title>Via del Cifalco, descrizione dettagliata</title>` +
+            `<style>${stili}</style></head><body>${html}</body></html>`
+        );
+        w.document.close();
+        w.focus();
+        w.setTimeout(() => w.print(), 350);
+      })
+    );
+  }
+</script>
 
 <style>
   .indice {
