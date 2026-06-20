@@ -1,0 +1,9 @@
+# Configurazione per la pubblicazione su Netlify.
+# Netlify legge questo file e imposta tutto da solo: non serve toccare nulla
+# nel pannello, basta collegare il repository.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
