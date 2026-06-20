@@ -1,23 +1,42 @@
 ---
+// Voci del menu. Le voci con `figli` mostrano una tendina (hover/focus su
+// desktop; sotto-elenco rientrato quando il menu mobile è aperto).
 const voci = [
   { href: '/progetto', testo: 'Il progetto' },
-  { href: '/itinerario', testo: 'L’itinerario' },
-  { href: '/approfondimenti', testo: 'Approfondimenti' },
+  {
+    href: '/itinerario',
+    testo: 'L’itinerario',
+    figli: [
+      { href: '/itinerario', testo: 'Panoramica e planner' },
+      { href: '/itinerario#mappa', testo: 'Mappa' },
+      { href: '/itinerario/descrizione-dettagliata', testo: 'Descrizione dettagliata' },
+      { href: '/itinerario/informazioni-pratiche', testo: 'Informazioni pratiche' },
+    ],
+  },
+  {
+    href: '/approfondimenti',
+    testo: 'Approfondimenti',
+    figli: [
+      { href: '/approfondimenti#voci', testo: 'Voci d’autore' },
+      { href: '/approfondimenti#diario', testo: 'Diario di bordo' },
+      { href: '/approfondimenti#rete', testo: 'Una rete di cammini' },
+      { href: '/approfondimenti#dicono', testo: 'Dicono di noi' },
+    ],
+  },
   { href: '/contatti', testo: 'Contatti' },
 ];
+
 const percorsoAttuale = Astro.url.pathname.replace(/\/$/, '') || '/';
+const attiva = (href: string) => {
+  const base = href.split('#')[0].replace(/\/$/, '') || '/';
+  return percorsoAttuale === base || percorsoAttuale.startsWith(base + '/');
+};
 ---
 
 <header class="testata">
   <div class="contenitore testata__riga">
     <a class="testata__marchio" href="/">
-      <svg
-        width="34"
-        height="34"
-        viewBox="0 0 34 34"
-        aria-hidden="true"
-        fill="none"
-      >
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true" fill="none">
         <!-- Marchio: il valico e il sentiero, in due tratti -->
         <path
           d="M3 24 L12 11 L17 17 L22 8 L31 24"
@@ -53,15 +72,29 @@ const percorsoAttuale = Astro.url.pathname.replace(/\/$/, '') || '/';
       <ul id="menu-principale" class="testata__menu">
         {
           voci.map((voce) => (
-            <li>
+            <li class:list={['testata__voce', voce.figli && 'has-sub']}>
               <a
                 href={voce.href}
-                aria-current={
-                  percorsoAttuale === voce.href ? 'page' : undefined
-                }
+                aria-current={percorsoAttuale === voce.href ? 'page' : undefined}
+                class:list={[attiva(voce.href) && 'attiva']}
               >
                 {voce.testo}
+                {voce.figli && <span class="testata__freccia" aria-hidden="true">▾</span>}
               </a>
+              {voce.figli && (
+                <ul class="sottomenu">
+                  {voce.figli.map((figlio) => (
+                    <li>
+                      <a
+                        href={figlio.href}
+                        aria-current={percorsoAttuale === figlio.href.split('#')[0].replace(/\/$/, '') ? 'page' : undefined}
+                      >
+                        {figlio.testo}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))
         }
@@ -75,7 +108,7 @@ const percorsoAttuale = Astro.url.pathname.replace(/\/$/, '') || '/';
     position: sticky;
     top: 0;
     z-index: 50;
-    background: color-mix(in srgb, var(--carta) 92%, transparent);
+    background: color-mix(in srgb, var(--superficie) 94%, transparent);
     backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--sabbia);
   }
@@ -133,6 +166,7 @@ const percorsoAttuale = Astro.url.pathname.replace(/\/$/, '') || '/';
   .testata__menu {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 0.25rem 1.4rem;
     list-style: none;
     margin: 0;
@@ -144,25 +178,68 @@ const percorsoAttuale = Astro.url.pathname.replace(/\/$/, '') || '/';
     font-weight: 600;
     color: var(--inchiostro-tenue);
     padding-block: 0.35rem;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
   }
-
   .testata__menu a:hover {
     color: var(--bosco);
   }
-
+  .testata__menu a.attiva,
   .testata__menu a[aria-current='page'] {
     color: var(--bosco);
     box-shadow: inset 0 -2.5px 0 var(--salvia);
+  }
+
+  .testata__freccia {
+    font-size: 0.7em;
+    line-height: 1;
+  }
+
+  /* --- Tendina (desktop) --- */
+  .has-sub {
+    position: relative;
+  }
+  .sottomenu {
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 14rem;
+    background: var(--superficie);
+    border: 1px solid var(--sabbia);
+    border-radius: var(--raggio);
+    box-shadow: var(--ombra);
+    display: none;
+  }
+  .has-sub:hover > .sottomenu,
+  .has-sub:focus-within > .sottomenu {
+    display: block;
+  }
+  .sottomenu a {
+    display: block;
+    padding: 0.45rem 0.6rem;
+    border-radius: var(--raggio);
+    font-weight: 600;
+  }
+  .sottomenu a:hover {
+    background: var(--fondo-scuro);
   }
 
   @media (max-width: 56rem) {
     .testata__bottone-menu {
       display: flex;
     }
+    nav {
+      width: 100%;
+      order: 3;
+    }
     .testata__menu {
       display: none;
       flex-direction: column;
+      align-items: stretch;
       gap: 0;
       width: 100%;
       padding-block: 0.5rem 1rem;
@@ -172,14 +249,27 @@ const percorsoAttuale = Astro.url.pathname.replace(/\/$/, '') || '/';
     .testata__menu.aperto {
       display: flex;
     }
-    .testata__menu a {
-      display: block;
+    .testata__menu > li > a {
+      display: flex;
       padding: 0.55rem 0.25rem;
       font-size: 1.05rem;
     }
-    nav {
-      width: 100%;
-      order: 3;
+    /* Su mobile la tendina è un sotto-elenco rientrato, sempre visibile */
+    .sottomenu {
+      position: static;
+      display: block;
+      border: none;
+      box-shadow: none;
+      background: none;
+      padding: 0 0 0.4rem 1rem;
+      min-width: 0;
+    }
+    .sottomenu a {
+      font-weight: 500;
+      padding: 0.4rem 0.25rem;
+    }
+    .testata__freccia {
+      display: none;
     }
   }
 </style>
