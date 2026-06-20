@@ -15,6 +15,8 @@ export default defineConfig({
     '/punti-di-interesse': '/itinerario#mappa',
     '/storia-e-territorio': '/approfondimenti',
     '/rete-di-cammini': '/approfondimenti#rete',
+    '/chi-siamo': '/progetto',
+    '/dicono-di-noi': '/approfondimenti#dicono',
   },
   build: {
     inlineStylesheets: 'auto',

@@ -16,8 +16,6 @@ const rotte = {
   '/itinerario/descrizione-dettagliata': 'descrizione-dettagliata.html',
   '/itinerario/informazioni-pratiche': 'informazioni-pratiche.html',
   '/approfondimenti': 'approfondimenti.html',
-  '/dicono-di-noi': 'dicono-di-noi.html',
-  '/chi-siamo': 'chi-siamo.html',
   '/contatti': 'contatti.html',
 };
 

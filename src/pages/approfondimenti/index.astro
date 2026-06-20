@@ -66,6 +66,7 @@ const cammini = [
       <a href="#voci">Voci d’autore</a>
       <a href="#diario">Diario di bordo</a>
       <a href="#rete">Una rete di cammini</a>
+      <a href="#dicono">Dicono di noi</a>
     </nav>
   </div>
 
@@ -157,12 +158,43 @@ const cammini = [
     </div>
   </section>
 
+  <!-- Dicono di noi -->
+  <section class="sezione sezione--alternata" id="dicono" aria-labelledby="t-dicono">
+    <div class="contenitore">
+      <p class="occhiello">Dicono di noi</p>
+      <h2 id="t-dicono">Chi ha raccontato la Via</h2>
+      <p class="intro">
+        Articoli, trasmissioni e racconti dedicati al progetto.
+        <em>(Sezione in costruzione: le voci qui sotto sono segnaposto in
+        attesa delle prime uscite.)</em>
+      </p>
+      <ul class="rassegna">
+        <li class="card">
+          <p class="occhiello">Testata · data</p>
+          <h3>Titolo dell’articolo o della puntata</h3>
+          <p>
+            Una riga di sintesi del pezzo, con il collegamento alla fonte
+            originale. <em>(Segnaposto.)</em>
+          </p>
+        </li>
+        <li class="card">
+          <p class="occhiello">Testata · data</p>
+          <h3>Titolo dell’articolo o della puntata</h3>
+          <p>
+            Una riga di sintesi del pezzo, con il collegamento alla fonte
+            originale. <em>(Segnaposto.)</em>
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <div class="contenitore sezione">
     <NotaMargine titolo="Hai qualcosa da aggiungere?">
       <p>
         Ricordi di famiglia, documenti, fotografie, tempi verificati sul
-        sentiero: ogni contributo aiuta a raccontare meglio la Via.
-        <a href="/contatti">Scrivici</a>.
+        sentiero, o un pezzo che parla della Via: ogni contributo aiuta a
+        raccontarla meglio. <a href="/contatti">Scrivici</a>.
       </p>
     </NotaMargine>
   </div>
@@ -232,6 +264,21 @@ const cammini = [
     font-size: 1.2rem;
   }
   .cammini p {
+    margin: 0;
+  }
+
+  .rassegna {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  }
+  .rassegna h3 {
+    font-size: 1.2rem;
+  }
+  .rassegna p:last-child {
     margin: 0;
   }
 </style>

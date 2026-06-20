@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
 import PersonaPlaceholder from '../components/PersonaPlaceholder.astro';
-import NotaMargine from '../components/NotaMargine.astro';
 
 // La Compagnia del Cifalco: le persone che hanno reso possibile il progetto.
 // Nomi, ruoli e descrizioni sono SEGNAPOSTO. Per aggiungere la foto vera vedi
@@ -13,12 +12,32 @@ const compagnia = [
     ruolo: 'Avido camminatore e sussurratore di api',
     foto: 'compagnia-luchino-ferraris.jpg',
   },
+  {
+    nome: 'Marisa Tonni',
+    ruolo: 'Custode delle fontane e memoria vivente del paese',
+    foto: 'compagnia-marisa-tonni.jpg',
+  },
+  {
+    nome: 'Pietro «Gambadilegno» Calvi',
+    ruolo: 'Segnatore di sentieri, non ha mai perso un bivio (parola sua)',
+    foto: 'compagnia-pietro-calvi.jpg',
+  },
+  {
+    nome: 'Adele Sbarbaro',
+    ruolo: 'Raccoglitrice di storie e di funghi, in quest’ordine',
+    foto: 'compagnia-adele-sbarbaro.jpg',
+  },
+  {
+    nome: 'Tommaso Repetto',
+    ruolo: 'Cartografo della domenica e oste a tempo perso',
+    foto: 'compagnia-tommaso-repetto.jpg',
+  },
 ];
 ---
 
 <Base
   titolo="Il progetto"
-  descrizione="Che cos’è l’Antica Via del Cifalco: l’idea, le motivazioni, gli obiettivi e la Compagnia del Cifalco, le persone che hanno reso possibile il cammino."
+  descrizione="Che cos’è l’Antica Via del Cifalco: l’idea, le motivazioni, la Compagnia del Cifalco, il logo, come contribuire e i ringraziamenti."
 >
   <section class="sezione sezione--terra">
     <div class="contenitore duo">
@@ -53,7 +72,8 @@ const compagnia = [
           percorrerlo dalla cima al mare, dandogli un nome, una cura e un
           racconto. <em>(Testo segnaposto.)</em>
         </p>
-
+      </div>
+      <div>
         <h2>Le motivazioni</h2>
         <p>
           La Via attraversa terre che si stanno spopolando, dove ogni locanda,
@@ -64,52 +84,26 @@ const compagnia = [
           <em>(Testo segnaposto.)</em>
         </p>
       </div>
-      <div>
-        <h2>Gli obiettivi</h2>
-        <ul class="obiettivi">
-          <li>
-            <strong>Rendere la Via percorribile a chiunque</strong> cammini con
-            gambe e testa: descrizioni a prova di errore, segnavia documentati,
-            punti d’appoggio organizzati.
-          </li>
-          <li>
-            <strong>Completare la segnaletica,</strong> a partire dall’«Anello
-            dei Borghi», il tratto iniziale di prossima realizzazione.
-          </li>
-          <li>
-            <strong>Raccontare il territorio con rigore:</strong> storia,
-            natura e cultura, distinguendo sempre i documenti dalle leggende.
-          </li>
-          <li>
-            <strong>Fare rete</strong> con i cammini che la Via incrocia e con
-            chi li mantiene vivi.
-          </li>
-        </ul>
-      </div>
     </div>
   </section>
 
-  <!-- La Compagnia del Cifalco -->
+  <!-- La Compagnia del Cifalco: foto intera in apertura, poi i compagni -->
   <section class="sezione sezione--bosco" aria-labelledby="t-compagnia">
     <div class="contenitore">
-      <div class="duo">
-        <div>
-          <p class="occhiello">Le persone</p>
-          <h2 id="t-compagnia">La Compagnia del Cifalco</h2>
-          <p class="intro" style="margin-bottom: 0;">
-            Dietro la Via c’è un gruppo di camminatori, abitanti e teste dure
-            innamorate di questi monti: sono loro che fanno i sopralluoghi,
-            ridipingono i segnavia, tengono i rapporti con i comuni e
-            raccolgono le storie. <em>(Nomi, ruoli e foto qui sotto sono
-            segnaposto: si sostituiscono uno per uno, vedi il README.)</em>
-          </p>
-        </div>
-        <Foto
-          classe="duo__foto"
-          src="/immagini/spada-nella-roccia.jpg"
-          alt="La spada infissa nella roccia su una vetta della Via, tra i crinali"
-        />
-      </div>
+      <Foto
+        classe="compagnia__foto"
+        src="/immagini/spada-nella-roccia.jpg"
+        alt="La spada infissa nella roccia su una vetta della Via, tra i crinali"
+      />
+      <p class="occhiello">Le persone</p>
+      <h2 id="t-compagnia">La Compagnia del Cifalco</h2>
+      <p class="intro">
+        Dietro la Via c’è un gruppo di camminatori, abitanti e teste dure
+        innamorate di questi monti: sono loro che fanno i sopralluoghi,
+        ridipingono i segnavia, tengono i rapporti con i comuni e raccolgono le
+        storie. <em>(Nomi, ruoli e foto qui sotto sono segnaposto: si
+        sostituiscono uno per uno, vedi il README.)</em>
+      </p>
 
       <ul class="compagnia">
         {
@@ -125,15 +119,85 @@ const compagnia = [
     </div>
   </section>
 
-  <div class="contenitore sezione">
-    <NotaMargine titolo="Vuoi entrare nella Compagnia?">
+  <!-- Logo, come contribuire, ringraziamenti -->
+  <section class="sezione">
+    <div class="contenitore prosa">
+      <h2>Il logo</h2>
+      <figure class="logo-figura">
+        <svg
+          width="120"
+          height="120"
+          viewBox="0 0 34 34"
+          role="img"
+          aria-label="Il logo della Via del Cifalco: un crinale a due cime e, sotto, il filo tratteggiato di un torrente"
+        >
+          <path
+            d="M3 24 L12 11 L17 17 L22 8 L31 24"
+            stroke="var(--bosco)"
+            stroke-width="2.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill="none"></path>
+          <path
+            d="M5 29 C 12 26, 14 31, 21 28 S 29 29, 30 27"
+            stroke="var(--acqua)"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-dasharray="4 4"
+            fill="none"></path>
+        </svg>
+        <figcaption>
+          Logo provvisorio · sostituire con <code>immagini/logo-via-del-cifalco.svg</code>
+        </figcaption>
+      </figure>
       <p>
-        Il progetto vive di chi cammina, segnala e racconta. Trovi come dare
-        una mano nella pagina <a href="/chi-siamo">Chi siamo</a> o scrivendoci
-        dai <a href="/contatti">contatti</a>.
+        Il segno racconta la Via in due tratti: il crinale dell’Appennino
+        sopra, il filo dell’acqua sotto, le fonti, i torrenti e il mare a cui
+        tutto scende. <em>(Testo segnaposto: qui andrà la storia del logo
+        definitivo e di chi l’ha disegnato.)</em>
       </p>
-    </NotaMargine>
-  </div>
+
+      <h2>Come contribuire</h2>
+      <ul>
+        <li>
+          <strong>Con le gambe:</strong> cammina la Via e mandaci le tue note,
+          tempi verificati, fonti attive, segnavia da ridipingere.
+        </li>
+        <li>
+          <strong>Con la memoria:</strong> cerchiamo fotografie, documenti e
+          ricordi legati a questi sentieri e ai loro mestieri. Tutto viene
+          catalogato e, se vuoi, pubblicato con il tuo nome.
+        </li>
+        <li>
+          <strong>Con le mani:</strong> le giornate di segnatura e manutenzione
+          sono aperte a tutti, a cominciare dall’«Anello dei Borghi» di prossima
+          realizzazione.
+        </li>
+      </ul>
+
+      <h2 id="ringraziamenti">Ringraziamenti</h2>
+      <p>
+        La Via esiste perché molti l’hanno resa possibile: le sezioni CAI e FIE
+        che curano i sentieri, i comuni attraversati, i gestori di locande,
+        rifugi e trattorie che danno appoggio a chi cammina, e chi ha condiviso
+        conoscenza dei luoghi e memoria. <em>(Testo segnaposto: qui andrà
+        l’elenco vero e proprio, nome per nome.)</em>
+      </p>
+    </div>
+  </section>
+
+  <section class="sezione sezione--terra">
+    <div class="contenitore chiusura">
+      <p class="occhiello">Scriviamoci</p>
+      <h2>Una mano, una storia, una segnalazione</h2>
+      <p>
+        Il progetto vive di chi cammina, segnala e racconta. Per tutto il resto
+        c’è la pagina dei contatti: rispondiamo volentieri, anche solo per
+        consigliarti la tratta giusta.
+      </p>
+      <a class="bottone bottone--pieno" href="/contatti">Vai ai contatti</a>
+    </div>
+  </section>
 </Base>
 
 <style>
@@ -142,20 +206,22 @@ const compagnia = [
     max-width: var(--misura);
   }
 
-  /* Compagnia sulla banda verde: descrizioni leggibili */
-  .sezione--bosco .persona__ruolo { color: var(--chiaro); opacity: 0.85; }
-
   .due-colonne {
     display: grid;
     gap: 2.5rem;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
   }
-  .due-colonne h2:first-child {
+  .due-colonne h2 {
     margin-top: 0;
   }
 
-  .obiettivi li {
-    margin-bottom: 0.7rem;
+  /* Compagnia: foto intera in apertura, poi i compagni in griglia */
+  .compagnia__foto {
+    margin-bottom: 2rem;
+  }
+  .sezione--bosco .persona__ruolo {
+    color: var(--chiaro);
+    opacity: 0.85;
   }
 
   .compagnia {
@@ -163,22 +229,33 @@ const compagnia = [
     margin: 1.75rem 0 0;
     padding: 0;
     display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 1.5rem 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
   }
-
   .persona {
     text-align: center;
   }
-
   .persona__nome {
     font-size: 1.2rem;
     margin: 0.9rem 0 0.2rem;
   }
-
   .persona__ruolo {
     color: var(--inchiostro-tenue);
     font-size: 0.97rem;
     margin: 0;
+  }
+
+  .logo-figura {
+    margin: 1rem 0 1.5rem;
+    padding: 2rem;
+    background: var(--fondo-scuro);
+    border-radius: var(--raggio-grande);
+    display: inline-block;
+    text-align: center;
+  }
+  .logo-figura figcaption {
+    font-size: 0.78rem;
+    color: var(--inchiostro-tenue);
+    margin-top: 0.75rem;
   }
 </style>
