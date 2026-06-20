@@ -82,36 +82,39 @@ const compagnia = [
     </div>
   </section>
 
-  <!-- La Compagnia del Cifalco: foto a sinistra, testo e persone a destra -->
+  <!-- La Compagnia del Cifalco: testo a sinistra, foto a destra, persone sotto -->
   <section class="sezione sezione--bosco" aria-labelledby="t-compagnia">
-    <div class="contenitore compagnia-layout">
-      <Foto
-        classe="compagnia__foto"
-        src="/immagini/spada-nella-roccia.jpg"
-        alt="La spada infissa nella roccia su una vetta della Via, tra i crinali"
-      />
-      <div class="compagnia-corpo">
-        <p class="occhiello">Le persone</p>
-        <h2 id="t-compagnia">La Compagnia del Cifalco</h2>
-        <p class="intro">
-          Dietro la Via c’è un gruppo di camminatori, abitanti e teste dure
-          innamorate di questi monti: sono loro che fanno i sopralluoghi,
-          ridipingono i segnavia, tengono i rapporti con i comuni e raccolgono
-          le storie. <em>(Nomi, ruoli e foto sono segnaposto: si sostituiscono
-          uno per uno, vedi il README.)</em>
-        </p>
-        <ul class="compagnia">
-          {
-            compagnia.map((persona) => (
-              <li class="persona">
-                <PersonaPlaceholder nomeFile={persona.foto} />
-                <h3 class="persona__nome">{persona.nome}</h3>
-                <p class="persona__ruolo">{persona.ruolo}</p>
-              </li>
-            ))
-          }
-        </ul>
+    <div class="contenitore">
+      <div class="duo">
+        <div>
+          <p class="occhiello">Le persone</p>
+          <h2 id="t-compagnia">La Compagnia del Cifalco</h2>
+          <p class="intro" style="margin-bottom: 0;">
+            Dietro la Via c’è un gruppo di camminatori, abitanti e teste dure
+            innamorate di questi monti: sono loro che fanno i sopralluoghi,
+            ridipingono i segnavia, tengono i rapporti con i comuni e
+            raccolgono le storie. <em>(Nomi, ruoli e foto sono segnaposto: si
+            sostituiscono uno per uno, vedi il README.)</em>
+          </p>
+        </div>
+        <Foto
+          classe="duo__foto"
+          src="/immagini/spada-nella-roccia.jpg"
+          alt="La spada infissa nella roccia su una vetta della Via, tra i crinali"
+        />
       </div>
+
+      <ul class="compagnia">
+        {
+          compagnia.map((persona) => (
+            <li class="persona">
+              <PersonaPlaceholder nomeFile={persona.foto} />
+              <h3 class="persona__nome">{persona.nome}</h3>
+              <p class="persona__ruolo">{persona.ruolo}</p>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
@@ -224,18 +227,7 @@ const compagnia = [
     margin-top: 0;
   }
 
-  /* Compagnia: foto a sinistra, testo e persone a destra */
-  .compagnia-layout {
-    display: grid;
-    gap: clamp(1.5rem, 4vw, 3rem);
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    align-items: start;
-  }
-  @media (max-width: 56rem) {
-    .compagnia-layout {
-      grid-template-columns: 1fr;
-    }
-  }
+  /* Compagnia: le persone in griglia sotto al blocco testo + foto */
   .sezione--bosco .persona__ruolo {
     color: var(--chiaro);
     opacity: 0.85;
@@ -243,16 +235,11 @@ const compagnia = [
 
   .compagnia {
     list-style: none;
-    margin: 1.5rem 0 0;
+    margin: 2.25rem 0 0;
     padding: 0;
     display: grid;
     gap: 1.5rem 1.25rem;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  @media (max-width: 26rem) {
-    .compagnia {
-      grid-template-columns: 1fr;
-    }
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
   }
   .persona {
     text-align: center;
