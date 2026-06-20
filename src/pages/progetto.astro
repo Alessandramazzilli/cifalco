@@ -92,15 +92,24 @@ const compagnia = [
   <!-- La Compagnia del Cifalco -->
   <section class="sezione sezione--bosco" aria-labelledby="t-compagnia">
     <div class="contenitore">
-      <p class="occhiello">Le persone</p>
-      <h2 id="t-compagnia">La Compagnia del Cifalco</h2>
-      <p class="intro">
-        Dietro la Via c’è un gruppo di camminatori, abitanti e teste dure
-        innamorate di questi monti: sono loro che fanno i sopralluoghi,
-        ridipingono i segnavia, tengono i rapporti con i comuni e raccolgono le
-        storie. <em>(Nomi, ruoli e foto qui sotto sono segnaposto: si
-        sostituiscono uno per uno, vedi il README.)</em>
-      </p>
+      <div class="duo">
+        <div>
+          <p class="occhiello">Le persone</p>
+          <h2 id="t-compagnia">La Compagnia del Cifalco</h2>
+          <p class="intro" style="margin-bottom: 0;">
+            Dietro la Via c’è un gruppo di camminatori, abitanti e teste dure
+            innamorate di questi monti: sono loro che fanno i sopralluoghi,
+            ridipingono i segnavia, tengono i rapporti con i comuni e
+            raccolgono le storie. <em>(Nomi, ruoli e foto qui sotto sono
+            segnaposto: si sostituiscono uno per uno, vedi il README.)</em>
+          </p>
+        </div>
+        <Foto
+          classe="duo__foto"
+          src="/immagini/spada-nella-roccia.jpg"
+          alt="La spada infissa nella roccia su una vetta della Via, tra i crinali"
+        />
+      </div>
 
       <ul class="compagnia">
         {
