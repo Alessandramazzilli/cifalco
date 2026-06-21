@@ -1,7 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
 import WalkPlanner from '../../components/WalkPlanner.astro';
-import MappaVia from '../../components/MappaVia.astro';
 import Segnavia from '../../components/Segnavia.astro';
 import NotaMargine from '../../components/NotaMargine.astro';
 import IconaPunto from '../../components/IconaPunto.astro';
@@ -36,14 +35,14 @@ const puntiAcqua = ordineAcqua.map(
 
 <Base
   titolo="L’itinerario"
-  descrizione="L’Antica Via del Cifalco tratta per tratta: walk planner, mappa illustrata interattiva, segnavia, punti acqua e tutto quello che serve per camminare da Ponte Organasco a Portofino."
+  descrizione="L’Antica Via del Cifalco tratta per tratta: walk planner, mappa GPS, segnavia, punti acqua e tutto quello che serve per camminare da Ponte Organasco a Portofino."
 >
   <div class="contenitore sezione">
     <p class="occhiello">L’itinerario</p>
     <h1>Da Ponte Organasco a Portofino, a piedi</h1>
     <p style="font-size: 1.15rem;">
       Questa pagina è il quaderno di chi parte: i numeri della Via, il planner
-      per costruire il piano sulle proprie gambe, la mappa illustrata, l’acqua
+      per costruire il piano sulle proprie gambe, la mappa GPS, l’acqua
       e i punti di appoggio. Per il racconto passo-passo di ogni tratta c’è la
       <a href="/itinerario/descrizione-dettagliata">descrizione dettagliata</a>;
       per come arrivare e tornare, cosa mettere nello zaino e le avvertenze
@@ -125,8 +124,7 @@ const puntiAcqua = ordineAcqua.map(
       <p class="occhiello">Walk planner</p>
       <h2 id="titolo-planner">Pianifica la tua camminata</h2>
       <p>
-        Scegli itinerario, tratto e passo: il piano si aggiorna da solo e la
-        mappa evidenzia il tratto scelto.
+        Scegli itinerario, tratto e passo: il piano si aggiorna da solo.
       </p>
       <WalkPlanner />
     </div>
@@ -137,12 +135,22 @@ const puntiAcqua = ordineAcqua.map(
     <div class="contenitore">
       <p class="occhiello">La mappa</p>
       <h2 id="titolo-mappa">La Via, punto per punto</h2>
-      <p>
-        Una mappa illustrata, non una carta topografica: serve a capire la
-        forma del cammino e cosa incontri. Tocca i punti per aprire le schede;
-        per orientarti sul sentiero affidati ai segnavia e a una carta vera.
+      <div class="mappa-gps">
+        <iframe
+          src="https://www.google.com/maps/d/u/0/embed?mid=1pZkHOxWBRe1zHANxN1YcchSI6xSl20A&ehbc=2E312F&noprof=1"
+          title="Mappa GPS della Via del Cifalco"
+          loading="lazy"
+        ></iframe>
+      </div>
+      <p class="mappa-gps__apri">
+        <a
+          href="https://www.google.com/maps/d/viewer?mid=1pZkHOxWBRe1zHANxN1YcchSI6xSl20A"
+          target="_blank"
+          rel="noopener"
+        >
+          Apri la mappa su Google Maps ↗
+        </a>
       </p>
-      <MappaVia />
     </div>
   </section>
 
@@ -335,6 +343,30 @@ const puntiAcqua = ordineAcqua.map(
     flex-wrap: wrap;
     gap: 1rem 2.5rem;
     margin-block: 2rem 0.5rem;
+  }
+
+  .mappa-gps {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    margin-top: 1.25rem;
+    border-radius: var(--raggio-grande);
+    overflow: hidden;
+    border: 1px solid var(--sabbia);
+    box-shadow: var(--ombra);
+  }
+
+  .mappa-gps iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .mappa-gps__apri {
+    margin-top: 0.75rem;
+    font-size: 0.92rem;
   }
 
   .segnavia {

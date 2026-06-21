@@ -143,26 +143,17 @@ Per metterla **accanto a un testo** (due colonne), usala dentro un blocco
 Conviene ridimensionare le foto prima di caricarle (lato lungo circa 2000 px):
 mantiene il sito veloce anche con segnale debole.
 
-### Sostituire la base della mappa con la mappa illustrata definitiva
+### Aggiornare la mappa della pagina «L’itinerario»
 
-La mappa interattiva (`src/components/MappaVia.astro`) è un disegno SVG con
-sopra i punti cliccabili. Quando la mappa illustrata definitiva sarà pronta:
+La mappa nella pagina `/itinerario` è l'incorporamento (iframe) di una mappa
+di Google My Maps, con il tracciato GPS reale della Via. Per aggiornarla
+(nuova versione del tracciato, nuovi punti, ecc.):
 
-1. Esportala come immagine con le stesse proporzioni 1000 × 700.
-2. Salvala in `public/immagini/mappa-illustrata.jpg` (o `.png`/`.svg`).
-3. In `MappaVia.astro`, dentro l'`<svg>` di sfondo, sostituisci le forme
-   segnaposto (commentate come tali) con:
-
-   ```html
-   <image href="/immagini/mappa-illustrata.jpg" width="1000" height="700" />
-   ```
-
-4. I punti interattivi restano dove sono: se sulla nuova mappa un punto non
-   coincide, si correggono `x` e `y` nel suo file JSON.
-
-I tracciati delle tappe sono disegnati automaticamente passando per i punti;
-se la mappa definitiva include già il tracciato disegnato, si può abbassare
-l'opacità dei tracciati automatici o lasciarli come evidenziazione.
+1. Modifica la mappa su [Google My Maps](https://www.google.com/maps/d).
+2. Da «Condividi» → «Incorpora nella mia pagina web», copia il nuovo `mid`
+   (l'identificativo nell'URL, es. `mid=1pZkHOxW...`).
+3. In `src/pages/itinerario/index.astro`, sostituisci quel `mid` sia nell'
+   `src` dell'`<iframe>` sia nel link «Apri la mappa su Google Maps».
 
 ---
 
