@@ -142,15 +142,27 @@ const puntiAcqua = ordineAcqua.map(
           loading="lazy"
         ></iframe>
       </div>
-      <p class="mappa-gps__apri">
-        <a
-          href="https://www.google.com/maps/d/viewer?mid=1pZkHOxWBRe1zHANxN1YcchSI6xSl20A"
-          target="_blank"
-          rel="noopener"
-        >
-          Apri la mappa su Google Maps ↗
-        </a>
-      </p>
+      <p class="mappa-gps__etichetta">Apri il tracciato GPS in:</p>
+      <ul class="mappa-gps__apri">
+        <li>
+          <a
+            href="https://www.google.com/maps/d/viewer?mid=1pZkHOxWBRe1zHANxN1YcchSI6xSl20A"
+            target="_blank"
+            rel="noopener"
+          >
+            Google Maps ↗
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.outdooractive.com/r/331537280"
+            target="_blank"
+            rel="noopener"
+          >
+            Outdooractive ↗
+          </a>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -364,8 +376,19 @@ const puntiAcqua = ordineAcqua.map(
     border: 0;
   }
 
-  .mappa-gps__apri {
+  .mappa-gps__etichetta {
     margin-top: 0.75rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.92rem;
+  }
+
+  .mappa-gps__apri {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
     font-size: 0.92rem;
   }
 
