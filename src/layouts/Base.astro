@@ -33,6 +33,14 @@ const urlCanonico = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:locale" content="it_IT" />
     <meta property="og:site_name" content="L’Antica Via del Cifalco" />
     <meta name="generator" content={Astro.generator} />
+    <script>
+      if (
+        !window.location.pathname.startsWith('/accesso') &&
+        localStorage.getItem('cifalco-accesso') !== '1'
+      ) {
+        window.location.replace('/accesso?da=' + encodeURIComponent(window.location.pathname));
+      }
+    </script>
   </head>
   <body>
     <a class="salta-al-contenuto" href="#contenuto">Salta al contenuto</a>
