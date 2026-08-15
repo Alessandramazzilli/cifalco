@@ -122,31 +122,11 @@ const compagnia = [
   <section class="sezione">
     <div class="contenitore duo">
       <figure class="logo-figura">
-        <svg
-          width="120"
-          height="120"
-          viewBox="0 0 34 34"
-          role="img"
-          aria-label="Il logo della Via del Cifalco: un crinale a due cime e, sotto, il filo tratteggiato di un torrente"
-        >
-          <path
-            d="M3 24 L12 11 L17 17 L22 8 L31 24"
-            stroke="var(--bosco)"
-            stroke-width="2.4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            fill="none"></path>
-          <path
-            d="M5 29 C 12 26, 14 31, 21 28 S 29 29, 30 27"
-            stroke="var(--acqua)"
-            stroke-width="2.2"
-            stroke-linecap="round"
-            stroke-dasharray="4 4"
-            fill="none"></path>
-        </svg>
-        <figcaption>
-          Logo provvisorio · sostituire con <code>immagini/logo-via-del-cifalco.svg</code>
-        </figcaption>
+        <img
+          src="/immagini/logo-avc.png"
+          alt="Il logo dell'Antica Via del Cifalco: lo stemma con i muli, la montagna e il cifalco in volo"
+          class="logo-figura__img"
+        />
       </figure>
       <div>
         <p class="occhiello">Il simbolo</p>
@@ -256,15 +236,13 @@ const compagnia = [
 
   .logo-figura {
     margin: 1rem 0 1.5rem;
-    padding: 2rem;
-    background: var(--fondo-scuro);
-    border-radius: var(--raggio-grande);
-    display: inline-block;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .logo-figura figcaption {
-    font-size: 0.78rem;
-    color: var(--inchiostro-tenue);
-    margin-top: 0.75rem;
+  .logo-figura__img {
+    max-width: 280px;
+    width: 100%;
+    height: auto;
   }
 </style>
