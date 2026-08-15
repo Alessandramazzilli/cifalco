@@ -25,23 +25,12 @@ const attiva = (href: string) => {
 <header class="testata">
   <div class="contenitore testata__riga">
     <a class="testata__marchio" href="/">
-      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true" fill="none">
-        <!-- Marchio: il valico e il sentiero, in due tratti -->
-        <path
-          d="M3 24 L12 11 L17 17 L22 8 L31 24"
-          stroke="var(--bosco)"
-          stroke-width="2.4"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M5 29 C 12 26, 14 31, 21 28 S 29 29, 30 27"
-          stroke="var(--acqua)"
-          stroke-width="2.2"
-          stroke-linecap="round"
-          stroke-dasharray="4 4"
-        />
-      </svg>
+      <img
+        src="/immagini/logo-avc.png"
+        alt=""
+        aria-hidden="true"
+        class="testata__logo"
+      />
       <span class="testata__nome">
         L’Antica Via <em>del Cifalco</em>
       </span>
@@ -116,6 +105,12 @@ const attiva = (href: string) => {
     align-items: center;
     gap: 0.6rem;
     text-decoration: none;
+  }
+
+  .testata__logo {
+    height: 40px;
+    width: auto;
+    border-radius: 5px;
   }
 
   .testata__nome {
