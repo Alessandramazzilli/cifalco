@@ -40,5 +40,81 @@
       "titolo": "Il B&B Ca' da Nonna",
       "testo": "Unico punto di ristoro e alloggio notturno a Neirone, oltre al Faggio Rotondo. Dalla Cascina Arsena, seguire l'asfaltata anziché il sentiero «rombo rosso vuoto» per circa 15 minuti (circa 30 da Pian del Pero). Davanti al B&B, una strada non segnata supera due cancelli (da aprire e richiudere) e riprende l'asfaltata in discesa a sinistra, che porta a Neirone paese in 25 minuti."
     }
-  ]
+  ],
+  "traduzioni": {
+    "en": {
+      "nome": "Section 6 · From Barbagelata to Neirone",
+      "descrizione": "The Caucaso section: from the crossing with the Alta Via dei Monti Liguri to the Passo della Scoglina, the climb via the Acquapendente to the summit of Monte Caucaso (1245 m) with its hut, then the long descent via Faggio Rotondo and Pian del Pero to Neirone.",
+      "segnavia": "“Three solid red dots”/“A13” as far as the Acquapendente, “solid red triangle” as far as the summit of the Caucaso, “hollow red diamond” as far as Neirone",
+      "passi": [
+        {
+          "titolo": "Barbagelata and the Alta Via",
+          "testo": "From Barbagelata, continue on the paved road to the edge of the village, where an obvious junction marks the crossing with the Alta Via dei Monti Liguri. Take it to the left (eastwards), gently downhill: in 15 minutes you are at the Passo della Scoglina (920 m), recognisable by the meeting of three paved roads."
+        },
+        {
+          "titolo": "The Acquapendente",
+          "testo": "From the pass, take the uphill trail (“three solid red dots” and “A13”) which, after several fords across the first reaches of the Aveto, leads to the Acquapendente (1075 m) in 1 h 15. The stream is known for a curious phenomenon of river capture."
+        },
+        {
+          "titolo": "The summit of Monte Caucaso",
+          "testo": "From the Acquapendente, a steep and tiring climb of about 30 minutes leads to the summit of the Caucaso (1245 m, “solid red triangle”) and its hut-restaurant, with a 360-degree view over the Ligurian Apennines and the Tigullio."
+        },
+        {
+          "titolo": "The ridge and the hidden junction",
+          "testo": "From the summit, follow the ridge westwards (sea on your left), climbing the “Caucasino” and descending in about an hour to Faggio Rotondo (“hollow red diamond”). Careful: about 40 minutes after the start of the descent, where the path is flanked by dry-stone walls, the waymark suddenly turns right towards an abandoned house, which you skirt clockwise."
+        },
+        {
+          "titolo": "From Faggio Rotondo to Neirone",
+          "testo": "From Faggio Rotondo you pass through Pian del Pero (30 minutes), where the “hollow red diamond” rejoins the paved road and follows it to the Cascina Arsena, which is not signposted but is the only farmhouse on the route, just below the road. From there the trail descends straight to the centre of Neirone (30 minutes from Pian del Pero)."
+        },
+        {
+          "titolo": "Quick variant (for those who need to make up time)",
+          "testo": "From Barbagelata, taking the Alta Via to the right (westwards), you cut straight to the summit of the Caucaso, saving about 45 minutes, or descend to Neirone in at least an hour less. You miss, however, the climb along the ridge between the Aveto and the Malvaro and the Acquapendente: a shortcut recommended only for those short of time."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "The B&B Ca' da Nonna",
+          "testo": "The only place for refreshment and overnight accommodation in Neirone, besides Faggio Rotondo. From the Cascina Arsena, follow the paved road instead of the “hollow red diamond” trail for about 15 minutes (about 30 from Pian del Pero). In front of the B&B, an unmarked road passes through two gates (open them and close them again) and rejoins the paved road downhill to the left, which leads to Neirone village in 25 minutes."
+        }
+      ]
+    },
+    "fr": {
+      "nome": "Tronçon 6 · De Barbagelata à Neirone",
+      "descrizione": "Le tronçon du Caucaso : du croisement avec l'Alta Via dei Monti Liguri au Passo della Scoglina, la montée par l'Acquapendente jusqu'au sommet du Monte Caucaso (1245 m) et son refuge, puis la longue descente par Faggio Rotondo et Pian del Pero jusqu'à Neirone.",
+      "segnavia": "« Trois points rouges pleins »/« A13 » jusqu'à l'Acquapendente, « triangle rouge plein » jusqu'au sommet du Caucaso, « losange rouge vide » jusqu'à Neirone",
+      "passi": [
+        {
+          "titolo": "Barbagelata et l'Alta Via",
+          "testo": "Depuis Barbagelata, on continue sur la route goudronnée jusqu'à la sortie du village, où une bifurcation évidente marque le croisement avec l'Alta Via dei Monti Liguri. Prends-la à gauche (vers l'est), en légère descente : en 15 minutes, tu es au Passo della Scoglina (920 m), reconnaissable à son carrefour de trois routes goudronnées."
+        },
+        {
+          "titolo": "L'Acquapendente",
+          "testo": "Depuis le col, prends le sentier qui monte (« trois points rouges pleins » et « A13 ») et qui, après plusieurs gués sur les premiers tronçons de l'Aveto, mène à l'Acquapendente (1075 m) en 1 h 15. Le ruisseau est connu pour un curieux phénomène de capture fluviale."
+        },
+        {
+          "titolo": "Le sommet du Monte Caucaso",
+          "testo": "Depuis l'Acquapendente, une montée raide et fatigante d'environ 30 minutes mène au sommet du Caucaso (1245 m, « triangle rouge plein ») et à son refuge-restaurant, avec une vue à 360 degrés sur l'Apennin ligure et le Tigullio."
+        },
+        {
+          "titolo": "La crête et la bifurcation cachée",
+          "testo": "Depuis le sommet, suis la crête vers l'ouest (mer à gauche), en remontant le « Caucasino » puis en descendant en une heure environ à Faggio Rotondo (« losange rouge vide »). Attention : à environ 40 minutes du début de la descente, quand le sentier est longé de murets en pierre sèche, le balisage tourne brusquement à droite vers une maison abandonnée, à contourner dans le sens des aiguilles d'une montre."
+        },
+        {
+          "titolo": "De Faggio Rotondo à Neirone",
+          "testo": "Depuis Faggio Rotondo, on passe par Pian del Pero (30 minutes), où le « losange rouge vide » retrouve la route goudronnée et la suit jusqu'à la Cascina Arsena, non indiquée, mais c'est la seule ferme du parcours, juste en contrebas de la route. De là, le sentier descend tout droit au centre de Neirone (30 minutes depuis Pian del Pero)."
+        },
+        {
+          "titolo": "Variante rapide (pour qui doit rattraper du temps)",
+          "testo": "Depuis Barbagelata, en prenant l'Alta Via à droite (vers l'ouest), on coupe directement vers le sommet du Caucaso en gagnant environ 45 minutes, ou l'on descend à Neirone en au moins une heure de moins. On renonce toutefois à la montée sur la crête entre Aveto et Malvaro et à l'Acquapendente : raccourci conseillé seulement à ceux qui sont pressés par le temps."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "Le B&B Ca' da Nonna",
+          "testo": "Seul point de restauration et d'hébergement pour la nuit à Neirone, outre Faggio Rotondo. Depuis la Cascina Arsena, suivre la route goudronnée au lieu du sentier « losange rouge vide » pendant environ 15 minutes (environ 30 depuis Pian del Pero). Devant le B&B, une route non balisée franchit deux portails (à ouvrir et à refermer) et rejoint la route goudronnée qui descend à gauche et mène au village de Neirone en 25 minutes."
+        }
+      ]
+    }
+  }
 }

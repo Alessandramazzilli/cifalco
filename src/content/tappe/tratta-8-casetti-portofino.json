@@ -52,5 +52,105 @@
       "titolo": "Nozarego",
       "testo": "Dopo 1 h 30 di cammino da Ruta, in località Crocetta, si stacca a sinistra un sentiero che in 45 minuti conduce a Nozarego (segnavia «T» rossa). Da Nozarego varie vie scendono a Santa Margherita, compresa un'asfaltata."
     }
-  ]
+  ],
+  "traduzioni": {
+    "en": {
+      "nome": "Section 8 · From the Passo dei Casetti to Portofino mare",
+      "descrizione": "The grand finale on the Via del Sale/Via del Mare: the Passo Spinarola, the Passo del Gallo, the Piane di Caravaggio and the “Millenaria” church of Ruta, then the entrance to the Parco di Portofino and the descent via Pietre Strette and San Sebastiano down to the sea.",
+      "segnavia": "“Two hollow red circles” as far as Ruta, then “solid red square” as far as Portofino mare",
+      "passi": [
+        {
+          "titolo": "From the Passo dei Casetti to the Passo Spinarola",
+          "testo": "The “two hollow red circles” waymark reaches the Passo Spinarola in 40 minutes, first descending towards Uscio: you need to take a non-obvious detour to the left 5 minutes after the pass, then 20 minutes of paved road to the Colonia Arnaldi. To skip the Colonia: right at the “Benvenuti” sign, an unmarked shortcut climbs to the left, with a sign for the Passo Spinarola."
+        },
+        {
+          "titolo": "As far as the “Millenaria” of Ruta",
+          "testo": "The same waymark continues to the Passo del Gallo (55 minutes from the Spinarola), the Piane di Caravaggio (30 minutes) and the “Millenaria” church of Ruta (55 minutes). From the Piane, as detours: the Santuario di Caravaggio (20 minutes, view over Rapallo) and the descent to Recco (1 h, with a railway station, the “emergency exit” for those who need to cut the walk short)."
+        },
+        {
+          "titolo": "Ruta and the entrance to the Park",
+          "testo": "From the “Millenaria”, 10 minutes of paved road to the right to the centre of Ruta, where you meet the Aurelia. In front of the benches overlooking the sea turn left; past the bar Egidio, just before the tunnel, the “solid red square” sign marks the steps up to the Chiesa di San Michele. With the church on your left, the trail to Portofino mare starts on the right: you are in the Parco del Monte di Portofino."
+        },
+        {
+          "titolo": "The descent to the sea",
+          "testo": "In 2 h 15 from the last sign in Ruta you reach Portofino mare via the Sella della Gaixella, Pietre Strette and San Sebastiano. Portofino has no station: Santa Margherita, Rapallo and Camogli can be reached by sea, or Santa Margherita on foot in 1 h 15 (“three solid red dots” as far as Paraggi, then along the seafront)."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "Passo della Serra and Manico del Lume",
+          "testo": "From the slopes of Monte Bello, the FIE “hollow red triangle” waymark leads in 1 h to the Passo della Serra and in 1 h 30 to the Manico del Lume. There are chains on the summit section of the Manico del Lume: a trail for experienced, equipped hikers (EEA). The same trail also leads to the Santuario di Montallegro in 3 h 30, but that is more an excursion in its own right than a detour."
+        },
+        {
+          "titolo": "The Santuario di Caravaggio",
+          "testo": "From the Piane di Caravaggio, the “three solid red dots” waymark, on the left, leads to the sanctuary in about 20 minutes: a spectacular view over the Tigullio and especially over Rapallo."
+        },
+        {
+          "titolo": "Recco, the “emergency exit”",
+          "testo": "About 45 minutes after the Piane di Caravaggio, a trail sets off on the right and descends to Recco in 1 h (“three solid red dots” waymark). Besides its famous focaccia, Recco has a railway station: anyone who needs to shorten the last stage can use it as an emergency exit."
+        },
+        {
+          "titolo": "San Rocco, Camogli and Punta Chiappa",
+          "testo": "Past Portofino Vetta, on the right, the “hollow red circle” waymark descends to San Rocco in about 45 minutes. From there you can go down to Punta Chiappa for a memorable swim (40 minutes, “two solid red squares”) or to Camogli (25 minutes, “two solid red circles”), where there is a station."
+        },
+        {
+          "titolo": "Santa Margherita Ligure",
+          "testo": "Shortly after Pietre Strette, on the left, the “two solid red diamonds” waymark sets off and in about 50 minutes leads to the centre of Santa Margherita Ligure."
+        },
+        {
+          "titolo": "Nozarego",
+          "testo": "After 1 h 30 of walking from Ruta, at the locality of Crocetta, a trail branches off to the left and leads to Nozarego in 45 minutes (red “T” waymark). From Nozarego various routes descend to Santa Margherita, including a paved road."
+        }
+      ]
+    },
+    "fr": {
+      "nome": "Tronçon 8 · Du Passo dei Casetti à Portofino mare",
+      "descrizione": "Le grand final sur la Via del Sale/Via del Mare : le Passo Spinarola, le Passo del Gallo, les Piane di Caravaggio et l'église « Millenaria » de Ruta, puis l'entrée dans le Parco di Portofino et la descente par Pietre Strette et San Sebastiano jusqu'à la mer.",
+      "segnavia": "« Deux cercles rouges vides » jusqu'à Ruta, puis « carré rouge plein » jusqu'à Portofino mare",
+      "passi": [
+        {
+          "titolo": "Du Passo dei Casetti au Passo Spinarola",
+          "testo": "Le balisage « deux cercles rouges vides » arrive au Passo Spinarola en 40 minutes, en descendant d'abord vers Uscio : il faut prendre un détour à gauche peu évident 5 minutes après le col, puis faire 20 minutes de route goudronnée jusqu'à la Colonia Arnaldi. Pour éviter la Colonia : juste au panneau « Benvenuti », un raccourci non balisé monte à gauche, avec un panneau pour le Passo Spinarola."
+        },
+        {
+          "titolo": "Jusqu'à la « Millenaria » de Ruta",
+          "testo": "Le même balisage continue jusqu'au Passo del Gallo (55 minutes depuis le Spinarola), aux Piane di Caravaggio (30 minutes) et à l'église « Millenaria » de Ruta (55 minutes). Depuis les Piane, en détour : le Santuario di Caravaggio (20 minutes, vue sur Rapallo) et la descente vers Recco (1 h, avec gare ferroviaire, la « sortie de secours » pour qui doit écourter)."
+        },
+        {
+          "titolo": "Ruta et l'entrée dans le Parc",
+          "testo": "Depuis la « Millenaria », 10 minutes de route goudronnée à droite jusqu'au centre de Ruta, où l'on croise l'Aurelia. Devant les bancs avec vue sur la mer, tourne à gauche ; après le bar Egidio, juste avant le tunnel, le panneau « carré rouge plein » signale l'escalier vers la Chiesa di San Michele. En laissant l'église à gauche, le sentier pour Portofino mare part à droite : tu es dans le Parco del Monte di Portofino."
+        },
+        {
+          "titolo": "La descente vers la mer",
+          "testo": "En 2 h 15 depuis le dernier panneau à Ruta, on arrive à Portofino mare par la Sella della Gaixella, Pietre Strette et San Sebastiano. Portofino n'a pas de gare : on rejoint Santa Margherita, Rapallo et Camogli par la mer, ou Santa Margherita à pied en 1 h 15 (« trois points rouges pleins » jusqu'à Paraggi, puis le bord de mer)."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "Passo della Serra et Manico del Lume",
+          "testo": "Depuis les flancs du Monte Bello, le balisage FIE « triangle rouge vide » mène en 1 h au Passo della Serra et en 1 h 30 au Manico del Lume. La partie sommitale du Manico del Lume est équipée de chaînes : sentier pour randonneurs expérimentés et équipés (EEA). Le même sentier mène aussi au Santuario di Montallegro en 3 h 30, mais c'est plus une excursion à part entière qu'un détour."
+        },
+        {
+          "titolo": "Le Santuario di Caravaggio",
+          "testo": "Depuis les Piane di Caravaggio, le balisage « trois points rouges pleins », sur la gauche, mène au sanctuaire en 20 minutes environ : vue spectaculaire sur le Tigullio et en particulier sur Rapallo."
+        },
+        {
+          "titolo": "Recco, la « sortie de secours »",
+          "testo": "Environ 45 minutes après les Piane di Caravaggio, un sentier part sur la droite et descend à Recco en 1 h (balisage « trois points rouges pleins »). Outre sa célèbre focaccia, Recco possède une gare ferroviaire : qui doit raccourcir la dernière étape peut l'utiliser comme sortie de secours."
+        },
+        {
+          "titolo": "San Rocco, Camogli et Punta Chiappa",
+          "testo": "Après Portofino Vetta, sur la droite, le balisage « cercle rouge vide » descend à San Rocco en 45 minutes environ. De là, on peut descendre à Punta Chiappa pour une baignade mémorable (40 minutes, « deux carrés rouges pleins ») ou à Camogli (25 minutes, « deux cercles rouges pleins »), où se trouve la gare."
+        },
+        {
+          "titolo": "Santa Margherita Ligure",
+          "testo": "Peu après Pietre Strette, sur la gauche, part le balisage « deux losanges rouges pleins » qui mène en 50 minutes environ au centre de Santa Margherita Ligure."
+        },
+        {
+          "titolo": "Nozarego",
+          "testo": "Après 1 h 30 de marche depuis Ruta, au lieu-dit Crocetta, un sentier se détache sur la gauche et mène en 45 minutes à Nozarego (balisage « T » rouge). Depuis Nozarego, plusieurs voies descendent à Santa Margherita, dont une route goudronnée."
+        }
+      ]
+    }
+  }
 }

@@ -1,0 +1,12 @@
+---
+import IndiceSezione from '../../../viste/IndiceSezione.astro';
+import { LINGUE_TRADOTTE } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  return LINGUE_TRADOTTE.flatMap((lingua) =>
+    ['fare-il-cammino', 'approfondimenti', 'intorno'].map((sezione) => ({ params: { lingua, sezione } }))
+  );
+}
+---
+
+<IndiceSezione href={`/${Astro.params.sezione}`} />

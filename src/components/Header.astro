@@ -1,18 +1,25 @@
 ---
-import { SEZIONI } from '../lib/menu';
+import { sezioni } from '../lib/menu';
+import { LINGUE, NOMI_LINGUA, linguaDa, localizza, senzaLingua, t } from '../lib/i18n';
+import Bandiera from './Bandiera.astro';
 
 // Il menu segue lo schema del sito: le sezioni numerate nella barra, le
 // voci a lettera nella tendina, i paragrafi (i., ii., …) in una seconda
 // tendina che si apre passando sulla voce. Su mobile tutto diventa un
 // elenco rientrato.
 const percorsoAttuale = Astro.url.pathname.replace(/\/$/, '') || '/';
+const lingua = linguaDa(percorsoAttuale);
+const T = t(lingua);
+const SEZIONI = sezioni(lingua);
+const home = localizza('/', lingua);
+const paginaBase = senzaLingua(percorsoAttuale);
 const inSezione = (href: string) =>
   percorsoAttuale === href || percorsoAttuale.startsWith(href + '/');
 ---
 
 <header class="testata">
   <div class="contenitore testata__riga">
-    <a class="testata__marchio" href="/">
+    <a class="testata__marchio" href={home}>
       <img
         src="/immagini/logo-avc.png"
         alt=""
@@ -31,13 +38,13 @@ const inSezione = (href: string) =>
       aria-controls="menu-principale"
     >
       <span aria-hidden="true" class="testata__icona-menu"></span>
-      Menu
+      {T.menu}
     </button>
 
-    <nav aria-label="Navigazione principale">
+    <nav aria-label={T.navPrincipale}>
       <ul id="menu-principale" class="testata__menu">
         <li class="testata__voce">
-          <a href="/" aria-current={percorsoAttuale === '/' ? 'page' : undefined}>Home</a>
+          <a href={home} aria-current={percorsoAttuale === home ? 'page' : undefined}>{T.home}</a>
         </li>
         {
           SEZIONI.map((sezione) => (
@@ -80,6 +87,26 @@ const inSezione = (href: string) =>
         }
       </ul>
     </nav>
+
+    <ul class="lingue" aria-label={T.lingua}>
+      {
+        LINGUE.map((l) => (
+          <li>
+            <a
+              href={localizza(paginaBase, l)}
+              hreflang={l}
+              lang={l}
+              title={NOMI_LINGUA[l]}
+              aria-label={NOMI_LINGUA[l]}
+              aria-current={l === lingua ? 'true' : undefined}
+              class:list={['lingue__voce', l === lingua && 'lingue__voce--attiva']}
+            >
+              <Bandiera lingua={l} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </header>
 
@@ -181,6 +208,49 @@ const inSezione = (href: string) =>
     line-height: 1;
   }
 
+  /* Su desktop il nome va su due righe, per lasciare spazio a menu e bandierine. */
+  @media (min-width: 68.01rem) {
+    .testata__nome em {
+      display: block;
+    }
+    .testata__riga {
+      gap: 0.5rem 1rem;
+    }
+    .testata__menu {
+      column-gap: 0.85rem;
+      font-size: 0.95rem;
+    }
+  }
+
+  /* --- Selettore della lingua (bandierine) --- */
+  .lingue {
+    display: flex;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .lingue li {
+    margin: 0;
+  }
+  .lingue__voce {
+    display: block;
+    padding: 3px;
+    border-radius: 4px;
+    border: 1.5px solid transparent;
+    opacity: 0.65;
+    line-height: 0;
+    transition: opacity 0.15s ease;
+  }
+  .lingue__voce:hover,
+  .lingue__voce:focus-visible {
+    opacity: 1;
+  }
+  .lingue__voce--attiva {
+    opacity: 1;
+    border-color: var(--salvia);
+  }
+
   /* --- Tendina (desktop) --- */
   .has-sub,
   .has-sub2 {
@@ -265,6 +335,9 @@ const inSezione = (href: string) =>
     nav {
       width: 100%;
       order: 3;
+    }
+    .lingue {
+      margin-left: auto;
     }
     .testata__menu {
       display: none;

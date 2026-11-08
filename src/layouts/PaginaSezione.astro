@@ -7,8 +7,9 @@
  * Il testo arriva come HTML (src/testi/…) nello slot.
  */
 import Base from './Base.astro';
-import { trova } from '../lib/menu';
+import { trovaLocalizzato } from '../lib/menu';
 import { titoli } from '../lib/testi';
+import { linguaDa, t } from '../lib/i18n';
 
 interface Props {
   descrizione: string;
@@ -17,7 +18,9 @@ interface Props {
 }
 const { descrizione, testo = '' } = Astro.props;
 
-const { sezione, voce } = trova(Astro.url.pathname);
+const lingua = linguaDa(Astro.url.pathname);
+const T = t(lingua);
+const { sezione, voce } = trovaLocalizzato(Astro.url.pathname, lingua);
 if (!sezione || !voce) throw new Error(`Pagina fuori dallo schema: ${Astro.url.pathname}`);
 
 const indice = sezione.voci.findIndex((v) => v === voce);
@@ -33,16 +36,16 @@ const interni = voce.paragrafi
 
 <Base titolo={voce.titolo} descrizione={descrizione}>
   <div class="contenitore sezione pagina-voce">
-    <nav class="briciole" aria-label="Sei qui">
+    <nav class="briciole" aria-label={T.seiQui}>
       <a href={sezione.href}>{sezione.titolo}</a>
       <span aria-hidden="true">›</span>
       <span>{voce.lettera}. {voce.titolo}</span>
     </nav>
 
     <div class="pagina-voce__griglia">
-      <aside class="indice-sezione" aria-label={`Indice: ${sezione.titolo}`}>
+      <aside class="indice-sezione" aria-label={`${T.indice}: ${sezione.titolo}`}>
         <details class="indice-sezione__apri" open>
-        <summary>Indice della sezione</summary>
+        <summary>{T.indiceSezione}</summary>
         <p class="indice-sezione__titolo">
           <a href={sezione.href}>{sezione.titolo}</a>
         </p>
@@ -82,11 +85,11 @@ const interni = voce.paragrafi
           <slot />
         </div>
 
-        <nav class="voci-vicine" aria-label="Altre voci della sezione">
+        <nav class="voci-vicine" aria-label={T.altreVoci}>
           {
             precedente ? (
               <a class="voci-vicine__link" href={precedente.href} rel="prev">
-                <span class="voci-vicine__verso">← Precedente</span>
+                <span class="voci-vicine__verso">{T.precedente}</span>
                 <span>{precedente.lettera}. {precedente.titolo}</span>
               </a>
             ) : (
@@ -96,7 +99,7 @@ const interni = voce.paragrafi
           {
             successiva && (
               <a class="voci-vicine__link voci-vicine__link--dopo" href={successiva.href} rel="next">
-                <span class="voci-vicine__verso">Successiva →</span>
+                <span class="voci-vicine__verso">{T.successiva}</span>
                 <span>{successiva.lettera}. {successiva.titolo}</span>
               </a>
             )
@@ -109,7 +112,7 @@ const interni = voce.paragrafi
 
 <script>
   // Su schermi stretti l'indice parte chiuso, per arrivare subito al testo.
-  if (window.matchMedia('(max-width: 62rem)').matches) {
+  if (window.matchMedia?.('(max-width: 62rem)').matches) {
     document.querySelector('.indice-sezione__apri')?.removeAttribute('open');
   }
 </script>

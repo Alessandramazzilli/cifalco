@@ -16,6 +16,12 @@
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { caricaPercorso } from '../lib/percorso';
+import { LOCALE, fmt, linguaDa, t } from '../lib/i18n';
+
+const lingua = linguaDa(Astro.url.pathname);
+const M = t(lingua).mappa;
+const GOOGLE = 'https://www.google.com/maps/d/viewer?mid=1pZkHOxWBRe1zHANxN1YcchSI6xSl20A';
+const OA = 'https://www.outdooractive.com/r/331537280';
 
 const FILE_GPX = '/gpx/antica-via-del-cifalco.gpx';
 const presente = existsSync(path.join(process.cwd(), 'public', FILE_GPX));
@@ -28,34 +34,27 @@ const punti = Object.fromEntries(
 
 {
   presente ? (
-    <div class="mappa-gpx" data-gpx={FILE_GPX}>
-      <div class="mappa-gpx__mappa" role="region" aria-label="Mappa della traccia GPX dell’Antica Via del Cifalco" />
-      <p class="mappa-gpx__selezione" data-selezione aria-live="polite">
-        Scegli un tratto nel <a href="#quanto-dura">walking tracker</a>: la mappa lo evidenzia.
-      </p>
+    <div class="mappa-gpx" data-gpx={FILE_GPX} data-locale={LOCALE[lingua]}>
+      <div class="mappa-gpx__mappa" role="region" aria-label={M.regione} />
+      <p class="mappa-gpx__selezione" data-selezione aria-live="polite" set:html={M.scegli} />
       <p class="mappa-gpx__azioni">
         <a class="bottone bottone--pieno" href={FILE_GPX} download>
-          Scarica la traccia GPX
+          {M.scarica}
         </a>
       </p>
       <script type="application/json" data-punti set:html={JSON.stringify(punti)} />
+      <script type="application/json" data-testi set:html={JSON.stringify(M)} />
     </div>
   ) : (
     <div class="mappa-gpx mappa-gpx--provvisoria">
       <div class="mappa-gpx__iframe">
         <iframe
           src="https://www.google.com/maps/d/u/0/embed?mid=1pZkHOxWBRe1zHANxN1YcchSI6xSl20A&ehbc=2E312F&noprof=1"
-          title="Mappa provvisoria della Via del Cifalco"
+          title={M.provvisoriaTitolo}
           loading="lazy"
         />
       </div>
-      <p class="mappa-gpx__nota">
-        Mappa provvisoria, in attesa della traccia GPX ufficiale. Il tracciato si
-        può aprire anche su
-        <a href="https://www.google.com/maps/d/viewer?mid=1pZkHOxWBRe1zHANxN1YcchSI6xSl20A" target="_blank" rel="noopener">Google Maps</a>
-        e
-        <a href="https://www.outdooractive.com/r/331537280" target="_blank" rel="noopener">Outdooractive</a>.
-      </p>
+      <p class="mappa-gpx__nota" set:html={fmt(M.provvisoria, { google: GOOGLE, oa: OA })} />
     </div>
   )
 }
@@ -131,6 +130,10 @@ const punti = Object.fromEntries(
         { nome: string; lat: number | null; lon: number | null }
       >;
 
+      const M = JSON.parse(contenitore.querySelector('[data-testi]')!.textContent!) as Record<string, string>;
+      const locale = contenitore.dataset.locale!;
+      const fmt = (s: string, v: Record<string, string>) => s.replace(/\{(\w+)\}/g, (_, k) => v[k] ?? '');
+      const km = (n: number) => n.toLocaleString(locale, { maximumFractionDigits: 1 });
       const normalizza = (s: string) =>
         s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
       const waypoint = new Map(gpx.waypoint.map((w) => [normalizza(w.nome), w]));
@@ -158,7 +161,7 @@ const punti = Object.fromEntries(
         attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       });
       topo.addTo(mappa);
-      L.control.layers({ Topografica: topo, Stradale: osm }).addTo(mappa);
+      L.control.layers({ [M.topografica]: topo, [M.stradale]: osm }).addTo(mappa);
 
       const coordinate = gpx.traccia.map((p) => [p.lat, p.lon] as [number, number]);
       const linea = L.polyline(coordinate, { color: '#7A6450', weight: 4, opacity: 0.75 }).addTo(mappa);
@@ -183,7 +186,7 @@ const punti = Object.fromEntries(
           evidenziato.setLatLngs([]);
           window.dispatchEvent(new CustomEvent('via-cifalco:misure', { detail: null }));
           const mancanti = [!pa && punti[d.da]?.nome, !pb && punti[d.a]?.nome].filter(Boolean);
-          etichetta.textContent = `Per evidenziare il tratto scelto, la traccia GPX deve contenere un punto chiamato: ${mancanti.join(', ')}.`;
+          etichetta.textContent = fmt(M.mancano, { nomi: mancanti.join(', ') });
           return;
         }
         let i = puntoPiuVicino(gpx.traccia, pa);
@@ -198,7 +201,7 @@ const punti = Object.fromEntries(
         // nella traccia viene dopo, si cammina la traccia al contrario.
         const salita = inverso ? m.discesa : m.salita;
         const discesa = inverso ? m.salita : m.discesa;
-        etichetta.textContent = `In evidenza: da ${d.daNome} a ${d.aNome}, ${m.km.toLocaleString('it-IT', { maximumFractionDigits: 1 })} km sulla traccia.`;
+        etichetta.textContent = fmt(M.evidenza, { da: d.daNome, a: d.aNome, km: km(m.km) });
         window.dispatchEvent(new CustomEvent('via-cifalco:misure', { detail: { km: m.km, salita, discesa } }));
       };
       if (ultimaScelta) aggiorna(ultimaScelta);

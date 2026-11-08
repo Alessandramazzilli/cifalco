@@ -44,5 +44,89 @@
       "titolo": "La vetta del Monte Dego (1427 m)",
       "testo": "Sulla sinistra al bivio: 10 minuti tra salita e discesa."
     }
-  ]
+  ],
+  "traduzioni": {
+    "en": {
+      "nome": "Section 3 · From the slopes of Monte delle Tane to the slopes of Monte Dego",
+      "descrizione": "The long ridge ride: the Bivio Veri (1080 m), the unmarked summit of Monte Veri (1223 m) and the approach to Monte Dego (1427 m), with detours to Ottone, Cariseto and Toveraia.",
+      "segnavia": "CAI trails 179, 129 and 127",
+      "passi": [
+        {
+          "titolo": "As far as the Bivio Veri",
+          "testo": "CAI trail 179 continues to the Bivio Veri (1080 m, 1 h 15 from the slopes of the Tane). You pick up the continuation of the 179 by taking the paved road to the right for a few metres, towards Ottone, and then rejoining the trail on the left."
+        },
+        {
+          "titolo": "Monte Veri and the junction with CAI 129",
+          "testo": "You reach the summit of Monte Veri (1223 m, neither marked nor visible) and come to the junction with CAI trail 129, 35 minutes from the Bivio Veri. At the junction, turn left."
+        },
+        {
+          "titolo": "Towards the Dego road",
+          "testo": "From the junction with CAI 129, in 20 minutes you reach the junction with the road to Monte Dego: keep left. After another 20 minutes the road forks conspicuously: neither branch is the right one! A few metres before the fork, follow the CAI waymarks climbing up on the right (sign for Monte Dego)."
+        },
+        {
+          "titolo": "The marked stretch above the road",
+          "testo": "As you climb, keep right again, particularly after 5 minutes of ascent, at a junction that is hard to see but marked. After a few hundred metres the trail returns to the road you left earlier: look for it on the left and take it to the right, avoiding the track that descends into the woods."
+        },
+        {
+          "titolo": "The slopes of Monte Dego",
+          "testo": "From the junction for Toveraia/Ottone, in 10 minutes you are on the slopes of the Dego."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "Ottone Soprano, Ottone and Cariseto",
+          "testo": "About 25 minutes' walk from the slopes of Monte delle Tane you cross CAI trail 133, which leads to Ottone Soprano (1 h) and Ottone (1 h 30) on the right, and to Cariseto (30 minutes) on the left."
+        },
+        {
+          "titolo": "Toveraia and Ottone",
+          "testo": "About 40 minutes after the first junction with the road to Monte Dego, beyond the gate of a pasture, you can see trail 127 descending to Toveraia in 1 h 30 and to Ottone in 2 h. From the same spot, on the opposite side of the road, an unmarked and very rough path leads to the summit of Monte Dego in a few minutes."
+        },
+        {
+          "titolo": "The summit of Monte Dego (1427 m)",
+          "testo": "On the left at the junction: 10 minutes up and down."
+        }
+      ]
+    },
+    "fr": {
+      "nome": "Tronçon 3 · Des flancs du Monte delle Tane aux flancs du Monte Dego",
+      "descrizione": "La longue chevauchée de crête : le Bivio Veri (1080 m), le sommet non balisé du Monte Veri (1223 m) et l'approche du Monte Dego (1427 m), avec les détours vers Ottone, Cariseto et Toveraia.",
+      "segnavia": "Sentiers CAI 179, 129 et 127",
+      "passi": [
+        {
+          "titolo": "Jusqu'au Bivio Veri",
+          "testo": "Le sentier CAI 179 continue jusqu'au Bivio Veri (1080 m, 1 h 15 depuis les flancs des Tane). On retrouve la suite du 179 en empruntant sur quelques mètres la route goudronnée à droite, vers Ottone, puis en reprenant le sentier sur la gauche."
+        },
+        {
+          "titolo": "Le Monte Veri et la bifurcation avec le CAI 129",
+          "testo": "On arrive au sommet du Monte Veri (1223 m, ni balisé ni visible) et on rencontre la bifurcation avec le sentier CAI 129, à 35 minutes du Bivio Veri. À la bifurcation, prends à gauche."
+        },
+        {
+          "titolo": "Vers la route carrossable du Dego",
+          "testo": "De la bifurcation avec le CAI 129, tu rejoins en 20 minutes la bifurcation avec la route carrossable du Monte Dego : garde la gauche. Après 20 minutes de plus, la route se divise nettement en deux : aucune des deux voies n'est la bonne ! Quelques mètres avant l'embranchement, suis le balisage CAI qui grimpe sur la droite (panneau pour le Monte Dego)."
+        },
+        {
+          "titolo": "Le passage balisé au-dessus de la route",
+          "testo": "En grimpant, garde encore la droite, en particulier après 5 minutes de montée, à une bifurcation peu visible mais balisée. Après quelques centaines de mètres, le sentier rejoint la route carrossable quittée plus tôt : repère-la sur la gauche et prends-la vers la droite, en évitant la route qui descend dans le bois."
+        },
+        {
+          "titolo": "Les flancs du Monte Dego",
+          "testo": "De la bifurcation pour Toveraia/Ottone, en 10 minutes, tu es sur les flancs du Dego."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "Ottone Soprano, Ottone et Cariseto",
+          "testo": "Après environ 25 minutes de marche depuis les flancs du Monte delle Tane, on croise le sentier CAI 133, qui mène à Ottone Soprano (1 h) et à Ottone (1 h 30) sur la droite, et à Cariseto (30 minutes) sur la gauche."
+        },
+        {
+          "titolo": "Toveraia et Ottone",
+          "testo": "Environ 40 minutes après la première bifurcation avec la route carrossable du Monte Dego, on aperçoit, au-delà du portail d'un pâturage, le sentier 127 qui descend à Toveraia en 1 h 30 et à Ottone en 2 h. Du même endroit, de l'autre côté de la route, un sentier non balisé et très escarpé mène au sommet du Monte Dego en quelques minutes."
+        },
+        {
+          "titolo": "Le sommet du Monte Dego (1427 m)",
+          "testo": "Sur la gauche à la bifurcation : 10 minutes aller-retour."
+        }
+      ]
+    }
+  }
 }

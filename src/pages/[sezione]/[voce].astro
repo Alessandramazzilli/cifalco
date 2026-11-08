@@ -1,27 +1,14 @@
 ---
 /**
- * Le pagine delle voci a lettera di «Fare il cammino», «Approfondimenti» e
- * «Intorno alla Via»: ognuna mostra il suo testo da src/testi/.
- * «Organizzare il viaggio» ha una pagina a parte (walking tracker e mappa).
+ * Le voci a lettera di «Fare il cammino», «Approfondimenti» e «Intorno alla
+ * Via» (italiano). «Organizzare il viaggio» ha una pagina a parte.
  */
-import PaginaSezione from '../../layouts/PaginaSezione.astro';
-import { SEZIONI } from '../../lib/menu';
-import { testo, anteprima, nomeTesto } from '../../lib/testi';
+import Voce from '../../viste/Voce.astro';
+import { pagineVoci } from '../../lib/menu';
 
 export function getStaticPaths() {
-  return SEZIONI.filter((s) => ['/fare-il-cammino', '/approfondimenti', '/intorno'].includes(s.href))
-    .flatMap((s) => s.voci)
-    .filter((v) => !v.href.endsWith('/organizzare-il-viaggio'))
-    .map((v) => {
-      const [, sezione, voce] = v.href.split('/');
-      return { params: { sezione, voce }, props: { nome: nomeTesto(v.href) } };
-    });
+  return pagineVoci().map(({ sezione, voce, nome }) => ({ params: { sezione, voce }, props: { nome } }));
 }
-
-const { nome } = Astro.props;
-const html = testo(nome);
 ---
 
-<PaginaSezione descrizione={anteprima(html, 155)} testo={html}>
-  <Fragment set:html={html} />
-</PaginaSezione>
+<Voce nome={Astro.props.nome} />

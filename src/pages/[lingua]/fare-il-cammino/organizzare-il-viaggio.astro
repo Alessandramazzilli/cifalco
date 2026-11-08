@@ -1,0 +1,8 @@
+---
+import Organizzare from '../../../viste/Organizzare.astro';
+import { LINGUE_TRADOTTE } from '../../../lib/i18n';
+
+export const getStaticPaths = () => LINGUE_TRADOTTE.map((lingua) => ({ params: { lingua } }));
+---
+
+<Organizzare />

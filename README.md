@@ -80,6 +80,25 @@ file di `src/testi/`: li riscriverebbe da zero.
 
 ---
 
+## Le lingue (italiano, inglese, francese)
+
+L'italiano è la lingua principale (indirizzi senza prefisso); inglese e
+francese stanno sotto `/en/…` e `/fr/…`, con le stesse pagine. Il selettore
+a bandierine in alto porta alla stessa pagina nell'altra lingua.
+
+- **Testi lunghi:** `src/testi/en/…` e `src/testi/fr/…`, con gli stessi nomi
+  dei file italiani. Se una traduzione manca, il sito mostra l'italiano.
+  Quando si modifica un testo italiano, va aggiornata anche la traduzione.
+- **Titoli del menu e delle sezioni:** tabella `TITOLI` in `src/lib/menu.ts`.
+- **Scritte dell'interfaccia** (bottoni, walking tracker, mappa…):
+  `src/lib/i18n.ts`.
+- **Dati del walking tracker:** campo `traduzioni` (`en`, `fr`) nei file JSON
+  di `src/content/tappe/` e `src/content/itinerari/`.
+- I link interni nei testi si scrivono sempre in versione italiana
+  (`/approfondimenti/…`): il sito aggiunge da solo `/en` o `/fr`.
+
+---
+
 ## La mappa GPX e il walking tracker
 
 La mappa compare da sola quando si carica la traccia in

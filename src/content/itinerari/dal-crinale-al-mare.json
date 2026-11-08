@@ -10,5 +10,19 @@
   ],
   "giorniConsigliati": "2 giorni",
   "ordine": 3,
-  "anello": false
+  "anello": false,
+  "traduzioni": {
+    "en": {
+      "nome": "From the ridge to the sea",
+      "sottotitolo": "From Barbagelata to Portofino mare",
+      "descrizione": "The half that descends to the sea: the summit of Monte Caucaso with its hut, Faggio Rotondo and the Fontanabuona, the Passo dei Casetti and the grand finale in the Parco di Portofino, from Ruta to Portofino mare via Pietre Strette and San Sebastiano.",
+      "giorniConsigliati": "2 days"
+    },
+    "fr": {
+      "nome": "De la crête à la mer",
+      "sottotitolo": "De Barbagelata à Portofino mare",
+      "descrizione": "La moitié qui descend vers la mer : le sommet du Monte Caucaso et son refuge, Faggio Rotondo et la Fontanabuona, le Passo dei Casetti et le grand final dans le Parco di Portofino, de Ruta à Portofino mare par Pietre Strette et San Sebastiano.",
+      "giorniConsigliati": "2 jours"
+    }
+  }
 }

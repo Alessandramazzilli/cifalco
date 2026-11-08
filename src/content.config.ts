@@ -62,6 +62,8 @@ const tappe = defineCollection({
         })
       )
       .default([]),
+    // Traduzioni dei testi (inglese, francese): { en: {...}, fr: {...} }.
+    traduzioni: z.record(z.string(), z.any()).optional(),
   }),
 });
 
@@ -79,6 +81,8 @@ const itinerari = defineCollection({
     ordine: z.number(),
     // true se il percorso torna al punto di partenza.
     anello: z.boolean().default(false),
+    // Traduzioni dei testi (inglese, francese): { en: {...}, fr: {...} }.
+    traduzioni: z.record(z.string(), z.any()).optional(),
   }),
 });
 

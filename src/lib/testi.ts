@@ -2,17 +2,24 @@
  * Accesso ai testi del sito (src/testi/**.html).
  * I testi sono HTML semplice, modificabile senza toccare il codice.
  */
+import { type Lingua, localizzaHtml } from './i18n';
+
 const file = import.meta.glob('../testi/**/*.html', {
   query: '?raw',
   import: 'default',
   eager: true,
 }) as Record<string, string>;
 
-/** Il testo di una pagina, es. testo('fare-il-cammino/premessa'). */
-export function testo(nome: string): string {
-  const h = file[`../testi/${nome}.html`];
+/**
+ * Il testo di una pagina, es. testo('fare-il-cammino/premessa', 'en').
+ * Per inglese e francese legge src/testi/en/… e src/testi/fr/…; se la
+ * traduzione manca, mostra l'italiano. I link interni prendono la lingua.
+ */
+export function testo(nome: string, lingua: Lingua = 'it'): string {
+  const tradotto = lingua === 'it' ? undefined : file[`../testi/${lingua}/${nome}.html`];
+  const h = tradotto ?? file[`../testi/${nome}.html`];
   if (h === undefined) throw new Error(`Testo mancante: src/testi/${nome}.html`);
-  return h.replace(/^<!--[\s\S]*?-->\s*/, '');
+  return localizzaHtml(h.replace(/^<!--[\s\S]*?-->\s*/, ''), lingua);
 }
 
 /** Divide un testo nei punti marcati con <!-- NOME -->. */
@@ -44,5 +51,5 @@ export function anteprima(h: string, caratteri = 260): string {
 
 /** Nome del testo associato a un indirizzo di pagina. */
 export function nomeTesto(href: string): string {
-  return href.split('#')[0].replace(/^\//, '');
+  return href.split('#')[0].replace(/^\/(en|fr)(?=\/)/, '').replace(/^\//, '');
 }
