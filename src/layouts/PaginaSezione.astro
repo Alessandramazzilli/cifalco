@@ -1,12 +1,13 @@
 ---
 /**
- * Pagina di una voce a lettera (es. «3.e Organizzare il viaggio»):
- * percorso di sezione, titolo con la lettera, indice laterale della sezione
+ * Pagina di una voce di sezione (es. «Organizzare il viaggio»): banda
+ * d'apertura nel colore della sezione con titolo e foto, indice laterale
  * e collegamenti alla voce precedente e successiva.
  *
  * Il testo arriva come HTML (src/testi/…) nello slot.
  */
 import Base from './Base.astro';
+import Foto from '../components/Foto.astro';
 import { trovaLocalizzato } from '../lib/menu';
 import { titoli } from '../lib/testi';
 import { linguaDa, t } from '../lib/i18n';
@@ -23,25 +24,31 @@ const T = t(lingua);
 const { sezione, voce } = trovaLocalizzato(Astro.url.pathname, lingua);
 if (!sezione || !voce) throw new Error(`Pagina fuori dallo schema: ${Astro.url.pathname}`);
 
+const foto = voce.foto ?? sezione.foto;
 const indice = sezione.voci.findIndex((v) => v === voce);
 const precedente = sezione.voci[indice - 1];
 const successiva = sezione.voci[indice + 1];
 
-// Titoli interni: i paragrafi i., ii., … se definiti nello schema,
-// altrimenti i titoli <h2> del testo.
+// Titoli interni: i paragrafi definiti nello schema, altrimenti i <h2> del testo.
 const interni = voce.paragrafi
-  ? voce.paragrafi.map((p) => ({ etichetta: `${p.numero}.`, titolo: p.titolo, href: p.href }))
-  : titoli(testo).map((t) => ({ etichetta: '', titolo: t.titolo, href: `#${t.id}` }));
+  ? voce.paragrafi.map((p) => ({ titolo: p.titolo, href: p.href }))
+  : titoli(testo).map((t) => ({ titolo: t.titolo, href: `#${t.id}` }));
 ---
 
 <Base titolo={voce.titolo} descrizione={descrizione}>
-  <div class="contenitore sezione pagina-voce">
-    <nav class="briciole" aria-label={T.seiQui}>
-      <a href={sezione.href}>{sezione.titolo}</a>
-      <span aria-hidden="true">›</span>
-      <span>{voce.lettera}. {voce.titolo}</span>
-    </nav>
+  <section class={`sezione apertura sezione--${sezione.colore}`}>
+    <div class="contenitore duo">
+      <div>
+        <nav class="briciole" aria-label={T.seiQui}>
+          <a href={sezione.href}>{sezione.titolo}</a>
+        </nav>
+        <h1 class="apertura__titolo">{voce.titolo}</h1>
+      </div>
+      <Foto classe="duo__foto" src={`/immagini/${foto}`} alt={T.altFoto[foto] ?? ''} />
+    </div>
+  </section>
 
+  <div class="contenitore sezione pagina-voce">
     <div class="pagina-voce__griglia">
       <aside class="indice-sezione" aria-label={`${T.indice}: ${sezione.titolo}`}>
         <details class="indice-sezione__apri" open>
@@ -54,7 +61,6 @@ const interni = voce.paragrafi
             sezione.voci.map((v) => (
               <li class:list={[v === voce && 'corrente']}>
                 <a href={v.href} aria-current={v === voce ? 'page' : undefined}>
-                  <span class="indice-sezione__lettera">{v.lettera}.</span>
                   <span>{v.titolo}</span>
                 </a>
                 {v === voce && interni.length > 0 && (
@@ -62,7 +68,6 @@ const interni = voce.paragrafi
                     {interni.map((i) => (
                       <li>
                         <a href={i.href.replace(/^[^#]*/, '')}>
-                          {i.etichetta && <span class="indice-sezione__lettera">{i.etichetta}</span>}
                           <span>{i.titolo}</span>
                         </a>
                       </li>
@@ -77,10 +82,7 @@ const interni = voce.paragrafi
       </aside>
 
       <article class="pagina-voce__testo">
-        <h1 class="titolo-voce">
-          <span class="titolo-voce__lettera">{voce.lettera}.</span>
-          {voce.titolo}
-        </h1>
+        
         <div class="prosa testo-sito">
           <slot />
         </div>
@@ -90,7 +92,7 @@ const interni = voce.paragrafi
             precedente ? (
               <a class="voci-vicine__link" href={precedente.href} rel="prev">
                 <span class="voci-vicine__verso">{T.precedente}</span>
-                <span>{precedente.lettera}. {precedente.titolo}</span>
+                <span>{precedente.titolo}</span>
               </a>
             ) : (
               <span />
@@ -100,7 +102,7 @@ const interni = voce.paragrafi
             successiva && (
               <a class="voci-vicine__link voci-vicine__link--dopo" href={successiva.href} rel="next">
                 <span class="voci-vicine__verso">{T.successiva}</span>
-                <span>{successiva.lettera}. {successiva.titolo}</span>
+                <span>{successiva.titolo}</span>
               </a>
             )
           }

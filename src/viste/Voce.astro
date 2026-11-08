@@ -1,14 +1,39 @@
 ---
-/** Pagina di una voce a lettera: il suo testo da src/testi/ (o en/, fr/). */
+/** Pagina di una voce di sezione: il suo testo da src/testi/ (o en/, fr/). */
 import PaginaSezione from '../layouts/PaginaSezione.astro';
 import { testo, anteprima } from '../lib/testi';
-import { linguaDa } from '../lib/i18n';
+import { linguaDa, t } from '../lib/i18n';
 
 interface Props {
   nome: string; // es. 'fare-il-cammino/premessa'
 }
 const lingua = linguaDa(Astro.url.pathname);
-const html = testo(Astro.props.nome, lingua);
+const T = t(lingua);
+
+// Foto dentro i testi lunghi: dopo il primo paragrafo del capitolo indicato
+// (gli id dei capitoli sono uguali in tutte le lingue).
+const FOTO_NEL_TESTO: Record<string, { capitolo: string; foto: string }[]> = {
+  'approfondimenti/cenni-storici': [{ capitolo: 'il-basso-medio-evo-malaspina-fieschi-doria', foto: 'rocca-bosco.jpg' }],
+  'approfondimenti/civilta-rurale': [{ capitolo: 'i-centri-abitati', foto: 'muro-ruota-carro.jpg' }],
+  'approfondimenti/natura-e-paesaggio': [
+    { capitolo: 'il-regno-della-faggeta', foto: 'faggeta.jpg' },
+    { capitolo: 'il-parco-del-m-di-portofino', foto: 'portofino-baia.jpg' },
+  ],
+  'approfondimenti/tappe': [
+    { capitolo: 'appennino-continentale', foto: 'vetta-rocca-bruna.jpg' },
+    { capitolo: 'appennino-marittimo', foto: 'sentiero-pozza.jpg' },
+    { capitolo: 'parco-portofino', foto: 'portofino-baia.jpg' },
+  ],
+};
+
+let html = testo(Astro.props.nome, lingua);
+for (const { capitolo, foto } of FOTO_NEL_TESTO[Astro.props.nome] ?? []) {
+  const i = html.indexOf(`id="${capitolo}"`);
+  const fine = i < 0 ? -1 : html.indexOf('</p>', i);
+  if (fine < 0) continue;
+  const figura = `<figure class="figura figura--larga"><img src="/immagini/${foto}" alt="${T.altFoto[foto] ?? ''}" loading="lazy" decoding="async"></figure>`;
+  html = html.slice(0, fine + 4) + figura + html.slice(fine + 4);
+}
 ---
 
 <PaginaSezione descrizione={anteprima(html, 155)} testo={html}>

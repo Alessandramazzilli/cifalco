@@ -20,6 +20,7 @@ export interface Voce {
   titolo: string;
   href: string;
   paragrafi?: Paragrafo[];
+  foto?: string; // foto d'apertura della pagina (in public/immagini/)
 }
 
 export interface Sezione {
@@ -28,6 +29,9 @@ export interface Sezione {
   breve: string; // etichetta nel menu
   href: string;
   voci: Voce[];
+  // Colore della sezione: banda d'apertura e schede (vedi global.css).
+  colore: 'bosco' | 'acqua' | 'terra' | 'pietra';
+  foto: string;
 }
 
 export const SEZIONI: Sezione[] = [
@@ -36,6 +40,8 @@ export const SEZIONI: Sezione[] = [
     titolo: 'Chi siamo',
     breve: 'Chi siamo',
     href: '/chi-siamo',
+    colore: 'bosco',
+    foto: 'muro-ruota-carro.jpg',
     voci: [
       { lettera: 'a', titolo: 'Il progetto', href: '/chi-siamo#il-progetto' },
       { lettera: 'b', titolo: 'Le persone', href: '/chi-siamo#le-persone' },
@@ -48,15 +54,17 @@ export const SEZIONI: Sezione[] = [
     titolo: 'Fare il cammino: informazioni pratiche',
     breve: 'Fare il cammino',
     href: '/fare-il-cammino',
+    colore: 'acqua',
+    foto: 'vetta-rocca-bruna.jpg',
     voci: [
-      { lettera: 'a', titolo: 'Premessa sull’itinerario proposto', href: '/fare-il-cammino/premessa' },
-      { lettera: 'b', titolo: 'Come arrivare al punto di partenza', href: '/fare-il-cammino/come-arrivare' },
-      { lettera: 'c', titolo: 'Rientrare', href: '/fare-il-cammino/rientrare' },
-      { lettera: 'd', titolo: 'Vie di fuga', href: '/fare-il-cammino/vie-di-fuga' },
+      { lettera: 'a', titolo: 'Premessa sull’itinerario proposto', href: '/fare-il-cammino/premessa', foto: 'rocca-bosco.jpg' },
+      { lettera: 'b', titolo: 'Come arrivare al punto di partenza', href: '/fare-il-cammino/come-arrivare', foto: 'home-banner-valle-del-cifalco.jpg' },
+      { lettera: 'c', titolo: 'Rientrare', href: '/fare-il-cammino/rientrare', foto: 'portofino-baia.jpg' },
+      { lettera: 'd', titolo: 'Vie di fuga', href: '/fare-il-cammino/vie-di-fuga', foto: 'sentiero-pozza.jpg' },
       {
         lettera: 'e',
         titolo: 'Organizzare il viaggio: tappe, deviazioni e mappe',
-        href: '/fare-il-cammino/organizzare-il-viaggio',
+        href: '/fare-il-cammino/organizzare-il-viaggio', foto: 'vetta-rocca-bruna.jpg',
         paragrafi: [
           { numero: 'i', titolo: 'Quanto dura la Via del Cifalco?', href: '/fare-il-cammino/organizzare-il-viaggio#quanto-dura' },
           { numero: 'ii', titolo: 'Descrizione dettagliata dell’itinerario', href: '/fare-il-cammino/organizzare-il-viaggio#descrizione-dettagliata' },
@@ -66,13 +74,13 @@ export const SEZIONI: Sezione[] = [
       {
         lettera: 'f',
         titolo: 'I punti di appoggio',
-        href: '/fare-il-cammino/punti-di-appoggio',
+        href: '/fare-il-cammino/punti-di-appoggio', foto: 'rifugio-terrazza-mare.jpg',
         paragrafi: [
           { numero: 'i', titolo: 'Alberghi e altre strutture attrezzate per pernottamenti', href: '/fare-il-cammino/punti-di-appoggio#alberghi' },
           { numero: 'ii', titolo: 'Rifugi non attrezzati', href: '/fare-il-cammino/punti-di-appoggio#rifugi' },
         ],
       },
-      { lettera: 'g', titolo: 'Avvertenze', href: '/fare-il-cammino/avvertenze' },
+      { lettera: 'g', titolo: 'Avvertenze', href: '/fare-il-cammino/avvertenze', foto: 'faggeta.jpg' },
     ],
   },
   {
@@ -80,14 +88,16 @@ export const SEZIONI: Sezione[] = [
     titolo: 'Approfondimenti',
     breve: 'Approfondimenti',
     href: '/approfondimenti',
+    colore: 'terra',
+    foto: 'rocca-bosco.jpg',
     voci: [
-      { lettera: 'a', titolo: 'Le incerte origini dell’Antica Via del Cifalco', href: '/approfondimenti/origini' },
-      { lettera: 'b', titolo: 'Cenni storici sul territorio', href: '/approfondimenti/cenni-storici' },
-      { lettera: 'c', titolo: 'La civiltà rurale sulle Vie del Sale', href: '/approfondimenti/civilta-rurale' },
+      { lettera: 'a', titolo: 'Le incerte origini dell’Antica Via del Cifalco', href: '/approfondimenti/origini', foto: 'spada-nella-roccia.jpg' },
+      { lettera: 'b', titolo: 'Cenni storici sul territorio', href: '/approfondimenti/cenni-storici', foto: 'home-banner-valle-del-cifalco.jpg' },
+      { lettera: 'c', titolo: 'La civiltà rurale sulle Vie del Sale', href: '/approfondimenti/civilta-rurale', foto: 'muro-ruota-carro.jpg' },
       {
         lettera: 'd',
         titolo: 'Natura e paesaggio, dai monti al mare',
-        href: '/approfondimenti/natura-e-paesaggio',
+        href: '/approfondimenti/natura-e-paesaggio', foto: 'faggeta.jpg',
         paragrafi: [
           { numero: 'i', titolo: 'L’Appennino “continentale”', href: '/approfondimenti/natura-e-paesaggio#appennino-continentale' },
           { numero: 'ii', titolo: 'L’Appennino “marittimo”', href: '/approfondimenti/natura-e-paesaggio#appennino-marittimo' },
@@ -96,14 +106,14 @@ export const SEZIONI: Sezione[] = [
       {
         lettera: 'e',
         titolo: 'Le tappe della Via del Cifalco tra storia, natura e cultura',
-        href: '/approfondimenti/tappe',
+        href: '/approfondimenti/tappe', foto: 'costa-tigullio.jpg',
         paragrafi: [
           { numero: 'i', titolo: 'L’Appennino “continentale”', href: '/approfondimenti/tappe#appennino-continentale' },
           { numero: 'ii', titolo: 'L’Appennino “marittimo”', href: '/approfondimenti/tappe#appennino-marittimo' },
           { numero: 'iii', titolo: 'Il Parco del M. di Portofino: l’arrivo a Portofino mare e la fine della Via del Cifalco', href: '/approfondimenti/tappe#parco-portofino' },
         ],
       },
-      { lettera: 'f', titolo: 'Riferimenti bibliografici', href: '/approfondimenti/bibliografia' },
+      { lettera: 'f', titolo: 'Riferimenti bibliografici', href: '/approfondimenti/bibliografia', foto: 'rocca-bosco.jpg' },
     ],
   },
   {
@@ -111,15 +121,19 @@ export const SEZIONI: Sezione[] = [
     titolo: 'Intorno all’Antica Via del Cifalco (e oltre)',
     breve: 'Intorno alla Via (e oltre)',
     href: '/intorno',
+    colore: 'pietra',
+    foto: 'sentiero-pozza.jpg',
     // 5a «Scritti d'autore» e 5b «Dicono di noi» verranno aperte con i
     // primi contributi: per ora non compaiono.
-    voci: [{ lettera: 'c', titolo: 'Altri cammini', href: '/intorno/altri-cammini' }],
+    voci: [{ lettera: 'c', titolo: 'Altri cammini', href: '/intorno/altri-cammini', foto: 'sentiero-pozza.jpg' }],
   },
   {
     numero: 6,
     titolo: 'Contatti',
     breve: 'Contatti',
     href: '/contatti',
+    colore: 'bosco',
+    foto: 'costa-tigullio.jpg',
     voci: [],
   },
 ];

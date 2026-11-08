@@ -3,9 +3,9 @@ import { sezioni } from '../lib/menu';
 import { LINGUE, NOMI_LINGUA, linguaDa, localizza, senzaLingua, t } from '../lib/i18n';
 import Bandiera from './Bandiera.astro';
 
-// Il menu segue lo schema del sito: le sezioni numerate nella barra, le
-// voci a lettera nella tendina, i paragrafi (i., ii., …) in una seconda
-// tendina che si apre passando sulla voce. Su mobile tutto diventa un
+// Il menu segue lo schema del sito: le sezioni nella barra, le loro voci
+// nella tendina, i paragrafi in una seconda tendina che si apre passando
+// sulla voce. Su mobile tutto diventa un
 // elenco rientrato.
 const percorsoAttuale = Astro.url.pathname.replace(/\/$/, '') || '/';
 const lingua = linguaDa(percorsoAttuale);
@@ -62,7 +62,6 @@ const inSezione = (href: string) =>
                   {sezione.voci.map((voce) => (
                     <li class:list={[voce.paragrafi && 'has-sub2']}>
                       <a href={voce.href} aria-current={percorsoAttuale === voce.href ? 'page' : undefined}>
-                        <span class="sottomenu__lettera">{voce.lettera}.</span>
                         <span>{voce.titolo}</span>
                         {voce.paragrafi && <span class="sottomenu__freccia" aria-hidden="true">‹</span>}
                       </a>
@@ -71,7 +70,6 @@ const inSezione = (href: string) =>
                           {voce.paragrafi.map((par) => (
                             <li>
                               <a href={par.href}>
-                                <span class="sottomenu__lettera">{par.numero}.</span>
                                 <span>{par.titolo}</span>
                               </a>
                             </li>
