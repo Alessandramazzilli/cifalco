@@ -1,5 +1,5 @@
 /* ==========================================================================
-   L'Antica Via del Cifalco — sistema di design "Il Cammino Umano"
+   L'Antica Via del Cifalco: sistema di design "Il Cammino Umano"
    Quaderno digitale: caldo, sobrio, leggibile. Niente texture finte.
    ========================================================================== */
 
@@ -13,7 +13,7 @@
    I nomi sono semantici: usa le variabili, non i codici esadecimali.
 --------------------------------------------------------------------------- */
 :root {
-  /* Verde dei faggi — verde bosco spento/salvia, mai squillante */
+  /* Verde dei faggi: verde bosco spento/salvia, mai squillante */
   --bosco: #4A5D44;
   --bosco-scuro: #39482F;
   --campagna: #6B7D5C;
@@ -25,14 +25,14 @@
   --pietra-chiara: #B5B3AC;
   --pietra-banda: #CCC4BA;   /* grigio chiaro per le bande (testo scuro) */
 
-  /* Accento acquatico — fonti, fontane, abbeveratoi e torrenti. */
+  /* Accento acquatico: fonti, fontane, abbeveratoi e torrenti. */
   --acqua: #5B7C7D;
   --acqua-scura: #455F60;
   --acqua-chiara: #7FA0A0;
   --acqua-fondo: #CDDED9;
   --terra-fondo: #EADDCB;    /* fondo chiaro marrone per i richiami al ristoro */
 
-  /* Marrone della terra — dettagli caldi, calore delle locande. */
+  /* Marrone della terra: dettagli caldi, calore delle locande. */
   --umbra: #5C4A3A;
   --terra: #7A6450;
   --tortora: #A8957E;
@@ -367,4 +367,379 @@ table.tabella th {
   color: var(--inchiostro-tenue);
   font-family: var(--serif);
   font-size: 1.1em;
+}
+
+/* ===========================================================================
+   Pagine di testo (sezioni 2–5)
+   ======================================================================== */
+
+/* Percorso di sezione */
+.briciole {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-size: 0.92rem;
+  color: var(--inchiostro-tenue);
+  margin-bottom: 1.5rem;
+}
+
+/* Titolo con lettera: «e. Organizzare il viaggio» */
+.titolo-voce__lettera {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--terra);
+  margin-right: 0.15em;
+}
+
+.pagina-voce__griglia {
+  display: grid;
+  grid-template-columns: 16rem minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+@media (max-width: 62rem) {
+  .pagina-voce__griglia { grid-template-columns: 1fr; }
+}
+
+/* Indice laterale della sezione */
+.indice-sezione {
+  position: sticky;
+  top: 5.5rem;
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
+  font-size: 0.93rem;
+  padding: 1rem 1rem 1rem 0;
+  border-right: 1px solid var(--sabbia);
+}
+@media (max-width: 62rem) {
+  .indice-sezione {
+    position: static;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid var(--sabbia);
+    padding: 0 0 1rem;
+  }
+}
+.indice-sezione__titolo {
+  font-family: var(--serif);
+  font-weight: 650;
+  margin: 0 0 0.6rem;
+}
+.indice-sezione__titolo a { color: var(--bosco-scuro); text-decoration: none; }
+.indice-sezione ol { list-style: none; margin: 0; padding: 0; }
+.indice-sezione li { margin: 0; }
+.indice-sezione a {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: var(--raggio);
+  color: var(--inchiostro-tenue);
+  text-decoration: none;
+  line-height: 1.3;
+}
+.indice-sezione a:hover { background: var(--fondo-scuro); color: var(--bosco); }
+.indice-sezione li.corrente > a {
+  background: var(--superficie);
+  color: var(--bosco-scuro);
+  font-weight: 650;
+}
+.indice-sezione__interni { padding-left: 1.2rem !important; margin: 0.2rem 0 0.4rem !important; }
+.indice-sezione__interni a { font-size: 0.9rem; }
+.indice-sezione__lettera {
+  flex: 0 0 auto;
+  min-width: 1.5em;
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--terra);
+}
+
+/* Precedente / successiva */
+.voci-vicine {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--sabbia);
+}
+.voci-vicine__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-width: 48%;
+  text-decoration: none;
+  font-weight: 600;
+}
+.voci-vicine__link--dopo { text-align: right; margin-left: auto; }
+.voci-vicine__verso {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--inchiostro-tenue);
+}
+
+/* Elenco delle voci (ingresso di sezione e Home) */
+.elenco-voci {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr));
+}
+.elenco-voci li { margin: 0; }
+.voce-card {
+  display: flex;
+  gap: 0.8rem;
+  height: 100%;
+  text-decoration: none;
+  color: var(--inchiostro);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.voce-card:hover { transform: translateY(-2px); color: var(--inchiostro); }
+.voce-card__lettera {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--terra);
+}
+.voce-card__corpo { display: flex; flex-direction: column; gap: 0.45rem; }
+.voce-card__titolo {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 650;
+  color: var(--bosco-scuro);
+}
+.voce-card__anteprima { font-size: 0.97rem; color: var(--inchiostro-tenue); }
+.voce-card__paragrafi { font-size: 0.85rem; color: var(--terra); }
+
+.indice-lettere { list-style: none; padding: 0; margin: 1rem 0 0; font-size: 1.1rem; }
+.indice-lettere a { text-decoration: none; font-weight: 600; }
+
+/* --- Il testo vero e proprio --------------------------------------------- */
+.testo-sito h2 { margin-top: 2.5rem; scroll-margin-top: 6rem; }
+.testo-sito h3 { margin-top: 1.8rem; scroll-margin-top: 6rem; }
+.testo-sito [id] { scroll-margin-top: 6rem; }
+.testo-sito::after { content: ''; display: block; clear: both; }
+
+/* Segnaposto (evidenziato giallo nei testi originali): resta visibile
+   finché non arriva il testo definitivo. */
+mark.segnaposto {
+  background: #F4E27A;
+  color: var(--inchiostro);
+  padding: 0.05em 0.2em;
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Foto nel testo */
+.figura {
+  margin: 1.8rem auto;
+  max-width: 32rem;
+}
+.figura--larga { max-width: 46rem; }
+.figura img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--raggio);
+  box-shadow: var(--ombra);
+}
+.figura figcaption {
+  font-size: 0.88rem;
+  color: var(--inchiostro-tenue);
+  padding-top: 0.5rem;
+  text-align: center;
+}
+.figura__credito { font-style: italic; }
+
+/* Aneddoti e leggende: riquadri con cornice, alternati a destra e sinistra */
+.aneddoto {
+  position: relative;
+  width: min(44%, 22rem);
+  margin: 0.4rem 0 1.2rem;
+  padding: 1.4rem 1.4rem 1.1rem;
+  background: var(--terra-fondo);
+  color: var(--inchiostro);
+  border: 1.5px solid var(--terra);
+  outline: 1px solid var(--terra);
+  outline-offset: -7px;
+  border-radius: 2px;
+  font-family: var(--serif);
+  font-size: 0.97rem;
+  line-height: 1.55;
+}
+.aneddoto--destra { float: right; margin-left: 1.8rem; }
+.aneddoto--sinistra { float: left; margin-right: 1.8rem; }
+/* Fregi agli angoli */
+.aneddoto::before,
+.aneddoto::after {
+  content: '❦';
+  position: absolute;
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--terra);
+  background: var(--terra-fondo);
+  padding: 0 0.3rem;
+}
+.aneddoto::before { top: -0.6rem; left: 50%; transform: translateX(-50%); }
+.aneddoto::after { bottom: -0.6rem; left: 50%; transform: translateX(-50%) rotate(180deg); }
+.aneddoto__occhiello {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--terra);
+  margin: 0 0 0.2rem;
+}
+.aneddoto__titolo {
+  font-size: 1.12rem;
+  font-weight: 650;
+  font-style: italic;
+  text-align: center;
+  color: var(--umbra);
+  margin: 0 0 0.7rem;
+}
+.aneddoto p { margin: 0 0 0.6em; }
+.aneddoto p:last-child { margin-bottom: 0; }
+@media (max-width: 44rem) {
+  .aneddoto--destra,
+  .aneddoto--sinistra { float: none; width: auto; margin: 1.6rem 0; }
+}
+
+/* Descrizione dettagliata: via principale, deviazioni, varianti */
+:root {
+  --via-principale: var(--umbra);
+  --via-deviazione: var(--acqua);
+  --via-variante: #A07A1F;
+}
+.legenda-percorso {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin: 1.2rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+.legenda-percorso__titolo { font-weight: 700; }
+.legenda-percorso__voce {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+.legenda-percorso__voce::before {
+  content: '';
+  width: 1.6rem;
+  height: 0.45rem;
+  border-radius: 2px;
+}
+.legenda-percorso__voce--principale::before { background: var(--via-principale); }
+.legenda-percorso__voce--deviazione::before { background: var(--via-deviazione); }
+.legenda-percorso__voce--variante::before {
+  background: repeating-linear-gradient(90deg, var(--via-variante) 0 0.35rem, transparent 0.35rem 0.55rem);
+}
+
+.testo-sito h3.tratta {
+  margin-top: 2.5rem;
+  padding: 0.55rem 0.9rem;
+  background: var(--via-principale);
+  color: var(--chiaro);
+  border-radius: var(--raggio);
+  font-size: 1.15rem;
+  line-height: 1.35;
+}
+.tratta-dato {
+  margin: 0.3rem 0;
+  padding-left: 0.9rem;
+  border-left: 3px solid var(--via-principale);
+}
+.percorso-alt {
+  margin: 0.9rem 0 0.9rem 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--via-deviazione);
+  background: var(--acqua-fondo);
+  border-radius: 0 var(--raggio) var(--raggio) 0;
+}
+.percorso-alt--variante {
+  border-left-style: dashed;
+  border-left-color: var(--via-variante);
+  background: #EFE4C6;
+}
+.percorso-alt p { margin: 0; }
+/* Nei testi originali le deviazioni erano in corsivo: qui le distingue il riquadro. */
+.percorso-alt em { font-style: normal; }
+.percorso-alt__titolo,
+.percorso-alt__titolo em {
+  font-weight: 700;
+  color: var(--acqua-scura);
+}
+.percorso-alt--variante .percorso-alt__titolo,
+.percorso-alt--variante .percorso-alt__titolo em { color: #6E5413; }
+
+/* Icone dei segnavia CAI e FIE nel testo */
+.segnavia {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 0;
+  margin: 0 0.1em;
+  position: relative;
+  top: -0.08em;
+}
+.segnavia svg { display: block; }
+
+/* Strutture ricettive */
+.testo-sito h3.struttura {
+  margin: 1.4rem 0 0.2rem;
+  font-size: 1.08rem;
+}
+
+.tracker { margin: 1.5rem 0 2rem; }
+
+/* --- Home ------------------------------------------------------------------ */
+.home__titolo { margin-bottom: 1rem; }
+.citazione { margin: 0; }
+.citazione blockquote {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.12rem;
+  line-height: 1.55;
+}
+.citazione blockquote p { margin: 0; }
+.citazione figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--inchiostro-tenue);
+}
+.citazione figcaption::before { content: '('; }
+.citazione figcaption::after { content: ')'; }
+.citazione--principale blockquote {
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  padding-left: 1.1rem;
+  border-left: 3px solid var(--terra);
+}
+.home__citazioni { padding-block: clamp(2rem, 5vw, 3.5rem); }
+.home__citazioni-griglia {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+}
+.duo--alto { align-items: start; }
+.home__elenco ul { padding-left: 1.2rem; }
+.home__elenco li { margin-bottom: 0.7rem; }
+.indice-sezione__apri > summary { display: none; }
+@media (max-width: 62rem) {
+  .indice-sezione__apri > summary {
+    display: list-item;
+    cursor: pointer;
+    font-weight: 650;
+    color: var(--bosco-scuro);
+    padding: 0.3rem 0;
+  }
+  .indice-sezione__apri[open] > summary { margin-bottom: 0.6rem; }
 }

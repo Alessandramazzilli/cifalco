@@ -1,0 +1,79 @@
+---
+/**
+ * 1. Home: le citazioni (Morosetti in apertura), «in breve», le novità e un
+ * ingresso a ogni sezione. Testi in src/testi/home/ (e en/, fr/).
+ */
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import { sezioni } from '../lib/menu';
+import { testo, anteprima, nomeTesto } from '../lib/testi';
+import { linguaDa, t } from '../lib/i18n';
+
+const lingua = linguaDa(Astro.url.pathname);
+const T = t(lingua);
+const [principale, ...altre] = testo('home/citazioni', lingua)
+  .split('\n')
+  .filter((r) => r.startsWith('<figure'));
+
+const ingressi = sezioni(lingua)
+  .filter((s) => s.voci.length > 0)
+  .map((s) => {
+    const primo = s.href.endsWith('/chi-siamo') ? 'chi-siamo/chi-siamo' : nomeTesto(s.voci[0].href);
+    return { ...s, anteprima: anteprima(testo(primo, lingua), 230) };
+  });
+---
+
+<Base titolo={T.nomeSito} descrizione={T.homeDescrizione}>
+  <section class="sezione sezione--pietra">
+    <div class="contenitore duo">
+      <div>
+        <p class="occhiello">{T.homeOcchiello}</p>
+        <h1 class="home__titolo">{T.nomeSito}</h1>
+        <Fragment set:html={principale} />
+      </div>
+      <Foto classe="duo__foto" src="/immagini/home-banner-valle-del-cifalco.jpg" alt={T.altBanner} />
+    </div>
+  </section>
+
+  <section class="sezione home__citazioni" aria-label={T.citazioni}>
+    <div class="contenitore home__citazioni-griglia">
+      <Fragment set:html={altre.join('\n')} />
+    </div>
+  </section>
+
+  <section class="sezione sezione--alternata">
+    <div class="contenitore duo duo--alto">
+      <div class="testo-sito home__elenco">
+        <h2>{T.inBreve}</h2>
+        <Fragment set:html={testo('home/in-breve', lingua)} />
+      </div>
+      <div class="testo-sito home__elenco home__novita">
+        <h2>{T.novita}</h2>
+        <Fragment set:html={testo('home/novita', lingua)} />
+      </div>
+    </div>
+  </section>
+
+  <section class="sezione">
+    <div class="contenitore">
+      <h2>{T.scopri}</h2>
+      <ol class="elenco-voci elenco-voci--sezioni">
+        {
+          ingressi.map((s) => (
+            <li>
+              <a class="voce-card card" href={s.href}>
+                <span class="voce-card__corpo">
+                  <span class="voce-card__titolo">{s.titolo}</span>
+                  <span class="voce-card__anteprima">{s.anteprima}</span>
+                  <span class="voce-card__paragrafi">
+                    {s.voci.map((v) => `${v.lettera}. ${v.titolo}`).join(' · ')}
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</Base>

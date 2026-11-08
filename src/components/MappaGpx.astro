@@ -1,0 +1,210 @@
+---
+/**
+ * Mappa della traccia GPX, sincronizzata con il walking tracker.
+ *
+ * - La traccia sta in public/gpx/antica-via-del-cifalco.gpx: basta caricare
+ *   quel file perché la mappa compaia (finché manca, resta il segnaposto e
+ *   la mappa provvisoria di Google My Maps).
+ * - Sincronia con il tracker: quando nel tracker si sceglie un tratto, la
+ *   mappa lo evidenzia e misura km e dislivelli reali sulla traccia, che il
+ *   tracker mostra accanto alle sue stime.
+ * - Per riconoscere i luoghi, i punti della traccia (waypoint <wpt>) devono
+ *   avere come nome lo stesso nome dei punti in src/content/punti/ (es.
+ *   «Ponte Organasco», «Oneto»…). In alternativa, si possono scrivere le
+ *   coordinate «lat» e «lon» direttamente nel file del punto.
+ */
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { caricaPercorso } from '../lib/percorso';
+import { LOCALE, fmt, linguaDa, t } from '../lib/i18n';
+
+const lingua = linguaDa(Astro.url.pathname);
+const M = t(lingua).mappa;
+const GOOGLE = 'https://www.google.com/maps/d/viewer?mid=1pZkHOxWBRe1zHANxN1YcchSI6xSl20A';
+const OA = 'https://www.outdooractive.com/r/331537280';
+
+const FILE_GPX = '/gpx/antica-via-del-cifalco.gpx';
+const presente = existsSync(path.join(process.cwd(), 'public', FILE_GPX));
+
+const percorso = await caricaPercorso();
+const punti = Object.fromEntries(
+  percorso.punti.map((p) => [p.id, { nome: p.nome, lat: p.lat ?? null, lon: p.lon ?? null }])
+);
+---
+
+{
+  presente ? (
+    <div class="mappa-gpx" data-gpx={FILE_GPX} data-locale={LOCALE[lingua]}>
+      <div class="mappa-gpx__mappa" role="region" aria-label={M.regione} />
+      <p class="mappa-gpx__selezione" data-selezione aria-live="polite" set:html={M.scegli} />
+      <p class="mappa-gpx__azioni">
+        <a class="bottone bottone--pieno" href={FILE_GPX} download>
+          {M.scarica}
+        </a>
+      </p>
+      <script type="application/json" data-punti set:html={JSON.stringify(punti)} />
+      <script type="application/json" data-testi set:html={JSON.stringify(M)} />
+    </div>
+  ) : (
+    <div class="mappa-gpx mappa-gpx--provvisoria">
+      <div class="mappa-gpx__iframe">
+        <iframe
+          src="https://www.google.com/maps/d/u/0/embed?mid=1pZkHOxWBRe1zHANxN1YcchSI6xSl20A&ehbc=2E312F&noprof=1"
+          title={M.provvisoriaTitolo}
+          loading="lazy"
+        />
+      </div>
+      <p class="mappa-gpx__nota" set:html={fmt(M.provvisoria, { google: GOOGLE, oa: OA })} />
+    </div>
+  )
+}
+
+<style>
+  .mappa-gpx {
+    margin-block: 1.5rem;
+  }
+  .mappa-gpx__mappa {
+    height: clamp(22rem, 60vh, 36rem);
+    border-radius: var(--raggio-grande);
+    box-shadow: var(--ombra);
+    overflow: hidden;
+    background: var(--superficie);
+  }
+  .mappa-gpx__selezione {
+    margin: 0.8rem 0 0.5rem;
+    font-weight: 600;
+    color: var(--acqua-scura);
+  }
+  .mappa-gpx__iframe {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--raggio-grande);
+    overflow: hidden;
+    box-shadow: var(--ombra);
+  }
+  .mappa-gpx__iframe iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .mappa-gpx__nota {
+    font-size: 0.92rem;
+    color: var(--inchiostro-tenue);
+    margin-top: 0.6rem;
+  }
+</style>
+
+<script>
+  import { leggiGpx, puntoPiuVicino, misura } from '../lib/gpx';
+
+  const contenitore = document.querySelector<HTMLElement>('.mappa-gpx[data-gpx]');
+
+  if (contenitore) {
+    type Dettaglio = {
+      da: string;
+      a: string;
+      daNome: string;
+      aNome: string;
+      senso: 'classico' | 'inverso';
+      punti: string[];
+    };
+    // Il tracker può parlare prima che la mappa sia pronta: si tiene l'ultima scelta.
+    let ultimaScelta: Dettaglio | null = null;
+    let aggiorna: ((d: Dettaglio) => void) | null = null;
+    window.addEventListener('via-cifalco:itinerario', (e) => {
+      ultimaScelta = (e as CustomEvent).detail as Dettaglio;
+      aggiorna?.(ultimaScelta);
+    });
+
+    (async () => {
+      const [{ default: L }, testoGpx] = await Promise.all([
+        import('leaflet'),
+        fetch(contenitore.dataset.gpx!).then((r) => r.text()),
+        import('leaflet/dist/leaflet.css'),
+      ]);
+      const gpx = leggiGpx(testoGpx);
+      const punti = JSON.parse(contenitore.querySelector('[data-punti]')!.textContent!) as Record<
+        string,
+        { nome: string; lat: number | null; lon: number | null }
+      >;
+
+      const M = JSON.parse(contenitore.querySelector('[data-testi]')!.textContent!) as Record<string, string>;
+      const locale = contenitore.dataset.locale!;
+      const fmt = (s: string, v: Record<string, string>) => s.replace(/\{(\w+)\}/g, (_, k) => v[k] ?? '');
+      const km = (n: number) => n.toLocaleString(locale, { maximumFractionDigits: 1 });
+      const normalizza = (s: string) =>
+        s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+      const waypoint = new Map(gpx.waypoint.map((w) => [normalizza(w.nome), w]));
+
+      /** Posizione di un punto del sito: dal waypoint omonimo o dalle coordinate del file. */
+      function posizione(id: string): [number, number] | null {
+        const p = punti[id];
+        if (!p) return null;
+        const w = waypoint.get(normalizza(p.nome));
+        if (w) return [w.lat, w.lon];
+        if (p.lat !== null && p.lon !== null) return [p.lat, p.lon];
+        return null;
+      }
+
+      const mappa = L.map(contenitore.querySelector<HTMLElement>('.mappa-gpx__mappa')!, {
+        scrollWheelZoom: false,
+      });
+      const topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        maxZoom: 17,
+        attribution:
+          'Mappa: © <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA), dati © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      });
+      const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      });
+      topo.addTo(mappa);
+      L.control.layers({ [M.topografica]: topo, [M.stradale]: osm }).addTo(mappa);
+
+      const coordinate = gpx.traccia.map((p) => [p.lat, p.lon] as [number, number]);
+      const linea = L.polyline(coordinate, { color: '#7A6450', weight: 4, opacity: 0.75 }).addTo(mappa);
+      const evidenziato = L.polyline([], { color: '#C8102E', weight: 6, opacity: 0.9 }).addTo(mappa);
+      mappa.fitBounds(linea.getBounds(), { padding: [20, 20] });
+
+      // I luoghi del sito che si trovano sulla traccia.
+      for (const id of Object.keys(punti)) {
+        const pos = posizione(id);
+        if (!pos) continue;
+        L.circleMarker(pos, { radius: 5, color: '#39482F', weight: 2, fillColor: '#F1F3EE', fillOpacity: 1 })
+          .bindTooltip(punti[id].nome)
+          .addTo(mappa);
+      }
+
+      const etichetta = contenitore.querySelector<HTMLElement>('[data-selezione]')!;
+
+      aggiorna = (d: Dettaglio) => {
+        const pa = posizione(d.da);
+        const pb = posizione(d.a);
+        if (!pa || !pb) {
+          evidenziato.setLatLngs([]);
+          window.dispatchEvent(new CustomEvent('via-cifalco:misure', { detail: null }));
+          const mancanti = [!pa && punti[d.da]?.nome, !pb && punti[d.a]?.nome].filter(Boolean);
+          etichetta.textContent = fmt(M.mancano, { nomi: mancanti.join(', ') });
+          return;
+        }
+        let i = puntoPiuVicino(gpx.traccia, pa);
+        let j = puntoPiuVicino(gpx.traccia, pb);
+        const inverso = i > j;
+        if (inverso) [i, j] = [j, i];
+        const tratto = gpx.traccia.slice(i, j + 1);
+        evidenziato.setLatLngs(tratto.map((p) => [p.lat, p.lon]));
+        if (tratto.length > 1) mappa.fitBounds(evidenziato.getBounds(), { padding: [30, 30] });
+        const m = misura(tratto);
+        // Salita e discesa dipendono dal verso: se si parte dal punto che
+        // nella traccia viene dopo, si cammina la traccia al contrario.
+        const salita = inverso ? m.discesa : m.salita;
+        const discesa = inverso ? m.salita : m.discesa;
+        etichetta.textContent = fmt(M.evidenza, { da: d.daNome, a: d.aNome, km: km(m.km) });
+        window.dispatchEvent(new CustomEvent('via-cifalco:misure', { detail: { km: m.km, salita, discesa } }));
+      };
+      if (ultimaScelta) aggiorna(ultimaScelta);
+    })();
+  }
+</script>

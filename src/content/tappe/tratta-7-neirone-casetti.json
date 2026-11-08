@@ -36,5 +36,73 @@
       "titolo": "Uscio",
       "testo": "Dal Passo dei Casetti, passando sotto il ponticello e seguendo il sentiero dell'Itinerario Storico Colombiano, si giunge a Uscio in circa 30 minuti: caratteristico paesino dell'entroterra ligure, con possibilità di alloggio e ristoro."
     }
-  ]
+  ],
+  "traduzioni": {
+    "en": {
+      "nome": "Section 7 · From Neirone to the Passo dei Casetti",
+      "descrizione": "The linking section through the Fontanabuona: the descent to Gattorna, the little wooden bridge over the Lavagna and the climb via Cassanesi to the Passo dei Casetti (550 m), with its distinctive bridge above the trail.",
+      "segnavia": "Paved road as far as Gattorna (no waymark), then “red bar and red circle”, finally the red-and-white waymark of the Itinerario Storico Colombiano",
+      "passi": [
+        {
+          "titolo": "From Neirone to Gattorna",
+          "testo": "From the main hub of Neirone (car park beside the church), walk down the paved road to Gattorna in about 50 minutes. The trail of the Itinerario dei Feudi Fliscani, far more charming, is unfortunately not passable at the moment."
+        },
+        {
+          "titolo": "The little wooden bridge",
+          "testo": "From the church of Gattorna, go down to the main road along the Lavagna stream and walk up it for a few hundred metres: between the Pasticceria Torre and the bar La Ciuccheria, a lane on the left descends to the little wooden bridge over the stream. This is where the “red bar and red circle” waymark begins. If the bridge is closed for maintenance, go round by the paved bridge at the Bar Beneitin and pick up the waymark again where it climbs on the left."
+        },
+        {
+          "titolo": "Via Cassanesi to the Passo dei Casetti",
+          "testo": "After the bridge keep left (avoid the immediate climb to Pian dei Preti), cross the old stone bridge over the Rio Rosso and follow the trail which, cutting across the road several times, passes through Cassanesi and leads to the Passo dei Casetti (550 m, 1 h 40 from Gattorna). For the last 10 minutes you walk under the red-and-white waymark of the Itinerario Storico Colombiano, which you take to the right."
+        },
+        {
+          "titolo": "Warning near Cassanesi",
+          "testo": "The Comune di Tribogna (ordinance no. 19 of 16 December 2025) prohibits passage on the stretch beside the ruined house near Cassanesi. If the ordinance is still in force: go back down a few hundred metres to the last point where the trail cuts the paved road, take the road (to the left going uphill) and rejoin the waymark after the Madia trattoria, on the right."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "Colle Caprile",
+          "testo": "From the Passo dei Casetti, the Via del Mare waymark (followed backwards) leads to Colle Caprile in 40 minutes, where you will find food and accommodation (Albergo Caprile)."
+        },
+        {
+          "titolo": "Uscio",
+          "testo": "From the Passo dei Casetti, passing under the little bridge and following the trail of the Itinerario Storico Colombiano, you reach Uscio in about 30 minutes: a charming village in the Ligurian hinterland, with accommodation and places to eat."
+        }
+      ]
+    },
+    "fr": {
+      "nome": "Tronçon 7 · De Neirone au Passo dei Casetti",
+      "descrizione": "Le tronçon de liaison à travers la Fontanabuona : la descente vers Gattorna, la petite passerelle en bois sur la Lavagna et la remontée par Cassanesi jusqu'au Passo dei Casetti (550 m), avec son pont caractéristique au-dessus du sentier.",
+      "segnavia": "Route goudronnée jusqu'à Gattorna (sans balisage), puis « barre rouge et cercle rouge », enfin balisage blanc et rouge de l'Itinerario Storico Colombiano",
+      "passi": [
+        {
+          "titolo": "De Neirone à Gattorna",
+          "testo": "Depuis le carrefour principal de Neirone (parking à côté de l'église), on descend par la route goudronnée jusqu'à Gattorna en 50 minutes environ. Le sentier de l'Itinerario dei Feudi Fliscani, bien plus séduisant, n'est malheureusement pas praticable pour le moment."
+        },
+        {
+          "titolo": "La petite passerelle en bois",
+          "testo": "Depuis l'église de Gattorna, descends jusqu'à la route principale le long du torrent Lavagna et remonte-la sur quelques centaines de mètres : entre la Pasticceria Torre et le bar La Ciuccheria, une ruelle à gauche descend vers la petite passerelle en bois sur le torrent. C'est ici que commence le balisage « barre rouge et cercle rouge ». Si la passerelle est fermée pour entretien, fais le tour par le pont goudronné du Bar Beneitin et rattrape le balisage qui monte sur la gauche."
+        },
+        {
+          "titolo": "Par Cassanesi au Passo dei Casetti",
+          "testo": "Après le pont, garde la gauche (évite la montée immédiate vers Pian dei Preti), traverse l'ancien petit pont en pierre sur le Rio Rosso et suis le sentier qui, en coupant plusieurs fois la route, traverse Cassanesi et mène au Passo dei Casetti (550 m, 1 h 40 depuis Gattorna). Pendant les 10 dernières minutes, on marche sous le balisage blanc et rouge de l'Itinerario Storico Colombiano, à prendre à droite."
+        },
+        {
+          "titolo": "Avertissement près de Cassanesi",
+          "testo": "La commune de Tribogna (arrêté n° 19 du 16 décembre 2025) interdit le passage sur le tronçon longeant la maison en ruine près de Cassanesi. Si l'arrêté est toujours en vigueur : redescends de quelques centaines de mètres jusqu'au dernier croisement avec la route goudronnée, prends-la (à gauche en montant) et reprends le balisage après la trattoria Madia, sur la droite."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "Colle Caprile",
+          "testo": "Depuis le Passo dei Casetti, le balisage de la Via del Mare (parcouru à rebours) mène en 40 minutes à Colle Caprile, où l'on trouve restauration et hébergement (Albergo Caprile)."
+        },
+        {
+          "titolo": "Uscio",
+          "testo": "Depuis le Passo dei Casetti, en passant sous la petite passerelle et en suivant le sentier de l'Itinerario Storico Colombiano, on arrive à Uscio en 30 minutes environ : un charmant village de l'arrière-pays ligure, avec possibilités d'hébergement et de restauration."
+        }
+      ]
+    }
+  }
 }

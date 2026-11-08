@@ -1,4 +1,5 @@
 import { getCollection } from 'astro:content';
+import type { Lingua } from './i18n';
 
 /** Modello dati condiviso da mappa, planner e pagine. */
 
@@ -12,6 +13,8 @@ export interface Punto {
   acquaPotabile: boolean;
   appoggio: boolean;
   quota?: number;
+  lat?: number;
+  lon?: number;
 }
 
 export interface Tappa {
@@ -48,11 +51,20 @@ export interface Percorso {
   itinerari: Itinerario[];
 }
 
-export async function caricaPercorso(): Promise<Percorso> {
+/**
+ * Carica punti, tappe e itinerari. Con una lingua diversa dall'italiano,
+ * i testi vengono presi dal campo «traduzioni» di ogni file (se presente).
+ */
+export async function caricaPercorso(lingua: Lingua = 'it'): Promise<Percorso> {
+  const tradotto = <T extends object>(data: T & { traduzioni?: Record<string, Partial<T>> }): T => {
+    const { traduzioni, ...resto } = data;
+    const tr = lingua === 'it' ? undefined : traduzioni?.[lingua];
+    return { ...(resto as T), ...(tr ?? {}) };
+  };
   const punti = (await getCollection('punti')).map((p) => ({ id: p.id, ...p.data }));
-  const tappe = (await getCollection('tappe')).map((t) => ({ id: t.id, ...t.data }));
+  const tappe = (await getCollection('tappe')).map((t) => ({ id: t.id, ...tradotto(t.data) }));
   const itinerari = (await getCollection('itinerari'))
-    .map((i) => ({ id: i.id, ...i.data }))
+    .map((i) => ({ id: i.id, ...tradotto(i.data) }))
     .sort((a, b) => a.ordine - b.ordine);
   return { punti, tappe, itinerari };
 }

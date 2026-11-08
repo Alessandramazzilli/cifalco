@@ -1,0 +1,27 @@
+---
+/**
+ * 3.e Organizzare il viaggio: il testo, con il walking tracker (dopo «Quanto
+ * dura la Via del Cifalco?») e la mappa GPX (in «Mappa e traccia GPX»),
+ * sincronizzati tra loro.
+ */
+import PaginaSezione from '../layouts/PaginaSezione.astro';
+import WalkPlanner from '../components/WalkPlanner.astro';
+import MappaGpx from '../components/MappaGpx.astro';
+import { testo, dividi, anteprima } from '../lib/testi';
+import { linguaDa } from '../lib/i18n';
+
+const lingua = linguaDa(Astro.url.pathname);
+const html = testo('fare-il-cammino/organizzare-il-viaggio', lingua);
+const [primaDelTracker, resto] = dividi(html, 'WALKING-TRACKER');
+const [primaDellaMappa, dopoLaMappa] = dividi(resto, 'MAPPA-GPX');
+---
+
+<PaginaSezione descrizione={anteprima(html, 155)} testo={html}>
+  <Fragment set:html={primaDelTracker} />
+  <div class="tracker">
+    <WalkPlanner />
+  </div>
+  <Fragment set:html={primaDellaMappa} />
+  <MappaGpx />
+  <Fragment set:html={dopoLaMappa} />
+</PaginaSezione>

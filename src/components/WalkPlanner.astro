@@ -7,10 +7,17 @@
  * «via-cifalco:itinerario».
  */
 import { caricaPercorso } from '../lib/percorso';
+import { LOCALE, fmt, linguaDa, localizza, t } from '../lib/i18n';
 
-const percorso = await caricaPercorso();
+const lingua = linguaDa(Astro.url.pathname);
+const T = t(lingua).planner;
+const percorso = await caricaPercorso(lingua);
 
 const datiPlanner = {
+  t: T,
+  locale: LOCALE[lingua],
+  lingua,
+  linkAppoggio: localizza('/fare-il-cammino/punti-di-appoggio', lingua),
   itinerari: percorso.itinerari.map((i) => ({
     id: i.id,
     nome: i.nome,
@@ -50,21 +57,21 @@ const datiPlanner = {
 };
 ---
 
-<section class="planner" aria-label="Pianifica la tua camminata">
+<section class="planner" aria-label={T.aria}>
   <form class="planner__modulo card">
-    <h3 class="planner__titolo">Costruisci il tuo piano</h3>
+    <h3 class="planner__titolo">{T.titolo}</h3>
     <p class="planner__sottotitolo">
-      Cinque scelte, nessun calcolo da fare: al resto pensiamo noi.
+      {T.sottotitolo}
     </p>
 
     <div class="planner__campi">
       <div class="planner__campo planner__campo--largo">
-        <label for="pl-itinerario">Itinerario</label>
+        <label for="pl-itinerario">{T.itinerario}</label>
         <select id="pl-itinerario" name="itinerario">
           {
             percorso.itinerari.map((i) => (
               <option value={i.id}>
-                {i.nome}, {i.sottotitolo.toLowerCase()}
+                {i.nome}, {i.sottotitolo.charAt(0).toLowerCase() + i.sottotitolo.slice(1)}
               </option>
             ))
           }
@@ -72,38 +79,38 @@ const datiPlanner = {
       </div>
 
       <div class="planner__campo">
-        <label for="pl-partenza">Parti da</label>
+        <label for="pl-partenza">{T.partiDa}</label>
         <select id="pl-partenza" name="partenza"></select>
       </div>
 
       <div class="planner__campo">
-        <label for="pl-arrivo">Arrivi a</label>
+        <label for="pl-arrivo">{T.arriviA}</label>
         <select id="pl-arrivo" name="arrivo"></select>
       </div>
 
       <div class="planner__campo">
-        <label for="pl-senso">Senso di percorrenza</label>
+        <label for="pl-senso">{T.senso}</label>
         <select id="pl-senso" name="senso">
-          <option value="classico">Classico (verso Portofino)</option>
-          <option value="inverso">Inverso</option>
+          <option value="classico">{T.classico}</option>
+          <option value="inverso">{T.inverso}</option>
         </select>
       </div>
 
       <div class="planner__campo">
-        <label for="pl-passo">Il tuo passo</label>
+        <label for="pl-passo">{T.passo}</label>
         <select id="pl-passo" name="passo">
-          <option value="1.25">Tranquillo, prime uscite, famiglie</option>
-          <option value="1" selected>Medio, cammino abitualmente</option>
-          <option value="0.85">Allenato, montagna frequente</option>
+          <option value="1.25">{T.passoLento}</option>
+          <option value="1" selected>{T.passoMedio}</option>
+          <option value="0.85">{T.passoVeloce}</option>
         </select>
       </div>
 
       <div class="planner__campo">
-        <label for="pl-tempo">Ore di cammino al giorno</label>
+        <label for="pl-tempo">{T.ore}</label>
         <select id="pl-tempo" name="tempo">
-          <option value="4">Fino a 4 ore</option>
-          <option value="6" selected>Fino a 6 ore</option>
-          <option value="8">Fino a 8 ore</option>
+          <option value="4">{fmt(T.fino, { n: 4 })}</option>
+          <option value="6" selected>{fmt(T.fino, { n: 6 })}</option>
+          <option value="8">{fmt(T.fino, { n: 8 })}</option>
         </select>
       </div>
     </div>
@@ -111,36 +118,37 @@ const datiPlanner = {
 
   <div class="planner__risultato">
     <div class="planner__intestazione">
-      <h3>Il tuo piano</h3>
+      <h3>{T.piano}</h3>
       <button type="button" class="bottone bottone--contorno planner__scarica" data-azione="scarica">
-        Scarica il piano (PDF)
+        {T.scarica}
       </button>
     </div>
 
     <dl class="planner__dati">
-      <div class="dato"><dt>Distanza</dt><dd data-esito="distanza"></dd></div>
-      <div class="dato"><dt>Salita</dt><dd data-esito="salita"></dd></div>
-      <div class="dato"><dt>Discesa</dt><dd data-esito="discesa"></dd></div>
-      <div class="dato"><dt>Tempo stimato</dt><dd data-esito="tempo"></dd></div>
-      <div class="dato"><dt>Difficoltà</dt><dd data-esito="difficolta"></dd></div>
+      <div class="dato"><dt>{T.distanza}</dt><dd data-esito="distanza"></dd></div>
+      <div class="dato"><dt>{T.salita}</dt><dd data-esito="salita"></dd></div>
+      <div class="dato"><dt>{T.discesa}</dt><dd data-esito="discesa"></dd></div>
+      <div class="dato"><dt>{T.tempo}</dt><dd data-esito="tempo"></dd></div>
+      <div class="dato"><dt>{T.difficolta}</dt><dd data-esito="difficolta"></dd></div>
     </dl>
 
     <div class="planner__segnavia">
-      <strong>Segnavia da seguire, tratta per tratta:</strong>
+      <strong>{T.segnaviaTratte}</strong>
       <ul data-esito="segnavia"></ul>
     </div>
 
     <p class="planner__direzione" data-esito="direzione"></p>
+    <p class="planner__misure-gpx" data-esito="misure-gpx" hidden></p>
+    <p class="planner__vai-mappa"><a href="#mappa-gpx">{T.vaiMappa}</a></p>
 
     <div class="planner__avviso" data-esito="avviso" role="status" hidden></div>
 
     <div data-esito="giornate"></div>
 
     <section class="planner__tappe" aria-label="Le tappe in sequenza">
-      <h4>Le tappe, una alla volta</h4>
+      <h4>{T.tappeUna}</h4>
       <p class="planner__nota-inverso" data-esito="nota-inverso" hidden>
-        Le indicazioni sono descritte nel senso classico: in senso inverso
-        usale come riferimento dei luoghi che attraversi, in ordine contrario.
+        {T.notaInverso}
       </p>
       <article class="planner__passo card" aria-live="polite">
         <p class="occhiello" data-esito="passo-tappa"></p>
@@ -150,11 +158,11 @@ const datiPlanner = {
       </article>
       <div class="planner__navigazione">
         <button type="button" class="bottone bottone--contorno" data-azione="indietro">
-          ← Indietro
+          {T.indietro}
         </button>
         <span class="planner__contatore" data-esito="passo-contatore"></span>
         <button type="button" class="bottone bottone--pieno" data-azione="avanti">
-          Avanti →
+          {T.avanti}
         </button>
       </div>
     </section>
@@ -171,10 +179,20 @@ const datiPlanner = {
     align-items: start;
   }
 
-  @media (max-width: 56rem) {
+  @media (max-width: 80rem) {
     .planner {
       grid-template-columns: 1fr;
     }
+  }
+
+  .planner__misure-gpx {
+    font-weight: 650;
+    color: var(--acqua-scura);
+    margin: 0 0 0.5rem;
+  }
+  .planner__vai-mappa {
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
   }
 
   .planner__titolo {
@@ -435,13 +453,19 @@ const datiPlanner = {
       tempo: sezione.querySelector<HTMLSelectElement>('#pl-tempo')!,
     };
 
+    const T = (dati as unknown as { t: Record<string, any> }).t;
+    const { locale, linkAppoggio } = dati as unknown as { locale: string; linkAppoggio: string };
+    const fmt = (s: string, v: Record<string, string | number>) =>
+      s.replace(/\{(\w+)\}/g, (_, k) => String(v[k] ?? ''));
+    const num = (n: number, cifre = 1) => n.toLocaleString(locale, { maximumFractionDigits: cifre });
+
     const esito = (nome: string) =>
       sezione.querySelector<HTMLElement>(`[data-esito="${nome}"]`)!;
 
     const ETICHETTA_DIFFICOLTA: Record<string, string> = {
-      facile: 'Facile',
-      medio: 'Medio',
-      impegnativo: 'Impegnativo',
+      facile: T.facile,
+      medio: T.medio,
+      impegnativo: T.impegnativo,
     };
 
     function formattaOre(ore: number): string {
@@ -503,7 +527,7 @@ const datiPlanner = {
     }[] = [];
     let passoCorrente = 0;
     let htmlPiano = ''; // il piano corrente in HTML, pronto da stampare in PDF
-    let titoloPiano = 'Piano di cammino';
+    let titoloPiano = T.pianoCammino as string;
 
     const bottoneIndietro = sezione.querySelector<HTMLButtonElement>('[data-azione="indietro"]')!;
     const bottoneAvanti = sezione.querySelector<HTMLButtonElement>('[data-azione="avanti"]')!;
@@ -544,17 +568,17 @@ const datiPlanner = {
       esito('passo-titolo').textContent = passo.titolo;
       esito('passo-testo').textContent = passo.testo;
       esito('passo-contatore').textContent =
-        `Passo ${passoCorrente + 1} di ${passi.length}`;
+        fmt(T.contatore, { n: passoCorrente + 1, tot: passi.length });
 
       const servizi = serviziDiPasso(passo);
       const badge: string[] = [];
       if (servizi.acqua.length)
         badge.push(
-          `<span class="planner__servizio planner__servizio--acqua">${ICONA_ACQUA} Acqua: ${servizi.acqua.join(', ')}</span>`
+          `<span class="planner__servizio planner__servizio--acqua">${ICONA_ACQUA} ${T.acqua}: ${servizi.acqua.join(', ')}</span>`
         );
       if (servizi.appoggi.length)
         badge.push(
-          `<span class="planner__servizio planner__servizio--appoggio">${ICONA_APPOGGIO} Punto d’appoggio: ${servizi.appoggi.join(', ')}</span>`
+          `<span class="planner__servizio planner__servizio--appoggio">${ICONA_APPOGGIO} ${T.appoggio}: ${servizi.appoggi.join(', ')}</span>`
         );
       esito('passo-servizi').innerHTML = badge.join('');
 
@@ -588,7 +612,7 @@ const datiPlanner = {
       const discesa = tappe.reduce((s, t) => s + (inverso ? t.salitaM : t.discesaM), 0);
       const ore = tappe.reduce((s, t) => s + t.oreBase, 0) * fattore;
 
-      esito('distanza').textContent = `${distanza.toLocaleString('it-IT', { maximumFractionDigits: 1 })} km`;
+      esito('distanza').textContent = `${num(distanza)} km`;
       esito('salita').textContent = `${salita} m`;
       esito('discesa').textContent = `${discesa} m`;
       esito('tempo').textContent = formattaOre(ore);
@@ -605,8 +629,8 @@ const datiPlanner = {
       const partenza = inverso ? prima.a : prima.da;
       const arrivo = inverso ? ultima.da : ultima.a;
       esito('direzione').textContent = itinerario.anello
-        ? `Anello con partenza e ritorno a ${partenza}. Il tempo stimato non comprende le soste.`
-        : `Da ${partenza} a ${arrivo}, in senso ${inverso ? 'inverso' : 'classico'}. Il tempo stimato non comprende le soste.`;
+        ? fmt(T.anello, { da: partenza })
+        : fmt(T.direzione, { da: partenza, a: arrivo, senso: inverso ? T.sensoInverso : T.sensoClassico });
 
       // Suddivisione in giornate, rispettando le ore disponibili al giorno.
       const giornate: { tappe: TappaDati[]; ore: number }[] = [];
@@ -631,7 +655,7 @@ const datiPlanner = {
             const g1 = giornata.tappe[giornata.tappe.length - 1];
             const da = inverso ? g0.a : g0.da;
             const a = inverso ? g1.da : g1.a;
-            return `<li><strong>Giorno ${i + 1}:</strong> da ${da} a ${a} (${formattaOre(giornata.ore)})</li>`;
+            return `<li><strong>${fmt(T.giorno, { n: i + 1 })}:</strong> ${fmt(T.daA, { da, a })} (${formattaOre(giornata.ore)})</li>`;
           })
           .join('');
         blocchoGiornate.innerHTML = `<ol class="planner__giornate">${voci}</ol>`;
@@ -642,10 +666,10 @@ const datiPlanner = {
       const avviso = esito('avviso');
       if (giornataLunga) {
         avviso.innerHTML =
-          '<p><strong>Giornata lunga per il tempo che hai indicato.</strong> Parti presto al mattino, oppure scegli un tratto più corto o un passo più realistico: la Via resta lì, non scappa.</p>';
+          `<p>${T.giornataLunga}</p>`;
         avviso.hidden = false;
       } else if (giornate.length > 1) {
-        avviso.innerHTML = `<p><strong>Servono ${giornate.length} giorni con le ore che hai a disposizione.</strong> Le notti si organizzano nei <a href="/itinerario#appoggio">punti d’appoggio</a> lungo la Via.</p>`;
+        avviso.innerHTML = `<p>${fmt(T.servonoGiorni, { n: giornate.length, link: linkAppoggio })}</p>`;
         avviso.hidden = false;
       } else {
         avviso.hidden = true;
@@ -667,21 +691,14 @@ const datiPlanner = {
 
       // Zaino: base + aggiunte legate a durata, quota e difficoltà.
       // Non mostrato qui (sta in «Informazioni pratiche»): serve solo al PDF.
-      const zaino = [
-        'Scarpe da trekking già rodate',
-        'Borraccia da almeno 1 litro',
-        'Guscio antipioggia',
-        'Cappello e crema solare',
-        'Telefono carico (e mappa scaricata: sul sentiero il campo va e viene)',
-        'Qualcosa da mangiare lungo il cammino',
-      ];
-      if (ore > 4) zaino.splice(2, 0, 'Scorta d’acqua: almeno 1,5 litri a persona');
+      const zaino: string[] = [...T.zaino];
+      if (ore > 4) zaino.splice(2, 0, T.zainoAcqua);
       if (tappe.some((t) => t.punti.some((id) => (dati.punti[id]?.quota ?? 0) >= 1000)))
-        zaino.push('Uno strato caldo in più: i crinali sopra i mille metri sono ventosi anche d’estate');
+        zaino.push(T.zainoCaldo);
       if (itinerario.difficolta === 'impegnativo')
-        zaino.push('Bastoncini da trekking per le lunghe discese');
+        zaino.push(T.zainoBastoncini);
       if (giornate.length > 1)
-        zaino.push('Sacco lenzuolo e un ricambio per le notti nei punti d’appoggio');
+        zaino.push(T.zainoSacco);
 
       // Stepper.
       esito('nota-inverso').hidden = !inverso;
@@ -698,29 +715,29 @@ const datiPlanner = {
       mostraPasso();
 
       // Prepara il piano completo in HTML, pronto da stampare/salvare in PDF.
-      const senso = inverso ? 'inverso' : 'classico';
+      const senso = inverso ? T.sensoInverso : T.sensoClassico;
       const esc = (s: string) =>
         s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       titoloPiano = `${itinerario.nome} (${itinerario.anello ? partenza : partenza + ' › ' + arrivo})`;
 
       const h: string[] = [];
       h.push(`<h1>L’Antica Via del Cifalco</h1>`);
-      h.push(`<p class="sottotitolo">Piano di cammino: <strong>${esc(itinerario.nome)}</strong></p>`);
+      h.push(`<p class="sottotitolo">${T.pdfSottotitolo}: <strong>${esc(itinerario.nome)}</strong></p>`);
       h.push(
         `<p>${
           itinerario.anello
-            ? `Anello con partenza e ritorno a ${esc(partenza)}.`
-            : `Da ${esc(partenza)} a ${esc(arrivo)} (senso ${senso}).`
+            ? fmt(T.pdfAnello, { da: esc(partenza) })
+            : fmt(T.pdfDirezione, { da: esc(partenza), a: esc(arrivo), senso })
         }</p>`
       );
-      h.push('<h2>In sintesi</h2><ul>');
-      h.push(`<li>Distanza stimata: ${distanza.toLocaleString('it-IT', { maximumFractionDigits: 1 })} km</li>`);
-      h.push(`<li>Salita: ${salita} m &nbsp;·&nbsp; Discesa: ${discesa} m</li>`);
-      h.push(`<li>Tempo di cammino (soste escluse): ${formattaOre(ore)}</li>`);
-      h.push(`<li>Difficoltà: ${ETICHETTA_DIFFICOLTA[itinerario.difficolta]}</li>`);
+      h.push(`<h2>${T.pdfSintesi}</h2><ul>`);
+      h.push(`<li>${T.pdfDistanza}: ${num(distanza)} km</li>`);
+      h.push(`<li>${T.salita}: ${salita} m &nbsp;·&nbsp; ${T.discesa}: ${discesa} m</li>`);
+      h.push(`<li>${T.pdfTempo}: ${formattaOre(ore)}</li>`);
+      h.push(`<li>${T.difficolta}: ${ETICHETTA_DIFFICOLTA[itinerario.difficolta]}</li>`);
       h.push('</ul>');
 
-      h.push('<h2>Segnavia, tratta per tratta</h2><ul>');
+      h.push(`<h2>${T.pdfSegnavia}</h2><ul>`);
       tappe.forEach((t) => {
         const tratto = inverso ? `${t.a} › ${t.da}` : `${t.da} › ${t.a}`;
         h.push(`<li><strong>${esc(tratto)}:</strong> ${esc(t.segnavia)}</li>`);
@@ -728,25 +745,25 @@ const datiPlanner = {
       h.push('</ul>');
 
       if (giornate.length > 1) {
-        h.push('<h2>Suddivisione in giornate</h2><ol>');
+        h.push(`<h2>${T.pdfGiornate}</h2><ol>`);
         giornate.forEach((g) => {
           const da = inverso ? g.tappe[0].a : g.tappe[0].da;
           const a = inverso ? g.tappe[g.tappe.length - 1].da : g.tappe[g.tappe.length - 1].a;
-          h.push(`<li>Da ${esc(da)} a ${esc(a)} (${formattaOre(g.ore)})</li>`);
+          h.push(`<li>${fmt(T.daA, { da: esc(da), a: esc(a) })} (${formattaOre(g.ore)})</li>`);
         });
         h.push('</ol>');
       }
 
-      h.push('<h2>Acqua lungo il tratto</h2><ul>');
+      h.push(`<h2>${T.pdfAcqua}</h2><ul>`);
       if (acquaNomi.length) acquaNomi.forEach((n) => h.push(`<li>${esc(n)}</li>`));
-      else h.push('<li>Nessuna fonte: parti con tutta l’acqua che ti serve.</li>');
+      else h.push(`<li>${T.pdfNessunaAcqua}</li>`);
       h.push('</ul>');
 
-      h.push('<h2>Cosa portare</h2><ul>');
+      h.push(`<h2>${T.pdfPortare}</h2><ul>`);
       zaino.forEach((v) => h.push(`<li>${esc(v)}</li>`));
       h.push('</ul>');
 
-      h.push('<h2>Le tappe, passo per passo</h2>');
+      h.push(`<h2>${T.pdfTappe}</h2>`);
       let tappaTitoloPrec = '';
       passi.forEach((p) => {
         if (p.tappa !== tappaTitoloPrec) {
@@ -756,28 +773,53 @@ const datiPlanner = {
         h.push(`<p class="passo"><strong>${esc(p.titolo)}.</strong> ${esc(p.testo)}</p>`);
         const s = serviziDiPasso(p);
         const note: string[] = [];
-        if (s.acqua.length) note.push(`Acqua: ${s.acqua.join(', ')}`);
-        if (s.appoggi.length) note.push(`Punto d’appoggio: ${s.appoggi.join(', ')}`);
+        if (s.acqua.length) note.push(`${T.acqua}: ${s.acqua.join(', ')}`);
+        if (s.appoggi.length) note.push(`${T.appoggio}: ${s.appoggi.join(', ')}`);
         if (note.length) h.push(`<p class="servizi">${esc(note.join(' · '))}</p>`);
       });
       if (inverso) {
         h.push(
-          '<p class="nb">Le indicazioni passo per passo sono descritte nel senso classico; in senso inverso usale come riferimento dei luoghi, in ordine contrario.</p>'
+          `<p class="nb">${T.pdfNb}</p>`
         );
       }
-      h.push('<p class="chiusura">Buon cammino. La montagna chiede rispetto, non coraggio.<br>anticaviadelcifalco.it</p>');
+      h.push(`<p class="chiusura">${T.pdfChiusura}<br>anticaviadelcifalco.netlify.app</p>`);
       htmlPiano = h.join('\n');
 
       // Dillo anche alla mappa, se c'è. Il rinvio di un tick garantisce che
       // al primo calcolo lo script della mappa abbia già registrato l'ascolto.
+      // La mappa GPX evidenzia lo stesso tratto (dal primo all'ultimo punto,
+      // nell'ordine di cammino) e risponde con le misure reali della traccia.
+      const puntiOrdinati = tappe.flatMap((t) => (inverso ? [...t.punti].reverse() : t.punti));
+      esito('misure-gpx').hidden = true;
       setTimeout(() =>
         window.dispatchEvent(
           new CustomEvent('via-cifalco:itinerario', {
-            detail: { id: itinerario.id },
+            detail: {
+              id: itinerario.id,
+              da: puntiOrdinati[0],
+              a: puntiOrdinati[puntiOrdinati.length - 1],
+              daNome: partenza,
+              aNome: arrivo,
+              senso: inverso ? 'inverso' : 'classico',
+              punti: [...new Set(puntiOrdinati)],
+            },
           })
         )
       );
     }
+
+    // Misure lette dalla traccia GPX (se la mappa è presente): affiancano
+    // le stime del planner, che restano il riferimento per i tempi.
+    window.addEventListener('via-cifalco:misure', (e) => {
+      const m = (e as CustomEvent).detail as { km: number; salita: number; discesa: number } | null;
+      const riga = esito('misure-gpx');
+      if (!m) {
+        riga.hidden = true;
+        return;
+      }
+      riga.textContent = fmt(T.misureGpx, { km: num(m.km), salita: num(Math.round(m.salita), 0), discesa: num(Math.round(m.discesa), 0) });
+      riga.hidden = false;
+    });
 
     campo.itinerario.addEventListener('change', () => {
       aggiornaTratto();
@@ -813,7 +855,7 @@ const datiPlanner = {
         const w = window.open('', '_blank');
         if (!w) return;
         w.document.write(
-          `<!doctype html><html lang="it"><head><meta charset="utf-8">` +
+          `<!doctype html><html lang="${document.documentElement.lang}"><head><meta charset="utf-8">` +
             `<title>${titoloPiano}</title><style>${stiliStampa}</style></head>` +
             `<body>${htmlPiano}</body></html>`
         );

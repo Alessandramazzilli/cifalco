@@ -1,0 +1,14 @@
+---
+/**
+ * Le voci a lettera di «Fare il cammino», «Approfondimenti» e «Intorno alla
+ * Via» (italiano). «Organizzare il viaggio» ha una pagina a parte.
+ */
+import Voce from '../../viste/Voce.astro';
+import { pagineVoci } from '../../lib/menu';
+
+export function getStaticPaths() {
+  return pagineVoci().map(({ sezione, voce, nome }) => ({ params: { sezione, voce }, props: { nome } }));
+}
+---
+
+<Voce nome={Astro.props.nome} />

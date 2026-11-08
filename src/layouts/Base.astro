@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { LINGUE, LOCALE, linguaDa, localizza, senzaLingua, t } from '../lib/i18n';
 
 interface Props {
   titolo: string;
@@ -14,10 +15,12 @@ const titoloCompleto =
     ? titolo
     : `${titolo} · L’Antica Via del Cifalco`;
 const urlCanonico = new URL(Astro.url.pathname, Astro.site);
+const lingua = linguaDa(Astro.url.pathname);
+const base = senzaLingua(Astro.url.pathname);
 ---
 
 <!doctype html>
-<html lang="it">
+<html lang={lingua}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,7 +33,8 @@ const urlCanonico = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:title" content={titoloCompleto} />
     <meta property="og:description" content={descrizione} />
     <meta property="og:url" content={urlCanonico} />
-    <meta property="og:locale" content="it_IT" />
+    <meta property="og:locale" content={LOCALE[lingua].replace('-', '_')} />
+    {LINGUE.map((l) => <link rel="alternate" hreflang={l} href={new URL(localizza(base, l), Astro.site)} />)}
     <meta property="og:site_name" content="L’Antica Via del Cifalco" />
     <meta name="generator" content={Astro.generator} />
     <script>
@@ -43,7 +47,7 @@ const urlCanonico = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body>
-    <a class="salta-al-contenuto" href="#contenuto">Salta al contenuto</a>
+    <a class="salta-al-contenuto" href="#contenuto">{t(lingua).saltaContenuto}</a>
     <Header />
     <main id="contenuto">
       <slot />

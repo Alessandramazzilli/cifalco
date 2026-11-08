@@ -1,0 +1,10 @@
+---
+/** Ingresso delle sezioni 3, 4 e 5 (italiano). */
+import IndiceSezione from '../../viste/IndiceSezione.astro';
+
+export function getStaticPaths() {
+  return ['fare-il-cammino', 'approfondimenti', 'intorno'].map((sezione) => ({ params: { sezione } }));
+}
+---
+
+<IndiceSezione href={`/${Astro.params.sezione}`} />

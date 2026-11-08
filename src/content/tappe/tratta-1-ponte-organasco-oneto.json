@@ -22,5 +22,45 @@
       "titolo": "Da Cerignale a Oneto",
       "testo": "Quaranta minuti fino a Oneto, venti dei quali su asfaltata. In alternativa, per saltare Cerignale e risparmiare tempo (perdendo però l'appoggio dell'Albergo del Pino): segnavia «tre pallini gialli» per Abrà, La Serra, Oneto, che incrocia due volte l'asfaltata e arriva a Oneto in circa 45 minuti da Ponte Organasco."
     }
-  ]
+  ],
+  "traduzioni": {
+    "en": {
+      "nome": "Section 1 · Ponte Organasco, Cerignale, Oneto",
+      "descrizione": "The start of the Via: from Ponte Organasco (457 m) you climb to Cerignale (725 m) in an hour, and from there, on CAI trail 177, you reach Oneto (811 m) in forty minutes, twenty of them on a paved road.",
+      "segnavia": "“Anello dei Borghi” (coming soon) as far as Cerignale, then CAI trail 177",
+      "passi": [
+        {
+          "titolo": "Setting off from the Locanda Rosa",
+          "testo": "From the Locanda Rosa, walk a few metres along the paved road towards Genova. On the left a wide cart track begins: after a few metres you reach a fountain where three ways meet. Take the leftmost one, which first climbs to Carisasca and Castello."
+        },
+        {
+          "titolo": "The climb to Cerignale",
+          "testo": "An hour of climbing up to Cerignale. In the village, take CAI trail 177 on the right, just before reaching the Albergo del Pino."
+        },
+        {
+          "titolo": "From Cerignale to Oneto",
+          "testo": "Forty minutes to Oneto, twenty of them on a paved road. Alternatively, to skip Cerignale and save time (though losing the Albergo del Pino as a base): follow the “three yellow dots” waymark via Abrà and La Serra to Oneto; it crosses the paved road twice and reaches Oneto in about 45 minutes from Ponte Organasco."
+        }
+      ]
+    },
+    "fr": {
+      "nome": "Tronçon 1 · Ponte Organasco, Cerignale, Oneto",
+      "descrizione": "Le départ de la Via : de Ponte Organasco (457 m), on monte à Cerignale (725 m) en une heure, puis, par le sentier CAI 177, on rejoint Oneto (811 m) en quarante minutes, dont vingt sur route goudronnée.",
+      "segnavia": "« Anello dei Borghi » (bientôt balisé) jusqu'à Cerignale, puis sentier CAI 177",
+      "passi": [
+        {
+          "titolo": "Départ de la Locanda Rosa",
+          "testo": "Depuis la Locanda Rosa, avance de quelques mètres sur la route goudronnée en direction de Genova. Sur la gauche commence un large chemin carrossable : quelques mètres plus loin, tu arrives à une fontaine où s'ouvre un carrefour à trois voies. Prends la voie la plus à gauche, qui monte d'abord à Carisasca et à Castello."
+        },
+        {
+          "titolo": "La montée à Cerignale",
+          "testo": "Une heure de montée jusqu'à Cerignale. Au village, prends le sentier CAI 177 sur la droite, juste avant d'arriver à l'Albergo del Pino."
+        },
+        {
+          "titolo": "De Cerignale à Oneto",
+          "testo": "Quarante minutes jusqu'à Oneto, dont vingt sur route goudronnée. Sinon, pour éviter Cerignale et gagner du temps (en renonçant toutefois à l'étape de l'Albergo del Pino) : balisage « trois points jaunes » par Abrà et La Serra jusqu'à Oneto ; il croise deux fois la route goudronnée et arrive à Oneto en 45 minutes environ depuis Ponte Organasco."
+        }
+      ]
+    }
+  }
 }

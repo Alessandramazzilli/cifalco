@@ -23,6 +23,10 @@ const punti = defineCollection({
     appoggio: z.boolean().default(false),
     // Quota in metri (facoltativa, mostrata nelle schede).
     quota: z.number().optional(),
+    // Coordinate geografiche (facoltative): servono alla mappa GPX solo se
+    // la traccia non contiene un waypoint con lo stesso nome del punto.
+    lat: z.number().optional(),
+    lon: z.number().optional(),
   }),
 });
 
@@ -58,6 +62,8 @@ const tappe = defineCollection({
         })
       )
       .default([]),
+    // Traduzioni dei testi (inglese, francese): { en: {...}, fr: {...} }.
+    traduzioni: z.record(z.string(), z.any()).optional(),
   }),
 });
 
@@ -75,6 +81,8 @@ const itinerari = defineCollection({
     ordine: z.number(),
     // true se il percorso torna al punto di partenza.
     anello: z.boolean().default(false),
+    // Traduzioni dei testi (inglese, francese): { en: {...}, fr: {...} }.
+    traduzioni: z.record(z.string(), z.any()).optional(),
   }),
 });
 

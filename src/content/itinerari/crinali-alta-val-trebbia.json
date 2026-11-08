@@ -12,5 +12,19 @@
   ],
   "giorniConsigliati": "2-3 giorni",
   "ordine": 2,
-  "anello": false
+  "anello": false,
+  "traduzioni": {
+    "en": {
+      "nome": "The ridges of the upper Val Trebbia",
+      "sottotitolo": "From Ponte Organasco to Barbagelata",
+      "descrizione": "The Apennine half of the Via: the villages of Cerignale and Oneto, Monte Tane, Monte Veri and Monte Dego, the Passo di Vallersone and the long traverse of the passes to Barbagelata, with detours to the summits of Oramara and Montarlone. Almost always above a thousand metres.",
+      "giorniConsigliati": "2-3 days"
+    },
+    "fr": {
+      "nome": "Les crêtes de la haute Val Trebbia",
+      "sottotitolo": "De Ponte Organasco à Barbagelata",
+      "descrizione": "La moitié apennine de la Via : les villages de Cerignale et d'Oneto, les monts Tane, Veri et Dego, le Passo di Vallersone et la longue traversée des cols jusqu'à Barbagelata, avec les détours vers les sommets de l'Oramara et du Montarlone. Presque toujours au-dessus de mille mètres d'altitude.",
+      "giorniConsigliati": "2-3 jours"
+    }
+  }
 }

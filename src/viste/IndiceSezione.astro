@@ -1,0 +1,55 @@
+---
+/** Pagina d'ingresso di una sezione numerata: le sue voci con le prime righe. */
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import { sezioni, SEZIONI } from '../lib/menu';
+import { testo, anteprima, nomeTesto } from '../lib/testi';
+import { linguaDa, t } from '../lib/i18n';
+
+interface Props {
+  href: string; // indirizzo italiano della sezione, es. '/fare-il-cammino'
+}
+const lingua = linguaDa(Astro.url.pathname);
+const T = t(lingua);
+const i = SEZIONI.findIndex((s) => s.href === Astro.props.href);
+const sezione = sezioni(lingua)[i];
+const FOTO: Record<string, string> = {
+  '/fare-il-cammino': '/immagini/vetta-rocca-bruna.jpg',
+  '/approfondimenti': '/immagini/rocca-bosco.jpg',
+  '/intorno': '/immagini/sentiero-pozza.jpg',
+};
+const foto = FOTO[Astro.props.href];
+const voci = sezione.voci.map((v) => ({ ...v, anteprima: anteprima(testo(nomeTesto(v.href), lingua)) }));
+---
+
+<Base titolo={sezione.titolo} descrizione={`${sezione.titolo}: ${voci.map((v) => v.titolo).join(', ')}.`}>
+  <div class="contenitore sezione">
+    <div class="duo">
+      <div>
+        <p class="occhiello">{T.nomeSito}</p>
+        <h1>{sezione.titolo}</h1>
+      </div>
+      {foto && <Foto classe="duo__foto" src={foto} alt={T.altSezione[Astro.props.href]} />}
+    </div>
+    <ol class="elenco-voci">
+      {
+        voci.map((v) => (
+          <li>
+            <a class="voce-card card" href={v.href}>
+              <span class="voce-card__lettera">{v.lettera}.</span>
+              <span class="voce-card__corpo">
+                <span class="voce-card__titolo">{v.titolo}</span>
+                <span class="voce-card__anteprima">{v.anteprima}</span>
+                {v.paragrafi && (
+                  <span class="voce-card__paragrafi">
+                    {v.paragrafi.map((p) => `${p.numero}. ${p.titolo}`).join(' · ')}
+                  </span>
+                )}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</Base>

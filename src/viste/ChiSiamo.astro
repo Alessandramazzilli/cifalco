@@ -1,0 +1,50 @@
+---
+/** 2. Chi siamo: una sola pagina con le quattro voci (a–d) come capitoli. */
+import Base from '../layouts/Base.astro';
+import Foto from '../components/Foto.astro';
+import { sezioni } from '../lib/menu';
+import { testo } from '../lib/testi';
+import { linguaDa, t } from '../lib/i18n';
+
+const lingua = linguaDa(Astro.url.pathname);
+const T = t(lingua);
+const sezione = sezioni(lingua).find((s) => s.href.endsWith('/chi-siamo'))!;
+// Ogni titolo <h2> riceve la sua lettera, come nello schema.
+let html = testo('chi-siamo/chi-siamo', lingua);
+for (const voce of sezione.voci) {
+  const id = voce.href.split('#')[1];
+  html = html.replace(
+    `<h2 id="${id}">`,
+    `<h2 id="${id}" class="titolo-voce"><span class="titolo-voce__lettera">${voce.lettera}.</span> `
+  );
+}
+---
+
+<Base titolo={sezione.titolo} descrizione={T.chiSiamoDescrizione}>
+  <section class="sezione sezione--pietra">
+    <div class="contenitore duo">
+      <div>
+        <p class="occhiello">{T.nomeSito}</p>
+        <h1>{sezione.titolo}</h1>
+        <ol class="indice-lettere">
+          {
+            sezione.voci.map((v) => (
+              <li>
+                <a href={`#${v.href.split('#')[1]}`}>
+                  <span class="indice-sezione__lettera">{v.lettera}.</span> {v.titolo}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+      <Foto classe="duo__foto" src="/immagini/faggeta.jpg" alt={T.altFaggeta} />
+    </div>
+  </section>
+
+  <div class="contenitore sezione">
+    <div class="prosa testo-sito">
+      <Fragment set:html={html} />
+    </div>
+  </div>
+</Base>

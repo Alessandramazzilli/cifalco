@@ -1,30 +1,25 @@
 ---
-// Voci del menu. Le voci con `figli` mostrano una tendina (hover/focus su
-// desktop; sotto-elenco rientrato quando il menu mobile è aperto).
-const voci = [
-  { href: '/progetto', testo: 'Il progetto' },
-  {
-    href: '/itinerario',
-    testo: 'L’itinerario',
-    figli: [
-      { href: '/itinerario/descrizione-dettagliata', testo: 'Descrizione dettagliata' },
-      { href: '/itinerario/informazioni-pratiche', testo: 'Informazioni pratiche' },
-    ],
-  },
-  { href: '/approfondimenti', testo: 'Approfondimenti' },
-  { href: '/contatti', testo: 'Contatti' },
-];
+import { sezioni } from '../lib/menu';
+import { LINGUE, NOMI_LINGUA, linguaDa, localizza, senzaLingua, t } from '../lib/i18n';
+import Bandiera from './Bandiera.astro';
 
+// Il menu segue lo schema del sito: le sezioni numerate nella barra, le
+// voci a lettera nella tendina, i paragrafi (i., ii., …) in una seconda
+// tendina che si apre passando sulla voce. Su mobile tutto diventa un
+// elenco rientrato.
 const percorsoAttuale = Astro.url.pathname.replace(/\/$/, '') || '/';
-const attiva = (href: string) => {
-  const base = href.split('#')[0].replace(/\/$/, '') || '/';
-  return percorsoAttuale === base || percorsoAttuale.startsWith(base + '/');
-};
+const lingua = linguaDa(percorsoAttuale);
+const T = t(lingua);
+const SEZIONI = sezioni(lingua);
+const home = localizza('/', lingua);
+const paginaBase = senzaLingua(percorsoAttuale);
+const inSezione = (href: string) =>
+  percorsoAttuale === href || percorsoAttuale.startsWith(href + '/');
 ---
 
 <header class="testata">
   <div class="contenitore testata__riga">
-    <a class="testata__marchio" href="/">
+    <a class="testata__marchio" href={home}>
       <img
         src="/immagini/logo-avc.png"
         alt=""
@@ -43,32 +38,46 @@ const attiva = (href: string) => {
       aria-controls="menu-principale"
     >
       <span aria-hidden="true" class="testata__icona-menu"></span>
-      Menu
+      {T.menu}
     </button>
 
-    <nav aria-label="Navigazione principale">
+    <nav aria-label={T.navPrincipale}>
       <ul id="menu-principale" class="testata__menu">
+        <li class="testata__voce">
+          <a href={home} aria-current={percorsoAttuale === home ? 'page' : undefined}>{T.home}</a>
+        </li>
         {
-          voci.map((voce) => (
-            <li class:list={['testata__voce', voce.figli && 'has-sub']}>
+          SEZIONI.map((sezione) => (
+            <li class:list={['testata__voce', sezione.voci.length > 0 && 'has-sub']}>
               <a
-                href={voce.href}
-                aria-current={percorsoAttuale === voce.href ? 'page' : undefined}
-                class:list={[attiva(voce.href) && 'attiva']}
+                href={sezione.href}
+                aria-current={percorsoAttuale === sezione.href ? 'page' : undefined}
+                class:list={[inSezione(sezione.href) && 'attiva']}
               >
-                {voce.testo}
-                {voce.figli && <span class="testata__freccia" aria-hidden="true">▾</span>}
+                {sezione.breve}
+                {sezione.voci.length > 0 && <span class="testata__freccia" aria-hidden="true">▾</span>}
               </a>
-              {voce.figli && (
+              {sezione.voci.length > 0 && (
                 <ul class="sottomenu">
-                  {voce.figli.map((figlio) => (
-                    <li>
-                      <a
-                        href={figlio.href}
-                        aria-current={percorsoAttuale === figlio.href.split('#')[0].replace(/\/$/, '') ? 'page' : undefined}
-                      >
-                        {figlio.testo}
+                  {sezione.voci.map((voce) => (
+                    <li class:list={[voce.paragrafi && 'has-sub2']}>
+                      <a href={voce.href} aria-current={percorsoAttuale === voce.href ? 'page' : undefined}>
+                        <span class="sottomenu__lettera">{voce.lettera}.</span>
+                        <span>{voce.titolo}</span>
+                        {voce.paragrafi && <span class="sottomenu__freccia" aria-hidden="true">‹</span>}
                       </a>
+                      {voce.paragrafi && (
+                        <ul class="sottomenu sottomenu--paragrafi">
+                          {voce.paragrafi.map((par) => (
+                            <li>
+                              <a href={par.href}>
+                                <span class="sottomenu__lettera">{par.numero}.</span>
+                                <span>{par.titolo}</span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -78,6 +87,26 @@ const attiva = (href: string) => {
         }
       </ul>
     </nav>
+
+    <ul class="lingue" aria-label={T.lingua}>
+      {
+        LINGUE.map((l) => (
+          <li>
+            <a
+              href={localizza(paginaBase, l)}
+              hreflang={l}
+              lang={l}
+              title={NOMI_LINGUA[l]}
+              aria-label={NOMI_LINGUA[l]}
+              aria-current={l === lingua ? 'true' : undefined}
+              class:list={['lingue__voce', l === lingua && 'lingue__voce--attiva']}
+            >
+              <Bandiera lingua={l} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </header>
 
@@ -150,7 +179,7 @@ const attiva = (href: string) => {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.25rem 1.4rem;
+    gap: 0.25rem 1.1rem;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -179,8 +208,52 @@ const attiva = (href: string) => {
     line-height: 1;
   }
 
+  /* Su desktop il nome va su due righe, per lasciare spazio a menu e bandierine. */
+  @media (min-width: 68.01rem) {
+    .testata__nome em {
+      display: block;
+    }
+    .testata__riga {
+      gap: 0.5rem 1rem;
+    }
+    .testata__menu {
+      column-gap: 0.85rem;
+      font-size: 0.95rem;
+    }
+  }
+
+  /* --- Selettore della lingua (bandierine) --- */
+  .lingue {
+    display: flex;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .lingue li {
+    margin: 0;
+  }
+  .lingue__voce {
+    display: block;
+    padding: 3px;
+    border-radius: 4px;
+    border: 1.5px solid transparent;
+    opacity: 0.65;
+    line-height: 0;
+    transition: opacity 0.15s ease;
+  }
+  .lingue__voce:hover,
+  .lingue__voce:focus-visible {
+    opacity: 1;
+  }
+  .lingue__voce--attiva {
+    opacity: 1;
+    border-color: var(--salvia);
+  }
+
   /* --- Tendina (desktop) --- */
-  .has-sub {
+  .has-sub,
+  .has-sub2 {
     position: relative;
   }
   .sottomenu {
@@ -189,29 +262,73 @@ const attiva = (href: string) => {
     padding: 0.4rem;
     position: absolute;
     top: 100%;
-    left: 0;
-    min-width: 14rem;
+    left: -0.6rem;
+    width: 21rem;
     background: var(--superficie);
     border: 1px solid var(--sabbia);
     border-radius: var(--raggio);
     box-shadow: var(--ombra);
     display: none;
+    z-index: 2;
+  }
+  /* Le ultime voci aprono la tendina verso sinistra, per restare nello schermo. */
+  .testata__voce:nth-last-child(-n + 3) > .sottomenu {
+    left: auto;
+    right: -0.6rem;
   }
   .has-sub:hover > .sottomenu,
   .has-sub:focus-within > .sottomenu {
     display: block;
   }
-  .sottomenu a {
-    display: block;
+  .testata__menu .sottomenu a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
     padding: 0.45rem 0.6rem;
     border-radius: var(--raggio);
     font-weight: 600;
+    line-height: 1.3;
   }
-  .sottomenu a:hover {
+  .sottomenu a:hover,
+  .has-sub2:hover > a,
+  .has-sub2:focus-within > a {
     background: var(--fondo-scuro);
   }
+  .sottomenu__lettera {
+    flex: 0 0 auto;
+    min-width: 1.4em;
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--terra);
+  }
+  .sottomenu__freccia {
+    margin-left: auto;
+    padding-left: 0.4rem;
+    color: var(--terra);
+  }
 
-  @media (max-width: 56rem) {
+  /* Seconda tendina: i paragrafi i., ii., … (si apre a sinistra della voce). */
+  .sottomenu--paragrafi {
+    top: -0.45rem;
+    left: auto;
+    right: calc(100% + 0.45rem);
+    width: 19rem;
+  }
+  .has-sub2:hover > .sottomenu--paragrafi,
+  .has-sub2:focus-within > .sottomenu--paragrafi {
+    display: block;
+  }
+  /* Ponte invisibile tra voce e seconda tendina: il mouse non la perde. */
+  .has-sub2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 100%;
+    width: 0.6rem;
+  }
+
+  @media (max-width: 68rem) {
     .testata__bottone-menu {
       display: flex;
     }
@@ -219,15 +336,21 @@ const attiva = (href: string) => {
       width: 100%;
       order: 3;
     }
+    .lingue {
+      margin-left: auto;
+    }
     .testata__menu {
       display: none;
       flex-direction: column;
+      flex-wrap: nowrap;
       align-items: stretch;
       gap: 0;
       width: 100%;
       padding-block: 0.5rem 1rem;
       border-top: 1px solid var(--sabbia);
       margin-top: 0.5rem;
+      max-height: calc(100vh - 5rem);
+      overflow-y: auto;
     }
     .testata__menu.aperto {
       display: flex;
@@ -237,21 +360,37 @@ const attiva = (href: string) => {
       padding: 0.55rem 0.25rem;
       font-size: 1.05rem;
     }
-    /* Su mobile la tendina è un sotto-elenco rientrato, sempre visibile */
-    .sottomenu {
+    /* Su mobile le tendine sono sotto-elenchi rientrati, sempre visibili */
+    .sottomenu,
+    .sottomenu--paragrafi,
+    .testata__voce:nth-last-child(-n + 3) > .sottomenu {
       position: static;
       display: block;
+      width: auto;
       border: none;
       box-shadow: none;
       background: none;
-      padding: 0 0 0.4rem 1rem;
-      min-width: 0;
+      padding: 0 0 0.4rem 0.9rem;
     }
-    .sottomenu a {
+    .testata__menu .sottomenu a {
       font-weight: 500;
-      padding: 0.4rem 0.25rem;
+      padding: 0.35rem 0.25rem;
     }
-    .testata__freccia {
+    .sottomenu--paragrafi a {
+      font-size: 0.95rem;
+    }
+    .testata__nome {
+      font-size: 1rem;
+    }
+    .testata__logo {
+      height: 34px;
+    }
+    .testata__bottone-menu {
+      padding: 0.3rem 0.7rem;
+    }
+    .testata__freccia,
+    .sottomenu__freccia,
+    .has-sub2::before {
       display: none;
     }
   }

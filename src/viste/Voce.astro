@@ -1,0 +1,16 @@
+---
+/** Pagina di una voce a lettera: il suo testo da src/testi/ (o en/, fr/). */
+import PaginaSezione from '../layouts/PaginaSezione.astro';
+import { testo, anteprima } from '../lib/testi';
+import { linguaDa } from '../lib/i18n';
+
+interface Props {
+  nome: string; // es. 'fare-il-cammino/premessa'
+}
+const lingua = linguaDa(Astro.url.pathname);
+const html = testo(Astro.props.nome, lingua);
+---
+
+<PaginaSezione descrizione={anteprima(html, 155)} testo={html}>
+  <Fragment set:html={html} />
+</PaginaSezione>

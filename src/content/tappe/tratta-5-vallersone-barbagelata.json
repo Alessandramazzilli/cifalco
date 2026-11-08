@@ -5,7 +5,7 @@
   "distanzaKm": 12,
   "salitaM": 350,
   "discesaM": 545,
-  "oreBase": 4,
+  "oreBase": 4.08,
   "segnavia": "«Pallino giallo pieno»",
   "descrizione": "La grande traversata dei passi: Ertola, Esola, Gifarco, il Passo del Fante e il Valico del Fregarolo, il Lago della Nave e il Passo della Rocca, poi le due cappellette e, presso il Monte Pietrabianca, la prima vista del mare, fino a Barbagelata (1115 m).",
   "punti": ["passo-di-vallersone", "lago-della-nave", "passo-della-rocca", "cappelletta-di-cardenosa", "barbagelata"],
@@ -48,5 +48,97 @@
       "titolo": "La Trattoria del Valico di Fregarolo",
       "testo": "A cinque minuti dal Passo del Fregarolo, sulla destra, si incrocia la trattoria."
     }
-  ]
+  ],
+  "traduzioni": {
+    "en": {
+      "nome": "Section 5 · From the Passo di Vallersone to Barbagelata",
+      "descrizione": "The great traverse of the passes: Ertola, Esola, Gifarco, the Passo del Fante and the Valico del Fregarolo, the Lago della Nave and the Passo della Rocca, then the two little chapels and, near Monte Pietrabianca, the first view of the sea, all the way to Barbagelata (1115 m).",
+      "segnavia": "“Solid yellow dot”",
+      "passi": [
+        {
+          "titolo": "The sequence of passes",
+          "testo": "From the Passo Vallersone, to the right, the “solid yellow dot” touches in turn the Passo Ertola (1287 m, 15 minutes), the Passo Esola (1307 m, another 15), the junction for the summit of Monte Roccabruna (30 minutes from the Esola) and the Passo Gifarco, 5 minutes later. Watch out: the Passo Gifarco is really hard to spot coming from the Esola, as the sign faces those arriving from the opposite direction."
+        },
+        {
+          "titolo": "From the Passo del Fante to the Fregarolo",
+          "testo": "The trail continues to the Passo del Fante (5 minutes from the Gifarco) and the Valico del Fregarolo (50 minutes from the Fante). Five minutes from the pass, on the right, is the Trattoria del Valico di Fregarolo."
+        },
+        {
+          "titolo": "The Lago della Nave and the Passo della Rocca",
+          "testo": "From the Fregarolo, in 1 h 10 you reach the Passo della Rocca (1250 m), passing the Lago della Nave, the hollow that freezes in winter and teems with tadpoles in May. At the pass, the waymark points right towards Aia di Gallo, Canale and Due Ponti, but leaves that route after 5 minutes to continue to the left."
+        },
+        {
+          "titolo": "The little chapels and the first view of the sea",
+          "testo": "You pass the Cappelletta di Cardenosa (in good condition, 30 minutes from the Passo della Rocca) and that of Costa Finale (in complete ruin, 50 minutes later). Between the two, near Monte Pietrabianca, you see the sea on the left for the first time."
+        },
+        {
+          "titolo": "Arrival in Barbagelata",
+          "testo": "From the Cappelletta di Costa Finale, Barbagelata (1115 m) is 30 minutes away. Pay close attention about 5 minutes after the ruins: the waymark continues on the right, on a path narrower than the main one."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "Rezzoaglio",
+          "testo": "From the Passo Ertola, descending to the left, you reach first Ertola and then Rezzoaglio (“solid yellow diamond” waymark, 50 minutes down, 1 h 10 up)."
+        },
+        {
+          "titolo": "The summit of Monte Roccabruna (1415 m)",
+          "testo": "From the junction for the summit: 15 minutes up, 10 down, “hollow yellow dot” waymark, faded in places but visible. In theory you could cut across towards the summit of the Gifarco without returning to the junction, but the starting point is unclear and the time saved is minimal."
+        },
+        {
+          "titolo": "The summit of Monte Gifarco (1380 m)",
+          "testo": "From the Passo Gifarco: an extremely steep ascent (and descent!), often slippery even on fine days. Although there are no chains, the last stretch may require using your hands. 10 minutes up and another 10 down. “Three solid yellow dots” waymark."
+        },
+        {
+          "titolo": "The Trattoria del Valico di Fregarolo",
+          "testo": "Five minutes from the Passo del Fregarolo, on the right, you come to the trattoria."
+        }
+      ]
+    },
+    "fr": {
+      "nome": "Tronçon 5 · Du Passo di Vallersone à Barbagelata",
+      "descrizione": "La grande traversée des cols : Ertola, Esola, Gifarco, le Passo del Fante et le Valico del Fregarolo, le Lago della Nave et le Passo della Rocca, puis les deux petites chapelles et, près du Monte Pietrabianca, la première vue sur la mer, jusqu'à Barbagelata (1115 m).",
+      "segnavia": "« Point jaune plein »",
+      "passi": [
+        {
+          "titolo": "La succession des cols",
+          "testo": "Depuis le Passo Vallersone, à droite, le « point jaune plein » passe successivement par le Passo Ertola (1287 m, 15 minutes), le Passo Esola (1307 m, 15 de plus), la bifurcation pour le sommet du Monte Roccabruna (30 minutes depuis l'Esola) et le Passo Gifarco, 5 minutes plus loin. Attention : le Passo Gifarco est vraiment peu visible en venant de l'Esola, car le panneau est tourné vers ceux qui arrivent en sens inverse."
+        },
+        {
+          "titolo": "Du Passo del Fante au Fregarolo",
+          "testo": "Le sentier continue jusqu'au Passo del Fante (5 minutes depuis le Gifarco) et au Valico del Fregarolo (50 minutes depuis le Fante). À cinq minutes du col, sur la droite, se trouve la Trattoria del Valico di Fregarolo."
+        },
+        {
+          "titolo": "Le Lago della Nave et le Passo della Rocca",
+          "testo": "Depuis le Fregarolo, on arrive en 1 h 10 au Passo della Rocca (1250 m) en passant le Lago della Nave, la cuvette qui gèle en hiver et grouille de têtards en mai. Au col, le balisage pointe à droite vers Aia di Gallo, Canale et Due Ponti, mais quitte cette direction après 5 minutes pour continuer à gauche."
+        },
+        {
+          "titolo": "Les petites chapelles et la première vue sur la mer",
+          "testo": "On passe la Cappelletta di Cardenosa (en bon état, 30 minutes depuis le Passo della Rocca) puis celle de Costa Finale (complètement en ruine, 50 minutes plus loin). Entre les deux, près du Monte Pietrabianca, on aperçoit pour la première fois la mer sur la gauche."
+        },
+        {
+          "titolo": "Arrivée à Barbagelata",
+          "testo": "Depuis la Cappelletta di Costa Finale, Barbagelata (1115 m) est à 30 minutes. La plus grande attention s'impose environ 5 minutes après les ruines : le balisage continue sur la droite, sur un sentier plus étroit que le chemin principal."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "Rezzoaglio",
+          "testo": "Depuis le Passo Ertola, en descendant à gauche, on arrive d'abord à Ertola puis à Rezzoaglio (balisage « losange jaune plein », 50 minutes à la descente, 1 h 10 à la montée)."
+        },
+        {
+          "titolo": "Le sommet du Monte Roccabruna (1415 m)",
+          "testo": "Depuis la bifurcation pour le sommet : 15 minutes à la montée, 10 à la descente, balisage « point jaune vide », effacé par endroits mais visible. En théorie, on pourrait couper vers le sommet du Gifarco sans revenir à la bifurcation, mais le point de départ n'est pas clair et le gain de temps est minime."
+        },
+        {
+          "titolo": "Le sommet du Monte Gifarco (1380 m)",
+          "testo": "Depuis le Passo Gifarco : montée (et descente !) extrêmement raides et souvent glissantes, même par beau temps. Bien qu'il n'y ait pas de chaînes, le dernier passage peut demander de poser les mains. 10 minutes à la montée et 10 autres à la descente. Balisage « trois points jaunes pleins »."
+        },
+        {
+          "titolo": "La Trattoria del Valico di Fregarolo",
+          "testo": "À cinq minutes du Passo del Fregarolo, sur la droite, on croise la trattoria."
+        }
+      ]
+    }
+  }
 }

@@ -1,0 +1,13 @@
+---
+import Voce from '../../../viste/Voce.astro';
+import { pagineVoci } from '../../../lib/menu';
+import { LINGUE_TRADOTTE } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  return LINGUE_TRADOTTE.flatMap((lingua) =>
+    pagineVoci().map(({ sezione, voce, nome }) => ({ params: { lingua, sezione, voce }, props: { nome } }))
+  );
+}
+---
+
+<Voce nome={Astro.props.nome} />

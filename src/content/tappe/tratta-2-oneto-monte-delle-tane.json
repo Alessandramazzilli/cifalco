@@ -28,5 +28,57 @@
       "titolo": "La vetta del Monte delle Tane",
       "testo": "Bella vetta erbosa e panoramica su tutto il Cifalco! Attacco alla sommità non segnato ma vistoso, circa 5 minuti dopo il bivio con il sentiero 179, sulla sinistra. Tempo: 10 minuti tra salita e discesa."
     }
-  ]
+  ],
+  "traduzioni": {
+    "en": {
+      "nome": "Section 2 · Oneto, Slopes of Monte delle Tane",
+      "descrizione": "A short ridge section on CAI trail 177, which at the junction with CAI 179 “dissolves” into the latter. Along the climb, the Rifugio Casermetta with its spring and an optional detour to the grassy summit of Monte delle Tane.",
+      "segnavia": "CAI trails 177 and 179",
+      "passi": [
+        {
+          "titolo": "From Oneto towards the junction with CAI 179",
+          "testo": "After 50 minutes you reach the junction with CAI trail 179. Before the junction, once past two birdwatching posts on the left, ignore a crossroads where a non-CAI trail is marked on the right (white rectangle with a central red band): carry straight on."
+        },
+        {
+          "titolo": "The Rifugio Casermetta",
+          "testo": "Just below the junction, on the left coming from Oneto, is the Rifugio Casermetta: unequipped, but with a spring. Fill your water bottles."
+        },
+        {
+          "titolo": "The slopes of Monte delle Tane",
+          "testo": "From the junction, carrying straight on, CAI 177 dissolves into CAI 179: in 5 minutes you are on the slopes of Monte delle Tane."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "The summit of Monte delle Tane",
+          "testo": "A beautiful grassy summit with a view over the whole Cifalco! The way up to the top is unmarked but obvious, about 5 minutes after the junction with trail 179, on the left. Time: 10 minutes up and down."
+        }
+      ]
+    },
+    "fr": {
+      "nome": "Tronçon 2 · Oneto, Flancs du Monte delle Tane",
+      "descrizione": "Court tronçon de crête sur le sentier CAI 177 qui, à la bifurcation avec le CAI 179, « se fond » dans ce dernier. Au fil de la montée, le Rifugio Casermetta et sa source, et un détour possible vers le sommet herbeux du Monte delle Tane.",
+      "segnavia": "Sentiers CAI 177 et 179",
+      "passi": [
+        {
+          "titolo": "D'Oneto vers la bifurcation avec le CAI 179",
+          "testo": "Au bout de 50 minutes, on atteint la bifurcation avec le sentier CAI 179. Avant la bifurcation, après deux postes d'observation des oiseaux sur la gauche, ignore un carrefour où un sentier non CAI est balisé sur la droite (rectangle blanc avec bande rouge centrale) : continue tout droit."
+        },
+        {
+          "titolo": "Le Rifugio Casermetta",
+          "testo": "Juste en dessous de la bifurcation, sur la gauche en venant d'Oneto, se trouve le Rifugio Casermetta : non équipé, mais doté d'une source. Remplis tes gourdes."
+        },
+        {
+          "titolo": "Les flancs du Monte delle Tane",
+          "testo": "À la bifurcation, en continuant tout droit, le CAI 177 se fond dans le CAI 179 : en 5 minutes, tu es sur les flancs du Monte delle Tane."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "Le sommet du Monte delle Tane",
+          "testo": "Un beau sommet herbeux avec vue sur tout le Cifalco ! L'accès au sommet n'est pas balisé mais bien visible, environ 5 minutes après la bifurcation avec le sentier 179, sur la gauche. Durée : 10 minutes aller-retour."
+        }
+      ]
+    }
+  }
 }

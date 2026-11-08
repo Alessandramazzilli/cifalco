@@ -44,5 +44,89 @@
       "titolo": "Fontanigorda (da Casanova)",
       "testo": "Dalla chiesa di Casanova, guardando la facciata, a sinistra parte una discesa (segnavia rettangolare rosso-bianco con taglio diagonale, poi croce gialla «+»). Al torrente Pescia: a destra si va al mulino di fronte allo spettacolare Ponte di Canfernasca, gioiello di architettura romana simbolo del Comune di Rovegno; a sinistra, in circa 15 minuti, al Bosco delle Fate e in altri 5 a Fontanigorda. Totale da Casanova: 25 minuti a scendere, 30 a salire."
     }
-  ]
+  ],
+  "traduzioni": {
+    "en": {
+      "nome": "Section 4 · From the slopes of Monte Dego to the Passo di Vallersone",
+      "descrizione": "From the slopes of the Dego to the Rifugio Prati di Foppiano and the Passo di Vallersone, where you pick up the “solid yellow dot” waymark that will guide you all the way to Barbagelata. All around, the finest detours: Oramara, Montarlone and the descent to Casanova.",
+      "segnavia": "CAI trail 127, then “solid yellow dot”",
+      "passi": [
+        {
+          "titolo": "The Rifugio Prati di Foppiano",
+          "testo": "From the slopes of the Dego, you reach the Rifugio Prati di Foppiano in an hour: no beds, but you can shelter and cook on site. Shortly before the hut, CAI 127 meets the “solid yellow dot” waymark: from the moment you meet it, you never leave it."
+        },
+        {
+          "titolo": "The junction after the hut",
+          "testo": "Five minutes after the hut, at a junction, keep left. (To the right, on an unmarked path, you reach the Fontana del Figliolo in 20 minutes.)"
+        },
+        {
+          "titolo": "The Passo di Vallersone",
+          "testo": "In 30 minutes from the hut you are at the Passo Vallersone, wrongly labelled “Passo Montarlone” on a stone tablet painted yellow on the right."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "The summit of Monte Oramara (1522 m)",
+          "testo": "The highest summit on the whole route. Shortly before the Rifugio Prati di Foppiano, CAI trail 127 and the “solid yellow dot” run together, until the yellow dot leaves CAI 127 on the left; the latter leads to the summit of the Oramara."
+        },
+        {
+          "titolo": "The Fontana del Figliolo",
+          "testo": "Turning right at the junction after the Rifugio Prati di Foppiano, you reach the Fontana del Figliolo in 20 minutes on an unmarked path."
+        },
+        {
+          "titolo": "The summit of Montarlone (1501 m)",
+          "testo": "It is best to carry on towards the Passo Vallersone: a few minutes before the pass, a trail marked “solid yellow square” climbs up and in about an hour leads easily to the summit, with its iconic cross and a wonderful view over the Val Trebbia and the Val d'Aveto. The direct route from the junction after the hut is neither marked nor visible: not recommended without GPS or knowledge of the route."
+        },
+        {
+          "titolo": "Casanova di Rovegno",
+          "testo": "From the Passo Vallersone, a spectacular trail (“solid yellow square”) descends to Casanova in 1 h 30, passing numerous springs and the Fontana del Vino, alternating beech woods with semi-arid areas where helichrysum grows on the rock (locals call these heights “Monte Nero”). Allow 2 h for the climb back; on the return, just after the first pasture gate, keep right on the gently rising road."
+        },
+        {
+          "titolo": "Fontanigorda (from Casanova)",
+          "testo": "From the church of Casanova, facing the façade, a descent starts on the left (red-and-white rectangular waymark with a diagonal cut, then a yellow cross “+”). At the Pescia stream: to the right you go to the mill opposite the spectacular Ponte di Canfernasca, a jewel of Roman architecture and symbol of the Comune di Rovegno; to the left, in about 15 minutes, to the Bosco delle Fate and in another 5 to Fontanigorda. Total from Casanova: 25 minutes down, 30 up."
+        }
+      ]
+    },
+    "fr": {
+      "nome": "Tronçon 4 · Des flancs du Monte Dego au Passo di Vallersone",
+      "descrizione": "Des flancs du Dego au Rifugio Prati di Foppiano et au Passo di Vallersone, où l'on rejoint le balisage « point jaune plein » qui accompagnera jusqu'à Barbagelata. Tout autour, les plus beaux détours : Oramara, Montarlone et la descente vers Casanova.",
+      "segnavia": "Sentier CAI 127, puis « point jaune plein »",
+      "passi": [
+        {
+          "titolo": "Le Rifugio Prati di Foppiano",
+          "testo": "Des flancs du Dego, tu rejoins en une heure le Rifugio Prati di Foppiano : pas de lits, mais on peut s'y abriter et cuisiner sur place. Peu avant le refuge, le CAI 127 rencontre le balisage « point jaune plein » : dès que tu le rencontres, tu ne le quittes plus."
+        },
+        {
+          "titolo": "La bifurcation après le refuge",
+          "testo": "Cinq minutes après le refuge, à une bifurcation, garde la gauche. (À droite, par un sentier non balisé, on rejoint en 20 minutes la Fontana del Figliolo.)"
+        },
+        {
+          "titolo": "Le Passo di Vallersone",
+          "testo": "En 30 minutes depuis le refuge, tu es au Passo Vallersone, indiqué à tort comme « Passo Montarlone » par une plaque peinte en jaune sur la droite."
+        }
+      ],
+      "deviazioni": [
+        {
+          "titolo": "Le sommet du Monte Oramara (1522 m)",
+          "testo": "Le plus haut sommet de tout le parcours. Peu avant le Rifugio Prati di Foppiano, le sentier CAI 127 et le « point jaune plein » cheminent ensemble, jusqu'à ce que le point jaune laisse sur la gauche le CAI 127, qui mène au sommet de l'Oramara."
+        },
+        {
+          "titolo": "La Fontana del Figliolo",
+          "testo": "En prenant à droite à la bifurcation après le Rifugio Prati di Foppiano, on arrive en 20 minutes, par un sentier non balisé, à la Fontana del Figliolo."
+        },
+        {
+          "titolo": "Le sommet du Montarlone (1501 m)",
+          "testo": "Mieux vaut continuer vers le Passo Vallersone : quelques minutes avant le col monte un sentier balisé « carré jaune plein » qui, en une heure environ, mène sans difficulté au sommet, avec sa croix emblématique et une vue merveilleuse sur le Val Trebbia et le Val d'Aveto. La voie directe depuis la bifurcation après le refuge n'est ni balisée ni visible : déconseillée sans GPS ou connaissance du tracé."
+        },
+        {
+          "titolo": "Casanova di Rovegno",
+          "testo": "Depuis le Passo Vallersone, un sentier spectaculaire (« carré jaune plein ») descend à Casanova en 1 h 30, en passant par de nombreuses sources et la Fontana del Vino, alternant hêtraies et zones semi-arides où l'immortelle pousse sur la roche (les habitants appellent ces hauteurs « Monte Nero »). Compter 2 h pour la remontée ; au retour, juste après le premier portail du pâturage, garder la droite sur la route en faux plat."
+        },
+        {
+          "titolo": "Fontanigorda (depuis Casanova)",
+          "testo": "Depuis l'église de Casanova, face à la façade, une descente part sur la gauche (balisage rectangulaire rouge et blanc barré en diagonale, puis croix jaune « + »). Au torrent Pescia : à droite, on va au moulin face au spectaculaire Ponte di Canfernasca, joyau d'architecture romaine et symbole de la commune de Rovegno ; à gauche, en 15 minutes environ, au Bosco delle Fate, puis en 5 minutes de plus à Fontanigorda. Total depuis Casanova : 25 minutes à la descente, 30 à la montée."
+        }
+      ]
+    }
+  }
 }
