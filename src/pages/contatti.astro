@@ -1,61 +1,36 @@
 ---
 import Base from '../layouts/Base.astro';
+import { EMAIL } from '../lib/menu';
 ---
 
 <Base
   titolo="Contatti"
-  descrizione="Come contattare la Compagnia del Cifalco: informazioni sul percorso, segnalazioni dal sentiero, contributi e collaborazioni."
+  descrizione={`Per scrivere all’Antica Via del Cifalco: ${EMAIL}.`}
 >
-  <section class="sezione sezione--bosco">
-    <div class="contenitore">
-      <p class="occhiello">Contatti</p>
-      <h1>Scriviamoci</h1>
-      <p class="lead">
-        Per informazioni sul percorso, segnalazioni dal sentiero, contributi
-        agli approfondimenti o collaborazioni tra cammini: siamo qui.
-        <em>(I recapiti sono segnaposto, in attesa di quelli definitivi.)</em>
-      </p>
-    </div>
-  </section>
-
   <section class="sezione">
-    <div class="contenitore">
-      <div class="griglia">
-        <article class="card recapito">
-          <h2>Posta elettronica</h2>
-          <p>Per qualsiasi domanda o proposta, il modo più semplice.</p>
-          <p>
-            <a href="mailto:info@anticaviadelcifalco.it">info@anticaviadelcifalco.it</a>
-            <em>(segnaposto)</em>
-          </p>
-        </article>
-        <article class="card recapito">
-          <h2>Telefono</h2>
-          <p>Per informazioni veloci, negli orari di ufficio.</p>
-          <p><strong>000 0000000</strong> <em>(segnaposto)</em></p>
-        </article>
-        <article class="card recapito">
-          <h2>Chi c’è dietro</h2>
-          <p>Le persone della Via e come dare una mano.</p>
-          <p>
-            <a href="/progetto#t-compagnia">La Compagnia del Cifalco</a>
-          </p>
-        </article>
-      </div>
+    <div class="contenitore prosa">
+      <p class="occhiello">L’Antica Via del Cifalco</p>
+      <h1>Contatti</h1>
+      <p class="contatti__lead">
+        Per informazioni sul cammino, segnalazioni dal sentiero, proposte di
+        collaborazione o per entrare a far parte della
+        <a href="/chi-siamo#le-persone">Compagnia del Cifalco</a>, scriveteci:
+      </p>
+      <p class="contatti__email">
+        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      </p>
     </div>
   </section>
 </Base>
 
 <style>
-  .lead {
+  .contatti__lead {
     font-size: 1.12rem;
-    max-width: var(--misura);
-    margin-bottom: 0;
   }
-  .recapito h2 {
-    font-size: 1.2rem;
-  }
-  .recapito p:last-child {
-    margin-bottom: 0;
+  .contatti__email {
+    font-family: var(--serif);
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 600;
+    overflow-wrap: anywhere;
   }
 </style>

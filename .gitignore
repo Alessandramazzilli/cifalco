@@ -11,3 +11,4 @@ npm-debug.log*
 
 # Anteprima autosufficiente generata (scripts/genera-anteprima.mjs)
 anteprima/
+__pycache__/

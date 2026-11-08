@@ -12,6 +12,8 @@ export interface Punto {
   acquaPotabile: boolean;
   appoggio: boolean;
   quota?: number;
+  lat?: number;
+  lon?: number;
 }
 
 export interface Tappa {

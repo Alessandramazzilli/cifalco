@@ -9,15 +9,19 @@ export default defineConfig({
   trailingSlash: 'never',
   // I vecchi indirizzi continuano a funzionare.
   redirects: {
-    '/percorso': '/itinerario',
-    '/mappa': '/itinerario#mappa',
-    '/info-pratiche': '/itinerario/informazioni-pratiche',
-    '/punti-di-interesse': '/itinerario#mappa',
-    '/storia-e-territorio': '/approfondimenti',
-    '/rete-di-cammini': '/approfondimenti#rete',
-    '/chi-siamo': '/progetto',
-    '/dicono-di-noi': '/approfondimenti#dicono',
+    '/progetto': '/chi-siamo',
+    '/itinerario': '/fare-il-cammino/organizzare-il-viaggio',
+    '/itinerario/descrizione-dettagliata': '/fare-il-cammino/organizzare-il-viaggio#descrizione-dettagliata',
+    '/itinerario/informazioni-pratiche': '/fare-il-cammino',
+    '/percorso': '/fare-il-cammino/organizzare-il-viaggio',
+    '/mappa': '/fare-il-cammino/organizzare-il-viaggio#mappa-gpx',
+    '/info-pratiche': '/fare-il-cammino',
+    '/punti-di-interesse': '/approfondimenti/tappe',
+    '/storia-e-territorio': '/approfondimenti/cenni-storici',
+    '/rete-di-cammini': '/intorno/altri-cammini',
+    '/dicono-di-noi': '/intorno',
   },
+
   build: {
     inlineStylesheets: 'auto',
   },

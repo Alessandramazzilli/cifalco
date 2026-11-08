@@ -1,0 +1,57 @@
+---
+/**
+ * Pagina d'ingresso di una sezione numerata: le sue voci a lettera, ognuna
+ * con le prime righe del testo.
+ */
+import Base from '../../layouts/Base.astro';
+import Foto from '../../components/Foto.astro';
+import { SEZIONI, type Sezione } from '../../lib/menu';
+import { testo, anteprima, nomeTesto } from '../../lib/testi';
+
+export function getStaticPaths() {
+  return SEZIONI.filter((s) => ['/fare-il-cammino', '/approfondimenti', '/intorno'].includes(s.href)).map(
+    (sezione) => ({ params: { sezione: sezione.href.slice(1) }, props: { sezione } })
+  );
+}
+
+const { sezione } = Astro.props as { sezione: Sezione };
+const FOTO: Record<string, { src: string; alt: string }> = {
+  '/fare-il-cammino': { src: '/immagini/vetta-rocca-bruna.jpg', alt: 'La croce di vetta sul Monte Roccabruna, lungo il crinale della Via' },
+  '/approfondimenti': { src: '/immagini/rocca-bosco.jpg', alt: 'Rocce e bosco lungo il crinale tra Trebbia e Aveto' },
+  '/intorno': { src: '/immagini/sentiero-pozza.jpg', alt: 'Un sentiero accanto a una pozza d’acqua' },
+};
+const foto = FOTO[sezione.href];
+const voci = sezione.voci.map((v) => ({ ...v, anteprima: anteprima(testo(nomeTesto(v.href))) }));
+---
+
+<Base titolo={sezione.titolo} descrizione={`${sezione.titolo}: ${voci.map((v) => v.titolo).join(', ')}.`}>
+  <div class="contenitore sezione">
+    <div class="duo">
+      <div>
+        <p class="occhiello">L’Antica Via del Cifalco</p>
+        <h1>{sezione.titolo}</h1>
+      </div>
+      {foto && <Foto classe="duo__foto" src={foto.src} alt={foto.alt} />}
+    </div>
+    <ol class="elenco-voci">
+      {
+        voci.map((v) => (
+          <li>
+            <a class="voce-card card" href={v.href}>
+              <span class="voce-card__lettera">{v.lettera}.</span>
+              <span class="voce-card__corpo">
+                <span class="voce-card__titolo">{v.titolo}</span>
+                <span class="voce-card__anteprima">{v.anteprima}</span>
+                {v.paragrafi && (
+                  <span class="voce-card__paragrafi">
+                    {v.paragrafi.map((p) => `${p.numero}. ${p.titolo}`).join(' · ')}
+                  </span>
+                )}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</Base>

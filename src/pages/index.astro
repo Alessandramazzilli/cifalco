@@ -1,35 +1,35 @@
 ---
+/**
+ * 1. Home: le citazioni (Morosetti in apertura), «L’Antica Via del Cifalco
+ * in breve», le novità e un ingresso a ogni sezione del sito.
+ * I testi sono in src/testi/home/.
+ */
 import Base from '../layouts/Base.astro';
-import CardItinerario from '../components/CardItinerario.astro';
 import Foto from '../components/Foto.astro';
-import { caricaPercorso, formattaOre } from '../lib/percorso';
+import { SEZIONI } from '../lib/menu';
+import { testo, anteprima, nomeTesto } from '../lib/testi';
 
-const percorso = await caricaPercorso();
+const [principale, ...altre] = testo('home/citazioni')
+  .split('\n')
+  .filter((r) => r.startsWith('<figure'));
 
-const viaIntera = percorso.itinerari.find((i) => i.id === 'via-intera')!;
-const tappeVia = viaIntera.tappe.map(
-  (id) => percorso.tappe.find((t) => t.id === id)!
-);
-const distanzaTotale = tappeVia.reduce((s, t) => s + t.distanzaKm, 0);
-const oreTotali = tappeVia.reduce((s, t) => s + t.oreBase, 0);
+// Un ingresso per sezione, con le prime righe della sua prima voce.
+const ingressi = SEZIONI.filter((s) => s.voci.length > 0).map((s) => {
+  const primo = s.href === '/chi-siamo' ? 'chi-siamo/chi-siamo' : nomeTesto(s.voci[0].href);
+  return { ...s, anteprima: anteprima(testo(primo), 230) };
+});
 ---
 
 <Base
   titolo="L’Antica Via del Cifalco"
-  descrizione="Dall’alta Val Trebbia al mare di Portofino, a piedi: un cammino di più giorni tra crinali, faggete, passi e borghi. Itinerari, walk planner e mappa GPS."
+  descrizione="L’Antica Via del Cifalco: una mulattiera medievale riscoperta, da Ponte Organasco a Portofino Mare in circa 75 chilometri lungo il crinale tra Trebbia e Aveto."
 >
-  <!-- Hero: banda grigio pietra, testo a sinistra e foto intera a destra -->
   <section class="sezione sezione--pietra">
     <div class="contenitore duo">
       <div>
-        <p class="occhiello">Un cammino di comunità</p>
-        <h1>Dalla Val Trebbia al mare, sulla strada dei muli</h1>
-        <p class="hero__intro">
-          Otto tratte a piedi tra crinali, faggete, passi e borghi, sulla rete
-          di sentieri che muli, commercianti, saltimbanchi e briganti hanno
-          battuto per secoli.
-        </p>
-        <a class="bottone bottone--pieno" href="/itinerario">Apri l’itinerario</a>
+        <p class="occhiello">Da Ponte Organasco a Portofino Mare</p>
+        <h1 class="home__titolo">L’Antica Via del Cifalco</h1>
+        <Fragment set:html={principale} />
       </div>
       <Foto
         classe="duo__foto"
@@ -39,108 +39,45 @@ const oreTotali = tappeVia.reduce((s, t) => s + t.oreBase, 0);
     </div>
   </section>
 
-  <!-- Lo sguardo d'insieme, in numeri (nessun link) -->
+  <section class="sezione home__citazioni" aria-label="Citazioni">
+    <div class="contenitore home__citazioni-griglia">
+      <Fragment set:html={altre.join('\n')} />
+    </div>
+  </section>
+
+  <section class="sezione sezione--alternata">
+    <div class="contenitore duo duo--alto">
+      <div class="testo-sito home__elenco">
+        <h2>L’Antica Via del Cifalco in breve</h2>
+        <Fragment set:html={testo('home/in-breve')} />
+      </div>
+      <div class="testo-sito home__elenco home__novita">
+        <h2>Novità</h2>
+        <Fragment set:html={testo('home/novita')} />
+      </div>
+    </div>
+  </section>
+
   <section class="sezione">
     <div class="contenitore">
-      <dl class="snapshot">
-        <div class="dato">
-          <dt>Lunghezza</dt>
-          <dd>{distanzaTotale.toLocaleString('it-IT', { maximumFractionDigits: 0 })} km</dd>
-        </div>
-        <div class="dato">
-          <dt>Tratte</dt>
-          <dd>{tappeVia.length}</dd>
-        </div>
-        <div class="dato">
-          <dt>Tempo di cammino</dt>
-          <dd>{formattaOre(oreTotali)}</dd>
-        </div>
-        <div class="dato">
-          <dt>Da</dt>
-          <dd>Ponte Organasco</dd>
-        </div>
-        <div class="dato">
-          <dt>A</dt>
-          <dd>Portofino mare</dd>
-        </div>
-      </dl>
-    </div>
-  </section>
-
-  <!-- Dalla valle al mare: banda acqua + foto della costa -->
-  <section class="sezione sezione--acqua">
-    <div class="contenitore duo duo--foto-prima">
-      <div>
-        <p class="occhiello">Il filo dell’acqua</p>
-        <h2>Dalle fonti del crinale al Mar Ligure</h2>
-        <p>
-          La Via è scandita dall’acqua: la fontana del trivio a Ponte Organasco,
-          le sorgive verso Casanova, i guadi dell’Aveto, fino all’acqua che
-          chiude il cammino, quella del mare di Portofino.
-        </p>
-        <a class="bottone bottone--contorno" href="/itinerario#acqua">
-          I punti acqua della Via
-        </a>
-      </div>
-      <Foto
-        classe="duo__foto"
-        src="/immagini/costa-tigullio.jpg"
-        alt="Il golfo del Tigullio visto dall’alto, dove la Via arriva al mare"
-      />
-    </div>
-  </section>
-
-  <!-- I tre itinerari: il cuore della home -->
-  <section class="sezione sezione--alternata">
-    <div class="contenitore">
-      <p class="occhiello">Scegli il tuo passo</p>
-      <h2>Tre modi di camminare la Via</h2>
-      <p class="testo-largo">
-        Non serve farla tutta: la Via si lascia camminare anche a metà giornata.
-        Scegli un itinerario e il <a href="/itinerario">planner</a> lo costruisce
-        sul tempo e sulle gambe che hai.
-      </p>
-      <div class="griglia" style="margin-top: 1.5rem;">
+      <h2>Scopri il sito</h2>
+      <ol class="elenco-voci elenco-voci--sezioni">
         {
-          percorso.itinerari.map((itinerario) => (
-            <CardItinerario itinerario={itinerario} percorso={percorso} />
+          ingressi.map((s) => (
+            <li>
+              <a class="voce-card card" href={s.href}>
+                <span class="voce-card__corpo">
+                  <span class="voce-card__titolo">{s.titolo}</span>
+                  <span class="voce-card__anteprima">{s.anteprima}</span>
+                  <span class="voce-card__paragrafi">
+                    {s.voci.map((v) => `${v.lettera}. ${v.titolo}`).join(' · ')}
+                  </span>
+                </span>
+              </a>
+            </li>
           ))
         }
-      </div>
-    </div>
-  </section>
-
-  <!-- Chiusura: banda terra, una sola porta verso il racconto -->
-  <section class="sezione sezione--terra">
-    <div class="contenitore">
-      <p class="occhiello">Più di un sentiero</p>
-      <h2>Muli, fiere, briganti e faggete</h2>
-      <p class="testo-largo">
-        La Via è anche una storia di lavoro e di comunità, raccontata con
-        rigore: i documenti da una parte, le leggende dall’altra.
-      </p>
-      <a class="bottone bottone--pieno" href="/approfondimenti">
-        Leggi gli approfondimenti
-      </a>
+      </ol>
     </div>
   </section>
 </Base>
-
-<style>
-  .hero__intro {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .snapshot {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.25rem 3rem;
-    margin: 0;
-  }
-
-  .testo-largo {
-    max-width: var(--misura);
-    font-size: 1.08rem;
-  }
-</style>

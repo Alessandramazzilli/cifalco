@@ -23,6 +23,10 @@ const punti = defineCollection({
     appoggio: z.boolean().default(false),
     // Quota in metri (facoltativa, mostrata nelle schede).
     quota: z.number().optional(),
+    // Coordinate geografiche (facoltative): servono alla mappa GPX solo se
+    // la traccia non contiene un waypoint con lo stesso nome del punto.
+    lat: z.number().optional(),
+    lon: z.number().optional(),
   }),
 });
 

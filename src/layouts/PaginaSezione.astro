@@ -1,0 +1,115 @@
+---
+/**
+ * Pagina di una voce a lettera (es. «3.e Organizzare il viaggio»):
+ * percorso di sezione, titolo con la lettera, indice laterale della sezione
+ * e collegamenti alla voce precedente e successiva.
+ *
+ * Il testo arriva come HTML (src/testi/…) nello slot.
+ */
+import Base from './Base.astro';
+import { trova } from '../lib/menu';
+import { titoli } from '../lib/testi';
+
+interface Props {
+  descrizione: string;
+  // HTML completo della pagina: serve per l'indice dei titoli interni.
+  testo?: string;
+}
+const { descrizione, testo = '' } = Astro.props;
+
+const { sezione, voce } = trova(Astro.url.pathname);
+if (!sezione || !voce) throw new Error(`Pagina fuori dallo schema: ${Astro.url.pathname}`);
+
+const indice = sezione.voci.findIndex((v) => v === voce);
+const precedente = sezione.voci[indice - 1];
+const successiva = sezione.voci[indice + 1];
+
+// Titoli interni: i paragrafi i., ii., … se definiti nello schema,
+// altrimenti i titoli <h2> del testo.
+const interni = voce.paragrafi
+  ? voce.paragrafi.map((p) => ({ etichetta: `${p.numero}.`, titolo: p.titolo, href: p.href }))
+  : titoli(testo).map((t) => ({ etichetta: '', titolo: t.titolo, href: `#${t.id}` }));
+---
+
+<Base titolo={voce.titolo} descrizione={descrizione}>
+  <div class="contenitore sezione pagina-voce">
+    <nav class="briciole" aria-label="Sei qui">
+      <a href={sezione.href}>{sezione.titolo}</a>
+      <span aria-hidden="true">›</span>
+      <span>{voce.lettera}. {voce.titolo}</span>
+    </nav>
+
+    <div class="pagina-voce__griglia">
+      <aside class="indice-sezione" aria-label={`Indice: ${sezione.titolo}`}>
+        <details class="indice-sezione__apri" open>
+        <summary>Indice della sezione</summary>
+        <p class="indice-sezione__titolo">
+          <a href={sezione.href}>{sezione.titolo}</a>
+        </p>
+        <ol>
+          {
+            sezione.voci.map((v) => (
+              <li class:list={[v === voce && 'corrente']}>
+                <a href={v.href} aria-current={v === voce ? 'page' : undefined}>
+                  <span class="indice-sezione__lettera">{v.lettera}.</span>
+                  <span>{v.titolo}</span>
+                </a>
+                {v === voce && interni.length > 0 && (
+                  <ol class="indice-sezione__interni">
+                    {interni.map((i) => (
+                      <li>
+                        <a href={i.href.replace(/^[^#]*/, '')}>
+                          {i.etichetta && <span class="indice-sezione__lettera">{i.etichetta}</span>}
+                          <span>{i.titolo}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </li>
+            ))
+          }
+        </ol>
+        </details>
+      </aside>
+
+      <article class="pagina-voce__testo">
+        <h1 class="titolo-voce">
+          <span class="titolo-voce__lettera">{voce.lettera}.</span>
+          {voce.titolo}
+        </h1>
+        <div class="prosa testo-sito">
+          <slot />
+        </div>
+
+        <nav class="voci-vicine" aria-label="Altre voci della sezione">
+          {
+            precedente ? (
+              <a class="voci-vicine__link" href={precedente.href} rel="prev">
+                <span class="voci-vicine__verso">← Precedente</span>
+                <span>{precedente.lettera}. {precedente.titolo}</span>
+              </a>
+            ) : (
+              <span />
+            )
+          }
+          {
+            successiva && (
+              <a class="voci-vicine__link voci-vicine__link--dopo" href={successiva.href} rel="next">
+                <span class="voci-vicine__verso">Successiva →</span>
+                <span>{successiva.lettera}. {successiva.titolo}</span>
+              </a>
+            )
+          }
+        </nav>
+      </article>
+    </div>
+  </div>
+</Base>
+
+<script>
+  // Su schermi stretti l'indice parte chiuso, per arrivare subito al testo.
+  if (window.matchMedia('(max-width: 62rem)').matches) {
+    document.querySelector('.indice-sezione__apri')?.removeAttribute('open');
+  }
+</script>

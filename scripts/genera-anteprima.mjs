@@ -9,15 +9,16 @@ const dist = path.resolve('dist');
 const destinazione = path.resolve('anteprima');
 await mkdir(destinazione, { recursive: true });
 
-const rotte = {
-  '/': 'home.html',
-  '/progetto': 'progetto.html',
-  '/itinerario': 'itinerario.html',
-  '/itinerario/descrizione-dettagliata': 'descrizione-dettagliata.html',
-  '/itinerario/informazioni-pratiche': 'informazioni-pratiche.html',
-  '/approfondimenti': 'approfondimenti.html',
-  '/contatti': 'contatti.html',
-};
+// Tutte le pagine della build (escluse quelle di solo reindirizzamento).
+import { readdir } from 'node:fs/promises';
+const rotte = {};
+for (const voce of await readdir(dist, { recursive: true })) {
+  if (!voce.endsWith('index.html')) continue;
+  const html = await readFile(path.join(dist, voce), 'utf8');
+  if (html.includes('http-equiv="refresh"')) continue;
+  const rotta = '/' + voce.replace(/\\/g, '/').replace(/\/?index\.html$/, '');
+  rotte[rotta === '/' ? '/' : rotta] = rotta === '/' ? 'home.html' : rotta.slice(1).replace(/\//g, '--') + '.html';
+}
 
 const favicon = await readFile('public/favicon.svg', 'utf8');
 const faviconDataUri = `data:image/svg+xml;base64,${Buffer.from(favicon).toString('base64')}`;
@@ -79,5 +80,5 @@ for (const [rotta, nomeFile] of Object.entries(rotte)) {
   console.log(`✓ ${nomeFile}`);
 }
 
-console.log(`\nAnteprima generata in ${destinazione}/ — apri home.html`);
+console.log(`\nAnteprima generata in ${destinazione}/: apri home.html`);
 // Nota: le rotte di solo reindirizzamento (es. /percorso) non sono incluse.

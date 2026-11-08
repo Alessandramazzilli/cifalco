@@ -131,6 +131,8 @@ const datiPlanner = {
     </div>
 
     <p class="planner__direzione" data-esito="direzione"></p>
+    <p class="planner__misure-gpx" data-esito="misure-gpx" hidden></p>
+    <p class="planner__vai-mappa"><a href="#mappa-gpx">Vedi il tratto sulla mappa ↓</a></p>
 
     <div class="planner__avviso" data-esito="avviso" role="status" hidden></div>
 
@@ -171,10 +173,20 @@ const datiPlanner = {
     align-items: start;
   }
 
-  @media (max-width: 56rem) {
+  @media (max-width: 80rem) {
     .planner {
       grid-template-columns: 1fr;
     }
+  }
+
+  .planner__misure-gpx {
+    font-weight: 650;
+    color: var(--acqua-scura);
+    margin: 0 0 0.5rem;
+  }
+  .planner__vai-mappa {
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
   }
 
   .planner__titolo {
@@ -645,7 +657,7 @@ const datiPlanner = {
           '<p><strong>Giornata lunga per il tempo che hai indicato.</strong> Parti presto al mattino, oppure scegli un tratto più corto o un passo più realistico: la Via resta lì, non scappa.</p>';
         avviso.hidden = false;
       } else if (giornate.length > 1) {
-        avviso.innerHTML = `<p><strong>Servono ${giornate.length} giorni con le ore che hai a disposizione.</strong> Le notti si organizzano nei <a href="/itinerario#appoggio">punti d’appoggio</a> lungo la Via.</p>`;
+        avviso.innerHTML = `<p><strong>Servono ${giornate.length} giorni con le ore che hai a disposizione.</strong> Le notti si organizzano nei <a href="/fare-il-cammino/punti-di-appoggio">punti d’appoggio</a> lungo la Via.</p>`;
         avviso.hidden = false;
       } else {
         avviso.hidden = true;
@@ -765,19 +777,44 @@ const datiPlanner = {
           '<p class="nb">Le indicazioni passo per passo sono descritte nel senso classico; in senso inverso usale come riferimento dei luoghi, in ordine contrario.</p>'
         );
       }
-      h.push('<p class="chiusura">Buon cammino. La montagna chiede rispetto, non coraggio.<br>anticaviadelcifalco.it</p>');
+      h.push('<p class="chiusura">Buon cammino. La montagna chiede rispetto, non coraggio.<br>anticaviadelcifalco.netlify.app</p>');
       htmlPiano = h.join('\n');
 
       // Dillo anche alla mappa, se c'è. Il rinvio di un tick garantisce che
       // al primo calcolo lo script della mappa abbia già registrato l'ascolto.
+      // La mappa GPX evidenzia lo stesso tratto (dal primo all'ultimo punto,
+      // nell'ordine di cammino) e risponde con le misure reali della traccia.
+      const puntiOrdinati = tappe.flatMap((t) => (inverso ? [...t.punti].reverse() : t.punti));
+      esito('misure-gpx').hidden = true;
       setTimeout(() =>
         window.dispatchEvent(
           new CustomEvent('via-cifalco:itinerario', {
-            detail: { id: itinerario.id },
+            detail: {
+              id: itinerario.id,
+              da: puntiOrdinati[0],
+              a: puntiOrdinati[puntiOrdinati.length - 1],
+              daNome: partenza,
+              aNome: arrivo,
+              senso: inverso ? 'inverso' : 'classico',
+              punti: [...new Set(puntiOrdinati)],
+            },
           })
         )
       );
     }
+
+    // Misure lette dalla traccia GPX (se la mappa è presente): affiancano
+    // le stime del planner, che restano il riferimento per i tempi.
+    window.addEventListener('via-cifalco:misure', (e) => {
+      const m = (e as CustomEvent).detail as { km: number; salita: number; discesa: number } | null;
+      const riga = esito('misure-gpx');
+      if (!m) {
+        riga.hidden = true;
+        return;
+      }
+      riga.textContent = `Misurato sulla traccia GPX: ${m.km.toLocaleString('it-IT', { maximumFractionDigits: 1 })} km, salita ${Math.round(m.salita).toLocaleString('it-IT')} m, discesa ${Math.round(m.discesa).toLocaleString('it-IT')} m.`;
+      riga.hidden = false;
+    });
 
     campo.itinerario.addEventListener('change', () => {
       aggiornaTratto();

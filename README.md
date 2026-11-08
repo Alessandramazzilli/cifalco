@@ -1,190 +1,119 @@
-# L'Antica Via del Cifalco — sito web
+# L'Antica Via del Cifalco: sito web
 
-Il sito del cammino: informa chi è sul sentiero, promuove il territorio e
-racconta la storia della Via con approccio critico.
-
-Costruito con [Astro](https://astro.build): pagine statiche velocissime, con
-due sole «isole» interattive (la mappa illustrata e il walk planner).
-**Tutti i contenuti sono separati dal codice**: per aggiornare il sito non
-serve essere programmatori, basta modificare file di testo. Questa guida
-spiega come.
-
-> **Nota:** tutti i contenuti attuali (nomi dei luoghi, distanze, recapiti,
-> citazioni) sono **segnaposto** in attesa dei dati reali. Sono scritti nel
-> tono giusto, ma vanno sostituiti.
+Il sito del cammino, costruito con [Astro](https://astro.build): pagine
+statiche velocissime, con due sole parti interattive (il walking tracker e la
+mappa GPX). **I testi sono separati dal codice**: per correggerli basta
+modificare file di testo.
 
 ---
 
 ## Come avviare il sito sul proprio computer
 
-Serve [Node.js](https://nodejs.org) (versione 20 o successiva). Poi, nella
-cartella del progetto:
+Serve [Node.js](https://nodejs.org) (versione 20 o successiva). Nella cartella
+del progetto:
 
 ```bash
-npm install        # solo la prima volta
-npm run dev        # apre il sito su http://localhost:4321
+npm install
 ```
-
-Ogni modifica ai file si vede subito nel browser. Per produrre la versione
-da pubblicare:
 
 ```bash
-npm run build      # crea la cartella dist/ pronta da pubblicare
+npm run dev
 ```
+
+Il sito si apre su http://localhost:4321 e ogni modifica si vede subito.
+Per produrre la versione da pubblicare: `npm run build` (crea `dist/`).
+`npm test` costruisce il sito e verifica il walking tracker.
 
 ---
 
-## Dove vive ogni cosa
+## La struttura del sito
+
+Segue lo «schema base» di Luchino (`scripts/docx/originali/`):
+
+1. Home
+2. Chi siamo (a–d, una sola pagina)
+3. Fare il cammino: informazioni pratiche (a–g, una pagina per voce)
+4. Approfondimenti (a–f, una pagina per voce)
+5. Intorno all'Antica Via del Cifalco (e oltre): per ora solo c. Altri cammini
+6. Contatti
+
+Il menu, il piè di pagina, gli indici di sezione e le anteprime della Home
+leggono tutti `src/lib/menu.ts`: è lì che si aggiunge una voce (per esempio
+quando si apriranno 5a «Scritti d'autore» e 5b «Dicono di noi»).
 
 ```
 src/
-├── content/             ⟵ TUTTI I CONTENUTI (è qui che si lavora di solito)
-│   ├── itinerari/       ⟵ un file JSON per itinerario
-│   ├── tappe/           ⟵ un file JSON per tratta (passi e deviazioni comprese)
-│   └── punti/           ⟵ un file JSON per punto d'interesse
-├── pages/               ⟵ le pagine del sito (testi delle pagine fisse)
-├── components/          ⟵ i blocchi riusabili (mappa, planner, foto, note…)
-├── lib/percorso.ts      ⟵ il codice che legge i contenuti
-└── styles/global.css    ⟵ colori, font e stile di tutto il sito
-
+├── testi/            ⟵ I TESTI DEL SITO (un file HTML per pagina)
+├── lib/menu.ts       ⟵ sezioni, voci a lettera e paragrafi i., ii., …
+├── pages/            ⟵ le pagine (impaginazione, non testi)
+├── components/       ⟵ walking tracker, mappa GPX, menu, piè di pagina…
+├── content/          ⟵ dati del walking tracker (tratte, punti, itinerari)
+└── styles/global.css ⟵ colori, font e stile
 public/
-└── immagini/            ⟵ le foto del sito (vedi «Sostituire una foto»)
+├── immagini/         ⟵ le foto
+└── gpx/              ⟵ (da creare) la traccia GPX ufficiale
+scripts/docx/         ⟵ i Word originali e lo script che li ha convertiti
 ```
 
 ---
 
-## Le operazioni più comuni
+## Modificare i testi
 
-### Modificare un testo
+Ogni pagina ha il suo file in `src/testi/`, in HTML semplice:
+`<p>` paragrafo, `<strong>` grassetto, `<em>` corsivo, `<a href="…">` link.
 
-I testi delle pagine fisse (Home, Il progetto, L'itinerario, Approfondimenti,
-Chi siamo…) sono nei file di `src/pages/`: si aprono con qualunque editor di
-testo, il testo è leggibile tra i tag HTML.
+Convenzioni usate nei testi:
 
-### Aggiungere un punto d'interesse
+- **Segnaposto** (le parti evidenziate in giallo nei Word):
+  `<mark class="segnaposto">[…]</mark>`. Compaiono evidenziati sul sito
+  finché non si sostituiscono con il testo definitivo.
+- **Aneddoti e leggende** (evidenziati in verde nei Word): riquadri
+  `<aside class="aneddoto aneddoto--destra">` (o `--sinistra`), posti appena
+  prima del paragrafo del luogo a cui si riferiscono.
+- **Descrizione dettagliata**: tratte `<h3 class="tratta">`, deviazioni e
+  varianti in `<div class="percorso-alt percorso-alt--deviazione">` (o
+  `--variante`). I segnavia sono disegnati come icone (`<span class="segnavia">`).
 
-1. Copia un file esistente in `src/content/punti/`, ad esempio
-   `rifugio-casermetta.json`, e rinominalo (minuscole e trattini: il nome del
-   file diventa l'identificativo del punto).
-2. Compila i campi:
-   - `nome`, `descrizione`, `quota` (metri, facoltativa);
-   - `tipo`: uno tra `borgo`, `fonte`, `valico`, `natura`, `storia`, `ristoro`;
-   - `acquaPotabile`: `true` solo se c'è acqua potabile;
-   - `x` e `y`: la posizione sulla mappa illustrata (vedi sotto).
-3. Se il punto è lungo una tappa, aggiungi il suo nome-file nell'elenco
-   `punti` della tappa in `src/content/tappe/`: comparirà nel tracciato e
-   nel planner.
+I testi sono stati generati una volta dai Word con
+`python3 scripts/docx/converti.py`. **Non rilanciarlo** dopo aver corretto i
+file di `src/testi/`: li riscriverebbe da zero.
 
-**Le coordinate `x` e `y`** sono sulla griglia della mappa: `x` da 0 (sinistra)
-a 1000 (destra), `y` da 0 (alto) a 700 (basso). Si va a occhio e si controlla
-con `npm run dev`: due o tre tentativi e il punto è al suo posto.
+---
 
-### Aggiungere o modificare un itinerario
+## La mappa GPX e il walking tracker
 
-1. Le tratte sono in `src/content/tappe/`: ogni tratta ha distanza,
-   dislivelli, ore di cammino, il `segnavia`, l'elenco dei `punti`
-   attraversati **in ordine**, i `passi` (le indicazioni che il planner
-   mostra una alla volta) e le `deviazioni` (mostrate nella descrizione
-   dettagliata).
-2. Gli itinerari sono in `src/content/itinerari/`: un itinerario è soprattutto
-   un elenco di tappe in ordine, più difficoltà, segnavia e descrizione.
-3. Mappa e planner si aggiornano da soli: leggono questi file.
+La mappa compare da sola quando si carica la traccia in
+`public/gpx/antica-via-del-cifalco.gpx`. Finché il file manca, la pagina
+mostra il segnaposto e la mappa provvisoria di Google My Maps.
 
-### Aggiungere o modificare un membro della Compagnia del Cifalco
+Perché mappa e tracker siano sincronizzati, i **waypoint** della traccia GPX
+devono chiamarsi come i punti in `src/content/punti/` (es. «Ponte Organasco»,
+«Cerignale», «Oneto», «Barbagelata», «Neirone», «Portofino mare»…). Così,
+quando nel tracker si sceglie un tratto, la mappa lo evidenzia e misura km e
+dislivelli reali, che il tracker mostra accanto alle sue stime. In
+alternativa ai waypoint si possono scrivere `"lat"` e `"lon"` nel file JSON
+del punto.
 
-Le persone della Compagnia stanno nella pagina `src/pages/progetto.astro`,
-nell'elenco `compagnia` in cima al file: ogni voce ha `nome`, `ruolo` (la
-descrizione, anche simpatica) e `foto` (il nome del file della foto).
+Le tratte del tracker (`src/content/tappe/`) corrispondono alle tratte della
+descrizione dettagliata: se cambiano tempi o segnavia nel testo, conviene
+aggiornarle anche lì.
 
-Per la **foto vera**: metti un'immagine quadrata in `public/immagini/` con il
-nome indicato in `foto` (es. `compagnia-luchino-ferraris.jpg`) e, in
-`progetto.astro`, sostituisci `<PersonaPlaceholder nomeFile={persona.foto} />`
-con:
+---
 
-```html
-<img class="ritratto" src={`/immagini/${persona.foto}`} alt={persona.nome} />
-```
+## Foto
 
-### Sostituire o aggiungere una foto
-
-Le foto stanno in `public/immagini/` e vengono mostrate **sempre intere**
-(mai tagliate). Per cambiarne una, sostituisci il file mantenendo lo stesso
-nome: comparirà subito al posto della vecchia. Le foto attualmente usate sono:
-
-| Pagina | File | Dove |
-| --- | --- | --- |
-| Home | `home-banner-valle-del-cifalco.jpg` | accanto al titolo |
-| Home | `costa-tigullio.jpg` | banda «dal crinale al mare» |
-| Il progetto | `muro-ruota-carro.jpg` | accanto all'introduzione |
-| L'itinerario | `vetta-rocca-bruna.jpg` | sotto i numeri della Via |
-| L'itinerario | `sentiero-pozza.jpg` | tra le sezioni |
-| Informazioni pratiche | `portofino-baia.jpg` | «arrivare e tornare» |
-| Informazioni pratiche | `rifugio-terrazza-mare.jpg` | «punti di appoggio» |
-| Approfondimenti | `rocca-bosco.jpg` | sotto il titolo |
-| Chi siamo | `faggeta.jpg` | accanto al titolo |
-
-Per **aggiungere** una foto in una pagina, metti il file in
-`public/immagini/` e usa il componente `Foto` (mostra l'immagine intera):
+Le foto stanno in `public/immagini/`. Per cambiarne una, si sostituisce il
+file mantenendo lo stesso nome. Quelle nei testi si inseriscono così:
 
 ```html
-<Foto src="/immagini/nome-file.jpg" alt="Descrizione della foto" />
+<figure class="figura"><img src="/immagini/nome.jpg" alt="Descrizione">
+<figcaption>Didascalia<br><span class="figura__credito">Foto di …</span></figcaption></figure>
 ```
-
-Per metterla **accanto a un testo** (due colonne), usala dentro un blocco
-`duo`:
-
-```html
-<div class="contenitore duo">
-  <div> …testo… </div>
-  <Foto classe="duo__foto" src="/immagini/nome-file.jpg" alt="…" />
-</div>
-```
-
-Conviene ridimensionare le foto prima di caricarle (lato lungo circa 2000 px):
-mantiene il sito veloce anche con segnale debole.
-
-### Aggiornare la mappa della pagina «L’itinerario»
-
-La mappa nella pagina `/itinerario` è l'incorporamento (iframe) di una mappa
-di Google My Maps, con il tracciato GPS reale della Via. Per aggiornarla
-(nuova versione del tracciato, nuovi punti, ecc.):
-
-1. Modifica la mappa su [Google My Maps](https://www.google.com/maps/d).
-2. Da «Condividi» → «Incorpora nella mia pagina web», copia il nuovo `mid`
-   (l'identificativo nell'URL, es. `mid=1pZkHOxW...`).
-3. In `src/pages/itinerario/index.astro`, sostituisci quel `mid` sia nell'
-   `src` dell'`<iframe>` sia nel link «Apri la mappa su Google Maps».
 
 ---
 
 ## Pubblicare il sito
 
-Il sito è statico: si pubblica gratuitamente su Netlify, Vercel o GitHub
-Pages. La via più semplice (Netlify):
-
-1. Crea un account su [netlify.com](https://www.netlify.com) e collega questo
-   repository.
-2. Impostazioni di build: comando `npm run build`, cartella `dist`.
-3. A ogni modifica caricata sul repository, il sito si ripubblica da solo.
-
-Quando il dominio definitivo è attivo, aggiorna l'indirizzo in
-`astro.config.mjs` (riga `site:`): serve per la sitemap e le anteprime
-social.
-
----
-
-## Scelte di design (per chi metterà mano allo stile)
-
-- **Palette** in `src/styles/global.css`, tutta a variabili CSS: verde dei
-  faggi, grigio delle rocce, accento acquatico e marrone della terra. Gli
-  sfondi sono verdi/grigi/acqua (niente fondo «crema»): le sezioni a tinta
-  piena si ottengono con le classi `sezione--bosco`, `sezione--acqua` e
-  `sezione--pietra`.
-- **Font**: Source Serif 4 per i titoli, Source Sans 3 per il corpo.
-  Self-hosted, niente richieste a server esterni.
-- **Walk planner**: il bottone «Scarica il piano» genera un file di testo con
-  l'intero piano (numeri, segnavia, acqua, cosa portare e tutte le tappe in
-  sequenza), utile da consultare sul sentiero anche senza campo.
-- **Tono dell'interfaccia**: il quaderno vive nella struttura (note a
-  margine, sezioni come pagine), mai in texture finte. Niente effetto
-  «medioevo da fiera».
+Il sito si pubblica su Netlify (configurazione in `netlify.toml`): a ogni
+modifica caricata sul repository si ripubblica da solo. Quando il dominio
+definitivo è attivo, aggiornare `site:` in `astro.config.mjs`.
