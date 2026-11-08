@@ -52,6 +52,18 @@ export function fmt(s: string, valori: Record<string, string | number>): string 
 }
 
 const it = {
+  altFoto: {
+    "faggeta.jpg": "Una faggeta lungo il crinale della Via",
+    "vetta-rocca-bruna.jpg": "La croce di vetta sul Monte Roccabruna, lungo il crinale della Via",
+    "rocca-bosco.jpg": "Una cima rocciosa che emerge dai boschi del crinale",
+    "sentiero-pozza.jpg": "Un sentiero nel bosco accanto a una pozza d’acqua",
+    "costa-tigullio.jpg": "Il golfo del Tigullio visto dall’alto, dove la Via arriva al mare",
+    "home-banner-valle-del-cifalco.jpg": "La valle del Cifalco vista dall’alto, con un borgo tra i boschi",
+    "portofino-baia.jpg": "La baia di Portofino tra i pini",
+    "rifugio-terrazza-mare.jpg": "La terrazza di un rifugio con tavoli e vista sul mare",
+    "spada-nella-roccia.jpg": "La spada nella roccia sulla vetta del Monte Gifarco",
+    "muro-ruota-carro.jpg": "Una vecchia ruota di carro appoggiata al muro di una casa in pietra"
+  } as Record<string, string>,
   home: 'Home',
   menu: 'Menu',
   navPrincipale: 'Navigazione principale',
@@ -182,6 +194,18 @@ const it = {
 export type Dizionario = typeof it;
 
 const en: Dizionario = {
+  altFoto: {
+    "faggeta.jpg": "A beech wood along the ridge of the Via",
+    "vetta-rocca-bruna.jpg": "The summit cross on Monte Roccabruna, along the ridge of the Via",
+    "rocca-bosco.jpg": "A rocky peak rising from the woods of the ridge",
+    "sentiero-pozza.jpg": "A woodland path beside a pool of water",
+    "costa-tigullio.jpg": "The Gulf of Tigullio seen from above, where the Via reaches the sea",
+    "home-banner-valle-del-cifalco.jpg": "The Cifalco valley seen from above, with a village among the woods",
+    "portofino-baia.jpg": "The bay of Portofino among the pines",
+    "rifugio-terrazza-mare.jpg": "The terrace of a mountain hut with tables and a view of the sea",
+    "spada-nella-roccia.jpg": "The sword in the stone on the summit of Monte Gifarco",
+    "muro-ruota-carro.jpg": "An old cartwheel leaning against the wall of a stone house"
+  },
   home: 'Home',
   menu: 'Menu',
   navPrincipale: 'Main navigation',
@@ -308,6 +332,18 @@ const en: Dizionario = {
 };
 
 const fr: Dizionario = {
+  altFoto: {
+    "faggeta.jpg": "Une hêtraie le long de la crête de la Via",
+    "vetta-rocca-bruna.jpg": "La croix sommitale du Monte Roccabruna, le long de la crête de la Via",
+    "rocca-bosco.jpg": "Un sommet rocheux qui émerge des bois de la crête",
+    "sentiero-pozza.jpg": "Un sentier forestier au bord d’une mare",
+    "costa-tigullio.jpg": "Le golfe du Tigullio vu d’en haut, là où la Via rejoint la mer",
+    "home-banner-valle-del-cifalco.jpg": "La vallée du Cifalco vue d’en haut, avec un village au milieu des bois",
+    "portofino-baia.jpg": "La baie de Portofino entre les pins",
+    "rifugio-terrazza-mare.jpg": "La terrasse d’un refuge avec des tables et vue sur la mer",
+    "spada-nella-roccia.jpg": "L’épée dans le rocher au sommet du Monte Gifarco",
+    "muro-ruota-carro.jpg": "Une vieille roue de charrette appuyée contre le mur d’une maison en pierre"
+  },
   home: 'Accueil',
   menu: 'Menu',
   navPrincipale: 'Navigation principale',

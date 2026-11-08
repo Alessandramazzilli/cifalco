@@ -9,19 +9,19 @@ import { linguaDa, t } from '../lib/i18n';
 const lingua = linguaDa(Astro.url.pathname);
 const T = t(lingua);
 const sezione = sezioni(lingua).find((s) => s.href.endsWith('/chi-siamo'))!;
-// Ogni titolo <h2> riceve la sua lettera, come nello schema.
-let html = testo('chi-siamo/chi-siamo', lingua);
-for (const voce of sezione.voci) {
-  const id = voce.href.split('#')[1];
-  html = html.replace(
-    `<h2 id="${id}">`,
-    `<h2 id="${id}" class="titolo-voce"><span class="titolo-voce__lettera">${voce.lettera}.</span> `
-  );
-}
+const html = testo('chi-siamo/chi-siamo', lingua);
+// Ogni capitolo (titolo <h2>) diventa una banda, con colori e foto alternati.
+const capitoli = html.split(/(?=<h2 )/).filter((c) => c.includes('<h2 '));
+const BANDE = [
+  { classe: '', foto: 'muro-ruota-carro.jpg' },
+  { classe: 'sezione--bosco', foto: 'faggeta.jpg' },
+  { classe: 'sezione--alternata', foto: null },
+  { classe: 'sezione--pietra', foto: null },
+];
 ---
 
 <Base titolo={sezione.titolo} descrizione={T.chiSiamoDescrizione}>
-  <section class="sezione sezione--pietra">
+  <section class="sezione apertura sezione--bosco">
     <div class="contenitore duo">
       <div>
         <p class="occhiello">{T.nomeSito}</p>
@@ -31,20 +31,30 @@ for (const voce of sezione.voci) {
             sezione.voci.map((v) => (
               <li>
                 <a href={`#${v.href.split('#')[1]}`}>
-                  <span class="indice-sezione__lettera">{v.lettera}.</span> {v.titolo}
+                  {v.titolo}
                 </a>
               </li>
             ))
           }
         </ol>
       </div>
-      <Foto classe="duo__foto" src="/immagini/faggeta.jpg" alt={T.altFaggeta} />
+      <Foto classe="duo__foto" src="/immagini/home-banner-valle-del-cifalco.jpg" alt={T.altFoto['home-banner-valle-del-cifalco.jpg']} />
     </div>
   </section>
 
-  <div class="contenitore sezione">
-    <div class="prosa testo-sito">
-      <Fragment set:html={html} />
-    </div>
-  </div>
+  {
+    capitoli.map((c, i) => {
+      const banda = BANDE[i % BANDE.length];
+      return (
+        <section class={`sezione ${banda.classe}`}>
+          <div class:list={['contenitore', banda.foto && 'duo duo--alto chi-siamo__duo']}>
+            <div class="prosa testo-sito">
+              <Fragment set:html={c} />
+            </div>
+            {banda.foto && <Foto classe="duo__foto chi-siamo__foto" src={`/immagini/${banda.foto}`} alt={T.altFoto[banda.foto]} />}
+          </div>
+        </section>
+      );
+    })
+  }
 </Base>

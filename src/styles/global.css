@@ -743,3 +743,58 @@ mark.segnaposto {
   }
   .indice-sezione__apri[open] > summary { margin-bottom: 0.6rem; }
 }
+
+/* ===========================================================================
+   Bande colorate e foto (aperture di pagina, Home, schede)
+   ======================================================================== */
+.apertura { padding-block: clamp(2rem, 5vw, 3.5rem); }
+.apertura__titolo {
+  font-size: clamp(1.9rem, 4.2vw, 2.9rem);
+  line-height: 1.12;
+  margin: 0;
+}
+.apertura .briciole { margin-bottom: 0.8rem; }
+.apertura .duo__foto img { max-height: 24rem; width: auto; max-width: 100%; margin-left: auto; }
+.sezione--bosco .briciole, .sezione--acqua .briciole, .sezione--terra .briciole { color: var(--chiaro); }
+
+/* Testo scuro dentro le bande scure: tutto chiaro */
+.sezione--bosco :is(strong, em, cite, figcaption, li),
+.sezione--acqua :is(strong, em, cite, figcaption, li),
+.sezione--terra :is(strong, em, cite, figcaption, li) { color: inherit; }
+.sezione--bosco .citazione figcaption,
+.sezione--acqua .citazione figcaption { color: var(--acqua-fondo); }
+.sezione--bosco .citazione--principale blockquote { border-left-color: var(--salvia); }
+
+/* Chi siamo: capitoli a bande con foto */
+.chi-siamo__duo { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+.chi-siamo__foto { position: sticky; top: 6rem; }
+@media (max-width: 56rem) {
+  .chi-siamo__duo { grid-template-columns: 1fr; }
+  .chi-siamo__foto { position: static; }
+}
+.sezione .testo-sito > h2:first-child { margin-top: 0; }
+
+/* Schede con foto, nel colore della sezione */
+.voce-card--foto {
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--raggio-grande);
+  background: var(--superficie);
+  box-shadow: var(--ombra);
+  border-bottom: 6px solid var(--colore-card, var(--bosco));
+}
+.voce-card--bosco { --colore-card: var(--bosco); }
+.voce-card--acqua { --colore-card: var(--acqua); }
+.voce-card--terra { --colore-card: var(--terra); }
+.voce-card--pietra { --colore-card: var(--pietra); }
+.voce-card__foto { display: block; width: 100%; height: auto; }
+.voce-card--foto .voce-card__corpo { padding: 1rem 1.15rem 1.2rem; }
+.sezione--terra .voce-card--foto,
+.sezione--terra .voce-card--foto :is(span) { color: var(--inchiostro); }
+.sezione--terra .voce-card--foto .voce-card__titolo { color: var(--bosco-scuro); }
+.sezione--terra .voce-card--foto .voce-card__paragrafi { color: var(--terra); }
+.elenco-voci { align-items: start; }
+.figura img[src*="faggeta"] { max-width: 22rem; margin-inline: auto; }
+.chi-siamo__foto img { max-height: 30rem; width: auto; max-width: 100%; margin-inline: auto; }

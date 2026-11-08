@@ -31,43 +31,49 @@ const ingressi = sezioni(lingua)
         <h1 class="home__titolo">{T.nomeSito}</h1>
         <Fragment set:html={principale} />
       </div>
-      <Foto classe="duo__foto" src="/immagini/home-banner-valle-del-cifalco.jpg" alt={T.altBanner} />
+      <Foto classe="duo__foto" src="/immagini/home-banner-valle-del-cifalco.jpg" alt={T.altFoto['home-banner-valle-del-cifalco.jpg']} />
     </div>
   </section>
 
-  <section class="sezione home__citazioni" aria-label={T.citazioni}>
+  <section class="sezione sezione--bosco home__citazioni" aria-label={T.citazioni}>
     <div class="contenitore home__citazioni-griglia">
       <Fragment set:html={altre.join('\n')} />
     </div>
   </section>
 
-  <section class="sezione sezione--alternata">
-    <div class="contenitore duo duo--alto">
+  <section class="sezione sezione--acqua">
+    <div class="contenitore duo duo--foto-prima">
       <div class="testo-sito home__elenco">
         <h2>{T.inBreve}</h2>
         <Fragment set:html={testo('home/in-breve', lingua)} />
       </div>
-      <div class="testo-sito home__elenco home__novita">
-        <h2>{T.novita}</h2>
-        <Fragment set:html={testo('home/novita', lingua)} />
-      </div>
+      <Foto classe="duo__foto" src="/immagini/costa-tigullio.jpg" alt={T.altFoto['costa-tigullio.jpg']} />
     </div>
   </section>
 
   <section class="sezione">
+    <div class="contenitore duo">
+      <div class="testo-sito home__elenco home__novita">
+        <h2>{T.novita}</h2>
+        <Fragment set:html={testo('home/novita', lingua)} />
+      </div>
+      <Foto classe="duo__foto" src="/immagini/sentiero-pozza.jpg" alt={T.altFoto['sentiero-pozza.jpg']} />
+    </div>
+  </section>
+
+  <section class="sezione sezione--terra">
     <div class="contenitore">
       <h2>{T.scopri}</h2>
       <ol class="elenco-voci elenco-voci--sezioni">
         {
           ingressi.map((s) => (
             <li>
-              <a class="voce-card card" href={s.href}>
+              <a class={`voce-card voce-card--foto voce-card--${s.colore}`} href={s.href}>
+                <img class="voce-card__foto" src={`/immagini/${s.foto}`} alt="" loading="lazy" decoding="async" />
                 <span class="voce-card__corpo">
                   <span class="voce-card__titolo">{s.titolo}</span>
                   <span class="voce-card__anteprima">{s.anteprima}</span>
-                  <span class="voce-card__paragrafi">
-                    {s.voci.map((v) => `${v.lettera}. ${v.titolo}`).join(' · ')}
-                  </span>
+                  <span class="voce-card__paragrafi">{s.voci.map((v) => v.titolo).join(' · ')}</span>
                 </span>
               </a>
             </li>
