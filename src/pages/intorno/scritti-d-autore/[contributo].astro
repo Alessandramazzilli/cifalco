@@ -1,0 +1,10 @@
+---
+import Contributo from '../../../viste/Contributo.astro';
+import { pagineContributi } from '../../../lib/menu';
+
+export function getStaticPaths() {
+  return pagineContributi().map(({ contributo, nome }) => ({ params: { contributo }, props: { nome } }));
+}
+---
+
+<Contributo nome={Astro.props.nome} />

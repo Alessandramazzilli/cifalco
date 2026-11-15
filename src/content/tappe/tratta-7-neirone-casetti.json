@@ -2,13 +2,17 @@
   "nome": "Tratta 7 · Da Neirone al Passo dei Casetti",
   "da": "Neirone",
   "a": "Passo dei Casetti",
-  "distanzaKm": 7.5,
-  "salitaM": 500,
-  "discesaM": 280,
+  "distanzaKm": 6.9,
+  "salitaM": 633,
+  "discesaM": 421,
   "oreBase": 2.5,
   "segnavia": "Asfaltata fino a Gattorna (nessun segnavia), poi «barra rossa e cerchio rosso», infine segnavia bianco-rosso dell'Itinerario Storico Colombiano",
   "descrizione": "La tratta di collegamento attraverso la Fontanabuona: la discesa a Gattorna, il ponticello di legno sul Lavagna e la risalita per Cassanesi al Passo dei Casetti (550 m), col suo caratteristico ponte sopra il sentiero.",
-  "punti": ["neirone", "gattorna", "passo-dei-casetti"],
+  "punti": [
+    "neirone",
+    "gattorna",
+    "passo-dei-casetti"
+  ],
   "passi": [
     {
       "titolo": "Da Neirone a Gattorna",

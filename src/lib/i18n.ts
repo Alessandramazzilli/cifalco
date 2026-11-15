@@ -53,13 +53,20 @@ export function fmt(s: string, valori: Record<string, string | number>): string 
 
 const it = {
   altFoto: {
-    "faggeta.jpg": "Una faggeta lungo il crinale della Via",
+    "sentiero-faggeta.jpg": "Un sentiero nella faggeta",
+    "croce-vetta-nuvole.jpg": "Una croce di vetta sotto un cielo di nuvole",
+    "girini.jpg": "Girini in una pozza d’acqua",
+    "ruscello-casanova.jpg": "Uno dei ruscelli lungo la discesa verso Casanova",
+    "vista-tigullio-crinale.jpg": "Dai monti, la vista si apre sul Tigullio",
+    "ginestre-monte-caucaso.jpg": "La parete sud del Monte Caucaso con le ginestre in fiore",
+    "chiesa-gattorna.jpg": "La chiesa di Gattorna",
+    "castello-paraggi.jpg": "Il castello di Paraggi sul mare",
+    "portofino-baia.jpg": "Il promontorio di Portofino e le barche fuori dal porticciolo",
     "vetta-rocca-bruna.jpg": "La croce di vetta sul Monte Roccabruna, lungo il crinale della Via",
     "rocca-bosco.jpg": "Una cima rocciosa che emerge dai boschi del crinale",
     "sentiero-pozza.jpg": "Un sentiero nel bosco accanto a una pozza d’acqua",
     "costa-tigullio.jpg": "Il golfo del Tigullio visto dall’alto, dove la Via arriva al mare",
     "home-banner-valle-del-cifalco.jpg": "La valle del Cifalco vista dall’alto, con un borgo tra i boschi",
-    "portofino-baia.jpg": "La baia di Portofino tra i pini",
     "rifugio-terrazza-mare.jpg": "La terrazza di un rifugio con tavoli e vista sul mare",
     "spada-nella-roccia.jpg": "La spada nella roccia sulla vetta del Monte Gifarco",
     "muro-ruota-carro.jpg": "Una vecchia ruota di carro appoggiata al muro di una casa in pietra"
@@ -101,15 +108,20 @@ const it = {
   } as Record<string, string>,
   // Mappa GPX
   mappa: {
+    caricamento: 'Caricamento della mappa…',
+    legenda: 'Legenda della mappa',
+    principale: 'Percorso principale',
+    deviazioni: 'Deviazioni',
+    tratto: 'Tratto scelto nel walking tracker',
+    profilo: 'Profilo altimetrico del percorso principale (quote da {min} a {max} m)',
+    scaricaPrincipale: 'Solo il percorso principale (GPX)',
+    altrove: 'Il file GPX contiene il percorso principale, tutte le deviazioni e i luoghi della Via: si apre con qualsiasi app di escursionismo. Il percorso è anche su OpenStreetMap: <a href="{waymarked}" target="_blank" rel="noopener">Waymarked Trails</a>.',
+    manca: 'La mappa sarà disponibile a breve.',
     regione: 'Mappa della traccia GPX dell’Antica Via del Cifalco',
     scegli: 'Scegli un tratto nel <a href="#quanto-dura">walking tracker</a>: la mappa lo evidenzia.',
-    scarica: 'Scarica la traccia GPX',
-    provvisoriaTitolo: 'Mappa provvisoria della Via del Cifalco',
-    provvisoria:
-      'Mappa provvisoria, in attesa della traccia GPX ufficiale. Il tracciato si può aprire anche su <a href="{google}" target="_blank" rel="noopener">Google Maps</a> e <a href="{oa}" target="_blank" rel="noopener">Outdooractive</a>.',
+    scarica: 'Scarica la traccia GPX completa',
     topografica: 'Topografica',
     stradale: 'Stradale',
-    mancano: 'Per evidenziare il tratto scelto, la traccia GPX deve contenere un punto chiamato: {nomi}.',
     evidenza: 'In evidenza: da {da} a {a}, {km} km sulla traccia.',
   },
   // Walking tracker
@@ -160,7 +172,6 @@ const it = {
       '<strong>Giornata lunga per il tempo che hai indicato.</strong> Parti presto al mattino, oppure scegli un tratto più corto o un passo più realistico: la Via resta lì, non scappa.',
     servonoGiorni:
       '<strong>Servono {n} giorni con le ore che hai a disposizione.</strong> Le notti si organizzano nei <a href="{link}">punti d’appoggio</a> lungo la Via.',
-    misureGpx: 'Misurato sulla traccia GPX: {km} km, salita {salita} m, discesa {discesa} m.',
     zaino: [
       'Scarpe da trekking già rodate',
       'Borraccia da almeno 1 litro',
@@ -195,13 +206,20 @@ export type Dizionario = typeof it;
 
 const en: Dizionario = {
   altFoto: {
-    "faggeta.jpg": "A beech wood along the ridge of the Via",
+    "sentiero-faggeta.jpg": "A path through the beech wood",
+    "croce-vetta-nuvole.jpg": "A summit cross under a cloudy sky",
+    "girini.jpg": "Tadpoles in a pool of water",
+    "ruscello-casanova.jpg": "One of the streams on the descent towards Casanova",
+    "vista-tigullio-crinale.jpg": "From the mountains, the view opens onto the Tigullio",
+    "ginestre-monte-caucaso.jpg": "The south face of Monte Caucaso with the broom in flower",
+    "chiesa-gattorna.jpg": "The church of Gattorna",
+    "castello-paraggi.jpg": "The castle of Paraggi above the sea",
+    "portofino-baia.jpg": "The Portofino headland and the boats outside the little harbour",
     "vetta-rocca-bruna.jpg": "The summit cross on Monte Roccabruna, along the ridge of the Via",
     "rocca-bosco.jpg": "A rocky peak rising from the woods of the ridge",
     "sentiero-pozza.jpg": "A woodland path beside a pool of water",
     "costa-tigullio.jpg": "The Gulf of Tigullio seen from above, where the Via reaches the sea",
     "home-banner-valle-del-cifalco.jpg": "The Cifalco valley seen from above, with a village among the woods",
-    "portofino-baia.jpg": "The bay of Portofino among the pines",
     "rifugio-terrazza-mare.jpg": "The terrace of a mountain hut with tables and a view of the sea",
     "spada-nella-roccia.jpg": "The sword in the stone on the summit of Monte Gifarco",
     "muro-ruota-carro.jpg": "An old cartwheel leaning against the wall of a stone house"
@@ -242,15 +260,20 @@ const en: Dizionario = {
     '/intorno': 'A path beside a pool of water',
   },
   mappa: {
+    caricamento: 'Loading the map…',
+    legenda: 'Map key',
+    principale: 'Main route',
+    deviazioni: 'Detours',
+    tratto: 'Section chosen in the walking tracker',
+    profilo: 'Elevation profile of the main route (from {min} to {max} m)',
+    scaricaPrincipale: 'Main route only (GPX)',
+    altrove: 'The GPX file contains the main route, all the detours and the places along the Via: it opens in any hiking app. The route is also on OpenStreetMap: <a href="{waymarked}" target="_blank" rel="noopener">Waymarked Trails</a>.',
+    manca: 'The map will be available soon.',
     regione: 'Map of the GPX track of the Antica Via del Cifalco',
     scegli: 'Choose a section in the <a href="#quanto-dura">walking tracker</a>: the map will highlight it.',
-    scarica: 'Download the GPX track',
-    provvisoriaTitolo: 'Provisional map of the Via del Cifalco',
-    provvisoria:
-      'Provisional map, pending the official GPX track. The route can also be opened in <a href="{google}" target="_blank" rel="noopener">Google Maps</a> and <a href="{oa}" target="_blank" rel="noopener">Outdooractive</a>.',
+    scarica: 'Download the full GPX track',
     topografica: 'Topographic',
     stradale: 'Road map',
-    mancano: 'To highlight the chosen section, the GPX track must contain a point named: {nomi}.',
     evidenza: 'Highlighted: from {da} to {a}, {km} km on the track.',
   },
   planner: {
@@ -300,7 +323,6 @@ const en: Dizionario = {
       '<strong>A long day for the time you have indicated.</strong> Set off early in the morning, or choose a shorter section or a more realistic pace: the Via will still be there, it is not going anywhere.',
     servonoGiorni:
       '<strong>You need {n} days with the hours you have available.</strong> Nights can be spent at the <a href="{link}">places to stay</a> along the Via.',
-    misureGpx: 'Measured on the GPX track: {km} km, ascent {salita} m, descent {discesa} m.',
     zaino: [
       'Broken-in hiking boots',
       'Water bottle of at least 1 litre',
@@ -333,13 +355,20 @@ const en: Dizionario = {
 
 const fr: Dizionario = {
   altFoto: {
-    "faggeta.jpg": "Une hêtraie le long de la crête de la Via",
+    "sentiero-faggeta.jpg": "Un sentier dans la hêtraie",
+    "croce-vetta-nuvole.jpg": "Une croix sommitale sous un ciel de nuages",
+    "girini.jpg": "Des têtards dans une mare",
+    "ruscello-casanova.jpg": "L’un des ruisseaux sur la descente vers Casanova",
+    "vista-tigullio-crinale.jpg": "Depuis les montagnes, la vue s’ouvre sur le Tigullio",
+    "ginestre-monte-caucaso.jpg": "Le versant sud du Monte Caucaso avec les genêts en fleur",
+    "chiesa-gattorna.jpg": "L’église de Gattorna",
+    "castello-paraggi.jpg": "Le château de Paraggi au-dessus de la mer",
+    "portofino-baia.jpg": "Le promontoire de Portofino et les bateaux devant le petit port",
     "vetta-rocca-bruna.jpg": "La croix sommitale du Monte Roccabruna, le long de la crête de la Via",
     "rocca-bosco.jpg": "Un sommet rocheux qui émerge des bois de la crête",
     "sentiero-pozza.jpg": "Un sentier forestier au bord d’une mare",
     "costa-tigullio.jpg": "Le golfe du Tigullio vu d’en haut, là où la Via rejoint la mer",
     "home-banner-valle-del-cifalco.jpg": "La vallée du Cifalco vue d’en haut, avec un village au milieu des bois",
-    "portofino-baia.jpg": "La baie de Portofino entre les pins",
     "rifugio-terrazza-mare.jpg": "La terrasse d’un refuge avec des tables et vue sur la mer",
     "spada-nella-roccia.jpg": "L’épée dans le rocher au sommet du Monte Gifarco",
     "muro-ruota-carro.jpg": "Une vieille roue de charrette appuyée contre le mur d’une maison en pierre"
@@ -380,15 +409,20 @@ const fr: Dizionario = {
     '/intorno': 'Un sentier au bord d’une mare',
   },
   mappa: {
+    caricamento: 'Chargement de la carte…',
+    legenda: 'Légende de la carte',
+    principale: 'Itinéraire principal',
+    deviazioni: 'Détours',
+    tratto: 'Tronçon choisi dans le walking tracker',
+    profilo: 'Profil altimétrique de l’itinéraire principal (de {min} à {max} m)',
+    scaricaPrincipale: 'Itinéraire principal seul (GPX)',
+    altrove: 'Le fichier GPX contient l’itinéraire principal, tous les détours et les lieux de la Via : il s’ouvre avec n’importe quelle application de randonnée. L’itinéraire figure aussi sur OpenStreetMap : <a href="{waymarked}" target="_blank" rel="noopener">Waymarked Trails</a>.',
+    manca: 'La carte sera bientôt disponible.',
     regione: 'Carte de la trace GPX de l’Antica Via del Cifalco',
     scegli: 'Choisissez un tronçon dans le <a href="#quanto-dura">walking tracker</a> : la carte le met en évidence.',
-    scarica: 'Télécharger la trace GPX',
-    provvisoriaTitolo: 'Carte provisoire de la Via del Cifalco',
-    provvisoria:
-      'Carte provisoire, dans l’attente de la trace GPX officielle. Le tracé peut aussi être ouvert sur <a href="{google}" target="_blank" rel="noopener">Google Maps</a> et <a href="{oa}" target="_blank" rel="noopener">Outdooractive</a>.',
+    scarica: 'Télécharger la trace GPX complète',
     topografica: 'Topographique',
     stradale: 'Routière',
-    mancano: 'Pour mettre en évidence le tronçon choisi, la trace GPX doit contenir un point nommé : {nomi}.',
     evidenza: 'En évidence : de {da} à {a}, {km} km sur la trace.',
   },
   planner: {
@@ -438,7 +472,6 @@ const fr: Dizionario = {
       '<strong>Journée longue pour le temps indiqué.</strong> Partez tôt le matin, ou choisissez un tronçon plus court ou un rythme plus réaliste : la Via restera là, elle ne s’enfuit pas.',
     servonoGiorni:
       '<strong>Il faut {n} jours avec les heures dont vous disposez.</strong> Les nuits s’organisent dans les <a href="{link}">points d’appui</a> le long de la Via.',
-    misureGpx: 'Mesuré sur la trace GPX : {km} km, montée {salita} m, descente {discesa} m.',
     zaino: [
       'Chaussures de randonnée déjà rodées',
       'Gourde d’au moins 1 litre',

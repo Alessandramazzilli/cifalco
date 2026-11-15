@@ -1,6 +1,6 @@
 {
   "nome": "La Via intera",
-  "sottotitolo": "Da Ponte Organasco a Portofino mare",
+  "sottotitolo": "Da Ponte Organasco a Portofino Mare",
   "descrizione": "La traversata completa: dall'alta Val Trebbia al mare di Portofino in otto tratte, circa 23 ore di cammino effettivo. Crinali appenninici, passi, faggete e l'arrivo nel Parco di Portofino: un cammino vero, da costruire sulle proprie gambe in 4 o 5 giorni.",
   "difficolta": "impegnativo",
   "tappe": [
@@ -19,13 +19,13 @@
   "traduzioni": {
     "en": {
       "nome": "The whole Via",
-      "sottotitolo": "From Ponte Organasco to Portofino mare",
+      "sottotitolo": "From Ponte Organasco to Portofino Mare",
       "descrizione": "The complete traverse: from the upper Val Trebbia to the sea at Portofino in eight sections, about 23 hours of actual walking. Apennine ridges, passes, beech woods and the arrival in the Parco di Portofino: a true journey on foot, to be built on your own legs over 4 or 5 days.",
       "giorniConsigliati": "4-5 days"
     },
     "fr": {
       "nome": "La Via intégrale",
-      "sottotitolo": "De Ponte Organasco à Portofino mare",
+      "sottotitolo": "De Ponte Organasco à Portofino Mare",
       "descrizione": "La traversée complète : de la haute Val Trebbia à la mer de Portofino en huit tronçons, environ 23 heures de marche effective. Crêtes apennines, cols, hêtraies et l'arrivée dans le Parco di Portofino : un vrai chemin, à construire sur ses propres jambes en 4 ou 5 jours.",
       "giorniConsigliati": "4-5 jours"
     }

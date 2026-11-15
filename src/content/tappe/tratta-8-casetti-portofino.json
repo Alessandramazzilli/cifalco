@@ -1,14 +1,19 @@
 {
-  "nome": "Tratta 8 · Dal Passo dei Casetti a Portofino mare",
+  "nome": "Tratta 8 · Dal Passo dei Casetti a Portofino Mare",
   "da": "Passo dei Casetti",
-  "a": "Portofino mare",
-  "distanzaKm": 15,
-  "salitaM": 450,
-  "discesaM": 1000,
+  "a": "Portofino Mare",
+  "distanzaKm": 17.5,
+  "salitaM": 853,
+  "discesaM": 1369,
   "oreBase": 5.25,
-  "segnavia": "«Due cerchi rossi vuoti» fino a Ruta, poi «quadrato rosso pieno» fino a Portofino mare",
-  "descrizione": "Il gran finale sulla Via del Sale/Via del Mare: il Passo Spinarola, il Passo del Gallo, le Piane di Caravaggio e la Chiesa «Millenaria» di Ruta, poi l'ingresso nel Parco di Portofino e la discesa per Pietre Strette e San Sebastiano fino al mare.",
-  "punti": ["passo-dei-casetti", "ruta", "pietre-strette", "portofino-mare"],
+  "segnavia": "«Due cerchi rossi vuoti» fino a Ruta, poi «quadrato rosso pieno» fino a Portofino Mare",
+  "descrizione": "Il gran finale sulla “via del sale”/Via del Mare: il Passo Spinarola, il Passo del Gallo, le Piane di Caravaggio e la Chiesa «Millenaria» di Ruta, poi l'ingresso nel Parco di Portofino e la discesa per Pietre Strette e San Sebastiano fino al mare.",
+  "punti": [
+    "passo-dei-casetti",
+    "ruta",
+    "pietre-strette",
+    "portofino-mare"
+  ],
   "passi": [
     {
       "titolo": "Dal Passo dei Casetti al Passo Spinarola",
@@ -20,11 +25,11 @@
     },
     {
       "titolo": "Ruta e l'ingresso nel Parco",
-      "testo": "Dalla «Millenaria», 10 minuti di asfaltata a destra fino al centro di Ruta, dove si incrocia l'Aurelia. Davanti alle panchine con vista sul mare gira a sinistra; superato il bar Egidio, appena prima della galleria, il cartello «quadrato rosso pieno» segna la scalinata verso la Chiesa di San Michele. Lasciata la chiesa a sinistra, a destra parte il sentiero per Portofino mare: sei nel Parco del Monte di Portofino."
+      "testo": "Dalla «Millenaria», 10 minuti di asfaltata a destra fino al centro di Ruta, dove si incrocia l'Aurelia. Davanti alle panchine con vista sul mare gira a sinistra; superato il bar Egidio, appena prima della galleria, il cartello «quadrato rosso pieno» segna la scalinata verso la Chiesa di San Michele. Lasciata la chiesa a sinistra, a destra parte il sentiero per Portofino Mare: sei nel Parco del Monte di Portofino."
     },
     {
       "titolo": "La discesa al mare",
-      "testo": "In 2 h 15 dall'ultimo cartello a Ruta si arriva a Portofino mare per la Sella della Gaixella, Pietre Strette e San Sebastiano. A Portofino non c'è stazione: si raggiungono via mare Santa Margherita, Rapallo e Camogli, oppure Santa Margherita a piedi in 1 h 15 («tre pallini rossi pieni» fino a Paraggi, poi lungomare)."
+      "testo": "In 2 h 15 dall'ultimo cartello a Ruta si arriva a Portofino Mare per la Sella della Gaixella, Pietre Strette e San Sebastiano. A Portofino non c'è stazione: si raggiungono via mare Santa Margherita, Rapallo e Camogli, oppure Santa Margherita a piedi in 1 h 15 («tre pallini rossi pieni» fino a Paraggi, poi lungomare)."
     }
   ],
   "deviazioni": [
@@ -55,9 +60,9 @@
   ],
   "traduzioni": {
     "en": {
-      "nome": "Section 8 · From the Passo dei Casetti to Portofino mare",
-      "descrizione": "The grand finale on the Via del Sale/Via del Mare: the Passo Spinarola, the Passo del Gallo, the Piane di Caravaggio and the “Millenaria” church of Ruta, then the entrance to the Parco di Portofino and the descent via Pietre Strette and San Sebastiano down to the sea.",
-      "segnavia": "“Two hollow red circles” as far as Ruta, then “solid red square” as far as Portofino mare",
+      "nome": "Section 8 · From the Passo dei Casetti to Portofino Mare",
+      "descrizione": "The grand finale on the “via del sale”/Via del Mare: the Passo Spinarola, the Passo del Gallo, the Piane di Caravaggio and the “Millenaria” church of Ruta, then the entrance to the Parco di Portofino and the descent via Pietre Strette and San Sebastiano down to the sea.",
+      "segnavia": "“Two hollow red circles” as far as Ruta, then “solid red square” as far as Portofino Mare",
       "passi": [
         {
           "titolo": "From the Passo dei Casetti to the Passo Spinarola",
@@ -69,11 +74,11 @@
         },
         {
           "titolo": "Ruta and the entrance to the Park",
-          "testo": "From the “Millenaria”, 10 minutes of paved road to the right to the centre of Ruta, where you meet the Aurelia. In front of the benches overlooking the sea turn left; past the bar Egidio, just before the tunnel, the “solid red square” sign marks the steps up to the Chiesa di San Michele. With the church on your left, the trail to Portofino mare starts on the right: you are in the Parco del Monte di Portofino."
+          "testo": "From the “Millenaria”, 10 minutes of paved road to the right to the centre of Ruta, where you meet the Aurelia. In front of the benches overlooking the sea turn left; past the bar Egidio, just before the tunnel, the “solid red square” sign marks the steps up to the Chiesa di San Michele. With the church on your left, the trail to Portofino Mare starts on the right: you are in the Parco del Monte di Portofino."
         },
         {
           "titolo": "The descent to the sea",
-          "testo": "In 2 h 15 from the last sign in Ruta you reach Portofino mare via the Sella della Gaixella, Pietre Strette and San Sebastiano. Portofino has no station: Santa Margherita, Rapallo and Camogli can be reached by sea, or Santa Margherita on foot in 1 h 15 (“three solid red dots” as far as Paraggi, then along the seafront)."
+          "testo": "In 2 h 15 from the last sign in Ruta you reach Portofino Mare via the Sella della Gaixella, Pietre Strette and San Sebastiano. Portofino has no station: Santa Margherita, Rapallo and Camogli can be reached by sea, or Santa Margherita on foot in 1 h 15 (“three solid red dots” as far as Paraggi, then along the seafront)."
         }
       ],
       "deviazioni": [
@@ -104,9 +109,9 @@
       ]
     },
     "fr": {
-      "nome": "Tronçon 8 · Du Passo dei Casetti à Portofino mare",
-      "descrizione": "Le grand final sur la Via del Sale/Via del Mare : le Passo Spinarola, le Passo del Gallo, les Piane di Caravaggio et l'église « Millenaria » de Ruta, puis l'entrée dans le Parco di Portofino et la descente par Pietre Strette et San Sebastiano jusqu'à la mer.",
-      "segnavia": "« Deux cercles rouges vides » jusqu'à Ruta, puis « carré rouge plein » jusqu'à Portofino mare",
+      "nome": "Tronçon 8 · Du Passo dei Casetti à Portofino Mare",
+      "descrizione": "Le grand final sur la « via del sale »/Via del Mare : le Passo Spinarola, le Passo del Gallo, les Piane di Caravaggio et l'église « Millenaria » de Ruta, puis l'entrée dans le Parco di Portofino et la descente par Pietre Strette et San Sebastiano jusqu'à la mer.",
+      "segnavia": "« Deux cercles rouges vides » jusqu'à Ruta, puis « carré rouge plein » jusqu'à Portofino Mare",
       "passi": [
         {
           "titolo": "Du Passo dei Casetti au Passo Spinarola",
@@ -118,11 +123,11 @@
         },
         {
           "titolo": "Ruta et l'entrée dans le Parc",
-          "testo": "Depuis la « Millenaria », 10 minutes de route goudronnée à droite jusqu'au centre de Ruta, où l'on croise l'Aurelia. Devant les bancs avec vue sur la mer, tourne à gauche ; après le bar Egidio, juste avant le tunnel, le panneau « carré rouge plein » signale l'escalier vers la Chiesa di San Michele. En laissant l'église à gauche, le sentier pour Portofino mare part à droite : tu es dans le Parco del Monte di Portofino."
+          "testo": "Depuis la « Millenaria », 10 minutes de route goudronnée à droite jusqu'au centre de Ruta, où l'on croise l'Aurelia. Devant les bancs avec vue sur la mer, tourne à gauche ; après le bar Egidio, juste avant le tunnel, le panneau « carré rouge plein » signale l'escalier vers la Chiesa di San Michele. En laissant l'église à gauche, le sentier pour Portofino Mare part à droite : tu es dans le Parco del Monte di Portofino."
         },
         {
           "titolo": "La descente vers la mer",
-          "testo": "En 2 h 15 depuis le dernier panneau à Ruta, on arrive à Portofino mare par la Sella della Gaixella, Pietre Strette et San Sebastiano. Portofino n'a pas de gare : on rejoint Santa Margherita, Rapallo et Camogli par la mer, ou Santa Margherita à pied en 1 h 15 (« trois points rouges pleins » jusqu'à Paraggi, puis le bord de mer)."
+          "testo": "En 2 h 15 depuis le dernier panneau à Ruta, on arrive à Portofino Mare par la Sella della Gaixella, Pietre Strette et San Sebastiano. Portofino n'a pas de gare : on rejoint Santa Margherita, Rapallo et Camogli par la mer, ou Santa Margherita à pied en 1 h 15 (« trois points rouges pleins » jusqu'à Paraggi, puis le bord de mer)."
         }
       ],
       "deviazioni": [

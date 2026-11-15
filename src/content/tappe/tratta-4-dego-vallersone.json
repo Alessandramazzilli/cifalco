@@ -2,13 +2,17 @@
   "nome": "Tratta 4 · Dalle pendici del Monte Dego al Passo di Vallersone",
   "da": "Pendici del Monte Dego",
   "a": "Passo di Vallersone",
-  "distanzaKm": 4.5,
-  "salitaM": 150,
-  "discesaM": 220,
+  "distanzaKm": 5.1,
+  "salitaM": 216,
+  "discesaM": 307,
   "oreBase": 1.5,
   "segnavia": "Sentiero CAI 127, poi «pallino giallo pieno»",
   "descrizione": "Dalle pendici del Dego al Rifugio Prati di Foppiano e al Passo di Vallersone, dove si aggancia il segnavia «pallino giallo pieno» che accompagnerà fino a Barbagelata. Intorno, le deviazioni più belle: Oramara, Montarlone e la discesa a Casanova.",
-  "punti": ["monte-dego", "rifugio-prati-di-foppiano", "passo-di-vallersone"],
+  "punti": [
+    "monte-dego",
+    "rifugio-prati-di-foppiano",
+    "passo-di-vallersone"
+  ],
   "passi": [
     {
       "titolo": "Il Rifugio Prati di Foppiano",

@@ -5,5 +5,7 @@
   "y": 575,
   "acquaPotabile": true,
   "descrizione": "Borgo della Fontanabuona, fine della sesta tratta. Lo snodo principale del paese, il parcheggio di fianco alla chiesa, ai piedi della scalinata del municipio, è il principio di molti itinerari escursionistici. Punto d'appoggio nelle vicinanze: il B&B Ca' da Nonna, sulla strada per Gattorna.",
-  "appoggio": true
+  "appoggio": true,
+  "lat": 44.453706,
+  "lon": 9.189399
 }

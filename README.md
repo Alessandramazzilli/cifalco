@@ -34,7 +34,8 @@ Segue lo «schema base» di Luchino (`scripts/docx/originali/`):
 2. Chi siamo (a–d, una sola pagina)
 3. Fare il cammino: informazioni pratiche (a–g, una pagina per voce)
 4. Approfondimenti (a–f, una pagina per voce)
-5. Intorno all'Antica Via del Cifalco (e oltre): per ora solo c. Altri cammini
+5. Intorno alla Via del Cifalco (e oltre): Scritti d'autore (una pagina per
+   contributo) e Altri cammini; «Dicono di noi» si aprirà più avanti
 6. Contatti
 
 Il menu, il piè di pagina, gli indici di sezione e le anteprime della Home
@@ -74,6 +75,16 @@ Convenzioni usate nei testi:
   varianti in `<div class="percorso-alt percorso-alt--deviazione">` (o
   `--variante`). I segnavia sono disegnati come icone (`<span class="segnavia">`).
 
+**Nuovo contributo in «Scritti d'autore»:** metti il Word in
+`scripts/docx/originali/scritti/`, aggiungilo all'elenco in
+`scripts/docx/interviste.py` e lancia lo script; poi aggiungi il contributo
+ai `paragrafi` della voce «Scritti d'autore» in `src/lib/menu.ts` (titolo,
+autore, indirizzo) e le traduzioni in `src/testi/en/` e `src/testi/fr/`.
+
+**Foto:** ogni foto compare una sola volta nel sito. Le foto d'apertura delle
+pagine sono nel campo `foto` di `src/lib/menu.ts`; quelle dentro i testi
+lunghi sono in `src/viste/Voce.astro` (elenco `FOTO_NEL_TESTO`).
+
 I testi sono stati generati una volta dai Word con
 `python3 scripts/docx/converti.py`. **Non rilanciarlo** dopo aver corretto i
 file di `src/testi/`: li riscriverebbe da zero.
@@ -101,21 +112,25 @@ a bandierine in alto porta alla stessa pagina nell'altra lingua.
 
 ## La mappa GPX e il walking tracker
 
-La mappa compare da sola quando si carica la traccia in
-`public/gpx/antica-via-del-cifalco.gpx`. Finché il file manca, la pagina
-mostra il segnaposto e la mappa provvisoria di Google My Maps.
+Le tracce del cartografo (percorso principale + una traccia per deviazione)
+stanno in `scripts/gpx/originali/`. Lo script
 
-Perché mappa e tracker siano sincronizzati, i **waypoint** della traccia GPX
-devono chiamarsi come i punti in `src/content/punti/` (es. «Ponte Organasco»,
-«Cerignale», «Oneto», «Barbagelata», «Neirone», «Portofino mare»…). Così,
-quando nel tracker si sceglie un tratto, la mappa lo evidenzia e misura km e
-dislivelli reali, che il tracker mostra accanto alle sue stime. In
-alternativa ai waypoint si possono scrivere `"lat"` e `"lon"` nel file JSON
-del punto.
+```bash
+python3 scripts/gpx/prepara.py
+```
 
-Le tratte del tracker (`src/content/tappe/`) corrispondono alle tratte della
-descrizione dettagliata: se cambiano tempi o segnavia nel testo, conviene
-aggiornarle anche lì.
+prepara i file scaricabili in `public/gpx/` (uno con tutto, uno con il solo
+percorso principale), scrive le coordinate dei luoghi in
+`src/content/punti/` e misura distanza e dislivelli di ogni tratta del
+walking tracker sulla traccia (`src/content/tappe/`). Così tracker, mappa e
+profilo altimetrico danno gli stessi numeri (75 km, 4677 m di salita).
+
+Se il cartografo aggiorna le tracce: si sostituiscono i file in
+`scripts/gpx/originali/` e si rilancia lo script. La posizione dei luoghi
+lungo il percorso (in km) è nell'elenco `SUL_PERCORSO` dello script.
+
+I tempi delle tratte (`oreBase`) restano quelli della descrizione di
+Luchino: se cambiano nel testo, vanno aggiornati anche nei file delle tappe.
 
 ---
 

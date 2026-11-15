@@ -5,5 +5,7 @@
   "y": 420,
   "quota": 1075,
   "acquaPotabile": false,
-  "descrizione": "Il Rio dell'Acquapendente è un luogo caratteristico, noto per un fenomeno geologico di cattura fluviale. Da qui parte la ripida e faticosa salita che in circa mezz'ora porta alla vetta del Monte Caucaso."
+  "descrizione": "Il Rio dell'Acquapendente è un luogo caratteristico, noto per un fenomeno geologico di cattura fluviale. Da qui parte la ripida e faticosa salita che in circa mezz'ora porta alla vetta del Monte Caucaso.",
+  "lat": 44.45912,
+  "lon": 9.232192
 }

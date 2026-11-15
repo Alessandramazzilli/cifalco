@@ -1,0 +1,18 @@
+---
+/** Pagina di un contributo di «Scritti d'autore» (es. un'intervista). */
+import PaginaSezione from '../layouts/PaginaSezione.astro';
+import { testo, anteprima } from '../lib/testi';
+import { linguaDa } from '../lib/i18n';
+
+interface Props {
+  nome: string; // es. 'intorno/scritti-d-autore/sandro-sbarbaro'
+}
+const lingua = linguaDa(Astro.url.pathname);
+const html = testo(Astro.props.nome, lingua);
+---
+
+<PaginaSezione descrizione={anteprima(html, 155)} testo="">
+  <div class="intervista">
+    <Fragment set:html={html} />
+  </div>
+</PaginaSezione>

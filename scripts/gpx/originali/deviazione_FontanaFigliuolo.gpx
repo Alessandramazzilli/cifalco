@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="GDAL 3.13.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<metadata>
+<bounds minlat="44.566870038149425" minlon="9.356028082383991" maxlat="44.568443500000001" maxlon="9.367867100000000"/>                                         
+</metadata>
+<trk>
+  <name>deviazione Fontana del Figliolo</name>
+  <trkseg>
+    <trkpt lat="44.567605" lon="9.3678671">
+        <ele>1330.691162109375</ele>
+    </trkpt>
+    <trkpt lat="44.5676026" lon="9.3677777">
+        <ele>1330.522705078125</ele>
+    </trkpt>
+    <trkpt lat="44.5676297" lon="9.3675556">
+        <ele>1330.149658203125</ele>
+    </trkpt>
+    <trkpt lat="44.5676211" lon="9.3673055">
+        <ele>1330.867919921875</ele>
+    </trkpt>
+    <trkpt lat="44.5675436" lon="9.3664369">
+        <ele>1341.5013427734375</ele>
+    </trkpt>
+    <trkpt lat="44.5674001" lon="9.3661963">
+        <ele>1345.5450439453125</ele>
+    </trkpt>
+    <trkpt lat="44.5673869" lon="9.3660148">
+        <ele>1348.109375</ele>
+    </trkpt>
+    <trkpt lat="44.5674542" lon="9.3658633">
+        <ele>1352.738037109375</ele>
+    </trkpt>
+    <trkpt lat="44.5675846" lon="9.3658344">
+        <ele>1356.8353271484375</ele>
+    </trkpt>
+    <trkpt lat="44.5676967" lon="9.3657265">
+        <ele>1358.7081298828125</ele>
+    </trkpt>
+    <trkpt lat="44.5678015" lon="9.3655237">
+        <ele>1364.302001953125</ele>
+    </trkpt>
+    <trkpt lat="44.5676464" lon="9.3650144">
+        <ele>1367.8179931640625</ele>
+    </trkpt>
+    <trkpt lat="44.5674759" lon="9.364337">
+        <ele>1358.94140625</ele>
+    </trkpt>
+    <trkpt lat="44.5677576" lon="9.3640222">
+        <ele>1357.6590576171875</ele>
+    </trkpt>
+    <trkpt lat="44.5679266" lon="9.363261">
+        <ele>1371.67529296875</ele>
+    </trkpt>
+    <trkpt lat="44.568020899999986" lon="9.3625979">
+        <ele>1377.4122314453125</ele>
+    </trkpt>
+    <trkpt lat="44.5678184" lon="9.3622395">
+        <ele>1374.3936767578125</ele>
+    </trkpt>
+    <trkpt lat="44.567827200000011" lon="9.3614856">
+        <ele>1383.8504638671875</ele>
+    </trkpt>
+    <trkpt lat="44.568038499999986" lon="9.3606823">
+        <ele>1385.286376953125</ele>
+    </trkpt>
+    <trkpt lat="44.5684435" lon="9.3600149">
+        <ele>1372.08935546875</ele>
+    </trkpt>
+    <trkpt lat="44.568320300000011" lon="9.3595206">
+        <ele>1367.955810546875</ele>
+    </trkpt>
+    <trkpt lat="44.5678888" lon="9.3594094">
+        <ele>1368.946044921875</ele>
+    </trkpt>
+    <trkpt lat="44.5674838" lon="9.3583218">
+        <ele>1349.1134033203125</ele>
+    </trkpt>
+    <trkpt lat="44.5670084" lon="9.3580005">
+        <ele>1361.8282470703125</ele>
+    </trkpt>
+    <trkpt lat="44.5669996" lon="9.3574197">
+        <ele>1347.3826904296875</ele>
+    </trkpt>
+    <trkpt lat="44.5670524" lon="9.3565175">
+        <ele>1343.2230224609375</ele>
+    </trkpt>
+    <trkpt lat="44.566870038149425" lon="9.356028082383991">
+        <ele>1337.521240234375</ele>
+    </trkpt>
+  </trkseg>
+</trk>
+</gpx>

@@ -2,13 +2,17 @@
   "nome": "Tratta 1 · Ponte Organasco, Cerignale, Oneto",
   "da": "Ponte Organasco",
   "a": "Oneto",
-  "distanzaKm": 5.5,
-  "salitaM": 480,
-  "discesaM": 130,
+  "distanzaKm": 7.2,
+  "salitaM": 581,
+  "discesaM": 257,
   "oreBase": 1.67,
-  "segnavia": "«Anello dei Borghi» (di prossima realizzazione) fino a Cerignale, poi sentiero CAI 177",
+  "segnavia": "«Anello dei Borghi» fino a Cerignale, poi sentiero CAI 177",
   "descrizione": "L'avvio della Via: da Ponte Organasco (457 m) si sale a Cerignale (725 m) in un'ora e da lì, con il sentiero CAI 177, si raggiunge Oneto (811 m) in quaranta minuti, venti dei quali su asfaltata.",
-  "punti": ["ponte-organasco", "cerignale", "oneto"],
+  "punti": [
+    "ponte-organasco",
+    "cerignale",
+    "oneto"
+  ],
   "passi": [
     {
       "titolo": "Partenza dalla Locanda Rosa",
@@ -27,7 +31,7 @@
     "en": {
       "nome": "Section 1 · Ponte Organasco, Cerignale, Oneto",
       "descrizione": "The start of the Via: from Ponte Organasco (457 m) you climb to Cerignale (725 m) in an hour, and from there, on CAI trail 177, you reach Oneto (811 m) in forty minutes, twenty of them on a paved road.",
-      "segnavia": "“Anello dei Borghi” (coming soon) as far as Cerignale, then CAI trail 177",
+      "segnavia": "“Anello dei Borghi” as far as Cerignale, then CAI trail 177",
       "passi": [
         {
           "titolo": "Setting off from the Locanda Rosa",
@@ -46,7 +50,7 @@
     "fr": {
       "nome": "Tronçon 1 · Ponte Organasco, Cerignale, Oneto",
       "descrizione": "Le départ de la Via : de Ponte Organasco (457 m), on monte à Cerignale (725 m) en une heure, puis, par le sentier CAI 177, on rejoint Oneto (811 m) en quarante minutes, dont vingt sur route goudronnée.",
-      "segnavia": "« Anello dei Borghi » (bientôt balisé) jusqu'à Cerignale, puis sentier CAI 177",
+      "segnavia": "« Anello dei Borghi » jusqu'à Cerignale, puis sentier CAI 177",
       "passi": [
         {
           "titolo": "Départ de la Locanda Rosa",

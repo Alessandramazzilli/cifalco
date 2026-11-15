@@ -2,13 +2,17 @@
   "nome": "Tratta 3 · Dalle pendici del Monte delle Tane alle pendici del Monte Dego",
   "da": "Pendici del Monte delle Tane",
   "a": "Pendici del Monte Dego",
-  "distanzaKm": 9,
-  "salitaM": 520,
-  "discesaM": 140,
+  "distanzaKm": 9.1,
+  "salitaM": 534,
+  "discesaM": 317,
   "oreBase": 3,
   "segnavia": "Sentieri CAI 179, 129 e 127",
   "descrizione": "La lunga cavalcata di crinale: il Bivio Veri (1080 m), la vetta non segnata del Monte Veri (1223 m) e l'avvicinamento al Monte Dego (1427 m), con le deviazioni per Ottone, Cariseto e Toveraia.",
-  "punti": ["monte-delle-tane", "monte-veri", "monte-dego"],
+  "punti": [
+    "monte-delle-tane",
+    "monte-veri",
+    "monte-dego"
+  ],
   "passi": [
     {
       "titolo": "Fino al Bivio Veri",

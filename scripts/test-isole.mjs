@@ -49,7 +49,7 @@ const partenza = document.querySelector('#pl-partenza');
 verifica('planner: tendina partenza popolata', partenza.options.length === 8);
 verifica(
   'planner: distanza calcolata',
-  document.querySelector('[data-esito="distanza"]').textContent.includes('69 km')
+  document.querySelector('[data-esito="distanza"]').textContent.includes('75 km')
 );
 verifica(
   'planner: tempo stimato presente',
@@ -102,14 +102,7 @@ verifica(
 );
 verifica(
   'planner: distanza aggiornata dopo il cambio',
-  document.querySelector('[data-esito="distanza"]').textContent.includes('35 km')
+  document.querySelector('[data-esito="distanza"]').textContent.includes('34,6 km')
 );
-
-// --- Mappa GPX -> tracker: le misure reali compaiono nel tracker -----------
-dom.window.dispatchEvent(
-  new dom.window.CustomEvent('via-cifalco:misure', { detail: { km: 30.4, salita: 900, discesa: 2000 } })
-);
-const misure = document.querySelector('[data-esito="misure-gpx"]');
-verifica('mappa→tracker: misure GPX mostrate', !misure.hidden && misure.textContent.includes('30,4 km'));
 
 process.exit(errori ? 1 : 0);

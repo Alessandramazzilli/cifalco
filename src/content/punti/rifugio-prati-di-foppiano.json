@@ -5,5 +5,7 @@
   "y": 160,
   "acquaPotabile": false,
   "descrizione": "A un'ora dalle pendici del Dego. Niente posti letto: solo la possibilità di cucinare sul posto e ripararsi all'interno. Con una deviazione di venti minuti su sentiero non segnato, dal bivio dopo il rifugio si raggiunge la Fontana del Figliolo.",
-  "appoggio": true
+  "appoggio": true,
+  "lat": 44.568969,
+  "lon": 9.37035
 }

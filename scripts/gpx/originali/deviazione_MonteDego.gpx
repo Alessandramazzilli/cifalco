@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="GDAL 3.13.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<metadata>
+<bounds minlat="44.586656200000007" minlon="9.362211700000000" maxlat="44.586984199999989" maxlon="9.363745300000000"/>                                         
+</metadata>
+<trk>
+  <name>deviazione cima Monte Dego</name>
+  <trkseg>
+    <trkpt lat="44.5868531" lon="9.3622117">
+        <ele>1390.186767578125</ele>
+    </trkpt>
+    <trkpt lat="44.5868659" lon="9.3622933">
+        <ele>1391.37451171875</ele>
+    </trkpt>
+    <trkpt lat="44.58688249999998" lon="9.3623633">
+        <ele>1393.3092041015625</ele>
+    </trkpt>
+    <trkpt lat="44.5867828" lon="9.3624274">
+        <ele>1394.327392578125</ele>
+    </trkpt>
+    <trkpt lat="44.5866603" lon="9.3625936">
+        <ele>1398.0526123046875</ele>
+    </trkpt>
+    <trkpt lat="44.5866562" lon="9.362681">
+        <ele>1399.801513671875</ele>
+    </trkpt>
+    <trkpt lat="44.586745499999985" lon="9.3627568">
+        <ele>1404.5849609375</ele>
+    </trkpt>
+    <trkpt lat="44.5868513" lon="9.3627247">
+        <ele>1404.28466796875</ele>
+    </trkpt>
+    <trkpt lat="44.5869157" lon="9.3628093">
+        <ele>1405.74755859375</ele>
+    </trkpt>
+    <trkpt lat="44.5869821" lon="9.3630133">
+        <ele>1411.4566650390625</ele>
+    </trkpt>
+    <trkpt lat="44.586984199999989" lon="9.3632115">
+        <ele>1415.41943359375</ele>
+    </trkpt>
+    <trkpt lat="44.5869468" lon="9.3634097">
+        <ele>1419.64013671875</ele>
+    </trkpt>
+    <trkpt lat="44.5869052" lon="9.3637453">
+        <ele>1425.9478759765625</ele>
+    </trkpt>
+  </trkseg>
+</trk>
+</gpx>

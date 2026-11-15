@@ -31,16 +31,10 @@ const voci = sezione.voci.map((v) => ({ ...v, anteprima: anteprima(testo(nomeTes
       {
         voci.map((v) => (
           <li>
-            <a class={`voce-card voce-card--foto voce-card--${sezione.colore}`} href={v.href}>
-              <img class="voce-card__foto" src={`/immagini/${v.foto ?? sezione.foto}`} alt="" loading="lazy" decoding="async" />
+            <a class={`voce-card voce-card--colore voce-card--${sezione.colore}`} href={v.href}>
               <span class="voce-card__corpo">
                 <span class="voce-card__titolo">{v.titolo}</span>
                 <span class="voce-card__anteprima">{v.anteprima}</span>
-                {v.paragrafi && (
-                  <span class="voce-card__paragrafi">
-                    {v.paragrafi.map((p) => p.titolo).join(' · ')}
-                  </span>
-                )}
               </span>
             </a>
           </li>

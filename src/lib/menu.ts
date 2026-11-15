@@ -12,7 +12,8 @@ import { type Lingua, localizza, senzaLingua } from './i18n';
 export interface Paragrafo {
   numero: string; // «i», «ii», …
   titolo: string;
-  href: string;
+  href: string; // con «#…»: capitolo della pagina; senza: pagina a sé (es. un contributo)
+  autore?: string; // per i contributi di «Scritti d'autore»
 }
 
 export interface Voce {
@@ -41,7 +42,7 @@ export const SEZIONI: Sezione[] = [
     breve: 'Chi siamo',
     href: '/chi-siamo',
     colore: 'bosco',
-    foto: 'muro-ruota-carro.jpg',
+    foto: '',
     voci: [
       { lettera: 'a', titolo: 'Il progetto', href: '/chi-siamo#il-progetto' },
       { lettera: 'b', titolo: 'Le persone', href: '/chi-siamo#le-persone' },
@@ -57,14 +58,14 @@ export const SEZIONI: Sezione[] = [
     colore: 'acqua',
     foto: 'vetta-rocca-bruna.jpg',
     voci: [
-      { lettera: 'a', titolo: 'Premessa sull’itinerario proposto', href: '/fare-il-cammino/premessa', foto: 'rocca-bosco.jpg' },
-      { lettera: 'b', titolo: 'Come arrivare al punto di partenza', href: '/fare-il-cammino/come-arrivare', foto: 'home-banner-valle-del-cifalco.jpg' },
-      { lettera: 'c', titolo: 'Rientrare', href: '/fare-il-cammino/rientrare', foto: 'portofino-baia.jpg' },
-      { lettera: 'd', titolo: 'Vie di fuga', href: '/fare-il-cammino/vie-di-fuga', foto: 'sentiero-pozza.jpg' },
+      { lettera: 'a', titolo: 'Premessa sull’itinerario proposto', href: '/fare-il-cammino/premessa' },
+      { lettera: 'b', titolo: 'Come arrivare al punto di partenza', href: '/fare-il-cammino/come-arrivare' },
+      { lettera: 'c', titolo: 'Rientrare', href: '/fare-il-cammino/rientrare' },
+      { lettera: 'd', titolo: 'Vie di fuga', href: '/fare-il-cammino/vie-di-fuga' },
       {
         lettera: 'e',
         titolo: 'Organizzare il viaggio: tappe, deviazioni e mappe',
-        href: '/fare-il-cammino/organizzare-il-viaggio', foto: 'vetta-rocca-bruna.jpg',
+        href: '/fare-il-cammino/organizzare-il-viaggio',
         paragrafi: [
           { numero: 'i', titolo: 'Quanto dura la Via del Cifalco?', href: '/fare-il-cammino/organizzare-il-viaggio#quanto-dura' },
           { numero: 'ii', titolo: 'Descrizione dettagliata dell’itinerario', href: '/fare-il-cammino/organizzare-il-viaggio#descrizione-dettagliata' },
@@ -80,7 +81,7 @@ export const SEZIONI: Sezione[] = [
           { numero: 'ii', titolo: 'Rifugi non attrezzati', href: '/fare-il-cammino/punti-di-appoggio#rifugi' },
         ],
       },
-      { lettera: 'g', titolo: 'Avvertenze', href: '/fare-il-cammino/avvertenze', foto: 'faggeta.jpg' },
+      { lettera: 'g', titolo: 'Avvertenze', href: '/fare-il-cammino/avvertenze', foto: 'sentiero-faggeta.jpg' },
     ],
   },
   {
@@ -92,12 +93,12 @@ export const SEZIONI: Sezione[] = [
     foto: 'rocca-bosco.jpg',
     voci: [
       { lettera: 'a', titolo: 'Le incerte origini dell’Antica Via del Cifalco', href: '/approfondimenti/origini', foto: 'spada-nella-roccia.jpg' },
-      { lettera: 'b', titolo: 'Cenni storici sul territorio', href: '/approfondimenti/cenni-storici', foto: 'home-banner-valle-del-cifalco.jpg' },
-      { lettera: 'c', titolo: 'La civiltà rurale sulle Vie del Sale', href: '/approfondimenti/civilta-rurale', foto: 'muro-ruota-carro.jpg' },
+      { lettera: 'b', titolo: 'Cenni storici sul territorio', href: '/approfondimenti/cenni-storici', foto: 'croce-vetta-nuvole.jpg' },
+      { lettera: 'c', titolo: 'La civiltà rurale sulle “vie del sale”', href: '/approfondimenti/civilta-rurale' },
       {
         lettera: 'd',
         titolo: 'Natura e paesaggio, dai monti al mare',
-        href: '/approfondimenti/natura-e-paesaggio', foto: 'faggeta.jpg',
+        href: '/approfondimenti/natura-e-paesaggio',
         paragrafi: [
           { numero: 'i', titolo: 'L’Appennino “continentale”', href: '/approfondimenti/natura-e-paesaggio#appennino-continentale' },
           { numero: 'ii', titolo: 'L’Appennino “marittimo”', href: '/approfondimenti/natura-e-paesaggio#appennino-marittimo' },
@@ -106,26 +107,38 @@ export const SEZIONI: Sezione[] = [
       {
         lettera: 'e',
         titolo: 'Le tappe della Via del Cifalco tra storia, natura e cultura',
-        href: '/approfondimenti/tappe', foto: 'costa-tigullio.jpg',
+        href: '/approfondimenti/tappe',
         paragrafi: [
           { numero: 'i', titolo: 'L’Appennino “continentale”', href: '/approfondimenti/tappe#appennino-continentale' },
           { numero: 'ii', titolo: 'L’Appennino “marittimo”', href: '/approfondimenti/tappe#appennino-marittimo' },
-          { numero: 'iii', titolo: 'Il Parco del M. di Portofino: l’arrivo a Portofino mare e la fine della Via del Cifalco', href: '/approfondimenti/tappe#parco-portofino' },
+          { numero: 'iii', titolo: 'Il Parco del M. di Portofino: l’arrivo a Portofino Mare e la fine della Via del Cifalco', href: '/approfondimenti/tappe#parco-portofino' },
         ],
       },
-      { lettera: 'f', titolo: 'Riferimenti bibliografici', href: '/approfondimenti/bibliografia', foto: 'rocca-bosco.jpg' },
+      { lettera: 'f', titolo: 'Riferimenti bibliografici', href: '/approfondimenti/bibliografia' },
     ],
   },
   {
     numero: 5,
-    titolo: 'Intorno all’Antica Via del Cifalco (e oltre)',
-    breve: 'Intorno alla Via (e oltre)',
+    titolo: 'Intorno alla Via del Cifalco (e oltre)',
+    breve: 'Intorno alla Via del Cifalco (e oltre)',
     href: '/intorno',
     colore: 'pietra',
     foto: 'sentiero-pozza.jpg',
     // 5a «Scritti d'autore» e 5b «Dicono di noi» verranno aperte con i
     // primi contributi: per ora non compaiono.
-    voci: [{ lettera: 'c', titolo: 'Altri cammini', href: '/intorno/altri-cammini', foto: 'sentiero-pozza.jpg' }],
+    voci: [
+      {
+        lettera: 'a',
+        titolo: 'Scritti d’autore',
+        href: '/intorno/scritti-d-autore',
+        // Un contributo = una pagina (testo in src/testi/intorno/scritti-d-autore/).
+        paragrafi: [
+          { numero: 'i', titolo: 'Poeti, banditi e altri pensatori tra Trebbia e Aveto', href: '/intorno/scritti-d-autore/sandro-sbarbaro', autore: 'Sandro Sbarbaro' },
+          { numero: 'ii', titolo: 'Il vizio della memoria', href: '/intorno/scritti-d-autore/dino-magistrati', autore: 'Dino Magistrati' },
+        ],
+      },
+      { lettera: 'c', titolo: 'Altri cammini', href: '/intorno/altri-cammini' },
+    ],
   },
   {
     numero: 6,
@@ -133,7 +146,7 @@ export const SEZIONI: Sezione[] = [
     breve: 'Contatti',
     href: '/contatti',
     colore: 'bosco',
-    foto: 'costa-tigullio.jpg',
+    foto: '',
     voci: [],
   },
 ];
@@ -141,11 +154,13 @@ export const SEZIONI: Sezione[] = [
 export const EMAIL = 'info@anticaviadelcifalco.eu';
 
 /** Sezione e voce corrispondenti a un indirizzo (senza #). */
-export function trova(percorso: string): { sezione?: Sezione; voce?: Voce } {
+export function trova(percorso: string): { sezione?: Sezione; voce?: Voce; paragrafo?: Paragrafo } {
   const p = percorso.replace(/\/$/, '') || '/';
   for (const sezione of SEZIONI) {
     for (const voce of sezione.voci) {
       if (voce.href.split('#')[0] === p && !voce.href.includes('#')) return { sezione, voce };
+      const paragrafo = voce.paragrafi?.find((par) => par.href === p);
+      if (paragrafo) return { sezione, voce, paragrafo };
     }
     if (sezione.href === p || p.startsWith(sezione.href + '/')) return { sezione };
   }
@@ -178,15 +193,17 @@ const TITOLI: Record<string, { en: string; fr: string }> = {
   Approfondimenti: { en: 'In depth', fr: 'Approfondissements' },
   'Le incerte origini dell’Antica Via del Cifalco': { en: 'The uncertain origins of the Antica Via del Cifalco', fr: 'Les origines incertaines de l’Antica Via del Cifalco' },
   'Cenni storici sul territorio': { en: 'Historical notes on the territory', fr: 'Aperçu historique du territoire' },
-  'La civiltà rurale sulle Vie del Sale': { en: 'Rural civilisation on the Salt Roads', fr: 'La civilisation rurale sur les Routes du Sel' },
+  'La civiltà rurale sulle “vie del sale”': { en: 'Rural civilisation on the “salt roads”', fr: 'La civilisation rurale sur les « routes du sel »' },
   'Natura e paesaggio, dai monti al mare': { en: 'Nature and landscape, from the mountains to the sea', fr: 'Nature et paysage, des monts à la mer' },
   'L’Appennino “continentale”': { en: 'The “continental” Apennines', fr: 'L’Apennin « continental »' },
   'L’Appennino “marittimo”': { en: 'The “maritime” Apennines', fr: 'L’Apennin « maritime »' },
   'Le tappe della Via del Cifalco tra storia, natura e cultura': { en: 'The stages of the Via del Cifalco through history, nature and culture', fr: 'Les étapes de la Via del Cifalco entre histoire, nature et culture' },
-  'Il Parco del M. di Portofino: l’arrivo a Portofino mare e la fine della Via del Cifalco': { en: 'The Monte di Portofino Park: arriving at Portofino Mare and the end of the Via del Cifalco', fr: 'Le Parc du Monte di Portofino : l’arrivée à Portofino Mare et la fin de la Via del Cifalco' },
+  'Il Parco del M. di Portofino: l’arrivo a Portofino Mare e la fine della Via del Cifalco': { en: 'The Monte di Portofino Park: arriving at Portofino Mare and the end of the Via del Cifalco', fr: 'Le Parc du Monte di Portofino : l’arrivée à Portofino Mare et la fin de la Via del Cifalco' },
   'Riferimenti bibliografici': { en: 'Bibliography', fr: 'Bibliographie' },
-  'Intorno all’Antica Via del Cifalco (e oltre)': { en: 'Around the Antica Via del Cifalco (and beyond)', fr: 'Autour de l’Antica Via del Cifalco (et au-delà)' },
-  'Intorno alla Via (e oltre)': { en: 'Around the Via (and beyond)', fr: 'Autour de la Via (et au-delà)' },
+  'Intorno alla Via del Cifalco (e oltre)': { en: 'Around the Via del Cifalco (and beyond)', fr: 'Autour de la Via del Cifalco (et au-delà)' },
+  'Scritti d’autore': { en: 'Writings', fr: 'Écrits d’auteurs' },
+  'Poeti, banditi e altri pensatori tra Trebbia e Aveto': { en: 'Poets, bandits and other thinkers between Trebbia and Aveto', fr: 'Poètes, bandits et autres penseurs entre Trebbia et Aveto' },
+  'Il vizio della memoria': { en: 'The vice of memory', fr: 'Le vice de la mémoire' },
   'Altri cammini': { en: 'Other walks', fr: 'Autres chemins' },
   Contatti: { en: 'Contact', fr: 'Contact' },
 };
@@ -214,12 +231,23 @@ export function sezioni(lingua: Lingua): Sezione[] {
 }
 
 /** Come trova(), ma con titoli e indirizzi nella lingua dell'indirizzo. */
-export function trovaLocalizzato(percorso: string, lingua: Lingua): { sezione?: Sezione; voce?: Voce } {
-  const { sezione, voce } = trova(senzaLingua(percorso));
+export function trovaLocalizzato(
+  percorso: string,
+  lingua: Lingua
+): { sezione?: Sezione; voce?: Voce; paragrafo?: Paragrafo } {
+  const { sezione, voce, paragrafo } = trova(senzaLingua(percorso));
   if (!sezione) return {};
   const i = SEZIONI.indexOf(sezione);
   const s = sezioni(lingua)[i];
-  return { sezione: s, voce: voce ? s.voci[sezione.voci.indexOf(voce)] : undefined };
+  const v = voce ? s.voci[sezione.voci.indexOf(voce)] : undefined;
+  const par = v && paragrafo ? v.paragrafi?.[voce!.paragrafi!.indexOf(paragrafo)] : undefined;
+  return { sezione: s, voce: v, paragrafo: par };
+}
+
+/** I contributi di «Scritti d'autore» (una pagina ciascuno). */
+export function pagineContributi(): { contributo: string; nome: string }[] {
+  const voce = SEZIONI.find((s) => s.href === '/intorno')!.voci.find((v) => v.href === '/intorno/scritti-d-autore')!;
+  return voce.paragrafi!.map((p) => ({ contributo: p.href.split('/').pop()!, nome: p.href.slice(1) }));
 }
 
 /** Le pagine «semplici» delle voci a lettera (sezioni 3, 4, 5). */
