@@ -1,8 +1,7 @@
 # L'Antica Via del Cifalco: sito web
 
 Il sito del cammino, costruito con [Astro](https://astro.build): pagine
-statiche velocissime, con due sole parti interattive (il walking tracker e la
-mappa GPX). **I testi sono separati dal codice**: per correggerli basta
+statiche velocissime, con una sola parte interattiva (la mappa GPX).
 modificare file di testo.
 
 ---
@@ -47,8 +46,8 @@ src/
 ├── testi/            ⟵ I TESTI DEL SITO (un file HTML per pagina)
 ├── lib/menu.ts       ⟵ sezioni, voci a lettera e paragrafi i., ii., …
 ├── pages/            ⟵ le pagine (impaginazione, non testi)
-├── components/       ⟵ walking tracker, mappa GPX, menu, piè di pagina…
-├── content/          ⟵ dati del walking tracker (tratte, punti, itinerari)
+├── components/       ⟵ mappa GPX, menu, piè di pagina…
+├── content/          ⟵ i luoghi della Via mostrati sulla mappa
 └── styles/global.css ⟵ colori, font e stile
 public/
 ├── immagini/         ⟵ le foto
