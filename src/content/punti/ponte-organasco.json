@@ -6,5 +6,7 @@
   "quota": 457,
   "acquaPotabile": true,
   "descrizione": "La partenza della Via, in alta Val Trebbia. Dalla Locanda Rosa si imbocca l'ampia carrareccia verso Genova: dopo pochi metri, alla fontana, si apre il trivio dove comincia il cammino. Punto d'appoggio e acqua alla partenza.",
-  "appoggio": true
+  "appoggio": true,
+  "lat": 44.683696,
+  "lon": 9.307306
 }

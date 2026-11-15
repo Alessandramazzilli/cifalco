@@ -16,8 +16,13 @@ const T = t(lingua);
 // nello stesso ordine, quindi la foto cade nello stesso punto in ogni lingua.
 // Ogni foto compare una volta sola nel sito.
 const FOTO_NEL_TESTO: Record<string, { dopo: string; foto: string }[]> = {
-  'approfondimenti/natura-e-paesaggio': [{ dopo: 'In maggio, quando la parete sud', foto: 'ginestre-monte-caucaso.jpg' }],
+  'approfondimenti/natura-e-paesaggio': [
+    { dopo: 'Attorno alle zone umide', foto: 'girini.jpg' },
+    { dopo: 'In maggio, quando la parete sud', foto: 'ginestre-monte-caucaso.jpg' },
+  ],
   'approfondimenti/tappe': [
+    { dopo: 'Questa deviazione è un vero spettacolo', foto: 'ruscello-casanova.jpg' },
+    { dopo: 'Come già ampiamente spiegato sopra', foto: 'vista-tigullio-crinale.jpg' },
     { dopo: 'Giunti a fondovalle, si entra nella piccola', foto: 'chiesa-gattorna.jpg' },
     { dopo: 'Come spiegato nella sezione', foto: 'castello-paraggi.jpg' },
     { dopo: 'Eppure, un incanto senza tempo', foto: 'portofino-baia.jpg' },

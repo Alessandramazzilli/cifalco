@@ -2,13 +2,17 @@
   "nome": "Tratta 2 · Oneto, Pendici del Monte delle Tane",
   "da": "Oneto",
   "a": "Pendici del Monte delle Tane",
-  "distanzaKm": 3,
-  "salitaM": 250,
-  "discesaM": 60,
+  "distanzaKm": 3.3,
+  "salitaM": 385,
+  "discesaM": 18,
   "oreBase": 0.92,
   "segnavia": "Sentieri CAI 177 e 179",
   "descrizione": "Breve tratta di crinale sul sentiero CAI 177, che al bivio con il CAI 179 si «dissolve» in quest'ultimo. Lungo la salita, il Rifugio Casermetta con la sua fonte e la possibile deviazione alla vetta erbosa del Monte delle Tane.",
-  "punti": ["oneto", "rifugio-casermetta", "monte-delle-tane"],
+  "punti": [
+    "oneto",
+    "rifugio-casermetta",
+    "monte-delle-tane"
+  ],
   "passi": [
     {
       "titolo": "Da Oneto verso il bivio con il CAI 179",

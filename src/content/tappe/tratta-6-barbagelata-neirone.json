@@ -2,13 +2,20 @@
   "nome": "Tratta 6 · Da Barbagelata a Neirone",
   "da": "Barbagelata",
   "a": "Neirone",
-  "distanzaKm": 12.5,
-  "salitaM": 520,
-  "discesaM": 1300,
+  "distanzaKm": 10.2,
+  "salitaM": 559,
+  "discesaM": 1362,
   "oreBase": 4,
   "segnavia": "«Tre pallini rossi pieni»/«A13» fino all'Acquapendente, «triangolo rosso pieno» fino alla vetta del Caucaso, «rombo rosso vuoto» fino a Neirone",
   "descrizione": "La tratta del Caucaso: dall'incrocio con l'Alta Via dei Monti Liguri al Passo della Scoglina, la salita per l'Acquapendente alla vetta del Monte Caucaso (1245 m) col suo rifugio, poi la lunga discesa per Faggio Rotondo e Pian del Pero fino a Neirone.",
-  "punti": ["barbagelata", "passo-della-scoglina", "acquapendente", "monte-caucaso", "faggio-rotondo", "neirone"],
+  "punti": [
+    "barbagelata",
+    "passo-della-scoglina",
+    "acquapendente",
+    "monte-caucaso",
+    "faggio-rotondo",
+    "neirone"
+  ],
   "passi": [
     {
       "titolo": "Barbagelata e l'Alta Via",

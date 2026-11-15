@@ -81,7 +81,7 @@ export const SEZIONI: Sezione[] = [
           { numero: 'ii', titolo: 'Rifugi non attrezzati', href: '/fare-il-cammino/punti-di-appoggio#rifugi' },
         ],
       },
-      { lettera: 'g', titolo: 'Avvertenze', href: '/fare-il-cammino/avvertenze' },
+      { lettera: 'g', titolo: 'Avvertenze', href: '/fare-il-cammino/avvertenze', foto: 'sentiero-faggeta.jpg' },
     ],
   },
   {
@@ -93,7 +93,7 @@ export const SEZIONI: Sezione[] = [
     foto: 'rocca-bosco.jpg',
     voci: [
       { lettera: 'a', titolo: 'Le incerte origini dell’Antica Via del Cifalco', href: '/approfondimenti/origini', foto: 'spada-nella-roccia.jpg' },
-      { lettera: 'b', titolo: 'Cenni storici sul territorio', href: '/approfondimenti/cenni-storici' },
+      { lettera: 'b', titolo: 'Cenni storici sul territorio', href: '/approfondimenti/cenni-storici', foto: 'croce-vetta-nuvole.jpg' },
       { lettera: 'c', titolo: 'La civiltà rurale sulle “vie del sale”', href: '/approfondimenti/civilta-rurale' },
       {
         lettera: 'd',

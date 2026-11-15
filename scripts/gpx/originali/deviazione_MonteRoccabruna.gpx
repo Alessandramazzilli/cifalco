@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="GDAL 3.13.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<metadata>
+<bounds minlat="44.536197899999991" minlon="9.340031500000000" maxlat="44.539379300000000" maxlon="9.340627500000000"/>                                         
+</metadata>
+<trk>
+  <name>deviazione vetta del Monte Roccabruna</name>
+  <trkseg>
+    <trkpt lat="44.5361979" lon="9.3403093">
+        <ele>1327.353515625</ele>
+    </trkpt>
+    <trkpt lat="44.5362675" lon="9.3403568">
+        <ele>1329.6202392578125</ele>
+    </trkpt>
+    <trkpt lat="44.536361" lon="9.3403552">
+        <ele>1332.748046875</ele>
+    </trkpt>
+    <trkpt lat="44.536403300000018" lon="9.3404248">
+        <ele>1334.95849609375</ele>
+    </trkpt>
+    <trkpt lat="44.5364297" lon="9.3405165">
+        <ele>1337.1053466796875</ele>
+    </trkpt>
+    <trkpt lat="44.5364682" lon="9.3405646">
+        <ele>1339.152099609375</ele>
+    </trkpt>
+    <trkpt lat="44.536484" lon="9.3406275">
+        <ele>1339.6390380859375</ele>
+    </trkpt>
+    <trkpt lat="44.5365791" lon="9.340577">
+        <ele>1342.2060546875</ele>
+    </trkpt>
+    <trkpt lat="44.536646199999986" lon="9.3405458">
+        <ele>1345.4229736328125</ele>
+    </trkpt>
+    <trkpt lat="44.5367298" lon="9.3405194">
+        <ele>1347.232421875</ele>
+    </trkpt>
+    <trkpt lat="44.5368473" lon="9.340555">
+        <ele>1349.5372314453125</ele>
+    </trkpt>
+    <trkpt lat="44.5369446" lon="9.3405207">
+        <ele>1350.1510009765625</ele>
+    </trkpt>
+    <trkpt lat="44.5371124" lon="9.3405054">
+        <ele>1353.38427734375</ele>
+    </trkpt>
+    <trkpt lat="44.53721190000001" lon="9.3404877">
+        <ele>1355.1641845703125</ele>
+    </trkpt>
+    <trkpt lat="44.5374856" lon="9.3405597">
+        <ele>1360.11474609375</ele>
+    </trkpt>
+    <trkpt lat="44.5375678" lon="9.3405609">
+        <ele>1362.6181640625</ele>
+    </trkpt>
+    <trkpt lat="44.537652599999987" lon="9.3405397">
+        <ele>1366.001953125</ele>
+    </trkpt>
+    <trkpt lat="44.5377695" lon="9.3404779">
+        <ele>1369.9962158203125</ele>
+    </trkpt>
+    <trkpt lat="44.5378244" lon="9.3404408">
+        <ele>1370.9674072265625</ele>
+    </trkpt>
+    <trkpt lat="44.5378335" lon="9.340357">
+        <ele>1371.5625</ele>
+    </trkpt>
+    <trkpt lat="44.5378506" lon="9.3402981">
+        <ele>1372.1728515625</ele>
+    </trkpt>
+    <trkpt lat="44.5378901" lon="9.3401614">
+        <ele>1374.0350341796875</ele>
+    </trkpt>
+    <trkpt lat="44.5379499" lon="9.3401158">
+        <ele>1375.7550048828125</ele>
+    </trkpt>
+    <trkpt lat="44.5379931" lon="9.3400478">
+        <ele>1376.4927978515625</ele>
+    </trkpt>
+    <trkpt lat="44.5380948" lon="9.3400315">
+        <ele>1377.84912109375</ele>
+    </trkpt>
+    <trkpt lat="44.538214299999986" lon="9.3400787">
+        <ele>1380.4442138671875</ele>
+    </trkpt>
+    <trkpt lat="44.5383019" lon="9.3401803">
+        <ele>1381.4422607421875</ele>
+    </trkpt>
+    <trkpt lat="44.538373" lon="9.3402464">
+        <ele>1383.3682861328125</ele>
+    </trkpt>
+    <trkpt lat="44.5384189" lon="9.3403154">
+        <ele>1384.6202392578125</ele>
+    </trkpt>
+    <trkpt lat="44.538448699999989" lon="9.3403426">
+        <ele>1385.7779541015625</ele>
+    </trkpt>
+    <trkpt lat="44.5385279" lon="9.3403296">
+        <ele>1388.3382568359375</ele>
+    </trkpt>
+    <trkpt lat="44.5385961" lon="9.3403752">
+        <ele>1389.7781982421875</ele>
+    </trkpt>
+    <trkpt lat="44.5386787" lon="9.3403932">
+        <ele>1392.306640625</ele>
+    </trkpt>
+    <trkpt lat="44.538764" lon="9.3403743">
+        <ele>1395.8935546875</ele>
+    </trkpt>
+    <trkpt lat="44.5388401" lon="9.3403792">
+        <ele>1397.8582763671875</ele>
+    </trkpt>
+    <trkpt lat="44.5389067" lon="9.3403887">
+        <ele>1401.5875244140625</ele>
+    </trkpt>
+    <trkpt lat="44.5389531" lon="9.3403253">
+        <ele>1404.2496337890625</ele>
+    </trkpt>
+    <trkpt lat="44.539027600000011" lon="9.3402714">
+        <ele>1408.3394775390625</ele>
+    </trkpt>
+    <trkpt lat="44.5390884" lon="9.3402603">
+        <ele>1409.566162109375</ele>
+    </trkpt>
+    <trkpt lat="44.5391992" lon="9.3402556">
+        <ele>1410.598876953125</ele>
+    </trkpt>
+    <trkpt lat="44.5392606" lon="9.3402243">
+        <ele>1410.453857421875</ele>
+    </trkpt>
+    <trkpt lat="44.5393326" lon="9.3401692">
+        <ele>1409.238525390625</ele>
+    </trkpt>
+    <trkpt lat="44.5393793" lon="9.3401599">
+        <ele>1408.284912109375</ele>
+    </trkpt>
+  </trkseg>
+</trk>
+</gpx>

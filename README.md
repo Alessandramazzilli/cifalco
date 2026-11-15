@@ -112,21 +112,25 @@ a bandierine in alto porta alla stessa pagina nell'altra lingua.
 
 ## La mappa GPX e il walking tracker
 
-La mappa compare da sola quando si carica la traccia in
-`public/gpx/antica-via-del-cifalco.gpx`. Finché il file manca, la pagina
-mostra il segnaposto e la mappa provvisoria di Google My Maps.
+Le tracce del cartografo (percorso principale + una traccia per deviazione)
+stanno in `scripts/gpx/originali/`. Lo script
 
-Perché mappa e tracker siano sincronizzati, i **waypoint** della traccia GPX
-devono chiamarsi come i punti in `src/content/punti/` (es. «Ponte Organasco»,
-«Cerignale», «Oneto», «Barbagelata», «Neirone», «Portofino mare»…). Così,
-quando nel tracker si sceglie un tratto, la mappa lo evidenzia e misura km e
-dislivelli reali, che il tracker mostra accanto alle sue stime. In
-alternativa ai waypoint si possono scrivere `"lat"` e `"lon"` nel file JSON
-del punto.
+```bash
+python3 scripts/gpx/prepara.py
+```
 
-Le tratte del tracker (`src/content/tappe/`) corrispondono alle tratte della
-descrizione dettagliata: se cambiano tempi o segnavia nel testo, conviene
-aggiornarle anche lì.
+prepara i file scaricabili in `public/gpx/` (uno con tutto, uno con il solo
+percorso principale), scrive le coordinate dei luoghi in
+`src/content/punti/` e misura distanza e dislivelli di ogni tratta del
+walking tracker sulla traccia (`src/content/tappe/`). Così tracker, mappa e
+profilo altimetrico danno gli stessi numeri (75 km, 4677 m di salita).
+
+Se il cartografo aggiorna le tracce: si sostituiscono i file in
+`scripts/gpx/originali/` e si rilancia lo script. La posizione dei luoghi
+lungo il percorso (in km) è nell'elenco `SUL_PERCORSO` dello script.
+
+I tempi delle tratte (`oreBase`) restano quelli della descrizione di
+Luchino: se cambiano nel testo, vanno aggiornati anche nei file delle tappe.
 
 ---
 

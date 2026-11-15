@@ -2,60 +2,114 @@
 /**
  * Mappa della traccia GPX, sincronizzata con il walking tracker.
  *
- * - La traccia sta in public/gpx/antica-via-del-cifalco.gpx: basta caricare
- *   quel file perché la mappa compaia (finché manca, resta il segnaposto e
- *   la mappa provvisoria di Google My Maps).
+ * - Le tracce stanno in public/gpx/ e si preparano con
+ *   `python3 scripts/gpx/prepara.py` a partire dai file del cartografo
+ *   (scripts/gpx/originali/): un file unico con percorso principale,
+ *   deviazioni e luoghi, più un file con il solo percorso principale.
  * - Sincronia con il tracker: quando nel tracker si sceglie un tratto, la
- *   mappa lo evidenzia e misura km e dislivelli reali sulla traccia, che il
- *   tracker mostra accanto alle sue stime.
- * - Per riconoscere i luoghi, i punti della traccia (waypoint <wpt>) devono
- *   avere come nome lo stesso nome dei punti in src/content/punti/ (es.
- *   «Ponte Organasco», «Oneto»…). In alternativa, si possono scrivere le
- *   coordinate «lat» e «lon» direttamente nel file del punto.
+ *   mappa e il profilo altimetrico lo evidenziano, e la mappa restituisce
+ *   km e dislivelli misurati sulla traccia (stessa regola usata per i dati
+ *   del tracker, quindi i numeri coincidono).
+ * - I luoghi del tracker hanno le coordinate nei file di src/content/punti/.
  */
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { caricaPercorso } from '../lib/percorso';
 import { LOCALE, fmt, linguaDa, t } from '../lib/i18n';
 
 const lingua = linguaDa(Astro.url.pathname);
 const M = t(lingua).mappa;
-const GOOGLE = 'https://www.google.com/maps/d/viewer?mid=1pZkHOxWBRe1zHANxN1YcchSI6xSl20A';
-const OA = 'https://www.outdooractive.com/r/331537280';
+const WAYMARKED = 'https://hiking.waymarkedtrails.org/#routelist?relations=20377677,21215319,21824348';
 
 const FILE_GPX = '/gpx/antica-via-del-cifalco.gpx';
-const presente = existsSync(path.join(process.cwd(), 'public', FILE_GPX));
+const FILE_PRINCIPALE = '/gpx/antica-via-del-cifalco-percorso-principale.gpx';
+const fileLocale = path.join(process.cwd(), 'public', FILE_PRINCIPALE);
+const presente = existsSync(fileLocale);
 
-const percorso = await caricaPercorso();
+const percorso = await caricaPercorso(lingua);
 const punti = Object.fromEntries(
   percorso.punti.map((p) => [p.id, { nome: p.nome, lat: p.lat ?? null, lon: p.lon ?? null }])
 );
+
+// Profilo altimetrico del percorso principale, disegnato in fase di build.
+const W = 1000;
+const H = 180;
+let profilo = { linea: '', area: '', kmTotali: 0, quotaMin: 0, quotaMax: 0, tacche: [] as { x: number; km: number }[] };
+if (presente) {
+  const xml = readFileSync(fileLocale, 'utf8');
+  const tp = [...xml.matchAll(/<trkpt lat="([-\d.]+)" lon="([-\d.]+)"><ele>([-\d.]+)<\/ele>/g)].map((m) => ({
+    lat: Number(m[1]),
+    lon: Number(m[2]),
+    ele: Number(m[3]),
+  }));
+  const rad = Math.PI / 180;
+  const d = (a: typeof tp[0], b: typeof tp[0]) => {
+    const h =
+      Math.sin(((b.lat - a.lat) * rad) / 2) ** 2 +
+      Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(((b.lon - a.lon) * rad) / 2) ** 2;
+    return 2 * 6371 * Math.asin(Math.sqrt(h));
+  };
+  const km = [0];
+  for (let i = 1; i < tp.length; i++) km.push(km[i - 1] + d(tp[i - 1], tp[i]));
+  const tot = km[km.length - 1];
+  const min = Math.min(...tp.map((p) => p.ele));
+  const max = Math.max(...tp.map((p) => p.ele));
+  const y = (e: number) => H - 8 - ((e - 0) / (max - 0)) * (H - 24);
+  const passo = Math.max(1, Math.floor(tp.length / 500));
+  const vertici = tp
+    .filter((_, i) => i % passo === 0 || i === tp.length - 1)
+    .map((p, i, arr) => `${((km[tp.indexOf(p)] / tot) * W).toFixed(1)},${y(p.ele).toFixed(1)}`);
+  profilo = {
+    linea: `M${vertici.join(' L')}`,
+    area: `M0,${H} L${vertici.join(' L')} L${W},${H} Z`,
+    kmTotali: tot,
+    quotaMin: Math.round(min),
+    quotaMax: Math.round(max),
+    tacche: [0, 10, 20, 30, 40, 50, 60, 70].map((k) => ({ x: (k / tot) * W, km: k })),
+  };
+}
 ---
 
 {
   presente ? (
     <div class="mappa-gpx" data-gpx={FILE_GPX} data-locale={LOCALE[lingua]}>
-      <div class="mappa-gpx__mappa" role="region" aria-label={M.regione} />
+      <div class="mappa-gpx__mappa" role="region" aria-label={M.regione}>
+        <p class="mappa-gpx__attesa">{M.caricamento}</p>
+      </div>
+      <ul class="mappa-gpx__legenda" aria-label={M.legenda}>
+        <li><span class="mappa-gpx__segno mappa-gpx__segno--principale" />{M.principale}</li>
+        <li><span class="mappa-gpx__segno mappa-gpx__segno--deviazione" />{M.deviazioni}</li>
+        <li><span class="mappa-gpx__segno mappa-gpx__segno--tratto" />{M.tratto}</li>
+      </ul>
       <p class="mappa-gpx__selezione" data-selezione aria-live="polite" set:html={M.scegli} />
+
+      <figure class="mappa-gpx__profilo">
+        <svg viewBox={`0 0 ${W} ${H + 22}`} role="img" aria-label={fmt(M.profilo, { min: profilo.quotaMin, max: profilo.quotaMax })}>
+          <rect data-profilo-tratto x="0" y="0" width="0" height={H} class="mappa-gpx__profilo-tratto" />
+          <path d={profilo.area} class="mappa-gpx__profilo-area" />
+          <path d={profilo.linea} class="mappa-gpx__profilo-linea" />
+          {profilo.tacche.map((t) => (
+            <g>
+              <line x1={t.x} x2={t.x} y1={H} y2={H + 5} class="mappa-gpx__profilo-asse" />
+              <text x={t.x} y={H + 18} text-anchor={t.km === 0 ? 'start' : 'middle'} class="mappa-gpx__profilo-testo">
+                {t.km} km
+              </text>
+            </g>
+          ))}
+        </svg>
+        <figcaption>{fmt(M.profilo, { min: profilo.quotaMin, max: profilo.quotaMax })}</figcaption>
+      </figure>
+
       <p class="mappa-gpx__azioni">
-        <a class="bottone bottone--pieno" href={FILE_GPX} download>
-          {M.scarica}
-        </a>
+        <a class="bottone bottone--pieno" href={FILE_GPX} download>{M.scarica}</a>
+        <a class="bottone bottone--contorno" href={FILE_PRINCIPALE} download>{M.scaricaPrincipale}</a>
       </p>
+      <p class="mappa-gpx__nota" set:html={fmt(M.altrove, { waymarked: WAYMARKED })} />
       <script type="application/json" data-punti set:html={JSON.stringify(punti)} />
       <script type="application/json" data-testi set:html={JSON.stringify(M)} />
     </div>
   ) : (
-    <div class="mappa-gpx mappa-gpx--provvisoria">
-      <div class="mappa-gpx__iframe">
-        <iframe
-          src="https://www.google.com/maps/d/u/0/embed?mid=1pZkHOxWBRe1zHANxN1YcchSI6xSl20A&ehbc=2E312F&noprof=1"
-          title={M.provvisoriaTitolo}
-          loading="lazy"
-        />
-      </div>
-      <p class="mappa-gpx__nota" set:html={fmt(M.provvisoria, { google: GOOGLE, oa: OA })} />
-    </div>
+    <p class="mappa-gpx__nota">{M.manca}</p>
   )
 }
 
@@ -64,53 +118,115 @@ const punti = Object.fromEntries(
     margin-block: 1.5rem;
   }
   .mappa-gpx__mappa {
-    height: clamp(22rem, 60vh, 36rem);
+    height: clamp(22rem, 62vh, 38rem);
     border-radius: var(--raggio-grande);
     box-shadow: var(--ombra);
     overflow: hidden;
     background: var(--superficie);
+    display: grid;
+    place-items: center;
+  }
+  .mappa-gpx__attesa {
+    color: var(--inchiostro-tenue);
+    margin: 0;
+  }
+  .mappa-gpx__legenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.4rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.8rem 0 0;
+    font-size: 0.92rem;
+  }
+  .mappa-gpx__legenda li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0;
+  }
+  .mappa-gpx__segno {
+    width: 1.8rem;
+    height: 0;
+    border-top: 4px solid var(--umbra);
+  }
+  .mappa-gpx__segno--deviazione {
+    border-top: 3px dashed var(--acqua);
+  }
+  .mappa-gpx__segno--tratto {
+    border-top: 6px solid #c8102e;
   }
   .mappa-gpx__selezione {
-    margin: 0.8rem 0 0.5rem;
+    margin: 0.6rem 0 0.5rem;
     font-weight: 600;
     color: var(--acqua-scura);
   }
-  .mappa-gpx__iframe {
-    position: relative;
-    aspect-ratio: 4 / 3;
-    border-radius: var(--raggio-grande);
-    overflow: hidden;
-    box-shadow: var(--ombra);
+  .mappa-gpx__profilo {
+    margin: 1rem 0 0;
   }
-  .mappa-gpx__iframe iframe {
-    position: absolute;
-    inset: 0;
+  .mappa-gpx__profilo svg {
+    display: block;
     width: 100%;
-    height: 100%;
-    border: 0;
+    height: auto;
+  }
+  .mappa-gpx__profilo-area {
+    fill: color-mix(in srgb, var(--salvia) 45%, transparent);
+  }
+  .mappa-gpx__profilo-linea {
+    fill: none;
+    stroke: var(--umbra);
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+  }
+  .mappa-gpx__profilo-tratto {
+    fill: rgb(200 16 46 / 0.16);
+  }
+  .mappa-gpx__profilo-asse {
+    stroke: var(--inchiostro-tenue);
+  }
+  .mappa-gpx__profilo-testo {
+    font-size: 13px;
+    fill: var(--inchiostro-tenue);
+    font-family: var(--sans);
+  }
+  .mappa-gpx__profilo figcaption {
+    font-size: 0.85rem;
+    color: var(--inchiostro-tenue);
+    text-align: center;
+  }
+  .mappa-gpx__azioni {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
   }
   .mappa-gpx__nota {
     font-size: 0.92rem;
     color: var(--inchiostro-tenue);
-    margin-top: 0.6rem;
   }
 </style>
 
 <script>
-  import { leggiGpx, puntoPiuVicino, misura } from '../lib/gpx';
+  import { leggiGpx, puntoPiuVicino, misura, distanzaKm } from '../lib/gpx';
 
   const contenitore = document.querySelector<HTMLElement>('.mappa-gpx[data-gpx]');
 
   if (contenitore) {
-    type Dettaglio = {
-      da: string;
-      a: string;
-      daNome: string;
-      aNome: string;
-      senso: 'classico' | 'inverso';
-      punti: string[];
-    };
-    // Il tracker può parlare prima che la mappa sia pronta: si tiene l'ultima scelta.
+    type Dettaglio = { da: string; a: string; daNome: string; aNome: string; senso: string; punti: string[] };
+    const punti = JSON.parse(contenitore.querySelector('[data-punti]')!.textContent!) as Record<
+      string,
+      { nome: string; lat: number | null; lon: number | null }
+    >;
+    const M = JSON.parse(contenitore.querySelector('[data-testi]')!.textContent!) as Record<string, string>;
+    const locale = contenitore.dataset.locale!;
+    const fmt = (s: string, v: Record<string, string>) => s.replace(/\{(\w+)\}/g, (_, k) => v[k] ?? '');
+    const num = (n: number) => n.toLocaleString(locale, { maximumFractionDigits: 1 });
+    const etichetta = contenitore.querySelector<HTMLElement>('[data-selezione]')!;
+    const fasciaProfilo = contenitore.querySelector<SVGRectElement>('[data-profilo-tratto]')!;
+    const LARGHEZZA_PROFILO = 1000;
+
+    // Il tracker parla subito; la mappa si carica solo quando ci si arriva
+    // (la traccia pesa qualche centinaio di kB): si tiene l'ultima scelta.
     let ultimaScelta: Dettaglio | null = null;
     let aggiorna: ((d: Dettaglio) => void) | null = null;
     window.addEventListener('via-cifalco:itinerario', (e) => {
@@ -118,39 +234,29 @@ const punti = Object.fromEntries(
       aggiorna?.(ultimaScelta);
     });
 
-    (async () => {
+    const posizione = (id: string): [number, number] | null => {
+      const p = punti[id];
+      return p && p.lat !== null && p.lon !== null ? [p.lat, p.lon] : null;
+    };
+
+    async function avvia() {
+      if (!('fetch' in window)) return;
       const [{ default: L }, testoGpx] = await Promise.all([
         import('leaflet'),
-        fetch(contenitore.dataset.gpx!).then((r) => r.text()),
+        fetch(contenitore!.dataset.gpx!).then((r) => r.text()),
         import('leaflet/dist/leaflet.css'),
       ]);
-      const gpx = leggiGpx(testoGpx);
-      const punti = JSON.parse(contenitore.querySelector('[data-punti]')!.textContent!) as Record<
-        string,
-        { nome: string; lat: number | null; lon: number | null }
-      >;
+      const { tracce } = leggiGpx(testoGpx);
+      const principale = tracce.find((t) => t.tipo === 'principale') ?? tracce[0];
+      const deviazioni = tracce.filter((t) => t !== principale);
+      const kmCumulati = [0];
+      for (let i = 1; i < principale.punti.length; i++)
+        kmCumulati.push(kmCumulati[i - 1] + distanzaKm(principale.punti[i - 1], principale.punti[i]));
+      const kmTotali = kmCumulati[kmCumulati.length - 1];
 
-      const M = JSON.parse(contenitore.querySelector('[data-testi]')!.textContent!) as Record<string, string>;
-      const locale = contenitore.dataset.locale!;
-      const fmt = (s: string, v: Record<string, string>) => s.replace(/\{(\w+)\}/g, (_, k) => v[k] ?? '');
-      const km = (n: number) => n.toLocaleString(locale, { maximumFractionDigits: 1 });
-      const normalizza = (s: string) =>
-        s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-      const waypoint = new Map(gpx.waypoint.map((w) => [normalizza(w.nome), w]));
-
-      /** Posizione di un punto del sito: dal waypoint omonimo o dalle coordinate del file. */
-      function posizione(id: string): [number, number] | null {
-        const p = punti[id];
-        if (!p) return null;
-        const w = waypoint.get(normalizza(p.nome));
-        if (w) return [w.lat, w.lon];
-        if (p.lat !== null && p.lon !== null) return [p.lat, p.lon];
-        return null;
-      }
-
-      const mappa = L.map(contenitore.querySelector<HTMLElement>('.mappa-gpx__mappa')!, {
-        scrollWheelZoom: false,
-      });
+      const area = contenitore!.querySelector<HTMLElement>('.mappa-gpx__mappa')!;
+      area.innerHTML = '';
+      const mappa = L.map(area, { scrollWheelZoom: false });
       const topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
         maxZoom: 17,
         attribution:
@@ -163,12 +269,21 @@ const punti = Object.fromEntries(
       topo.addTo(mappa);
       L.control.layers({ [M.topografica]: topo, [M.stradale]: osm }).addTo(mappa);
 
-      const coordinate = gpx.traccia.map((p) => [p.lat, p.lon] as [number, number]);
-      const linea = L.polyline(coordinate, { color: '#7A6450', weight: 4, opacity: 0.75 }).addTo(mappa);
-      const evidenziato = L.polyline([], { color: '#C8102E', weight: 6, opacity: 0.9 }).addTo(mappa);
+      for (const dev of deviazioni) {
+        L.polyline(
+          dev.punti.map((p) => [p.lat, p.lon] as [number, number]),
+          { color: '#455F60', weight: 3, opacity: 0.9, dashArray: '6 6' }
+        )
+          .bindTooltip(dev.nome, { sticky: true })
+          .addTo(mappa);
+      }
+      const linea = L.polyline(
+        principale.punti.map((p) => [p.lat, p.lon] as [number, number]),
+        { color: '#5C4A3A', weight: 5, opacity: 0.9 }
+      ).addTo(mappa);
+      const evidenziato = L.polyline([], { color: '#C8102E', weight: 7, opacity: 0.9 }).addTo(mappa);
       mappa.fitBounds(linea.getBounds(), { padding: [20, 20] });
 
-      // I luoghi del sito che si trovano sulla traccia.
       for (const id of Object.keys(punti)) {
         const pos = posizione(id);
         if (!pos) continue;
@@ -177,34 +292,39 @@ const punti = Object.fromEntries(
           .addTo(mappa);
       }
 
-      const etichetta = contenitore.querySelector<HTMLElement>('[data-selezione]')!;
-
       aggiorna = (d: Dettaglio) => {
         const pa = posizione(d.da);
         const pb = posizione(d.a);
-        if (!pa || !pb) {
-          evidenziato.setLatLngs([]);
-          window.dispatchEvent(new CustomEvent('via-cifalco:misure', { detail: null }));
-          const mancanti = [!pa && punti[d.da]?.nome, !pb && punti[d.a]?.nome].filter(Boolean);
-          etichetta.textContent = fmt(M.mancano, { nomi: mancanti.join(', ') });
-          return;
-        }
-        let i = puntoPiuVicino(gpx.traccia, pa);
-        let j = puntoPiuVicino(gpx.traccia, pb);
-        const inverso = i > j;
-        if (inverso) [i, j] = [j, i];
-        const tratto = gpx.traccia.slice(i, j + 1);
+        if (!pa || !pb) return;
+        let i = puntoPiuVicino(principale.punti, pa);
+        let j = puntoPiuVicino(principale.punti, pb);
+        if (i > j) [i, j] = [j, i];
+        const tratto = principale.punti.slice(i, j + 1);
         evidenziato.setLatLngs(tratto.map((p) => [p.lat, p.lon]));
-        if (tratto.length > 1) mappa.fitBounds(evidenziato.getBounds(), { padding: [30, 30] });
+        const tuttaLaVia = i === 0 && j === principale.punti.length - 1;
+        mappa.fitBounds(tuttaLaVia ? linea.getBounds() : evidenziato.getBounds(), { padding: [30, 30] });
+        fasciaProfilo.setAttribute('x', String((kmCumulati[i] / kmTotali) * LARGHEZZA_PROFILO));
+        fasciaProfilo.setAttribute('width', String(((kmCumulati[j] - kmCumulati[i]) / kmTotali) * LARGHEZZA_PROFILO));
         const m = misura(tratto);
-        // Salita e discesa dipendono dal verso: se si parte dal punto che
-        // nella traccia viene dopo, si cammina la traccia al contrario.
-        const salita = inverso ? m.discesa : m.salita;
-        const discesa = inverso ? m.salita : m.discesa;
-        etichetta.textContent = fmt(M.evidenza, { da: d.daNome, a: d.aNome, km: km(m.km) });
-        window.dispatchEvent(new CustomEvent('via-cifalco:misure', { detail: { km: m.km, salita, discesa } }));
+        etichetta.textContent = fmt(M.evidenza, { da: d.daNome, a: d.aNome, km: num(m.km) });
       };
       if (ultimaScelta) aggiorna(ultimaScelta);
-    })();
+    }
+
+    // Carica la mappa quando sta per entrare nello schermo.
+    if ('IntersectionObserver' in window) {
+      const osservatore = new IntersectionObserver(
+        (voci) => {
+          if (voci.some((v) => v.isIntersecting)) {
+            osservatore.disconnect();
+            avvia();
+          }
+        },
+        { rootMargin: '600px' }
+      );
+      osservatore.observe(contenitore);
+    } else {
+      avvia();
+    }
   }
 </script>

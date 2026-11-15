@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="GDAL 3.13.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<metadata>
+<bounds minlat="44.517443000000000" minlon="9.319228300000001" maxlat="44.518928400000007" maxlon="9.322405300000000"/>                                         
+</metadata>
+<trk>
+  <name>deviazione Trattoria Al Valico</name>
+  <trkseg>
+    <trkpt lat="44.517443" lon="9.3192283">
+        <ele>1202.49951171875</ele>
+    </trkpt>
+    <trkpt lat="44.5174921" lon="9.319264">
+        <ele>1202.0306396484375</ele>
+    </trkpt>
+    <trkpt lat="44.5175065" lon="9.3192824">
+        <ele>1202.0306396484375</ele>
+    </trkpt>
+    <trkpt lat="44.5176572" lon="9.3194738">
+        <ele>1201.269775390625</ele>
+    </trkpt>
+    <trkpt lat="44.5179996" lon="9.3200376">
+        <ele>1200.0101318359375</ele>
+    </trkpt>
+    <trkpt lat="44.518032099999985" lon="9.3201477">
+        <ele>1199.831787109375</ele>
+    </trkpt>
+    <trkpt lat="44.5182017" lon="9.3209378">
+        <ele>1192.1614990234375</ele>
+    </trkpt>
+    <trkpt lat="44.51831330000001" lon="9.3216207">
+        <ele>1191.872314453125</ele>
+    </trkpt>
+    <trkpt lat="44.5183713" lon="9.3218171">
+        <ele>1191.69482421875</ele>
+    </trkpt>
+    <trkpt lat="44.5184963" lon="9.3220045">
+        <ele>1193.369873046875</ele>
+    </trkpt>
+    <trkpt lat="44.5186793" lon="9.3221384">
+        <ele>1192.422119140625</ele>
+    </trkpt>
+    <trkpt lat="44.5187111" lon="9.322152">
+        <ele>1191.8721923828125</ele>
+    </trkpt>
+    <trkpt lat="44.5187143" lon="9.3221988">
+        <ele>1192.903076171875</ele>
+    </trkpt>
+    <trkpt lat="44.5187787" lon="9.3222935">
+        <ele>1192.7210693359375</ele>
+    </trkpt>
+    <trkpt lat="44.5188193" lon="9.3223513">
+        <ele>1193.004638671875</ele>
+    </trkpt>
+    <trkpt lat="44.5189284" lon="9.3224053">
+        <ele>1192.354736328125</ele>
+    </trkpt>
+  </trkseg>
+</trk>
+</gpx>

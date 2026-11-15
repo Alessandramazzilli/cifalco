@@ -138,7 +138,6 @@ const datiPlanner = {
     </div>
 
     <p class="planner__direzione" data-esito="direzione"></p>
-    <p class="planner__misure-gpx" data-esito="misure-gpx" hidden></p>
     <p class="planner__vai-mappa"><a href="#mappa-gpx">{T.vaiMappa}</a></p>
 
     <div class="planner__avviso" data-esito="avviso" role="status" hidden></div>
@@ -185,11 +184,6 @@ const datiPlanner = {
     }
   }
 
-  .planner__misure-gpx {
-    font-weight: 650;
-    color: var(--acqua-scura);
-    margin: 0 0 0.5rem;
-  }
   .planner__vai-mappa {
     margin: 0 0 1rem;
     font-size: 0.95rem;
@@ -788,9 +782,8 @@ const datiPlanner = {
       // Dillo anche alla mappa, se c'è. Il rinvio di un tick garantisce che
       // al primo calcolo lo script della mappa abbia già registrato l'ascolto.
       // La mappa GPX evidenzia lo stesso tratto (dal primo all'ultimo punto,
-      // nell'ordine di cammino) e risponde con le misure reali della traccia.
+      // nell'ordine di cammino) e il profilo altimetrico.
       const puntiOrdinati = tappe.flatMap((t) => (inverso ? [...t.punti].reverse() : t.punti));
-      esito('misure-gpx').hidden = true;
       setTimeout(() =>
         window.dispatchEvent(
           new CustomEvent('via-cifalco:itinerario', {
@@ -807,19 +800,6 @@ const datiPlanner = {
         )
       );
     }
-
-    // Misure lette dalla traccia GPX (se la mappa è presente): affiancano
-    // le stime del planner, che restano il riferimento per i tempi.
-    window.addEventListener('via-cifalco:misure', (e) => {
-      const m = (e as CustomEvent).detail as { km: number; salita: number; discesa: number } | null;
-      const riga = esito('misure-gpx');
-      if (!m) {
-        riga.hidden = true;
-        return;
-      }
-      riga.textContent = fmt(T.misureGpx, { km: num(m.km), salita: num(Math.round(m.salita), 0), discesa: num(Math.round(m.discesa), 0) });
-      riga.hidden = false;
-    });
 
     campo.itinerario.addEventListener('change', () => {
       aggiornaTratto();
