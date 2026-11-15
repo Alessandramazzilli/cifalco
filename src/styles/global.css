@@ -798,3 +798,105 @@ mark.segnaposto {
 .elenco-voci { align-items: start; }
 .figura img[src*="faggeta"] { max-width: 22rem; margin-inline: auto; }
 .chi-siamo__foto img { max-height: 30rem; width: auto; max-width: 100%; margin-inline: auto; }
+
+/* ===========================================================================
+   Revisione di Luchino (novembre 2026)
+   ======================================================================== */
+
+/* Testo giustificato, con sillabazione per evitare spazi troppo larghi */
+.testo-sito p,
+.testo-sito li,
+.voce-card__anteprima {
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  hyphenate-limit-chars: 7 3 3;
+}
+.testo-sito .poesia,
+.testo-sito .citazione p,
+.aneddoto__titolo,
+.aneddoto__occhiello,
+.figura figcaption { text-align: left; -webkit-hyphens: manual; hyphens: manual; }
+.aneddoto__titolo, .aneddoto__occhiello, .figura figcaption { text-align: center; }
+
+/* Schede tutte della stessa misura (stessa larghezza e altezza) */
+.elenco-voci {
+  align-items: stretch;
+  grid-auto-rows: 1fr;
+}
+.elenco-voci li { display: flex; }
+.elenco-voci .voce-card { width: 100%; }
+.voce-card--colore {
+  flex-direction: column;
+  padding: 1.15rem 1.25rem 1.3rem;
+  border-radius: var(--raggio-grande);
+  background: var(--superficie);
+  color: var(--inchiostro);
+  box-shadow: var(--ombra);
+  border-top: 8px solid var(--colore-card, var(--bosco));
+}
+.voce-card--colore .voce-card__titolo { color: var(--bosco-scuro); }
+.voce-card--colore .voce-card__anteprima {
+  color: var(--inchiostro-tenue);
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.sezione--terra .voce-card--colore,
+.sezione--terra .voce-card--colore span { color: var(--inchiostro); }
+.sezione--terra .voce-card--colore .voce-card__titolo { color: var(--bosco-scuro); }
+.voce-card__email { margin-top: auto; padding-top: 0.6rem; font-weight: 650; color: var(--bosco); overflow-wrap: anywhere; }
+.sezione--terra .voce-card--colore .voce-card__email { color: var(--bosco); }
+.voce-card__autore {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--terra);
+}
+.elenco-contributi { margin: 2rem 0 1rem; }
+
+/* Home: logo accanto al titolo */
+.home__testata {
+  display: grid;
+  grid-template-columns: clamp(7rem, 20vw, 15.5rem) minmax(0, 1fr);
+  gap: clamp(1.2rem, 3.5vw, 3rem);
+  align-items: center;
+  max-width: 62rem;
+}
+.home__logo { width: 100%; height: auto; }
+@media (max-width: 30rem) {
+  .home__testata { grid-template-columns: 1fr; }
+  .home__logo { width: 7rem; }
+}
+
+/* Aperture senza foto: banda più compatta */
+.apertura--senza-foto { padding-block: clamp(1.8rem, 4vw, 2.8rem); }
+.apertura--senza-foto .apertura__titolo { max-width: 48rem; }
+.apertura__autore {
+  margin: 0 0 0.3rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* Interviste */
+.intervista__intro {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  padding: 0.2rem 0 0.2rem 1.1rem;
+  border-left: 3px solid var(--terra);
+  margin-bottom: 1.8rem;
+}
+.intervista__domanda { margin-top: 1.8rem; margin-bottom: 0.4rem; color: var(--bosco-scuro); }
+.poesia__titolo { font-style: italic; margin-top: 2rem; }
+.poesia { font-family: var(--serif); font-style: italic; line-height: 1.7; }
+
+/* Chi siamo: bande meno alte (niente vuoti tra un capitolo e l'altro) */
+.chi-siamo__banda { padding-block: clamp(2rem, 5vw, 3.2rem); }
+.chi-siamo__banda .testo-sito > :last-child,
+.chi-siamo__banda .testo-sito ul:last-child { margin-bottom: 0; }
+.testo-sito .citazione { margin-bottom: 1.6rem; }

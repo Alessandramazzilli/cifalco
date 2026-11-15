@@ -14,31 +14,26 @@ const html = testo('chi-siamo/chi-siamo', lingua);
 const capitoli = html.split(/(?=<h2 )/).filter((c) => c.includes('<h2 '));
 const BANDE = [
   { classe: '', foto: 'muro-ruota-carro.jpg' },
-  { classe: 'sezione--bosco', foto: 'faggeta.jpg' },
+  { classe: 'sezione--bosco', foto: null },
   { classe: 'sezione--alternata', foto: null },
   { classe: 'sezione--pietra', foto: null },
 ];
 ---
 
 <Base titolo={sezione.titolo} descrizione={T.chiSiamoDescrizione}>
-  <section class="sezione apertura sezione--bosco">
-    <div class="contenitore duo">
-      <div>
-        <p class="occhiello">{T.nomeSito}</p>
-        <h1>{sezione.titolo}</h1>
-        <ol class="indice-lettere">
-          {
-            sezione.voci.map((v) => (
-              <li>
-                <a href={`#${v.href.split('#')[1]}`}>
-                  {v.titolo}
-                </a>
-              </li>
-            ))
-          }
-        </ol>
-      </div>
-      <Foto classe="duo__foto" src="/immagini/home-banner-valle-del-cifalco.jpg" alt={T.altFoto['home-banner-valle-del-cifalco.jpg']} />
+  <section class="sezione apertura apertura--senza-foto sezione--bosco">
+    <div class="contenitore">
+      <p class="occhiello">{T.nomeSito}</p>
+      <h1 class="apertura__titolo">{sezione.titolo}</h1>
+      <ol class="indice-lettere">
+        {
+          sezione.voci.map((v) => (
+            <li>
+              <a href={`#${v.href.split('#')[1]}`}>{v.titolo}</a>
+            </li>
+          ))
+        }
+      </ol>
     </div>
   </section>
 
@@ -46,7 +41,7 @@ const BANDE = [
     capitoli.map((c, i) => {
       const banda = BANDE[i % BANDE.length];
       return (
-        <section class={`sezione ${banda.classe}`}>
+        <section class={`sezione chi-siamo__banda ${banda.classe}`}>
           <div class:list={['contenitore', banda.foto && 'duo duo--alto chi-siamo__duo']}>
             <div class="prosa testo-sito">
               <Fragment set:html={c} />

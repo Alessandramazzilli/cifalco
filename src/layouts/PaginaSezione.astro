@@ -21,10 +21,14 @@ const { descrizione, testo = '' } = Astro.props;
 
 const lingua = linguaDa(Astro.url.pathname);
 const T = t(lingua);
-const { sezione, voce } = trovaLocalizzato(Astro.url.pathname, lingua);
+const { sezione, voce, paragrafo } = trovaLocalizzato(Astro.url.pathname, lingua);
 if (!sezione || !voce) throw new Error(`Pagina fuori dallo schema: ${Astro.url.pathname}`);
 
-const foto = voce.foto ?? sezione.foto;
+// Pagina di un contributo (es. un'intervista di «Scritti d'autore»): ha
+// per titolo il contributo e sta «dentro» la sua voce.
+const titolo = paragrafo?.titolo ?? voce.titolo;
+// Foto d'apertura facoltativa (ogni foto compare una volta sola nel sito).
+const foto = paragrafo ? undefined : voce.foto;
 const indice = sezione.voci.findIndex((v) => v === voce);
 const precedente = sezione.voci[indice - 1];
 const successiva = sezione.voci[indice + 1];
@@ -35,16 +39,23 @@ const interni = voce.paragrafi
   : titoli(testo).map((t) => ({ titolo: t.titolo, href: `#${t.id}` }));
 ---
 
-<Base titolo={voce.titolo} descrizione={descrizione}>
-  <section class={`sezione apertura sezione--${sezione.colore}`}>
-    <div class="contenitore duo">
+<Base titolo={titolo} descrizione={descrizione}>
+  <section class:list={['sezione apertura', `sezione--${sezione.colore}`, !foto && 'apertura--senza-foto']}>
+    <div class:list={['contenitore', foto && 'duo']}>
       <div>
         <nav class="briciole" aria-label={T.seiQui}>
           <a href={sezione.href}>{sezione.titolo}</a>
+          {paragrafo && (
+            <>
+              <span aria-hidden="true">›</span>
+              <a href={voce.href}>{voce.titolo}</a>
+            </>
+          )}
         </nav>
-        <h1 class="apertura__titolo">{voce.titolo}</h1>
+        {paragrafo?.autore && <p class="apertura__autore">{paragrafo.autore}</p>}
+        <h1 class="apertura__titolo">{titolo}</h1>
       </div>
-      <Foto classe="duo__foto" src={`/immagini/${foto}`} alt={T.altFoto[foto] ?? ''} />
+      {foto && <Foto classe="duo__foto" src={`/immagini/${foto}`} alt={T.altFoto[foto] ?? ''} />}
     </div>
   </section>
 
@@ -66,8 +77,11 @@ const interni = voce.paragrafi
                 {v === voce && interni.length > 0 && (
                   <ol class="indice-sezione__interni">
                     {interni.map((i) => (
-                      <li>
-                        <a href={i.href.replace(/^[^#]*/, '')}>
+                      <li class:list={[paragrafo?.href === i.href && 'corrente']}>
+                        <a
+                          href={i.href.includes('#') ? i.href.replace(/^[^#]*/, '') : i.href}
+                          aria-current={paragrafo?.href === i.href ? 'page' : undefined}
+                        >
                           <span>{i.titolo}</span>
                         </a>
                       </li>

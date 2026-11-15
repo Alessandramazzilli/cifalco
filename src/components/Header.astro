@@ -70,7 +70,10 @@ const inSezione = (href: string) =>
                           {voce.paragrafi.map((par) => (
                             <li>
                               <a href={par.href}>
-                                <span>{par.titolo}</span>
+                                <span>
+                                  {par.autore && <span class="sottomenu__autore">{par.autore}</span>}
+                                  {par.titolo}
+                                </span>
                               </a>
                             </li>
                           ))}
@@ -146,9 +149,12 @@ const inSezione = (href: string) =>
     color: var(--bosco-scuro);
     line-height: 1.1;
   }
+  .testata__nome {
+    font-style: italic;
+  }
   .testata__nome em {
     font-style: italic;
-    color: var(--umbra);
+    color: inherit;
   }
 
   .testata__bottone-menu {
@@ -297,6 +303,14 @@ const inSezione = (href: string) =>
     min-width: 1.4em;
     font-family: var(--serif);
     font-style: italic;
+    color: var(--terra);
+  }
+  .sottomenu__autore {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
     color: var(--terra);
   }
   .sottomenu__freccia {

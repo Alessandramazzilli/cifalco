@@ -1,0 +1,13 @@
+---
+import Contributo from '../../../../viste/Contributo.astro';
+import { pagineContributi } from '../../../../lib/menu';
+import { LINGUE_TRADOTTE } from '../../../../lib/i18n';
+
+export function getStaticPaths() {
+  return LINGUE_TRADOTTE.flatMap((lingua) =>
+    pagineContributi().map(({ contributo, nome }) => ({ params: { lingua, contributo }, props: { nome } }))
+  );
+}
+---
+
+<Contributo nome={Astro.props.nome} />

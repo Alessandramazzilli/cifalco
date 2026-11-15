@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import Foto from '../components/Foto.astro';
 import { EMAIL } from '../lib/menu';
 import { fmt, linguaDa, localizza, t } from '../lib/i18n';
 
@@ -10,7 +9,7 @@ const T = t(lingua);
 
 <Base titolo={T.contatti} descrizione={fmt(T.contattiDescrizione, { email: EMAIL })}>
   <section class="sezione apertura sezione--bosco">
-    <div class="contenitore duo">
+    <div class="contenitore">
       <div>
       <p class="occhiello">{T.nomeSito}</p>
       <h1>{T.contatti}</h1>
@@ -19,7 +18,6 @@ const T = t(lingua);
         <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
       </p>
       </div>
-      <Foto classe="duo__foto" src="/immagini/costa-tigullio.jpg" alt={T.altFoto['costa-tigullio.jpg']} />
     </div>
   </section>
 </Base>

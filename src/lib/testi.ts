@@ -40,7 +40,8 @@ export function titoli(h: string): { id: string; titolo: string }[] {
 
 /** Le prime righe di un testo (testo semplice), per le anteprime. */
 export function anteprima(h: string, caratteri = 260): string {
-  const primo = h.match(/<p[^>]*>([\s\S]*?)<\/p>/);
+  // Le citazioni (<figure>) non fanno da anteprima.
+  const primo = h.replace(/<figure[\s\S]*?<\/figure>/g, '').match(/<p[^>]*>([\s\S]*?)<\/p>/);
   const t = (primo ? primo[1] : h)
     .replace(/<[^>]+>/g, '')
     .replace(/\s+/g, ' ')

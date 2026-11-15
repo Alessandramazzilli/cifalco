@@ -34,7 +34,8 @@ Segue lo «schema base» di Luchino (`scripts/docx/originali/`):
 2. Chi siamo (a–d, una sola pagina)
 3. Fare il cammino: informazioni pratiche (a–g, una pagina per voce)
 4. Approfondimenti (a–f, una pagina per voce)
-5. Intorno all'Antica Via del Cifalco (e oltre): per ora solo c. Altri cammini
+5. Intorno alla Via del Cifalco (e oltre): Scritti d'autore (una pagina per
+   contributo) e Altri cammini; «Dicono di noi» si aprirà più avanti
 6. Contatti
 
 Il menu, il piè di pagina, gli indici di sezione e le anteprime della Home
@@ -73,6 +74,16 @@ Convenzioni usate nei testi:
 - **Descrizione dettagliata**: tratte `<h3 class="tratta">`, deviazioni e
   varianti in `<div class="percorso-alt percorso-alt--deviazione">` (o
   `--variante`). I segnavia sono disegnati come icone (`<span class="segnavia">`).
+
+**Nuovo contributo in «Scritti d'autore»:** metti il Word in
+`scripts/docx/originali/scritti/`, aggiungilo all'elenco in
+`scripts/docx/interviste.py` e lancia lo script; poi aggiungi il contributo
+ai `paragrafi` della voce «Scritti d'autore» in `src/lib/menu.ts` (titolo,
+autore, indirizzo) e le traduzioni in `src/testi/en/` e `src/testi/fr/`.
+
+**Foto:** ogni foto compare una sola volta nel sito. Le foto d'apertura delle
+pagine sono nel campo `foto` di `src/lib/menu.ts`; quelle dentro i testi
+lunghi sono in `src/viste/Voce.astro` (elenco `FOTO_NEL_TESTO`).
 
 I testi sono stati generati una volta dai Word con
 `python3 scripts/docx/converti.py`. **Non rilanciarlo** dopo aver corretto i
