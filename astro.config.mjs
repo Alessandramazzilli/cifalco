@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 // serve per sitemap, Open Graph e URL canonici.
 export default defineConfig({
   site: 'https://anticaviadelcifalco.it',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (pagina) => !pagina.includes('/stampa/') })],
   trailingSlash: 'never',
   // I vecchi indirizzi continuano a funzionare.
   redirects: {

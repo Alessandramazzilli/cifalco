@@ -1,8 +1,0 @@
----
-import ChiSiamo from '../../viste/ChiSiamo.astro';
-import { LINGUE_TRADOTTE } from '../../lib/i18n';
-
-export const getStaticPaths = () => LINGUE_TRADOTTE.map((lingua) => ({ params: { lingua } }));
----
-
-<ChiSiamo />

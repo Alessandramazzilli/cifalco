@@ -44,10 +44,10 @@ export const SEZIONI: Sezione[] = [
     colore: 'bosco',
     foto: '',
     voci: [
-      { lettera: 'a', titolo: 'Il progetto', href: '/chi-siamo#il-progetto' },
-      { lettera: 'b', titolo: 'Le persone', href: '/chi-siamo#le-persone' },
-      { lettera: 'c', titolo: 'Ringraziamenti', href: '/chi-siamo#ringraziamenti' },
-      { lettera: 'd', titolo: 'Menzione legale', href: '/chi-siamo#menzione-legale' },
+      { lettera: 'a', titolo: 'Il progetto', href: '/chi-siamo/il-progetto' },
+      { lettera: 'b', titolo: 'Le persone', href: '/chi-siamo/le-persone' },
+      { lettera: 'c', titolo: 'Ringraziamenti', href: '/chi-siamo/ringraziamenti' },
+      { lettera: 'd', titolo: 'Menzione legale', href: '/chi-siamo/menzione-legale' },
     ],
   },
   {
@@ -90,15 +90,15 @@ export const SEZIONI: Sezione[] = [
     breve: 'Approfondimenti',
     href: '/approfondimenti',
     colore: 'terra',
-    foto: 'rocca-bosco.jpg',
+    foto: 'sentiero-pozza.jpg',
     voci: [
       { lettera: 'a', titolo: 'Le incerte origini dell’Antica Via del Cifalco', href: '/approfondimenti/origini', foto: 'spada-nella-roccia.jpg' },
       { lettera: 'b', titolo: 'Cenni storici sul territorio', href: '/approfondimenti/cenni-storici', foto: 'croce-vetta-nuvole.jpg' },
-      { lettera: 'c', titolo: 'La civiltà rurale sulle “vie del sale”', href: '/approfondimenti/civilta-rurale' },
+      { lettera: 'c', titolo: 'La civiltà rurale sulle “vie del sale”', href: '/approfondimenti/civilta-rurale', foto: 'muro-ruota-carro.jpg' },
       {
         lettera: 'd',
         titolo: 'Natura e paesaggio, dai monti al mare',
-        href: '/approfondimenti/natura-e-paesaggio',
+        href: '/approfondimenti/natura-e-paesaggio', foto: 'vista-tigullio-crinale.jpg',
         paragrafi: [
           { numero: 'i', titolo: 'L’Appennino “continentale”', href: '/approfondimenti/natura-e-paesaggio#appennino-continentale' },
           { numero: 'ii', titolo: 'L’Appennino “marittimo”', href: '/approfondimenti/natura-e-paesaggio#appennino-marittimo' },
@@ -107,7 +107,7 @@ export const SEZIONI: Sezione[] = [
       {
         lettera: 'e',
         titolo: 'Le tappe della Via del Cifalco tra storia, natura e cultura',
-        href: '/approfondimenti/tappe',
+        href: '/approfondimenti/tappe', foto: 'portofino-baia.jpg',
         paragrafi: [
           { numero: 'i', titolo: 'L’Appennino “continentale”', href: '/approfondimenti/tappe#appennino-continentale' },
           { numero: 'ii', titolo: 'L’Appennino “marittimo”', href: '/approfondimenti/tappe#appennino-marittimo' },
@@ -123,14 +123,14 @@ export const SEZIONI: Sezione[] = [
     breve: 'Intorno alla Via del Cifalco (e oltre)',
     href: '/intorno',
     colore: 'pietra',
-    foto: 'sentiero-pozza.jpg',
+    foto: '',
     // 5a «Scritti d'autore» e 5b «Dicono di noi» verranno aperte con i
     // primi contributi: per ora non compaiono.
     voci: [
       {
         lettera: 'a',
         titolo: 'Scritti d’autore',
-        href: '/intorno/scritti-d-autore',
+        href: '/intorno/scritti-d-autore', foto: 'golfo-tigullio-dai-monti.jpg',
         // Un contributo = una pagina (testo in src/testi/intorno/scritti-d-autore/).
         paragrafi: [
           { numero: 'i', titolo: 'Poeti, banditi e altri pensatori tra Trebbia e Aveto', href: '/intorno/scritti-d-autore/sandro-sbarbaro', autore: 'Sandro Sbarbaro' },
@@ -252,7 +252,7 @@ export function pagineContributi(): { contributo: string; nome: string }[] {
 
 /** Le pagine «semplici» delle voci a lettera (sezioni 3, 4, 5). */
 export function pagineVoci(): { sezione: string; voce: string; nome: string }[] {
-  return SEZIONI.filter((s) => ['/fare-il-cammino', '/approfondimenti', '/intorno'].includes(s.href))
+  return SEZIONI.filter((s) => ['/chi-siamo', '/fare-il-cammino', '/approfondimenti', '/intorno'].includes(s.href))
     .flatMap((s) => s.voci)
     .filter((v) => !v.href.endsWith('/organizzare-il-viaggio'))
     .map((v) => {

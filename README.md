@@ -1,9 +1,9 @@
 # L'Antica Via del Cifalco: sito web
 
 Il sito del cammino, costruito con [Astro](https://astro.build): pagine
-statiche velocissime, con due sole parti interattive (il walking tracker e la
-mappa GPX). **I testi sono separati dal codice**: per correggerli basta
-modificare file di testo.
+statiche velocissime, con una sola parte interattiva (la mappa GPX).
+**I testi sono separati dal codice**: per correggerli basta modificare file
+di testo.
 
 ---
 
@@ -22,7 +22,7 @@ npm run dev
 
 Il sito si apre su http://localhost:4321 e ogni modifica si vede subito.
 Per produrre la versione da pubblicare: `npm run build` (crea `dist/`).
-`npm test` costruisce il sito e verifica il walking tracker.
+`npm test` costruisce il sito e verifica mappa e file GPX.
 
 ---
 
@@ -31,7 +31,7 @@ Per produrre la versione da pubblicare: `npm run build` (crea `dist/`).
 Segue lo «schema base» di Luchino (`scripts/docx/originali/`):
 
 1. Home
-2. Chi siamo (a–d, una sola pagina)
+2. Chi siamo (una pagina per voce, con ingresso a riquadri)
 3. Fare il cammino: informazioni pratiche (a–g, una pagina per voce)
 4. Approfondimenti (a–f, una pagina per voce)
 5. Intorno alla Via del Cifalco (e oltre): Scritti d'autore (una pagina per
@@ -47,8 +47,8 @@ src/
 ├── testi/            ⟵ I TESTI DEL SITO (un file HTML per pagina)
 ├── lib/menu.ts       ⟵ sezioni, voci a lettera e paragrafi i., ii., …
 ├── pages/            ⟵ le pagine (impaginazione, non testi)
-├── components/       ⟵ walking tracker, mappa GPX, menu, piè di pagina…
-├── content/          ⟵ dati del walking tracker (tratte, punti, itinerari)
+├── components/       ⟵ mappa GPX, menu, piè di pagina…
+├── content/          ⟵ i luoghi della Via mostrati sulla mappa
 └── styles/global.css ⟵ colori, font e stile
 public/
 ├── immagini/         ⟵ le foto
@@ -101,16 +101,14 @@ a bandierine in alto porta alla stessa pagina nell'altra lingua.
   dei file italiani. Se una traduzione manca, il sito mostra l'italiano.
   Quando si modifica un testo italiano, va aggiornata anche la traduzione.
 - **Titoli del menu e delle sezioni:** tabella `TITOLI` in `src/lib/menu.ts`.
-- **Scritte dell'interfaccia** (bottoni, walking tracker, mappa…):
+- **Scritte dell'interfaccia** (bottoni, mappa, PDF…):
   `src/lib/i18n.ts`.
-- **Dati del walking tracker:** campo `traduzioni` (`en`, `fr`) nei file JSON
-  di `src/content/tappe/` e `src/content/itinerari/`.
 - I link interni nei testi si scrivono sempre in versione italiana
   (`/approfondimenti/…`): il sito aggiunge da solo `/en` o `/fr`.
 
 ---
 
-## La mappa GPX e il walking tracker
+## La mappa GPX
 
 Le tracce del cartografo (percorso principale + una traccia per deviazione)
 stanno in `scripts/gpx/originali/`. Lo script
@@ -119,18 +117,25 @@ stanno in `scripts/gpx/originali/`. Lo script
 python3 scripts/gpx/prepara.py
 ```
 
-prepara i file scaricabili in `public/gpx/` (uno con tutto, uno con il solo
-percorso principale), scrive le coordinate dei luoghi in
-`src/content/punti/` e misura distanza e dislivelli di ogni tratta del
-walking tracker sulla traccia (`src/content/tappe/`). Così tracker, mappa e
-profilo altimetrico danno gli stessi numeri (75 km, 4677 m di salita).
+prepara i file scaricabili in `public/gpx/`: uno con tutto (percorso
+principale, deviazioni e luoghi), uno con il solo percorso principale e uno
+ZIP con un file per ogni traccia (per le app, come Komoot o Wikiloc, che
+importano solo la prima traccia di un file). Scrive anche le coordinate dei
+luoghi in `src/content/punti/`.
+
+Sulla pagina «Organizzare il viaggio» la mappa mostra percorso principale e
+deviazioni; il profilo altimetrico è interattivo (passando sul profilo, un
+segnaposto si muove sulla mappa).
 
 Se il cartografo aggiorna le tracce: si sostituiscono i file in
-`scripts/gpx/originali/` e si rilancia lo script. La posizione dei luoghi
-lungo il percorso (in km) è nell'elenco `SUL_PERCORSO` dello script.
+`scripts/gpx/originali/` e si rilancia lo script.
 
-I tempi delle tratte (`oreBase`) restano quelli della descrizione di
-Luchino: se cambiano nel testo, vanno aggiornati anche nei file delle tappe.
+## I PDF scaricabili
+
+«Scarica il PDF» (descrizione dettagliata e approfondimenti) apre una pagina
+di stampa (`src/pages/stampa/`) con lo stesso testo, la stessa grafica e le
+stesse foto del sito, e avvia la stampa: si sceglie «Salva come PDF». I PDF
+sono quindi sempre aggiornati con i testi del sito.
 
 ---
 

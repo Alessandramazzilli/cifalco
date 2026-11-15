@@ -9,7 +9,7 @@ const SEZIONI = sezioni(lingua);
 
 <footer class="pie">
   <div class="contenitore pie__griglia">
-    <p class="pie__titolo">L’Antica Via del Cifalco</p>
+    <p class="pie__titolo">Antica Via del Cifalco</p>
     <nav aria-label={T.piePagina}>
       <ul>
         {SEZIONI.map((s) => <li><a href={s.href}>{s.breve}</a></li>)}
@@ -18,8 +18,8 @@ const SEZIONI = sezioni(lingua);
   </div>
   <div class="contenitore pie__nota">
     <p>
-      © {anno} L’Antica Via del Cifalco · <a href={`mailto:${EMAIL}`}>{EMAIL}</a> ·
-      <a href={localizza('/chi-siamo#menzione-legale', lingua)}>{T.menzioneLegale}</a>
+      © {anno} Antica Via del Cifalco · <a href={`mailto:${EMAIL}`}>{EMAIL}</a> ·
+      <a href={localizza('/chi-siamo/menzione-legale', lingua)}>{T.menzioneLegale}</a>
     </p>
   </div>
 </footer>

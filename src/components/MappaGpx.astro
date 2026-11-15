@@ -6,15 +6,13 @@
  *   `python3 scripts/gpx/prepara.py` a partire dai file del cartografo
  *   (scripts/gpx/originali/): un file unico con percorso principale,
  *   deviazioni e luoghi, più un file con il solo percorso principale.
- * - Sincronia con il tracker: quando nel tracker si sceglie un tratto, la
- *   mappa e il profilo altimetrico lo evidenziano, e la mappa restituisce
- *   km e dislivelli misurati sulla traccia (stessa regola usata per i dati
- *   del tracker, quindi i numeri coincidono).
+ * - Profilo altimetrico interattivo: passando sul profilo, un segnaposto si
+ *   muove sulla mappa (e viceversa passando sulla traccia nella mappa).
  * - I luoghi del tracker hanno le coordinate nei file di src/content/punti/.
  */
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
-import { caricaPercorso } from '../lib/percorso';
+import { caricaPunti } from '../lib/percorso';
 import { LOCALE, fmt, linguaDa, t } from '../lib/i18n';
 
 const lingua = linguaDa(Astro.url.pathname);
@@ -23,18 +21,19 @@ const WAYMARKED = 'https://hiking.waymarkedtrails.org/#routelist?relations=20377
 
 const FILE_GPX = '/gpx/antica-via-del-cifalco.gpx';
 const FILE_PRINCIPALE = '/gpx/antica-via-del-cifalco-percorso-principale.gpx';
+const FILE_ZIP = '/gpx/antica-via-del-cifalco-tracce-separate.zip';
 const fileLocale = path.join(process.cwd(), 'public', FILE_PRINCIPALE);
 const presente = existsSync(fileLocale);
 
-const percorso = await caricaPercorso(lingua);
 const punti = Object.fromEntries(
-  percorso.punti.map((p) => [p.id, { nome: p.nome, lat: p.lat ?? null, lon: p.lon ?? null }])
+  (await caricaPunti()).map((p) => [p.id, { nome: p.nome, lat: p.lat ?? null, lon: p.lon ?? null }])
 );
 
 // Profilo altimetrico del percorso principale, disegnato in fase di build.
 const W = 1000;
 const H = 180;
 let profilo = { linea: '', area: '', kmTotali: 0, quotaMin: 0, quotaMax: 0, tacche: [] as { x: number; km: number }[] };
+let scalaQuota = 0;
 if (presente) {
   const xml = readFileSync(fileLocale, 'utf8');
   const tp = [...xml.matchAll(/<trkpt lat="([-\d.]+)" lon="([-\d.]+)"><ele>([-\d.]+)<\/ele>/g)].map((m) => ({
@@ -54,7 +53,8 @@ if (presente) {
   const tot = km[km.length - 1];
   const min = Math.min(...tp.map((p) => p.ele));
   const max = Math.max(...tp.map((p) => p.ele));
-  const y = (e: number) => H - 8 - ((e - 0) / (max - 0)) * (H - 24);
+  scalaQuota = max;
+  const y = (e: number) => H - 8 - (e / max) * (H - 24);
   const passo = Math.max(1, Math.floor(tp.length / 500));
   const vertici = tp
     .filter((_, i) => i % passo === 0 || i === tp.length - 1)
@@ -72,20 +72,18 @@ if (presente) {
 
 {
   presente ? (
-    <div class="mappa-gpx" data-gpx={FILE_GPX} data-locale={LOCALE[lingua]}>
+    <div class="mappa-gpx" data-gpx={FILE_GPX} data-locale={LOCALE[lingua]} data-quota-max={scalaQuota} data-altezza={H}>
       <div class="mappa-gpx__mappa" role="region" aria-label={M.regione}>
         <p class="mappa-gpx__attesa">{M.caricamento}</p>
       </div>
       <ul class="mappa-gpx__legenda" aria-label={M.legenda}>
         <li><span class="mappa-gpx__segno mappa-gpx__segno--principale" />{M.principale}</li>
         <li><span class="mappa-gpx__segno mappa-gpx__segno--deviazione" />{M.deviazioni}</li>
-        <li><span class="mappa-gpx__segno mappa-gpx__segno--tratto" />{M.tratto}</li>
       </ul>
-      <p class="mappa-gpx__selezione" data-selezione aria-live="polite" set:html={M.scegli} />
 
       <figure class="mappa-gpx__profilo">
-        <svg viewBox={`0 0 ${W} ${H + 22}`} role="img" aria-label={fmt(M.profilo, { min: profilo.quotaMin, max: profilo.quotaMax })}>
-          <rect data-profilo-tratto x="0" y="0" width="0" height={H} class="mappa-gpx__profilo-tratto" />
+        <p class="mappa-gpx__cursore" data-cursore aria-live="polite">{M.profiloAiuto}</p>
+        <svg viewBox={`0 0 ${W} ${H + 22}`} role="img" aria-label={fmt(M.profilo, { min: profilo.quotaMin, max: profilo.quotaMax })} data-profilo>
           <path d={profilo.area} class="mappa-gpx__profilo-area" />
           <path d={profilo.linea} class="mappa-gpx__profilo-linea" />
           {profilo.tacche.map((t) => (
@@ -96,6 +94,8 @@ if (presente) {
               </text>
             </g>
           ))}
+          <line data-profilo-linea-cursore x1="0" x2="0" y1="0" y2={H} class="mappa-gpx__profilo-cursore" visibility="hidden" />
+          <circle data-profilo-punto-cursore cx="0" cy="0" r="6" class="mappa-gpx__profilo-punto" visibility="hidden" />
         </svg>
         <figcaption>{fmt(M.profilo, { min: profilo.quotaMin, max: profilo.quotaMax })}</figcaption>
       </figure>
@@ -103,6 +103,7 @@ if (presente) {
       <p class="mappa-gpx__azioni">
         <a class="bottone bottone--pieno" href={FILE_GPX} download>{M.scarica}</a>
         <a class="bottone bottone--contorno" href={FILE_PRINCIPALE} download>{M.scaricaPrincipale}</a>
+        <a class="bottone bottone--contorno" href={FILE_ZIP} download>{M.scaricaSeparate}</a>
       </p>
       <p class="mappa-gpx__nota" set:html={fmt(M.altrove, { waymarked: WAYMARKED })} />
       <script type="application/json" data-punti set:html={JSON.stringify(punti)} />
@@ -125,6 +126,10 @@ if (presente) {
     background: var(--superficie);
     display: grid;
     place-items: center;
+    /* La mappa resta sotto la barra del menu quando si scorre. */
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
   }
   .mappa-gpx__attesa {
     color: var(--inchiostro-tenue);
@@ -153,13 +158,12 @@ if (presente) {
   .mappa-gpx__segno--deviazione {
     border-top: 3px dashed var(--acqua);
   }
-  .mappa-gpx__segno--tratto {
-    border-top: 6px solid #c8102e;
-  }
-  .mappa-gpx__selezione {
-    margin: 0.6rem 0 0.5rem;
+  .mappa-gpx__cursore {
+    margin: 0 0 0.3rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--acqua-scura);
+    min-height: 1.4em;
   }
   .mappa-gpx__profilo {
     margin: 1rem 0 0;
@@ -178,8 +182,19 @@ if (presente) {
     stroke-width: 2;
     vector-effect: non-scaling-stroke;
   }
-  .mappa-gpx__profilo-tratto {
-    fill: rgb(200 16 46 / 0.16);
+  .mappa-gpx__profilo svg {
+    touch-action: pan-y;
+    cursor: crosshair;
+  }
+  .mappa-gpx__profilo-cursore {
+    stroke: #c8102e;
+    stroke-width: 1.5;
+    vector-effect: non-scaling-stroke;
+  }
+  .mappa-gpx__profilo-punto {
+    fill: #c8102e;
+    stroke: #fff;
+    stroke-width: 2;
   }
   .mappa-gpx__profilo-asse {
     stroke: var(--inchiostro-tenue);
@@ -207,32 +222,22 @@ if (presente) {
 </style>
 
 <script>
-  import { leggiGpx, puntoPiuVicino, misura, distanzaKm } from '../lib/gpx';
+  import { leggiGpx, puntoPiuVicino, distanzaKm } from '../lib/gpx';
 
   const contenitore = document.querySelector<HTMLElement>('.mappa-gpx[data-gpx]');
 
   if (contenitore) {
-    type Dettaglio = { da: string; a: string; daNome: string; aNome: string; senso: string; punti: string[] };
     const punti = JSON.parse(contenitore.querySelector('[data-punti]')!.textContent!) as Record<
       string,
       { nome: string; lat: number | null; lon: number | null }
     >;
     const M = JSON.parse(contenitore.querySelector('[data-testi]')!.textContent!) as Record<string, string>;
     const locale = contenitore.dataset.locale!;
+    const quotaMax = Number(contenitore.dataset.quotaMax);
+    const H = Number(contenitore.dataset.altezza);
     const fmt = (s: string, v: Record<string, string>) => s.replace(/\{(\w+)\}/g, (_, k) => v[k] ?? '');
-    const num = (n: number) => n.toLocaleString(locale, { maximumFractionDigits: 1 });
-    const etichetta = contenitore.querySelector<HTMLElement>('[data-selezione]')!;
-    const fasciaProfilo = contenitore.querySelector<SVGRectElement>('[data-profilo-tratto]')!;
+    const num = (n: number, cifre = 1) => n.toLocaleString(locale, { maximumFractionDigits: cifre });
     const LARGHEZZA_PROFILO = 1000;
-
-    // Il tracker parla subito; la mappa si carica solo quando ci si arriva
-    // (la traccia pesa qualche centinaio di kB): si tiene l'ultima scelta.
-    let ultimaScelta: Dettaglio | null = null;
-    let aggiorna: ((d: Dettaglio) => void) | null = null;
-    window.addEventListener('via-cifalco:itinerario', (e) => {
-      ultimaScelta = (e as CustomEvent).detail as Dettaglio;
-      aggiorna?.(ultimaScelta);
-    });
 
     const posizione = (id: string): [number, number] | null => {
       const p = punti[id];
@@ -281,7 +286,6 @@ if (presente) {
         principale.punti.map((p) => [p.lat, p.lon] as [number, number]),
         { color: '#5C4A3A', weight: 5, opacity: 0.9 }
       ).addTo(mappa);
-      const evidenziato = L.polyline([], { color: '#C8102E', weight: 7, opacity: 0.9 }).addTo(mappa);
       mappa.fitBounds(linea.getBounds(), { padding: [20, 20] });
 
       for (const id of Object.keys(punti)) {
@@ -292,26 +296,75 @@ if (presente) {
           .addTo(mappa);
       }
 
-      aggiorna = (d: Dettaglio) => {
-        const pa = posizione(d.da);
-        const pb = posizione(d.a);
-        if (!pa || !pb) return;
-        let i = puntoPiuVicino(principale.punti, pa);
-        let j = puntoPiuVicino(principale.punti, pb);
-        if (i > j) [i, j] = [j, i];
-        const tratto = principale.punti.slice(i, j + 1);
-        evidenziato.setLatLngs(tratto.map((p) => [p.lat, p.lon]));
-        const tuttaLaVia = i === 0 && j === principale.punti.length - 1;
-        mappa.fitBounds(tuttaLaVia ? linea.getBounds() : evidenziato.getBounds(), { padding: [30, 30] });
-        fasciaProfilo.setAttribute('x', String((kmCumulati[i] / kmTotali) * LARGHEZZA_PROFILO));
-        fasciaProfilo.setAttribute('width', String(((kmCumulati[j] - kmCumulati[i]) / kmTotali) * LARGHEZZA_PROFILO));
-        const m = misura(tratto);
-        etichetta.textContent = fmt(M.evidenza, { da: d.daNome, a: d.aNome, km: num(m.km) });
+      // --- Profilo altimetrico ⇄ mappa -----------------------------------
+      const svg = contenitore!.querySelector<SVGSVGElement>('[data-profilo]')!;
+      const lineaCursore = svg.querySelector<SVGLineElement>('[data-profilo-linea-cursore]')!;
+      const puntoCursore = svg.querySelector<SVGCircleElement>('[data-profilo-punto-cursore]')!;
+      const testoCursore = contenitore!.querySelector<HTMLElement>('[data-cursore]')!;
+      const segnaposto = L.circleMarker([0, 0], {
+        radius: 8,
+        color: '#fff',
+        weight: 3,
+        fillColor: '#C8102E',
+        fillOpacity: 1,
+      });
+
+      /** Indice del punto della traccia a una certa distanza dalla partenza. */
+      const indiceKm = (km: number) => {
+        let basso = 0;
+        let alto = kmCumulati.length - 1;
+        while (basso < alto) {
+          const mezzo = (basso + alto) >> 1;
+          if (kmCumulati[mezzo] < km) basso = mezzo + 1;
+          else alto = mezzo;
+        }
+        return basso;
       };
-      if (ultimaScelta) aggiorna(ultimaScelta);
+
+      function mostra(i: number, centra: boolean) {
+        const p = principale.punti[i];
+        const x = (kmCumulati[i] / kmTotali) * LARGHEZZA_PROFILO;
+        const y = H - 8 - ((p.ele ?? 0) / quotaMax) * (H - 24);
+        lineaCursore.setAttribute('x1', String(x));
+        lineaCursore.setAttribute('x2', String(x));
+        puntoCursore.setAttribute('cx', String(x));
+        puntoCursore.setAttribute('cy', String(y));
+        lineaCursore.setAttribute('visibility', 'visible');
+        puntoCursore.setAttribute('visibility', 'visible');
+        segnaposto.setLatLng([p.lat, p.lon]);
+        if (!mappa.hasLayer(segnaposto)) segnaposto.addTo(mappa);
+        if (centra && !mappa.getBounds().pad(-0.1).contains([p.lat, p.lon])) mappa.panTo([p.lat, p.lon]);
+        testoCursore.textContent = fmt(M.cursore, {
+          km: num(kmCumulati[i]),
+          quota: num(Math.round(p.ele ?? 0), 0),
+        });
+      }
+
+      function nascondi() {
+        lineaCursore.setAttribute('visibility', 'hidden');
+        puntoCursore.setAttribute('visibility', 'hidden');
+        segnaposto.remove();
+        testoCursore.textContent = M.profiloAiuto;
+      }
+
+      const daProfilo = (e: PointerEvent) => {
+        const r = svg.getBoundingClientRect();
+        const frazione = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+        mostra(indiceKm(frazione * kmTotali), true);
+      };
+      svg.addEventListener('pointermove', daProfilo);
+      svg.addEventListener('pointerdown', daProfilo);
+      svg.addEventListener('pointerleave', nascondi);
+
+      // Passando sulla traccia nella mappa, il punto compare sul profilo.
+      linea.on('mousemove', (e: { latlng: { lat: number; lng: number } }) => {
+        mostra(puntoPiuVicino(principale.punti, [e.latlng.lat, e.latlng.lng]), false);
+      });
+      linea.on('mouseout', nascondi);
     }
 
-    // Carica la mappa quando sta per entrare nello schermo.
+    // Carica la mappa quando sta per entrare nello schermo (la traccia pesa
+    // qualche centinaio di kB: chi non arriva fin qui non la scarica).
     if ('IntersectionObserver' in window) {
       const osservatore = new IntersectionObserver(
         (voci) => {

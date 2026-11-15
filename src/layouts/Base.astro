@@ -11,9 +11,9 @@ interface Props {
 
 const { titolo, descrizione } = Astro.props;
 const titoloCompleto =
-  titolo === 'L’Antica Via del Cifalco'
+  titolo === 'Antica Via del Cifalco'
     ? titolo
-    : `${titolo} · L’Antica Via del Cifalco`;
+    : `${titolo} · Antica Via del Cifalco`;
 const urlCanonico = new URL(Astro.url.pathname, Astro.site);
 const lingua = linguaDa(Astro.url.pathname);
 const base = senzaLingua(Astro.url.pathname);
@@ -35,7 +35,7 @@ const base = senzaLingua(Astro.url.pathname);
     <meta property="og:url" content={urlCanonico} />
     <meta property="og:locale" content={LOCALE[lingua].replace('-', '_')} />
     {LINGUE.map((l) => <link rel="alternate" hreflang={l} href={new URL(localizza(base, l), Astro.site)} />)}
-    <meta property="og:site_name" content="L’Antica Via del Cifalco" />
+    <meta property="og:site_name" content="Antica Via del Cifalco" />
     <meta name="generator" content={Astro.generator} />
     <script>
       if (
