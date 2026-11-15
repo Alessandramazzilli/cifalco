@@ -2,7 +2,8 @@
 
 Il sito del cammino, costruito con [Astro](https://astro.build): pagine
 statiche velocissime, con una sola parte interattiva (la mappa GPX).
-modificare file di testo.
+**I testi sono separati dal codice**: per correggerli basta modificare file
+di testo.
 
 ---
 
