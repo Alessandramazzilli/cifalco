@@ -2,45 +2,16 @@
 /** Pagina di una voce di sezione: il suo testo da src/testi/ (o en/, fr/). */
 import PaginaSezione from '../layouts/PaginaSezione.astro';
 import { testo, anteprima } from '../lib/testi';
-import { linguaDa, t } from '../lib/i18n';
+import { testoConFoto } from '../lib/foto';
+import { linguaDa } from '../lib/i18n';
 import { trovaLocalizzato } from '../lib/menu';
 
 interface Props {
   nome: string; // es. 'fare-il-cammino/premessa'
 }
 const lingua = linguaDa(Astro.url.pathname);
-const T = t(lingua);
 
-// Foto dentro i testi lunghi: vanno dopo il paragrafo che inizia con il
-// testo indicato (in italiano). I testi tradotti hanno gli stessi paragrafi
-// nello stesso ordine, quindi la foto cade nello stesso punto in ogni lingua.
-// Ogni foto compare una volta sola nel sito.
-const FOTO_NEL_TESTO: Record<string, { dopo: string; foto: string }[]> = {
-  'approfondimenti/natura-e-paesaggio': [
-    { dopo: 'Attorno alle zone umide', foto: 'girini.jpg' },
-    { dopo: 'In maggio, quando la parete sud', foto: 'ginestre-monte-caucaso.jpg' },
-  ],
-  'approfondimenti/tappe': [
-    { dopo: 'Questa deviazione è un vero spettacolo', foto: 'ruscello-casanova.jpg' },
-    { dopo: 'Come già ampiamente spiegato sopra', foto: 'vista-tigullio-crinale.jpg' },
-    { dopo: 'Giunti a fondovalle, si entra nella piccola', foto: 'chiesa-gattorna.jpg' },
-    { dopo: 'Come spiegato nella sezione', foto: 'castello-paraggi.jpg' },
-    { dopo: 'Eppure, un incanto senza tempo', foto: 'portofino-baia.jpg' },
-  ],
-};
-
-const paragrafi = (h: string) => [...h.matchAll(/<p[\s>][\s\S]*?<\/p>/g)];
-let html = testo(Astro.props.nome, lingua);
-const italiano = paragrafi(testo(Astro.props.nome, 'it'));
-for (const { dopo, foto } of FOTO_NEL_TESTO[Astro.props.nome] ?? []) {
-  const n = italiano.findIndex((m) => m[0].replace(/<[^>]+>/g, '').startsWith(dopo));
-  const bersaglio = n < 0 ? undefined : paragrafi(html)[n];
-  if (!bersaglio) continue;
-  const fine = bersaglio.index! + bersaglio[0].length;
-  const testoAlt = T.altFoto[foto] ?? '';
-  const figura = `<figure class="figura figura--larga"><img src="/immagini/${foto}" alt="${testoAlt}" loading="lazy" decoding="async"><figcaption>${testoAlt}</figcaption></figure>`;
-  html = html.slice(0, fine) + figura + html.slice(fine);
-}
+const html = testoConFoto(Astro.props.nome, lingua);
 
 // Voci con contributi a sé (es. «Scritti d'autore»): una scheda per ciascuno.
 const { voce } = trovaLocalizzato(Astro.url.pathname, lingua);

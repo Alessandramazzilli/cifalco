@@ -7,10 +7,9 @@ Produce:
   principale, tutte le deviazioni e i luoghi (waypoint) della Via;
 - public/gpx/antica-via-del-cifalco-percorso-principale.gpx: solo la via
   principale, con i luoghi.
-E aggiorna i dati del walking tracker:
-- coordinate (lat, lon) dei punti in src/content/punti/;
-- distanza, salita e discesa delle tratte in src/content/tappe/, misurate
-  sulla traccia, così tracker e mappa danno gli stessi numeri.
+- public/gpx/antica-via-del-cifalco-tracce-separate.zip: un file per traccia
+  (per le app che leggono solo la prima traccia di un file).
+E scrive le coordinate (lat, lon) dei luoghi in src/content/punti/.
 
 Uso: python3 scripts/gpx/prepara.py
 """
@@ -20,6 +19,7 @@ import json
 import math
 import os
 import re
+import zipfile
 
 QUI = os.path.dirname(os.path.abspath(__file__))
 RADICE = os.path.join(QUI, '..', '..')
@@ -102,14 +102,19 @@ def trk(nome, punti, tipo):
     return f'<trk><name>{html.escape(nome)}</name><type>{tipo}</type><trkseg>{righe}</trkseg></trk>\n'
 
 
-def gpx(nome_file, contenuto, waypoint):
+def file_gpx(contenuto, waypoint):
     w = ''.join(f'<wpt lat="{la:.7f}" lon="{lo:.7f}"><ele>{el:.0f}</ele><name>{html.escape(n)}</name></wpt>\n'
                 for n, (la, lo, el) in waypoint)
     testo = ('<?xml version="1.0" encoding="UTF-8"?>\n'
-             '<gpx version="1.1" creator="L’Antica Via del Cifalco" xmlns="http://www.topografix.com/GPX/1/1">\n'
-             '<metadata><name>L’Antica Via del Cifalco</name>'
-             '<link href="https://anticaviadelcifalco.netlify.app"><text>L’Antica Via del Cifalco</text></link></metadata>\n'
+             '<gpx version="1.1" creator="Antica Via del Cifalco" xmlns="http://www.topografix.com/GPX/1/1">\n'
+             '<metadata><name>Antica Via del Cifalco</name>'
+             '<link href="https://anticaviadelcifalco.netlify.app"><text>Antica Via del Cifalco</text></link></metadata>\n'
              + w + contenuto + '</gpx>\n')
+    return testo
+
+
+def gpx(nome_file, contenuto, waypoint):
+    testo = file_gpx(contenuto, waypoint)
     os.makedirs(PUBBLICO, exist_ok=True)
     with open(os.path.join(PUBBLICO, nome_file), 'w', encoding='utf-8') as f:
         f.write(testo)
@@ -151,19 +156,8 @@ def main():
             print('  ! punto senza posizione:', id_)
     waypoint = [(nomi[i], posizioni[i]) for i in posizioni if i in nomi]
 
-    # Tratte del tracker: misure sulla traccia, tra il primo e l'ultimo punto
-    totale = [0, 0, 0]
-    for f in sorted(glob.glob(os.path.join(RADICE, 'src', 'content', 'tappe', '*.json'))):
-        d = json.load(open(f, encoding='utf-8'))
-        a, b = indici[d['punti'][0]], indici[d['punti'][-1]]
-        km, su, giu = misura(principale[a:b + 1])
-        d['distanzaKm'], d['salitaM'], d['discesaM'] = round(km, 1), round(su), round(giu)
-        totale = [totale[0] + km, totale[1] + su, totale[2] + giu]
-        with open(f, 'w', encoding='utf-8') as out:
-            out.write(json.dumps(d, ensure_ascii=False, indent=2) + '\n')
-        print(f'  {os.path.basename(f):42s} {km:5.1f} km  +{su:4.0f}  -{giu:4.0f}')
     km, su, giu = misura(principale)
-    print(f'  percorso principale: {km:.1f} km, +{su:.0f} m, -{giu:.0f} m (somma tratte {totale[0]:.1f} km, +{totale[1]:.0f})')
+    print(f'  percorso principale: {km:.1f} km, +{su:.0f} m, -{giu:.0f} m')
 
     # File GPX
     deviazioni = ''
@@ -174,6 +168,17 @@ def main():
     via = trk('Antica Via del Cifalco · percorso principale', principale, 'principale')
     gpx('antica-via-del-cifalco.gpx', via + deviazioni, waypoint)
     gpx('antica-via-del-cifalco-percorso-principale.gpx', via, waypoint)
+
+    # Tracce separate in uno ZIP: molte app (Komoot, Wikiloc…) importano solo
+    # la prima traccia di un file, quindi ogni deviazione ha il suo file.
+    with zipfile.ZipFile(os.path.join(PUBBLICO, 'antica-via-del-cifalco-tracce-separate.zip'), 'w',
+                         zipfile.ZIP_DEFLATED) as z:
+        z.writestr('00 Antica Via del Cifalco - percorso principale.gpx', file_gpx(via, waypoint))
+        for i, f in enumerate(sorted(glob.glob(os.path.join(ORIGINALI, 'deviazione_*.gpx'))), 1):
+            nome, punti = leggi(f)
+            nome = nome[0].upper() + nome[1:]
+            z.writestr(f'{i:02d} {nome}.gpx', file_gpx(trk(nome, punti, 'deviazione'), []))
+    print('scritto public/gpx/antica-via-del-cifalco-tracce-separate.zip')
 
 
 if __name__ == '__main__':

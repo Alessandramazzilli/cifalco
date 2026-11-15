@@ -4,7 +4,7 @@ import Base from '../layouts/Base.astro';
 import Foto from '../components/Foto.astro';
 import { sezioni, SEZIONI } from '../lib/menu';
 import { testo, anteprima, nomeTesto } from '../lib/testi';
-import { linguaDa, t } from '../lib/i18n';
+import { linguaDa, localizza, t } from '../lib/i18n';
 
 interface Props {
   href: string; // indirizzo italiano della sezione, es. '/fare-il-cammino'
@@ -22,8 +22,15 @@ const voci = sezione.voci.map((v) => ({ ...v, anteprima: anteprima(testo(nomeTes
       <div>
         <p class="occhiello">{T.nomeSito}</p>
         <h1 class="apertura__titolo">{sezione.titolo}</h1>
+        {Astro.props.href === '/approfondimenti' && (
+          <p class="apertura__pdf">
+            <a class="bottone bottone--contorno bottone-pdf" href={localizza('/stampa/approfondimenti', lingua)} target="_blank" rel="noopener">
+              {T.pdf.approfondimenti}
+            </a>
+          </p>
+        )}
       </div>
-      <Foto classe="duo__foto" src={`/immagini/${sezione.foto}`} alt={T.altFoto[sezione.foto]} />
+      {sezione.foto && <Foto classe="duo__foto" src={`/immagini/${sezione.foto}`} alt={T.altFoto[sezione.foto]} />}
     </div>
   </section>
   <div class="contenitore sezione">

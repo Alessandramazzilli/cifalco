@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 /**
- * Le tre collection «di percorso» (punti, tappe, itinerari) sono file JSON:
+ * I punti della Via (luoghi mostrati sulla mappa) sono file JSON:
  * aggiornare il cammino significa modificare quei file, non il codice.
  * Le istruzioni passo-passo sono nel README.
  */
@@ -30,60 +30,4 @@ const punti = defineCollection({
   }),
 });
 
-const tappe = defineCollection({
-  loader: glob({ pattern: '*.json', base: './src/content/tappe' }),
-  schema: z.object({
-    nome: z.string(),
-    da: z.string(),
-    a: z.string(),
-    distanzaKm: z.number(),
-    salitaM: z.number(),
-    discesaM: z.number(),
-    // Ore di cammino a passo medio, soste escluse.
-    oreBase: z.number(),
-    descrizione: z.string(),
-    // Segnavia da seguire su questa tratta (può cambiare lungo la Via).
-    segnavia: z.string(),
-    // Id dei punti attraversati, in ordine: disegnano la tappa sulla mappa.
-    punti: z.array(z.string()),
-    // Le indicazioni passo-passo mostrate dal planner («avanti»).
-    passi: z.array(
-      z.object({
-        titolo: z.string(),
-        testo: z.string(),
-      })
-    ),
-    // Le deviazioni dalla via principale (mostrate nella descrizione dettagliata).
-    deviazioni: z
-      .array(
-        z.object({
-          titolo: z.string(),
-          testo: z.string(),
-        })
-      )
-      .default([]),
-    // Traduzioni dei testi (inglese, francese): { en: {...}, fr: {...} }.
-    traduzioni: z.record(z.string(), z.any()).optional(),
-  }),
-});
-
-const itinerari = defineCollection({
-  loader: glob({ pattern: '*.json', base: './src/content/itinerari' }),
-  schema: z.object({
-    nome: z.string(),
-    sottotitolo: z.string(),
-    descrizione: z.string(),
-    difficolta: z.enum(['facile', 'medio', 'impegnativo']),
-    // Id delle tappe che compongono l'itinerario, in ordine.
-    tappe: z.array(z.string()),
-    giorniConsigliati: z.string(),
-    // Ordine di presentazione nelle liste.
-    ordine: z.number(),
-    // true se il percorso torna al punto di partenza.
-    anello: z.boolean().default(false),
-    // Traduzioni dei testi (inglese, francese): { en: {...}, fr: {...} }.
-    traduzioni: z.record(z.string(), z.any()).optional(),
-  }),
-});
-
-export const collections = { punti, tappe, itinerari };
+export const collections = { punti };

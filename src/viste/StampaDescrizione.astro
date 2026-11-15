@@ -1,0 +1,18 @@
+---
+/** Pagina di stampa della «Descrizione dettagliata dell'itinerario». */
+import Stampa from '../layouts/Stampa.astro';
+import { testo } from '../lib/testi';
+import { linguaDa } from '../lib/i18n';
+import { traduciTitolo } from '../lib/menu';
+
+const lingua = linguaDa(Astro.url.pathname);
+const html = testo('fare-il-cammino/organizzare-il-viaggio', lingua);
+const inizio = html.indexOf('<h2 id="descrizione-dettagliata">');
+const fine = html.indexOf('<h2 id="mappa-gpx">');
+// Il titolo diventa il titolo della pagina: qui resta il contenuto.
+const sezione = html.slice(inizio, fine).replace(/^<h2[^>]*>[\s\S]*?<\/h2>/, '');
+---
+
+<Stampa titolo={traduciTitolo('Descrizione dettagliata dell’itinerario', lingua)}>
+  <Fragment set:html={sezione} />
+</Stampa>

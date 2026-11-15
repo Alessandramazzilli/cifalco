@@ -1,0 +1,62 @@
+---
+/**
+ * Pagina di stampa (per «Scarica il PDF»): lo stesso testo del sito, con la
+ * stessa grafica e le stesse immagini, impaginato per la carta. All'apertura
+ * parte la finestra di stampa, dove si sceglie «Salva come PDF».
+ */
+import '../styles/global.css';
+import { linguaDa, t } from '../lib/i18n';
+
+interface Props {
+  titolo: string;
+}
+const { titolo } = Astro.props;
+const lingua = linguaDa(Astro.url.pathname);
+const T = t(lingua);
+---
+
+<!doctype html>
+<html lang={lingua}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{titolo} · {T.nomeSito}</title>
+    <link rel="icon" type="image/png" href="/immagini/logo-avc-512.png" />
+    <script>
+      if (localStorage.getItem('cifalco-accesso') !== '1') {
+        window.location.replace('/accesso?da=' + encodeURIComponent(window.location.pathname));
+      }
+    </script>
+  </head>
+  <body class="stampa">
+    <div class="stampa__barra">
+      <a href="javascript:history.back()">{T.pdf.torna}</a>
+      <span>{T.pdf.istruzioni}</span>
+      <button type="button" class="bottone bottone--pieno" data-stampa>{T.pdf.salva}</button>
+    </div>
+    <main class="stampa__pagina">
+      <header class="stampa__testata">
+        <img src="/immagini/logo-avc.png" alt="" width="90" height="90" />
+        <div>
+          <p class="stampa__sito">{T.nomeSito}</p>
+          <h1>{titolo}</h1>
+        </div>
+      </header>
+      <div class="prosa testo-sito">
+        <slot />
+      </div>
+    </main>
+    <script>
+      const stampa = () => window.print();
+      document.querySelector('[data-stampa]')?.addEventListener('click', stampa);
+      // Aspetta le immagini (anche quelle «lazy»), poi apre la stampa.
+      window.addEventListener('load', async () => {
+        const immagini = [...document.images];
+        immagini.forEach((i) => (i.loading = 'eager'));
+        await Promise.all(immagini.map((i) => (i.complete ? null : new Promise((r) => (i.onload = i.onerror = r)))));
+        setTimeout(stampa, 300);
+      });
+    </script>
+  </body>
+</html>

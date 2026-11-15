@@ -13,7 +13,7 @@ const T = t(lingua);
       <div>
       <p class="occhiello">{T.nomeSito}</p>
       <h1>{T.contatti}</h1>
-      <p class="contatti__lead" set:html={fmt(T.contattiTesto, { link: localizza('/chi-siamo#le-persone', lingua) })} />
+      <p class="contatti__lead" set:html={fmt(T.contattiTesto, { link: localizza('/chi-siamo/le-persone', lingua) })} />
       <p class="contatti__email">
         <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
       </p>

@@ -1,0 +1,36 @@
+---
+/** Pagina di stampa di tutta la sezione «Approfondimenti», con le foto. */
+import Stampa from '../layouts/Stampa.astro';
+import { testoConFoto } from '../lib/foto';
+import { nomeTesto } from '../lib/testi';
+import { linguaDa, t } from '../lib/i18n';
+import { sezioni } from '../lib/menu';
+
+const lingua = linguaDa(Astro.url.pathname);
+const T = t(lingua);
+const sezione = sezioni(lingua).find((s) => s.href.endsWith('/approfondimenti'))!;
+const capitoli = sezione.voci.map((v) => ({
+  titolo: v.titolo,
+  foto: v.foto,
+  html: testoConFoto(nomeTesto(v.href), lingua),
+}));
+---
+
+<Stampa titolo={sezione.titolo}>
+  <nav class="stampa__indice">
+    <ol>{capitoli.map((c) => <li>{c.titolo}</li>)}</ol>
+  </nav>
+  {
+    capitoli.map((c) => (
+      <section class="stampa__capitolo">
+        <h2 class="stampa__titolo-capitolo">{c.titolo}</h2>
+        {c.foto && (
+          <figure class="figura figura--larga">
+            <img src={`/immagini/${c.foto}`} alt={T.altFoto[c.foto] ?? ''} />
+          </figure>
+        )}
+        <Fragment set:html={c.html} />
+      </section>
+    ))
+  }
+</Stampa>

@@ -900,3 +900,94 @@ mark.segnaposto {
 .chi-siamo__banda .testo-sito > :last-child,
 .chi-siamo__banda .testo-sito ul:last-child { margin-bottom: 0; }
 .testo-sito .citazione { margin-bottom: 1.6rem; }
+
+/* Home: logo accanto al titolo, citazione sotto, foto a destra */
+.home__marchio {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.9rem, 2vw, 1.4rem);
+  margin-bottom: 1.4rem;
+}
+.home__marchio .home__logo { width: clamp(5.5rem, 10vw, 8.5rem); flex: 0 0 auto; }
+.home__marchio .home__titolo { margin: 0; }
+
+/* ===========================================================================
+   Pulsanti «Scarica il PDF» e pagine di stampa
+   ======================================================================== */
+.titolo-con-pdf {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem 1.2rem;
+  margin-top: 2.5rem;
+}
+.titolo-con-pdf h2 { margin: 0; }
+.bottone-pdf {
+  font-size: 0.9rem;
+  padding: 0.45rem 1rem;
+}
+.bottone-pdf::before { content: '⤓'; margin-right: 0.45rem; font-weight: 700; }
+.apertura__pdf { margin: 1.2rem 0 0; }
+
+.stampa { background: #fff; }
+.stampa__barra {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1.2rem;
+  padding: 0.8rem 1.25rem;
+  background: var(--superficie);
+  border-bottom: 1px solid var(--sabbia);
+  font-size: 0.92rem;
+}
+.stampa__pagina {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+.stampa__testata {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--salvia);
+}
+.stampa__testata img { width: 5rem; height: auto; }
+.stampa__testata h1 { margin: 0; font-size: 1.9rem; }
+.stampa__sito {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 650;
+  color: var(--bosco-scuro);
+}
+.stampa__indice ol { columns: 2; font-size: 0.95rem; }
+.stampa__titolo-capitolo {
+  font-size: 1.6rem;
+  margin-top: 2.5rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--sabbia);
+}
+
+@media print {
+  @page { size: A4; margin: 15mm 14mm 16mm; }
+  html, body.stampa { background: #fff !important; }
+  .stampa__barra { display: none; }
+  .stampa__pagina { max-width: none; padding: 0; }
+  body.stampa { font-size: 10.5pt; }
+  .stampa * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .stampa a { color: inherit; text-decoration: none; }
+  .stampa .figura img, .stampa img { box-shadow: none; max-height: 9.5cm; width: auto; max-width: 100%; margin-inline: auto; }
+  .stampa h2, .stampa h3 { break-after: avoid; }
+  .stampa .percorso-alt, .stampa .aneddoto, .stampa figure, .stampa .tratta-dato, .stampa .legenda-percorso { break-inside: avoid; }
+  .stampa__capitolo { break-before: page; }
+  .stampa__capitolo:first-of-type { break-before: auto; }
+  .stampa__titolo-capitolo { border-top: none; margin-top: 0; }
+  .stampa .stampa__testata img { width: 2.3cm; max-height: none; margin: 0; }
+}

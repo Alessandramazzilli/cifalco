@@ -10,7 +10,7 @@ import Base from './Base.astro';
 import Foto from '../components/Foto.astro';
 import { trovaLocalizzato } from '../lib/menu';
 import { titoli } from '../lib/testi';
-import { linguaDa, t } from '../lib/i18n';
+import { linguaDa, localizza, t } from '../lib/i18n';
 
 interface Props {
   descrizione: string;
@@ -54,6 +54,13 @@ const interni = voce.paragrafi
         </nav>
         {paragrafo?.autore && <p class="apertura__autore">{paragrafo.autore}</p>}
         <h1 class="apertura__titolo">{titolo}</h1>
+        {sezione.href.endsWith('/approfondimenti') && (
+          <p class="apertura__pdf">
+            <a class="bottone bottone--contorno bottone-pdf" href={localizza('/stampa/approfondimenti', lingua)} target="_blank" rel="noopener">
+              {T.pdf.approfondimenti}
+            </a>
+          </p>
+        )}
       </div>
       {foto && <Foto classe="duo__foto" src={`/immagini/${foto}`} alt={T.altFoto[foto] ?? ''} />}
     </div>
